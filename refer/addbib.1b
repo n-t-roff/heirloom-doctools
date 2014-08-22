@@ -1,0 +1,169 @@
+.\" Copyright (c) 1983 Regents of the University of California.
+.\" All rights reserved.
+.\"
+.\" This code contains changes by
+.\"      Gunnar Ritter, Freiburg i. Br., Germany, 2005. All rights reserved.
+.\"
+.\" Conditions 1, 2, and 4 and the no-warranty notice below apply
+.\" to these changes.
+.\"
+.\" Redistribution and use in source and binary forms, with or without
+.\" modification, are permitted provided that the following conditions
+.\" are met:
+.\" 1. Redistributions of source code must retain the above copyright
+.\"    notice, this list of conditions and the following disclaimer.
+.\" 2. Redistributions in binary form must reproduce the above copyright
+.\"    notice, this list of conditions and the following disclaimer in the
+.\"    documentation and/or other materials provided with the distribution.
+.\" 3. All advertising materials mentioning features or use of this software
+.\"    must display the following acknowedgement:
+.\" 	This product includes software developed by the University of
+.\" 	California, Berkeley and its contributors.
+.\" 4. Neither the name of the University nor the names of its contributors
+.\"    may be used to endorse or promote products derived from this software
+.\"    without specific prior written permission.
+.\"
+.\" THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS ``AS IS'' AND
+.\" ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+.\" IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+.\" ARE DISCLAIMED.  IN NO EVENT SHALL THE REGENTS OR CONTRIBUTORS BE LIABLE
+.\" FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+.\" DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+.\" OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+.\" HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+.\" LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+.\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+.\" SUCH DAMAGE.
+.\"
+.\" Copyright(C) Caldera International Inc. 2001-2002. All rights reserved.
+.\"
+.\" Redistribution and use in source and binary forms, with or without
+.\" modification, are permitted provided that the following conditions
+.\" are met:
+.\"   Redistributions of source code and documentation must retain the
+.\"    above copyright notice, this list of conditions and the following
+.\"    disclaimer.
+.\"   Redistributions in binary form must reproduce the above copyright
+.\"    notice, this list of conditions and the following disclaimer in the
+.\"    documentation and/or other materials provided with the distribution.
+.\"   All advertising materials mentioning features or use of this software
+.\"    must display the following acknowledgement:
+.\"      This product includes software developed or owned by Caldera
+.\"      International, Inc.
+.\"   Neither the name of Caldera International, Inc. nor the names of
+.\"    other contributors may be used to endorse or promote products
+.\"    derived from this software without specific prior written permission.
+.\"
+.\" USE OF THE SOFTWARE PROVIDED FOR UNDER THIS LICENSE BY CALDERA
+.\" INTERNATIONAL, INC. AND CONTRIBUTORS ``AS IS'' AND ANY EXPRESS OR
+.\" IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+.\" WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+.\" ARE DISCLAIMED. IN NO EVENT SHALL CALDERA INTERNATIONAL, INC. BE
+.\" LIABLE FOR ANY DIRECT, INDIRECT INCIDENTAL, SPECIAL, EXEMPLARY, OR
+.\" CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+.\" SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR
+.\" BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+.\" WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
+.\" OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+.\" EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+.\"
+.\" Sccsid @(#)addbib.1b	1.4 (gritter) 12/12/05
+.\"
+.\"
+.\"	from 4.3BSD-Tahoe addbib.1	6.1 (Berkeley) 4/29/85
+.\"
+.\".TH ADDBIB 1 "April 29, 1985"
+.TH ADDBIB 1B "12/12/05" "Heirloom Documentation Tools" "BSD System Compatibility"
+.UC 5
+.SH NAME
+addbib \- (BSD) create or extend bibliographic database
+.SH SYNOPSIS
+\fB/usr/ucb/addbib\fR
+[\fB\-p\fI\ promptfile\fR] [\fB\-a\fR] \fIdatabase\fR
+.SH DESCRIPTION
+When this program starts up, answering ``y''
+to the initial ``Instructions?'' prompt yields directions;
+typing ``n'' or \s-2RETURN\s0 skips them.
+.I Addbib
+then prompts for various bibliographic fields,
+reads responses from the terminal,
+and sends output records to a
+.I database.
+A null response (just \s-2RETURN\s0) means to leave out that field.
+A minus sign (\-) means to go back to the previous field.
+A trailing backslash allows a field to be continued on the next line.
+The repeating ``Continue?'' prompt allows the user
+either to resume by typing ``y'' or \s-2RETURN\s0,
+to quit the current session by typing ``n'' or ``q'',
+or to edit the
+.I database
+with any system editor \fI(vi, ex, edit, ed).\fP
+.PP
+The
+.B \-a
+option suppresses prompting for an abstract;
+asking for an abstract is the default.
+Abstracts are ended with a \s-2CTRL\s0-d.
+The
+.B \-p
+option causes
+.I addbib
+to use a new prompting skeleton, defined in
+.I promptfile.
+This file should contain prompt strings, a tab,
+and the key-letters to be written to the
+.I database.
+.PP
+The most common key-letters and their meanings are given below.
+.I Addbib
+insulates you from these key-letters,
+since it gives you prompts in English,
+but if you edit the bibliography file later on,
+you will need to know this information.
+.sp
+.nf
+	%A	Author's name
+	%B	Book containing article referenced
+	%C	City (place of publication)
+	%D	Date of publication
+	%E	Editor of book containing article referenced
+	%F	Footnote number or label (supplied by \fIrefer\fP\|)
+	%G	Government order number
+	%H	Header commentary, printed before reference
+	%I	Issuer (publisher)
+	%J	Journal containing article
+	%K	Keywords to use in locating reference
+	%L	Label field used by \fB\-k\fP option of \fIrefer\fP
+	%M	Bell Labs Memorandum (undefined)
+	%N	Number within volume
+	%O	Other commentary, printed at end of reference
+	%P	Page number(s)
+	%Q	Corporate or Foreign Author (unreversed)
+	%R	Report, paper, or thesis (unpublished)
+	%S	Series title
+	%T	Title of article or book
+	%V	Volume number
+	%X	Abstract \(em used by \fIroffbib\fP, not by \fIrefer\fP
+	%Y,Z	ignored by \fIrefer\fP
+.fi
+.sp
+Except for `A', each field should be given just once.
+Only relevant fields should be supplied.
+An example is:
+.sp
+.nf
+	%A	Bill Tuthill
+	%T	Refer \(em A Bibliography System
+	%I	Computing Services
+	%C	Berkeley
+	%D	1982
+	%O	\s-1UNX\s0 4.3.5.
+.fi
+.sp
+.SH FILES
+.DT
+promptfile	optional file to define prompting
+.SH SEE ALSO
+refer(1B), sortbib(1B), roffbib(1B), indxbib(1B), lookbib(1B)
+.SH NOTES
+Written by Al Stangenberger & Bill Tuthill.

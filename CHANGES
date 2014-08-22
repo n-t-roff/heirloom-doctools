@@ -1,0 +1,35 @@
+2014-08-20
+    eqn(1) did not compile because of bison to BSD yacc differ-
+    ences.  Sorry, had not tested on Linux this time...
+
+2014-08-18
+    Experimental bugfix: When .bp is directly followed by .. and
+    .bp triggers a macro which calls a macro then document text
+    is printed at that trap position.  This bug is also in other
+    ditroff derivatives (e.g. DWB and Plan9).  It is difficult to
+    track the bug to it's root cause so it is an experimental fix
+    at the moment.
+
+2014-08-17
+    \fP after \fS did set the font before the previous font and
+    not the previous one.
+
+2014-08-16
+    Bug reported by Pierre-Jean Fichet fixed: If character "!" is
+    used in a .char request it did not work in a .if request as
+    the NOT operator.
+
+2014-08-14
+    The eqn parser used type int for all token values--even
+    pointers.  This may work fine on 32 bit hardware but causes
+    problems on 64 bit.  A new data type had been introduced to
+    separate int tokens from pointers.
+
+    Also a bug in the parser regarding movements (e.g. FWD) had
+    been fixed.
+
+2014-07-27
+    A variable had been initilized after use.  This variable mi-
+    nus a literal value is used as an array index.  When data
+    from the array is read an invalid memory segment is accessed.
+    This had caused crashes on at least OpenBSD.

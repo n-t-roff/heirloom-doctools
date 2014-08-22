@@ -1,0 +1,137 @@
+'\" t
+.\" Sccsid @(#)tbl.1b	1.7 (gritter) 9/9/06
+.\" Derived from tbl(1), Unix 7th edition:
+.\" Copyright(C) Caldera International Inc. 2001-2002. All rights reserved.
+.\"
+.\" Redistribution and use in source and binary forms, with or without
+.\" modification, are permitted provided that the following conditions
+.\" are met:
+.\"   Redistributions of source code and documentation must retain the
+.\"    above copyright notice, this list of conditions and the following
+.\"    disclaimer.
+.\"   Redistributions in binary form must reproduce the above copyright
+.\"    notice, this list of conditions and the following disclaimer in the
+.\"    documentation and/or other materials provided with the distribution.
+.\"   All advertising materials mentioning features or use of this software
+.\"    must display the following acknowledgement:
+.\"      This product includes software developed or owned by Caldera
+.\"      International, Inc.
+.\"   Neither the name of Caldera International, Inc. nor the names of
+.\"    other contributors may be used to endorse or promote products
+.\"    derived from this software without specific prior written permission.
+.\"
+.\" USE OF THE SOFTWARE PROVIDED FOR UNDER THIS LICENSE BY CALDERA
+.\" INTERNATIONAL, INC. AND CONTRIBUTORS ``AS IS'' AND ANY EXPRESS OR
+.\" IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+.\" WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+.\" ARE DISCLAIMED. IN NO EVENT SHALL CALDERA INTERNATIONAL, INC. BE
+.\" LIABLE FOR ANY DIRECT, INDIRECT INCIDENTAL, SPECIAL, EXEMPLARY, OR
+.\" CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+.\" SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR
+.\" BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+.\" WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
+.\" OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+.\" EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+.TH TBL 1B "9/9/06" "Heirloom Documentation Tools" "BSD System Compatibility"
+.SH NAME
+tbl \- (BSD) format tables for nroff or troff
+.SH SYNOPSIS
+\fB/usr/ucb/tbl\fR
+[\fB\-g\fR]
+[\fB\-me\fR|\fB\-mm\fR|\fB\-ms\fR]
+[\fB\-TX\fR]
+[\fIfiles\fR] ...
+.SH DESCRIPTION
+.I Tbl
+is a preprocessor for formatting tables for
+.I nroff
+or
+.IR troff .
+The input files are copied to the standard output,
+except for lines between .TS and .TE
+command lines, which are assumed to describe tables
+and reformatted.
+With the
+.I \-mx
+options, the respective macro packages
+are copied to the beginning of the output.
+Details are given in the reference manual.
+.PP
+As an example, letting \\t represent a tab (which should
+be typed as a genuine tab)
+the input
+.IP ""
+\&.TS
+.nf
+c s s
+c c s
+c c c
+l n n.
+Household Population
+Town\\tHouseholds
+\\tNumber\\tSize
+Bedminster\\t789\\t3.26
+Bernards Twp.\\t3087\\t3.74
+Bernardsville\\t2018\\t3.30
+Bound Brook\\t3425\\t3.04
+Branchburg\\t1644\\t3.49
+Bridgewater\\t7897\\t3.81
+Far Hills\\t240\\t3.19
+\&.TE
+.LP
+.fi
+yields
+.ne 10
+.IP " "
+.TS
+c s s
+c c s
+c c c
+l n n.
+Household Population
+Town	Households
+	Number	Size
+Bedminster	789	3.26
+Bernards Twp.	3087	3.74
+Bernardsville	2018	3.30
+Bound Brook	3425	3.04
+Branchburg	1644	3.49
+Bridgewater	7897	3.81
+Far Hills	240	3.19
+.TE
+.PP
+If no arguments are given,
+.I tbl
+reads the standard input,
+so it may be used as a filter.
+When it is used with
+.I eqn
+or
+.I neqn
+the
+.I tbl
+command should be first, to minimize the volume
+of data passed through
+pipes.
+.PP
+.I tbl
+normally uses line drawing commands with repeated
+underline and box rule characters
+(i.e.
+.I troff
+\el and \eL).
+With the
+.B \-g
+option,
+graphic drawing commands (i.e. \eD) are used instead.
+.PP
+The
+.B \-TX
+option causes
+.I tbl
+not to produce fractional line motions.
+.SH SEE ALSO
+troff(1B), eqn(1B)
+.br
+M. E. Lesk,
+.I TBL.
