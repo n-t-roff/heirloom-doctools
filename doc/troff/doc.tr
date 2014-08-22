@@ -5215,7 +5215,7 @@ or one to draw a box around a string
 such that
 .x1
 .ft B
-&ul "underlined words"
+&us "underlined words"
 .ft R
 .x2
 and
