@@ -1,3 +1,7 @@
+2014-08-23
+    Bugfix by Steffen Nurpmeso: In .rm code a function return
+    value is unchecked used as a pointer.
+
 2014-08-20
     eqn(1) did not compile because of bison to BSD yacc differ-
     ences.  Sorry, had not tested on Linux this time...
