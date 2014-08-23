@@ -37,6 +37,9 @@
  */
 
 /*
+ * Changes Copyright (c) 2014 Steffen Nurpmeso
+ */
+/*
  * University Copyright- Copyright (c) 1982, 1986, 1988
  * The Regents of the University of California
  * All Rights Reserved
@@ -405,7 +408,8 @@ caserm(void)
 			continue;
 		if (contp->als) {
 			contt = _findmn(j, 1, contp->flags & FLAG_LOCAL);
-			if (--contt->nlink <= 0)
+			/* bugfix by S.N. */
+			if (contt != NULL && --contt->nlink <= 0)
 				clrmn(contt);
 		}
 		if (contp->nlink > 0)
