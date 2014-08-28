@@ -2794,3 +2794,5 @@ PRIVATE\h'-\w'PRIVATE'u'\l'\w'PRIVATE'u'
 .if \nD .PH "'\\*(RE line # \\\\n(.c'- \\\\nP -''
 .if \nA=1 .AF
 'em )q
+.\" From Plan9 mmt to remove cut marks:
+.if !\*(.Taps .rm )k
