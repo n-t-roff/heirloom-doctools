@@ -66,7 +66,8 @@ created.
 The main focus of this fork is not further development but rather keeping all
 funktionality and fixing bugs.
 
-Bugs can be reported at
-https://github.com/n-t-roff/heirloom-doctools/issues
+Bugs can be reported at the
+[issue list](https://github.com/n-t-roff/heirloom-doctools/issues).
 
-On problems send mail to troff@arcor.de
+If there are any problems mail can be send to
+[troff at arcor dot de](mailto:troff@arcor.de).
