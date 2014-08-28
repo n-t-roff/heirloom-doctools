@@ -66,6 +66,17 @@ created.
 The main focus of this fork is not further development but rather keeping all
 funktionality and fixing bugs.
 
+The source code can be downloaded as a zip archive with the "Download ZIP" button
+or with the git command
+```bash
+git clone https://github.com/n-t-roff/heirloom-doctools
+```
+Installation paths and compiler settings can be adjusted in `mk.config`.
+The software is build with `make` and installed with `make install`.
+Generated files are removed afterwards with `make mrproper`.
+A git repository can be kept up-to-date with
+`git pull`.
+
 Bugs can be reported at the
 [issue list](https://github.com/n-t-roff/heirloom-doctools/issues).
 
