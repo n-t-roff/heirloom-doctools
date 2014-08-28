@@ -50,6 +50,7 @@
 .warn
 .mediasize letter
 .lc_ctype en_US.utf8
+.ig
 .fps math,greek 1 R texgyretermes-regular otf
 .fp 2 I texgyretermes-italic otf
 .fp 3 B texgyretermes-bold otf
@@ -74,6 +75,7 @@
 .kernpair B \\ B / 40
 .kernpair I f R \  60
 .kernpair BI f B \  80
+..
 .ig
 .fps math,greek 1 R times ttf
 .fp 2 I timesi ttf
@@ -5408,7 +5410,7 @@ When determining the hyphenation points for an input word,
 \fIa\fR is mapped to \fIb\fR, etc.
 When no hyphenation code is specified for a character,
 it is mapped to its lower-case variant if necessary,
-and the ``long \[longs]'' character is mapped to a ``round s''.
+and the ``long s'' (\fB\e[longs]\fP) character is mapped to a ``round s''.
 .bta hylen
 \fB&hylen\fI|N\fR	5	5	E	Hyphenate only words of at least \fIN\fR characters in length.
 The current value is available in the \A'n_.hylen'\fB&hylen\fR number register.
