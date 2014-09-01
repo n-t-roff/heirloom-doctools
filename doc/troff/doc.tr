@@ -708,7 +708,8 @@ can be dynamically varied
 both for computing break points
 and for adjusting output lines;
 this is sometimes called ``micro-typography'',
-cf. e.g. the thesis by Hàn Thế Thành\T'ref_8'\|\*u8\*d\T.
+.ds U+1EBF \o'e\s-1^\s0'\\k(aX\h'-.8n'\s-1\v'-.15m'´\v'+.15m'\s0\h'|\\n(aXu'
+cf. e.g. the thesis by Hàn Th\*[U+1EBF] Thành\T'ref_8'\|\*u8\*d\T.
 All paragraph formatting options can be arbitrarily combined.
 .pg
 A variety of international paper formats
@@ -941,7 +942,7 @@ also in D. E. Knuth, \fIDigital Typography\fR,
 Stanford, 1999 (\s-1CSLI\s0 lecture notes no. 78),
 pp.\ 67\(en155.
 .ref 8
-Hàn Thế Thành, \fIMicro-typographic extensions to the \*[TEX]\fI
+Hàn Th\*[U+1EBF] Thành, \fIMicro-typographic extensions to the \*[TEX]\fI
 typesetting system\fR,
 Masaryk University Brno, 2000.
 .ref 9
@@ -4709,8 +4710,8 @@ A complete list of such sequences is given in the Summary.
 \fB\e\fR
 should not be confused with the \s-1ASCII\s+1 control character \s-1ESC\s+1 of the
 same name.
-The escape character \fB\e\fR can be input
-with the sequence \A'e_esc'\fB\e\e\fR.
+The escape character \fB\e\fR can be output by using the special character
+\A'e_esc'\fB\e(rs\fR.
 The escape character can be changed with \T'ec'\fBec\fR,\T
 and all that has been said about the default \fB\e\fR becomes true
 for the new escape character.
@@ -7926,6 +7927,7 @@ insulate the appearance of equations from the choice of standard fonts.
 	\(ga	\\(ga	grave accent
 	\(ul	\\(ul	underrule
 	\(sl	\\(sl	slash (matching backslash)
+	\(rs	\e(rs	backslash
 	\(*a	\\(*a	alpha
 	\(*b	\\(*b	beta
 	\(*g	\\(*g	gamma

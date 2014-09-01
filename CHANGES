@@ -1,9 +1,10 @@
 2014-08-28
-    Very old versions of the mm macros inserted cut marks in the
-    document for typesetters which had used endless paper rolls.
-    Although they are only of historical significance they had
-    never been removed in the Solaris version of mm.  They are
-    now switched of (via .rm )k).
+    Bug reported by Blake McBride fixed: Very old versions of the
+    mm macros inserted cut marks in the document for typesetters
+    which had used endless paper rolls.  Although they are only
+    of historical significance they had never been removed in the
+    Solaris version of mm.  They are now switched of (via .rm
+    )k).
 
 2014-08-23
     Bugfix by Steffen Nurpmeso: In .rm code a function return

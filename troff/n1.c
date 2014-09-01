@@ -1070,7 +1070,7 @@ g0:
 				i = makem(-width(' ' | chbits));
 				return(i);
 			}
-		chartest:
+chartest:
 			if (!lgf && !charf && chartab[trtab[k]] != NULL &&
 			    !afterif)
 				i = setchar(i);
