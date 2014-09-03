@@ -1,3 +1,8 @@
+2014-09-03
+    Bug reported by Pierre-Jean Fichet fixed: If character '"' is
+    used in a .char request it did not work in a .if request as
+    the string compare delimiter.
+
 2014-08-28
     Bug reported by Blake McBride fixed: Very old versions of the
     mm macros inserted cut marks in the document for typesetters

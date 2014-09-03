@@ -75,7 +75,8 @@
  * misc processing requests
  */
 
-int afterif = 0;
+int	afterif		= 0;
+int	cmpstrdelim	= 0;
 static int	*iflist;
 static int	ifx;
 
@@ -1878,7 +1879,7 @@ cmpstr(tchar c)
 
 	if (ismot(c))
 		return(0);
-	delim = cbits(c);
+	cmpstrdelim = delim = cbits(c);
 	savapts = apts;
 	savapts1 = apts1;
 	savfont = font;
@@ -1928,6 +1929,7 @@ rtn:
 	pts = savpts;
 	pts1 = savpts1;
 	mchbits();
+	cmpstrdelim = 0;
 	return(val);
 }
 

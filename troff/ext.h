@@ -247,7 +247,8 @@ extern	int	***lgrevtab;
 extern	int	spreadwarn;
 extern	int	spreadlimit;
 extern	int	lastrq;
-extern int afterif;
+extern	int	afterif;
+extern	int	cmpstrdelim;
 
 /* n1.c */
 extern	void	mainloop(void);

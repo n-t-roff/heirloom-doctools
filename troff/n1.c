@@ -1072,7 +1072,8 @@ g0:
 			}
 chartest:
 			if (!lgf && !charf && chartab[trtab[k]] != NULL &&
-			    !afterif)
+			    !afterif && (!cmpstrdelim || cbits(i) !=
+			    cmpstrdelim))
 				i = setchar(i);
 			return(i);
 		}
