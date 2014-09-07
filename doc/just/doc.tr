@@ -3,93 +3,174 @@
 .mediasize a5
 .warn
 .hylang en_US
-.lc_ctype en_US.utf8
-.fp 1 R AGaramondPro-Regular otf
-.rhang R f -80
-.feature R +onum +pnum
-.ds Ornament \v'-.25m'\s(12\[orn.003]\s0
-.char ế \ze\h'.05m'\v'.04m'\z^\h'.12m'\v'-.12m'\[Acutesmall]
-.fp 2 I AGaramondPro-Italic otf
-.feature I +onum +pnum
-.fp \n[.fp] N AGaramondPro-Regular otf
-.flig N 0
-.fp \n[.fp] SC AGaramondPro-Regular otf
-.feature SC +onum +pnum +smcp
-.track SC 1 1.2 20 1
-.fp \n[.fp] V AGaramondPro-Regular otf
-.flig V 0
-.track V 1 1.2 20 1
-.fzoom V .92
-.fp \n[.fp] T AGaramondPro-Regular otf
-.flig T 0
-.track T 18 3 18 3
-.feature T +titl
-.\"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-.kernafter R ‹« 66
-.kernbefore R ›» 66
-.kernbefore R :;!? 66
-.kernbefore R ,. 20
-.kernafter R £¥$€#§ 66
-.kernafter I ‹« 66
-.kernbefore I ›» 66
-.kernbefore I :;!? 66
-.kernbefore I ,. 20
-.\"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-.kernpair R f\(ff R ? 30
-.kernpair R f\(ff R T 120
-.kernpair R f\(ff R ä 60
-.kernpair R f\(ff R khb 100
-.kernpair R f\(ff R l 100
-.kernpair R f\(ff R i 30
-.kernpair R f\(ff R ö 20
-.kernpair I g I f\(ff\(fi\(fl\(Fi\(Fl 130
-.kernpair R k R y 10
-.kernpair R a R x 30
-.kernpair R v R w 40
-.kernpair R VW R öäü -10
-.kernpair R VW R uy -50
-.kernpair R VW R r -60
-.kernpair R e R a 10
-.kernpair R Y R e -70
-.kernpair R Y R o -60
-.kernpair R Y R b 20
-.kernpair R Y R g -50
-.kernpair R Y R p -60
-.kernpair R Y R u -50
-.kernpair R V R I 40
-.kernpair R W R L 40
-.kernpair R Y R N 60
-.kernpair R T R V 30
-.kernpair R \(ff R ) 120
-.kernpair R f\(ff R “‘ 120
-.kernpair R f\(ff R * 120
-.kernpair R f\(ff R ' 100
-.kernpair R ›» R T -40
-.kernpair R ›» R VW -90
-.kernpair R ›» R Y -80
-.kernpair R ‹« R VW -130
-.kernpair R ‹« R T -50
-.kernpair R ‹« R Y -90
-.kernpair R T R ‹« -50
-.kernpair R VW R ‹« -70
-.kernpair R Y R ‹« -50
-.kernpair R T R ›» -10
-.kernpair R VW R ›» -60
-.kernpair R Y R ›» -50
-.kernpair R J R „‚ 20
-.kernpair R g R „‚ 40
-.kernpair R „‚ R T -45
-.kernpair R „‚ R VW -90
-.kernpair R ›» R \-\(en\(em 40
-.kernpair R \-\(en\(em R ‹« 40
-.kernpair R ( R !? -66
-.kernpair R !? R ) 20
-.kernpair R \[ellipsis] R , 66
-.kernpair R ( I f\(ff\(fl\(fi\(Fl\(Fi 170
-.kernpair I f\(ff R ) 280
-.kernpair I ( I f\(ff\(fl\(fi\(Fl\(Fi 60
-.kernpair I f\(ff I ) 280
-.kernpair I d R ) 120
+.lc_ctype en_US.UTF-8
+.so fonts.tmac
+.ie r AGaramondPro \{\
+.	\" Use Adobe Garamond Pro font
+.	fp 1 R AGaramondPro-Regular otf
+.	rhang R f -80
+.	feature R +onum +pnum
+.	ds Ornament \v'-.25m'\s(12\[orn.003]\s0
+.	char ế \ze\h'.05m'\v'.04m'\z^\h'.12m'\v'-.12m'\[Acutesmall]
+.	fp 2 I AGaramondPro-Italic otf
+.	feature I +onum +pnum
+.	fp \n[.fp] N AGaramondPro-Regular otf
+.	flig N 0
+.	fp \n[.fp] SC AGaramondPro-Regular otf
+.	feature SC +onum +pnum +smcp
+.	track SC 1 1.2 20 1
+.	fp \n[.fp] V AGaramondPro-Regular otf
+.	flig V 0
+.	track V 1 1.2 20 1
+.	fzoom V .92
+.	fp \n[.fp] T AGaramondPro-Regular otf
+.	flig T 0
+.	track T 18 3 18 3
+.	feature T +titl
+.	\"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+.	kernafter R ‹« 66
+.	kernbefore R ›» 66
+.	kernbefore R :;!? 66
+.	kernbefore R ,. 20
+.	kernafter R £¥$€#§ 66
+.	kernafter I ‹« 66
+.	kernbefore I ›» 66
+.	kernbefore I :;!? 66
+.	kernbefore I ,. 20
+.	\"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+.	kernpair R f\(ff R ? 30
+.	kernpair R f\(ff R T 120
+.	kernpair R f\(ff R ä 60
+.	kernpair R f\(ff R khb 100
+.	kernpair R f\(ff R l 100
+.	kernpair R f\(ff R i 30
+.	kernpair R f\(ff R ö 20
+.	kernpair I g I f\(ff\(fi\(fl\(Fi\(Fl 130
+.	kernpair R k R y 10
+.	kernpair R a R x 30
+.	kernpair R v R w 40
+.	kernpair R VW R öäü -10
+.	kernpair R VW R uy -50
+.	kernpair R VW R r -60
+.	kernpair R e R a 10
+.	kernpair R Y R e -70
+.	kernpair R Y R o -60
+.	kernpair R Y R b 20
+.	kernpair R Y R g -50
+.	kernpair R Y R p -60
+.	kernpair R Y R u -50
+.	kernpair R V R I 40
+.	kernpair R W R L 40
+.	kernpair R Y R N 60
+.	kernpair R T R V 30
+.	kernpair R \(ff R ) 120
+.	kernpair R f\(ff R “‘ 120
+.	kernpair R f\(ff R * 120
+.	kernpair R f\(ff R ' 100
+.	kernpair R ›» R T -40
+.	kernpair R ›» R VW -90
+.	kernpair R ›» R Y -80
+.	kernpair R ‹« R VW -130
+.	kernpair R ‹« R T -50
+.	kernpair R ‹« R Y -90
+.	kernpair R T R ‹« -50
+.	kernpair R VW R ‹« -70
+.	kernpair R Y R ‹« -50
+.	kernpair R T R ›» -10
+.	kernpair R VW R ›» -60
+.	kernpair R Y R ›» -50
+.	kernpair R J R „‚ 20
+.	kernpair R g R „‚ 40
+.	kernpair R „‚ R T -45
+.	kernpair R „‚ R VW -90
+.	kernpair R ›» R \-\(en\(em 40
+.	kernpair R \-\(en\(em R ‹« 40
+.	kernpair R ( R !? -66
+.	kernpair R !? R ) 20
+.	kernpair R \[ellipsis] R , 66
+.	kernpair R ( I f\(ff\(fl\(fi\(Fl\(Fi 170
+.	kernpair I f\(ff R ) 280
+.	kernpair I ( I f\(ff\(fl\(fi\(Fl\(Fi 60
+.	kernpair I f\(ff I ) 280
+.	kernpair I d R ) 120
+.\}
+.el \{\
+.	\" Use libertine font
+.	fp 1 R LinLibertine_R otf
+.	fp 2 I LinLibertine_RI otf
+.	fp 0 N LinLibertine_M otf
+.	fp 0 V LinLibertine_R otf
+.	fp 0 C LinLibertine_R otf
+.	fp 0 SC LinLibertine_R otf
+.	fp 0 T LinLibertine_DR otf
+.	fzoom N .8
+.	fzoom C .9
+.	track T 10 3 10 3
+.	flig N 0
+.	flig C 0
+.	flig R `` \[quotedblleft]
+.	flig R '' \[quotedblright]
+.	flig R fb \[f_b] ff \[f_f]
+.	flig R fh \[f_h] ffh \[f_f_h]
+.	flig R fi \[fi] ffi \[f_f_i]
+.	flig R fj \[f_j] ffj \[f_f_j]
+.	flig R fk \[f_k] ffk \[f_f_k]
+.	flig R fl \[fl] ffl \[f_f_l]
+.	flig R ft \[f_t] fft \[f_f_t]
+.	flig R tt \[t_t]
+.	flig I `` \[quotedblleft]
+.	flig I '' \[quotedblright]
+.	flig I fb \[f_b] ff \[f_f]
+.	flig I fh \[f_h] ffh \[f_f_h]
+.	flig I fi \[fi] ffi \[f_f_i]
+.	flig I fj \[f_j] ffj \[f_f_j]
+.	flig I fk \[f_k] ffk \[f_f_k]
+.	flig I fl \[fl] ffl \[f_f_l]
+.	flig I ft \[f_t] fft \[f_f_t]
+.	flig I tt \[t_t]
+.	flig C 0
+.	flig T fb \[f_b] ff \[f_f]
+.	flig T fh \[f_h] ffh \[f_f_h]
+.	flig T fi \[fi] ffi \[f_f_i]
+.	flig T fj \[f_j] ffj \[f_f_j]
+.	flig T fk \[f_k] ffk \[f_f_k]
+.	flig T fl \[fl] ffl \[f_f_l]
+.	flig T ft \[f_t] fft \[f_f_t]
+.	flig T tt \[t_t]
+.	kernafter R ‹ 66 « 66
+.	kernbefore R › 66 » 66
+.	kernbefore R :;!? 66
+.	kernbefore R ,. 20
+.	kernafter R £¥$€#§ 66
+.	kernafter R ( 66
+.	kernbefore R ( 66
+.	kernafter R \[quotedblleft] 100
+.	kernbefore R \[quotedblright] 100
+.	kernafter N \[longs] -190
+.	kernbefore N \[backslash] -100
+.	kernafter N \[backslash] -100
+.	kernafter I ‹« 66
+.	kernbefore I ›» 66
+.	kernbefore I :;!? 66
+.	kernbefore I ,. 20
+.	kernafter I \[quotedblleft] 100
+.	kernbefore I \[quotedblright] 100
+.	feature R +pnum +onum
+.	feature I +pnum +onum
+.	feature SC +smcp +pnum +onum
+.	track SC 1 1.2 40 0
+.	track C 1 1.2 40 0
+.	track N 1 -.1 40 -0
+.	rhang R \(hy 80
+.	char \(ff \[f_f]
+.	char \(Fi \[fi]
+.	char \(Fl \[fl]
+.	char \[s_p] sp
+.	ds Ornament \v'-.25m'\s9\[uniE002]
+.	\"char ế \ze\h'.05m'\v'.04m'\z^\h'.12m'\v'-.12m'\[Acutesmall]
+.\}
+.	warn w
+.	spreadwarn 1m
 .\"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 .ds - \(en
 .nr TM 1.75c+1v 
@@ -398,7 +479,10 @@ no shrinking is performed.
 .sp 2
 .xx 12 100 100 12 100 100 b 10.42P 12 "Standard adjustment settings"
 .sp 2
+.ie r AGaramondPro \
 .xx 9 100 100 19 100 100 b 10.42P 12 "Shrink to 75\|% (.minss 9)"
+.el \
+.xx 8 100 100 12 100 100 b 10.42P 12 "Shrink to 67\|% (.minss 8)"
 .sp 2
 While the second setting is certainly not perfect,
 it is much better than the first one.
@@ -518,12 +602,11 @@ has been determined:
 .EX
 &nr IXcount 0 1
 &de IX
-&de IX-\(rs\(rsn+[IXcount]
-&write index \(rs\(rs\(rs\(rsn% \(rs\(rs$1
+&	de IX-\(rs\(rsn+[IXcount]
+&	write index \(rs\(rs\(rs\(rsn% \(rs\(rs$1
 \(rs\(rs..
 \(rs\(rsP[IX-\(rs\(rsn[IXcount]]\(rsc
 &.
-.sp
 An
 &IX \(dqindex term\(dq
 index term is contained in this sample text.
@@ -552,9 +635,17 @@ distort the typeface as soon as they become noticable.
 This is best demonstrated
 by using them as an exclusive adjustment mechanism:
 .sp 2
-.xx 12 96 100 12 1000 100 p 10.42P 12 "Adjusting by word spacing only"
+.ie r AGaramondPro \
+.xx 12 96 100 12 1000 100 p 10.42P 12 "Adjusting by letter spacing only"
+.el \
+.xx 12 96 100 12 110 100 p 10.42P 12 \
+"Adjusting by letter spacing only (.letadj 96 100 12 110 100)"
 .sp 2
+.ie r AGaramondPro \
 .xx 12 100 96.0 12 100 1000 p 10.42P 12 "Adjusting by glyph reshaping only"
+.el \
+.xx 12 100 96 12 100 110 p 10.42P 12 \
+"Adjusting by glyph reshaping only (.letadj 100 96 100 110)"
 .sp 2
 In combination with adjustment of interword spaces,
 and if applied with rather strict limits,
@@ -770,7 +861,7 @@ examples in James Felici's
 \fIComplete Manual of Typography\fR¹.
 .S References
 .ad l
-.feature N +onum +tnum
+.if r AGaramondPro .feature N +onum +tnum
 .nr w \w'[\fN0]\fR '
 .de RF
 .	in \nwu

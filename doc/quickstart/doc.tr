@@ -1,7 +1,7 @@
 .\" Sccsid @(#)doc.tr	1.4 (gritter) 11/5/06
 .do xflag 3
 .warn
-.lc_ctype en_US.utf8
+.lc_ctype en_US.UTF-8
 .hylang en_US
 .mediasize a4
 .ll 17c
@@ -12,24 +12,64 @@
 \X'PDFMark: Title Heirloom Documentation Tools: Quickstart Guide'
 \X'PS: [ {Catalog} << /ViewerPreferences << /DisplayDocTitle true >> >> /PUT pdfmark'
 .ss 12 0
-.fp 1 R MyriadPro-Regular otf
-.fp 2 I MyriadPro-It otf
-.fp 3 B MyriadPro-Bold otf
-.fp \n[.fp] V MyriadPro-Regular otf
-.fp \n[.fp] ZD
-.flig B 0
-.kernafter R ‹ 66 « 66
-.kernbefore R › 66 » 66
-.ds Kernbefore : 66 ! 66 ? 66 ; 66 . 20 , 20
-.kernbefore R \*[Kernbefore]
-.kernbefore I \*[Kernbefore]
-.kernbefore B \*[Kernbefore]
-.ds Rhang \(hy 120 \(en 120 \(em 120 , 80 . 80
-.rhang R \*[Rhang]
-.rhang I \*[Rhang]
-.rhang B \*[Rhang]
-.track V 1 2 18 1.4
-.fzoom V .92
+.so fonts.tmac
+.ie r MyriadPro \{\
+.	\" Use MyriadPro font
+.	fp 1 R MyriadPro-Regular otf
+.	fp 2 I MyriadPro-It otf
+.	fp 3 B MyriadPro-Bold otf
+.	fp \n[.fp] V MyriadPro-Regular otf
+.	fp \n[.fp] ZD
+.	flig B 0
+.	kernafter R ‹ 66 « 66
+.	kernbefore R › 66 » 66
+.	ds Kernbefore : 66 ! 66 ? 66 ; 66 . 20 , 20
+.	kernbefore R \*[Kernbefore]
+.	kernbefore I \*[Kernbefore]
+.	kernbefore B \*[Kernbefore]
+.	ds Rhang \(hy 120 \(en 120 \(em 120 , 80 . 80
+.	rhang R \*[Rhang]
+.	rhang I \*[Rhang]
+.	rhang B \*[Rhang]
+.	track V 1 2 18 1.4
+.	fzoom V .92
+\}
+.el \{\
+.	\" Use Libertine font
+.	fp 1 R LinLibertine_R otf
+.	fp 2 I LinLibertine_RI otf
+.	fp 3 B LinLibertine_M otf
+.	fp 4 V LinLibertine_R otf
+.	fzoom B .8
+.	fzoom V .9
+.	track B 1 -.1 40 -0
+.	track V 1 1.2 40 0
+.	flig B 0
+.	flig R fb \[f_b] ff \[f_f]
+.	flig R fh \[f_h] ffh \[f_f_h]
+.	flig R fi \[fi] ffi \[f_f_i]
+.	flig R fj \[f_j] ffj \[f_f_j]
+.	flig R fk \[f_k] ffk \[f_f_k]
+.	flig R fl \[fl] ffl \[f_f_l]
+.	flig R ft \[f_t] fft \[f_f_t]
+.	flig R tt \[t_t]
+.	flig I fb \[f_b] ff \[f_f]
+.	flig I fh \[f_h] ffh \[f_f_h]
+.	flig I fi \[fi] ffi \[f_f_i]
+.	flig I fj \[f_j] ffj \[f_f_j]
+.	flig I fk \[f_k] ffk \[f_f_k]
+.	flig I fl \[fl] ffl \[f_f_l]
+.	flig I ft \[f_t] fft \[f_f_t]
+.	flig I tt \[t_t]
+.	kernafter R ‹ 66 « 66
+.	ds Kernbefore › 66 » 66 : 66 ! 66 ? 66 ; 66 . 20 , 20
+.	kernbefore R \*[Kernbefore]
+.	ds Rhang \(hy 120 \(en 120 \(em 120 , 80 . 80
+.	rhang R \*[Rhang]
+.	rhang I \*[Rhang]
+.	rhang B \*[Rhang]
+.	char \[a15] \[uni261E]\h'5p'
+.\}
 .ds q \[a15]\ 
 .de Q
 .	in \w'\\*q'u
@@ -113,7 +153,10 @@ PostScript Type\ 1, TrueType, and OpenType fonts
 without any need for conversion.
 The font of this document is mounted by
 .CS
+.ie r MyriadPro \
 \&.fp 1 R MyriadPro-Regular otf
+.el \
+\&.fp 1 R LinLibertine_R otf
 .CE
 The document
 \fIFont Handling in Troff With PostScript Devices\fR
@@ -137,7 +180,7 @@ Heirloom \fItroff\fR provides
 a \fIgroff\fR compatibility mode and macro set.
 A command line like
 .CS
-gtbl input.tr | troff \-mg /usr/share/groff/current/tmac/s.tmac \- | dpost \
-> output.ps
+gtbl input.tr | troff \-mg /usr/share/groff/current/tmac/s.tmac \e
+| dpost > output.ps
 .CE
 lets you process \fIgroff\fR macro sets and preprocessor output.

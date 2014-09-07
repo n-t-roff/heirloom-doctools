@@ -12,3 +12,14 @@ system. There are many other shops that sell Adobe fonts,
 though, and these usually allow downloads for Linux users.
 
 Gunnar Ritter					01/08/07
+
+
+Update for the revised Heirloom Troff edition
+=============================================
+
+2014/09/05
+The files contained in this directory have been modified to
+use the Linux Libertine fonts if the fonts choosen by Gunnar
+Ritter are not present in your system. The Linux Libertine
+can be downloaded from <http://linuxlibertine.org>. You
+still need to set the TROFFONTS variable accordingly.

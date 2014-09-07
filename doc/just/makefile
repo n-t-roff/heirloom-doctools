@@ -30,6 +30,20 @@ even.ps: book.ps
 
 clean:
 	rm -f book.ps book.pdf doc.ps doc.pdf print.ps \
-		odd.ps odd.pdf even.ps even.pdf core log *~
+		odd.ps odd.pdf even.ps even.pdf core log *~ \
+		fonts.tmac
+
+fonts.tmac:
+	@[ -n "$$TROFFONTS" ] || \
+	    (echo "Error: Environment variable TROFFONTS not set" && false)
+	@for F in LinLibertine AGaramondPro ; do \
+		find $$(echo $$TROFFONTS | sed -e 's/:/ /g') -name "$$F*" | \
+		    grep $$F > /dev/null && echo ".nr $$F 1" >> $@ || true; \
+	done
+	@grep nr $@ > /dev/null || \
+	    (echo 'Error: None of the fonts "LinLibertine" and ' \
+	     '"AGaramondPro" found' && false)
 
 mrproper: clean
+
+doc.ps: fonts.tmac
