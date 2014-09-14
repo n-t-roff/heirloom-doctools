@@ -1125,8 +1125,8 @@ _collect(int termc)
 {
 	register tchar i = 0;
 	int	at = 0, asp = 0;
-	int	nt = 0, nsp = 0;
-	int	quote;
+	int	nt = 0, nsp = 0, nsp0;
+	int	quote, right;
 	struct s *savnxf;
 
 	copyf++;
@@ -1143,8 +1143,8 @@ _collect(int termc)
 		if (nt >= at)
 			savnxf->argt = realloc(savnxf->argt,
 				(at += 10) * sizeof *savnxf->argt);
-		savnxf->argt[nt++] = nsp;
-		quote = 0;
+		savnxf->argt[nt] = nsp0 = nsp; /* CK: Bugfix: \} counts \n(.$ */
+		quote = right = 0;
 		if (cbits(i = getch()) == '"')
 			quote++;
 		else 
@@ -1169,12 +1169,18 @@ _collect(int termc)
 			if (nsp >= asp)
 				savnxf->argsp = realloc(savnxf->argsp,
 					(asp += 200) * sizeof *savnxf->argsp);
-			savnxf->argsp[nsp++] = i;
+			if (cbits(i) == RIGHT) /* CK: Bugfix: \} counts \n(.$ */
+				right = 1;
+			else
+				savnxf->argsp[nsp++] = i;
 		}
 		if (nsp >= asp)
 			savnxf->argsp = realloc(savnxf->argsp,
 				++asp * sizeof *savnxf->argsp);
-		savnxf->argsp[nsp++] = 0;
+		if (!right || nsp != nsp0) { /* CK: Bugfix: \} counts \n(.$ */
+			nt++;
+			savnxf->argsp[nsp++] = 0;
+		}
 	}
 rtn:
 	if (termc && i != termc)
