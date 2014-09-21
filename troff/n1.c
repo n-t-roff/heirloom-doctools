@@ -300,6 +300,15 @@ main(int argc, char **argv)
 			errprint("DEBUG not enabled");
 #endif	/* DEBUG */
 			continue;
+		case 'V':
+			fprintf(stdout, "Heirloom doctools %croff\n",
+#ifdef NROFF
+			    'n'
+#else
+			    't'
+#endif
+			);
+			exit(0);
 		default:
 			errprint("unknown option %s", argv[0]);
 			done(02);

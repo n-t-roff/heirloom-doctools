@@ -40,7 +40,7 @@ nroff \- (BSD) format documents for display or line-printer
 .ad l
 .nh
 \fB/usr/ucb/nroff\fR
-[\fB\-ehiqz\fR]
+[\fB\-ehiqzV\fR]
 [\fB\-d\fIaS\fR]
 [\fB\-d\fIa\fB=\fIS\fR]
 [\fB\-F\fIfontdir\fR]
@@ -219,6 +219,9 @@ except for long requests and request arguments;
 level 2 enables these in addition
 but executes short requests which are prefixes of undefined long requests;
 level 3 ignores undefined long requests.
+.TP
+.B \-V
+Print nroff version.
 .SH "ENVIRONMENT VARIABLES"
 .TP
 .BR LANG ", " LC_ALL

@@ -40,7 +40,7 @@ troff \- (BSD) typeset or format documents
 .ad l
 .nh
 \fB/usr/ucb/troff\fR
-[\fB\-af\&iz\fR]
+[\fB\-af\&izV\fR]
 [\fB\-d\fIaS\fR]
 [\fB\-d\fIa\fB=\fIS\fR]
 [\fB\-F\fIfontdir\fR]
@@ -237,6 +237,9 @@ except for long requests and request arguments;
 level 2 enables these in addition
 but executes short requests which are prefixes of undefined long requests;
 level 3 ignores undefined long requests.
+.TP
+.B \-V
+Print troff version.
 .SH "ENVIRONMENT VARIABLES"
 .TP
 .BR LANG ", " LC_ALL
