@@ -1,3 +1,7 @@
+2014-10-06
+    Drawing of filled polygone (\D'P ...'), filled circle (\D'C
+    ...') and filled ellipse (\D'E ...') added.
+
 2014-09-14
     Any version of roff (e.g. UNIX V7) does count \} as a macro
     argument regarding \n(.$.  This makes \n(.$ rather random if
