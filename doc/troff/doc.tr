@@ -5300,12 +5300,21 @@ which are generally pairs of numbers.
 .nr nosave 1
 \fB\eD\'l \fIdh dv\'	\fRdraw line from current position by \fIdh,\|dv\fR
 .nr nosave 0
-\fB\eD\'p \fIdh1 dv1 dh2 dv2 ...\'	\fRdraw polygon, i.e. a line to \fIdh1,\|dv1\fR, then to \fIdh2,\|dv2\fR, then ...
-\fB\eD\'c \fId\'	\fRdraw circle of diameter \fId\fR with left side at current position
+\fB\eD\'p \fIdh1 dv1 dh2 dv2 ...\'	\fRdraw polygon, i.e. a line to\
+ \fIdh1,\|dv1\fR, then to \fIdh2,\|dv2\fR, then ...
+\fB\eD\'P \fIdh1 dv1 dh2 dv2 ...\'	\fRdraw filled polygon
+\fB\eD\'c \fId\'	\fRdraw circle of diameter \fId\fR with left side at\
+ current position
+\fB\eD\'C \fId\'	\fRdraw filled circle
 \fB\eD\'e \fIu v\'	\fRdraw ellipse of diameters \fIu\fP and \fIv\fP
+\fB\eD\'E \fIu v\'	\fRdraw filled ellipse
 .ne 2
-\fB\eD\'a \fIa b c d\'\fB	\fRdraw arc from current position to \fIa\fR+\fIc\fR,\|\fIb\fR+\fId\fR, \fRwith center at \fIa\fR,\|\fIb\fR from current position
-\fB\eD\'\(ap \fIa b c d...\'\fB	\fRdraw B-spline from current position by \fIa\fR,\|\fIb\fR, \fRthen by \fIc\fR,\|\fId\fR, then by \fIc\fR,\|\fId\fR, then ...
+\fB\eD\'a \fIa b c d\'\fB	\fRdraw arc from current position to\
+ \fIa\fR+\fIc\fR,\|\fIb\fR+\fId\fR, \fRwith center at \fIa\fR,\|\fIb\fR from\
+ current position
+\fB\eD\'\(ap \fIa b c d...\'\fB	\fRdraw B-spline from current position by\
+ \fIa\fR,\|\fIb\fR, \fRthen by \fIc\fR,\|\fId\fR, then by \fIc\fR,\|\fId\fR,\
+ then ...
 .pg
 For example,\fB\eD\'e0.2i 0.1i\'\fR
 draws the ellipse

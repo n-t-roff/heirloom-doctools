@@ -214,7 +214,7 @@ drawline (
 
 
     if ( dx == 0 && dy == 0 )
-	drawcirc(1);
+	drawcirc(1, 'c');
     else fprintf(tf, "%d %d %d %d Dl\n", hpos + dx, vpos + dy, hpos, vpos);
 
     hgoto(hpos+dx);			/* where troff expects to be */
@@ -230,7 +230,8 @@ drawline (
 
 void
 drawcirc (
-    int d			/* diameter of the circle */
+    int d,			/* diameter of the circle */
+    int c
 )
 
 
@@ -245,7 +246,7 @@ drawcirc (
  *
  */
 
-    drawellip(d, d);
+    drawellip(d, d, c == 'C' ? 'E' : 'e');
 
 }   /* End of drawcirc */
 
@@ -256,7 +257,8 @@ drawcirc (
 void
 drawellip (
     int a,
-    int b			/* axes lengths for the ellipse */
+    int b,			/* axes lengths for the ellipse */
+    int c
 )
 
 
@@ -275,7 +277,7 @@ drawellip (
     if ( a == 0 && b == 0 )
 	return;
 
-    fprintf(tf, "%d %d %d %d De\n", hpos, vpos, a, b);
+    fprintf(tf, "%d %d %d %d D%c\n", hpos, vpos, a, b, c);
 
     hgoto(hpos + a);			/* where troff expects to be */
     vgoto(vpos);

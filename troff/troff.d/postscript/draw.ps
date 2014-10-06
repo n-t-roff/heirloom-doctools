@@ -61,6 +61,18 @@
 	ifelse
 } bind def
 
+/DE {
+	/y1 exch 2 div def
+	/x1 exch 2 div def
+	neg exch x1 add exch translate
+	x1 y1 scale
+	0 0 1 0 360
+	inpath
+		{1 0 moveto arc savematrix setmatrix}
+		{newpath arc savematrix setmatrix fill}
+	ifelse
+} bind def
+
 /Da {
 	/dy2 exch def
 	/dx2 exch def

@@ -1486,9 +1486,20 @@ conv(
 		    }
 		    switch ((c=getc(fp))) {
 			case 'p':	/* draw a path */
-			case 'P':	/* should be solid */
 			    while (fscanf(fp, "%d %d", &n, &m) == 2)
 				drawline(n, m);
+			    lineno++;
+			    break;
+
+			case 'P':	/* solid polygon */
+			    fprintf(tf, "newpath %d %d neg moveto\n", hpos,
+				vpos);
+			    while (fscanf(fp, "%d %d", &n, &m) == 2) {
+				hpos += n;
+				vpos += m;
+				fprintf(tf, "%d %d neg lineto\n", hpos, vpos);
+			    }
+			    fprintf(tf, "closepath fill\n");
 			    lineno++;
 			    break;
 
@@ -1499,15 +1510,15 @@ conv(
 			    break;
 
 			case 'c':	/* circle */
-			case 'C':	/* should be filled */
+			case 'C':	/* filled circle */
 			    fscanf(fp, "%d", &n);
-			    drawcirc(n);
+			    drawcirc(n, c);
 			    break;
 
 			case 'e':	/* ellipse */
-			case 'E':	/* should be filled */
+			case 'E':	/* filled ellipse */
 			    fscanf(fp, "%d %d", &m, &n);
-			    drawellip(m, n);
+			    drawellip(m, n, c);
 			    break;
 
 			case 'a':	/* counter-clockwise arc */

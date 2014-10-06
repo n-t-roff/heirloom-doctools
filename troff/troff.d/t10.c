@@ -410,7 +410,7 @@ ptout0(tchar *pi, tchar *pend)
 	struct afmtab	*a;
 	register int j;
 	register int k, w = 0;
-	int	z, dx, dy, dx2, dy2, n;
+	int	z, dx, dy, dx2, dy2, n, c;
 	register tchar	i;
 	int outsize;	/* size of object being printed */
 	double	f;
@@ -603,16 +603,16 @@ ptout0(tchar *pi, tchar *pend)
 		dy = absmot(pi[4]);
 		if (isnmot(pi[4]))
 			dy = -dy;
-		switch (cbits(pi[1])) {
+		switch ((c=cbits(pi[1]))) {
 		case DRAWCIRCLE:	/* circle */
 		case DRAWCIRCLEFI:
-			fdprintf(ptid, "D%c %d\n", DRAWCIRCLE, dx);	/* dx is diameter */
+			fdprintf(ptid, "D%c %d\n", c, dx);	/* dx is diameter */
 			w = 0;
 			hpos += dx;
 			break;
 		case DRAWELLIPSE:
 		case DRAWELLIPSEFI:
-			fdprintf(ptid, "D%c %d %d\n", DRAWELLIPSE, dx, dy);
+			fdprintf(ptid, "D%c %d %d\n", c, dx, dy);
 			w = 0;
 			hpos += dx;
 			break;

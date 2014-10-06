@@ -137,8 +137,8 @@ void redirect(int);
 /* draw.c */
 void getdraw(void);
 void drawline(int, int);
-void drawcirc(int);
-void drawellip(int, int);
+void drawcirc(int, int);
+void drawellip(int, int, int);
 void drawarc(int, int, int, int, int);
 void drawspline(FILE *, int);
 void beginpath(char *, int);
