@@ -21,7 +21,8 @@ SUBDIRS = eqn/eqn.d \
 	picpack \
 	checknr \
 	ptx \
-	soelim
+	soelim \
+	col
 
 MAKEFILES = $(SUBDIRS:=/Makefile)
 
