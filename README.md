@@ -64,7 +64,7 @@ This had been at a time when 64 bit hardware was not very common.
 Since Gunnar is not maintaining the project at the moment this fork had been
 created.
 The main focus of this fork is not further development but rather keeping all
-funktionality and fixing bugs.
+functionality, making it 64-bit clean and fixing bugs.
 
 The source code can be downloaded as a zip archive with the "Download ZIP" button
 or with the git command
@@ -81,4 +81,4 @@ Bugs can be reported at the
 [issue list](https://github.com/n-t-roff/heirloom-doctools/issues).
 
 If there are any problems mail can be send to
-[troff at arcor dot de](mailto:troff@arcor.de).
+&lt;troff [at] arcor [dot] de&gt;.
