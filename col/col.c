@@ -42,6 +42,7 @@
 #include <stdlib.h>
 #include <wctype.h>
 #include <unistd.h>
+#include <wchar.h>
 
 #define	PL 256
 #define	ESC '\033'
@@ -51,7 +52,9 @@
 #define	GREEK 0200
 #define	LINELN 4096
 #define gettext(x) x
-#define iswascii(c) isascii(c)
+#ifndef iswascii
+# define iswascii(c) isascii(c)
+#endif
 
 wchar_t	*page[PL];
 wchar_t	lbuff[LINELN], *line;
