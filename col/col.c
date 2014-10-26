@@ -498,7 +498,7 @@ emit(wchar_t *s, int lineno)
 {
 	static int	cline = 0;
 	int	ncp;
-	wchar_t	*p;
+	wchar_t	*p, *begin = s;
 	char	cshifted;
 	char	chr[MB_LEN_MAX + 1];
 
@@ -566,7 +566,7 @@ emit(wchar_t *s, int lineno)
 			} else
 				(void) putwchar(c);
 			if (c == '\b') {
-				if (*(p-2) && *(p-2) == ESC) {
+				if (p-begin >= 2 && *(p-2) && *(p-2) == ESC) {
 					pcp++;
 				} else
 					pcp--;
