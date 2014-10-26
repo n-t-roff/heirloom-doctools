@@ -53,6 +53,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
 #include <limits.h>
@@ -937,7 +938,7 @@ loop:	for (i = 0; i < NTM - 5 - mb_cur_max; ) {
 		errprint("%s", tmbuf);
 	} else if (wr < 0) {
 		flusho();
-		fdprintf(stderr, "%s", tmbuf);
+		fprintf(stderr, "%s", tmbuf);
 	} else if (i)
 		write(wr, tmbuf, i);
 	if (tmm)
@@ -1947,12 +1948,12 @@ caserd(void)
 			echo_off();
 			flusho();
 #endif	/* NROFF */
-			fdprintf(stderr, "\007"); /*bell*/
+			fprintf(stderr, "\007"); /*bell*/
 		} else {
 			if (nextf[0]) {
-				fdprintf(stderr, "%s:", nextf);
+				fprintf(stderr, "%s:", nextf);
 			} else {
-				fdprintf(stderr, "\007"); /*bell*/
+				fprintf(stderr, "\007"); /*bell*/
 			}
 		}
 	}

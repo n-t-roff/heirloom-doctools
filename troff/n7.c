@@ -1797,7 +1797,7 @@ parcomp(int start)
 						pghyphw[j] && j >= pglastw);
 				t += pgpenal[j];
 				t += cost[i-1];
-				/*fdprintf(stderr, "%c%c%c%c to %c%c%c%c "
+				/*fprintf(stderr, "%c%c%c%c to %c%c%c%c "
 				                 "t=%g cost[%d]=%g "
 						 "brcnt=%d oldbrcnt=%d\n",
 						(char)para[pgwordp[i]],
@@ -1844,7 +1844,7 @@ parcomp(int start)
 		}
 	}
 	/*for (i = 0; i < pgwords; i++)
-		fdprintf(stderr, "cost[%d] = %g %c%c%c%c to %c%c%c%c\n",
+		fprintf(stderr, "cost[%d] = %g %c%c%c%c to %c%c%c%c\n",
 				i, cost[i],
 				(char)para[pgwordp[prevbreak[i]]],
 				(char)para[pgwordp[prevbreak[i]]+1],

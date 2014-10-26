@@ -416,16 +416,6 @@ struct lgtab {
 	int	to;
 };
 
-/*
- * <widec.h> includes <stdio.h> which defines
- * stderr. So undef it if it is already defined.
- */
-#ifdef stderr
-#	undef stderr
-#endif
-#define	stderr	xxstderr
-extern int	stderr;	/* this is NOT the stdio value! */
-
 #ifdef	DEBUG
 extern	int	debug;	/*debug flag*/
 #define	DB_MAC	01	/*print out macro calls*/

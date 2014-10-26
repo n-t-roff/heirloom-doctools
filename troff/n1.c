@@ -345,7 +345,7 @@ loop:
 		eject((struct s *)0);
 #ifdef	DEBUG
 	if (debug & DB_LOOP)
-		fdprintf(stderr, "loop: NL=%d, ejf=%d, lss=%d, eileenct=%d\n",
+		fprintf(stderr, "loop: NL=%d, ejf=%d, lss=%d, eileenct=%d\n",
 			numtab[NL].val, ejf, lss, eileenct);
 #endif	/* DEBUG */
 		if (eileenct > 20) {
@@ -544,15 +544,15 @@ mesg(int f)
 void
 verrprint(const char *s, va_list ap)
 {
-	fdprintf(stderr, "%s: ", progname);
-	vfdprintf(stderr, s, ap);
+	fprintf(stderr, "%s: ", progname);
+	vfprintf(stderr, s, ap);
 	if (numtab[CD].val > 0)
-		fdprintf(stderr, "; line %d, file %s",
+		fprintf(stderr, "; line %d, file %s",
 			 numtab[CD].val + (nlflg == 0 && frame == stk),
 			 cfname[ifi] ? cfname[ifi] : "");
 	if (xflag && realpage)
-		fdprintf(stderr, "; page %ld", realpage);
-	fdprintf(stderr, "\n");
+		fprintf(stderr, "; page %ld", realpage);
+	fprintf(stderr, "\n");
 	stackdump();
 #ifdef	DEBUG
 	if (debug & DB_ABRT)
@@ -580,7 +580,6 @@ errprint(const char *s, ...)	/* error message printer */
 
 static char	pfbuf[NTM];
 static char	*pfbp = pfbuf;
-int	stderr	 = 2;	/* NOT stdio value */
 
 void
 fdprintf(int fd, char *fmt, ...)
@@ -603,7 +602,7 @@ vfdprintf(int fd, const char *fmt, va_list ap)
 loop:
 	while ((c = *fmt++) != '%') {
 		if (c == '\0') {
-			if (fd == stderr)
+			if (fd == 2)
 				write(stderr, pfbuf, pfbp - pfbuf);
 			else {
 				*pfbp = 0;
@@ -902,7 +901,7 @@ control(register int a, register int b)
 
 #ifdef	DEBUG
 	if (debug & DB_MAC)
-		fdprintf(stderr, "control: macro %s, contab[%d]\n",
+		fprintf(stderr, "control: macro %s, contab[%d]\n",
 			macname(a), contp - contab);
 #endif	/* DEBUG */
 	if (contp->f == 0) {
@@ -1012,7 +1011,7 @@ g0:
 	if (i = ch) {
 #ifdef	DEBUG
 		if (debug & DB_GETC)
-			fdprintf(stderr, "getch: ch is %x (%c)\n",
+			fprintf(stderr, "getch: ch is %x (%c)\n",
 				(int)ch, (ch&0177) < 040 ? 0177 : ch&0177);
 #endif	/* DEBUG */
 		if (cbits(i) == '\n') {
@@ -1026,14 +1025,14 @@ g0:
 #ifdef	DEBUG
 	if (nlflg)
 		if (debug & DB_GETC)
-			fdprintf(stderr,"getch: nlflg is %x\n", nlflg);
+			fprintf(stderr,"getch: nlflg is %x\n", nlflg);
 #endif	/* DEBUG */
 	if (nlflg)
 		return('\n');
 	i = getch0();
 #ifdef	DEBUG
 	if (debug & DB_GETC)
-		fdprintf(stderr, "getch: getch0 returns %x (%c)\n",
+		fprintf(stderr, "getch: getch0 returns %x (%c)\n",
 			(int)i, (i&0177) < 040 ? 0177 : i&0177);
 #endif	/* DEBUG */
 	if (ismot(i))

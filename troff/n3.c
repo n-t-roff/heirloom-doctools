@@ -56,6 +56,7 @@
  */
 
 
+#include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
 #include <string.h>
@@ -798,14 +799,14 @@ alloc (void)		/*return free blist[] block in nextb*/
 #ifdef	DEBUG
 	if (debug & DB_ALLC) {
 		char cc1, cc2;
-		fdprintf(stderr, "alloc: ");
+		fprintf(stderr, "alloc: ");
 		if (oldmn != NULL) {
 			cc1 = oldmn->rq & 0177;
 			if ((cc2 = (oldmn->rq >> BYTE) & 0177) == 0)
 				cc2 = ' ';
-			fdprintf(stderr, "oldmn %p %c%c, ", oldmn, cc1, cc2);
+			fprintf(stderr, "oldmn %p %c%c, ", oldmn, cc1, cc2);
 		}
-		fdprintf(stderr, "newmn %p; nextb was %lx, will be %lx\n",
+		fprintf(stderr, "newmn %p; nextb was %lx, will be %lx\n",
 			newmn, (long)nextb, (long)j);
 	}
 #endif	/* DEBUG */
@@ -1306,7 +1307,7 @@ casedi(int box)
 		if (dilev > 0) {
 #ifdef	DEBUG
 			if (debug & DB_MAC)
-				fdprintf(stderr, "ending diversion %s\n",
+				fprintf(stderr, "ending diversion %s\n",
 						macname(dip->curd));
 #endif	/* DEBUG */
 			numtab[DN].val = dip->dnl;
@@ -1328,7 +1329,7 @@ casedi(int box)
 	}
 #ifdef	DEBUG
 	if (debug & DB_MAC)
-		fdprintf(stderr, "starting diversion %s\n", macname(i));
+		fprintf(stderr, "starting diversion %s\n", macname(i));
 #endif	/* DEBUG */
 	if (++dilev == NDI) {
 		struct d	*nd;
@@ -2112,9 +2113,9 @@ casepm(void)
 			k = 0;
 		kk += k;
 		if (!tot && contab[i].nlink == 0)
-			fdprintf(stderr, "%s %d\n", macname(xx), k);
+			fprintf(stderr, "%s %d\n", macname(xx), k);
 	}
-	fdprintf(stderr, "pm: total %d, macros %d, space %d\n", tcnt, cnt, kk);
+	fprintf(stderr, "pm: total %d, macros %d, space %d\n", tcnt, cnt, kk);
 }
 
 void
@@ -2125,8 +2126,8 @@ stackdump (void)	/* dumps stack of macros in process */
 	if (frame != stk) {
 		for (p = frame; p != stk; p = p->pframe)
 			if (p->mname != LOOP)
-				fdprintf(stderr, "%s ", macname(p->mname));
-		fdprintf(stderr, "\n");
+				fprintf(stderr, "%s ", macname(p->mname));
+		fprintf(stderr, "\n");
 	}
 }
 
