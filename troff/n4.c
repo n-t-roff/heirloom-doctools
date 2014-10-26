@@ -82,7 +82,8 @@ static struct acc	_inumb(int *, float *, int, int *);
 static void *
 _grownumtab(struct numtab **numtp, int *NNp, struct numtab ***hashp)
 {
-	int	i, j, inc = 20;
+	int	i, inc = 20;
+	long	j;
 	struct numtab	*onc;
 
 	onc = *numtp;
