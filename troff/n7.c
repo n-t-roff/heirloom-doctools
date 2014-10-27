@@ -2012,7 +2012,7 @@ parword(void)
 			intptr_t	n;
 			tchar		e, s;
 
-			n = hyp[-1] & 03;
+			n = (intptr_t)hyp[-1] & 03;
 			ip = n ? lgrevtab[fbits(*wp)][cbits(*wp)] : NULL;
 			if (n != 0 && ip != NULL) {
 				pglgec[pgwords] = e =

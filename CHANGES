@@ -1,6 +1,22 @@
+2014-10-27
+    col(1) bugfix: Avoid to access chars before string.
+
+    troff: fdprintf changed back to libc fprintf.
+
+    troff: 32 bit bug in register and macro allocation fixed (Bug
+    reported by Anthony J. Bentley).
+
+    nroff/troff made -Wall clean.
+
+2014-10-22
+    OpenSolaris col(1) added.
+
 2014-10-06
     Drawing of filled polygone (\D'P ...'), filled circle (\D'C
     ...') and filled ellipse (\D'E ...') added.
+
+2014-09-21
+    *roff: Option -V for version information added.
 
 2014-09-14
     Any version of roff (e.g. UNIX V7) does count \} as a macro
