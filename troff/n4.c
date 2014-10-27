@@ -83,7 +83,7 @@ static void *
 _grownumtab(struct numtab **numtp, int *NNp, struct numtab ***hashp)
 {
 	int	i, inc = 20;
-	long	j;
+	size_t	j;
 	struct numtab	*onc;
 
 	onc = *numtp;

@@ -205,6 +205,7 @@ static void *
 _growcontab(struct contab **contp, int *NMp, struct contab ***hashp)
 {
 	int	i, j, inc = 256;
+	size_t	sft;
 	struct contab	*onc;
 	struct s	*s;
 
@@ -223,23 +224,23 @@ _growcontab(struct contab **contp, int *NMp, struct contab ***hashp)
 		*hashp = calloc(128, sizeof **hashp);
 		mrehash(*contp, inc, *hashp);
 	} else {
-		j = (char *)*contp - (char *)onc;
+		sft = (char *)*contp - (char *)onc;
 		for (i = 0; i < 128; i++)
 			if ((*hashp)[i])
 				(*hashp)[i] = (struct contab *)
-					((char *)((*hashp)[i]) + j);
+					((char *)((*hashp)[i]) + sft);
 		for (i = 0; i < *NMp; i++)
 			if ((*contp)[i].link)
 				(*contp)[i].link = (struct contab *)
-					((char *)((*contp)[i].link) + j);
+					((char *)((*contp)[i].link) + sft);
 		for (s = frame; s != stk; s = s->pframe)
 			if (s->contp >= onc && s->contp < &onc[*NMp])
 				s->contp = (struct contab *)
-					((char *)(s->contp) + j);
+					((char *)(s->contp) + sft);
 		for (i = 0; i <= dilev; i++)
 			if (d[i].soff >= onc && d[i].soff < &onc[*NMp])
 				d[i].soff = (struct contab *)
-					((char *)(d[i].soff) + j);
+					((char *)(d[i].soff) + sft);
 	}
 	*NMp += inc;
 	return *contp;
