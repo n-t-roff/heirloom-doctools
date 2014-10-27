@@ -205,7 +205,7 @@ static void *
 _growcontab(struct contab **contp, int *NMp, struct contab ***hashp)
 {
 	int	i, j, inc = 256;
-	size_t	sft;
+	ptrdiff_t	sft;
 	struct contab	*onc;
 	struct s	*s;
 
@@ -1371,7 +1371,7 @@ casedi(int box)
 		prwatch(newmn, i, 0);
 	}
 	dip->soff = newmn;
-	k = (int *) & dip->dnl;
+	k = &dip->dnl;
 	dip->flss = 0;
 	for (j = 0; j < 10; j++)
 		k[j] = 0;	/*not op and curd*/

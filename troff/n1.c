@@ -758,7 +758,7 @@ char *roff_sprintf(char *str, char *fmt, ...)
 {
 	register int c;
 	char	*s;
-	register int i;
+	long i;
 	va_list ap;
 
 	va_start(ap, fmt);
@@ -1470,7 +1470,7 @@ tchar getch0(void)
 	register int	j;
 	register tchar i;
 #ifdef	EUC
-	register int	n;
+	size_t	n;
 #endif	/* EUC */
 
 again:
@@ -1528,13 +1528,13 @@ g2:
 			mbstate_t	state;
 			memset(&state, 0, sizeof state);
 			if ((n = mbrtowc(&twc, mbbuf1, mbbuf1p-mbbuf1, &state))
-					==(size_t)-1 ||
+					== -1 ||
 					twc & ~(wchar_t)0x1FFFFF) {
 				illseq(-1, mbbuf1, mbbuf1p-mbbuf1);
 				mbbuf1p = mbbuf1;
 				*mbbuf1p = 0;
 				i &= 0177;
-			} else if (n == (size_t)-2)
+			} else if (n == -2)
 				goto again;
 			else {
 				mbbuf1p = mbbuf1;
@@ -1708,7 +1708,7 @@ popf(void)
 	ibufp = ibuf;
 	if (ttyname(ifile) == 0)
 		/* was >= ... */
-		if ((ibufp = ibuf + (int)(ioff & (IBUFSZ - 1))) > eibuf)
+		if ((ibufp = ibuf + (ioff & (IBUFSZ - 1))) > eibuf)
 			return(1);
 	return(0);
 }

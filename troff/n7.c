@@ -2008,10 +2008,11 @@ parword(void)
 			pghyphw[pgwords] = w;
 #ifndef	NROFF
 			{
-			int	n, *ip;
-			tchar	e, s;
+			int		*ip;
+			intptr_t	n;
+			tchar		e, s;
 
-			n = (intptr_t)(hyp[-1]) & 03;
+			n = hyp[-1] & 03;
 			ip = n ? lgrevtab[fbits(*wp)][cbits(*wp)] : NULL;
 			if (n != 0 && ip != NULL) {
 				pglgec[pgwords] = e =

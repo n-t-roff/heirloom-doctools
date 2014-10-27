@@ -216,7 +216,7 @@ extern	int	NCHARS;	/* maximum size of troff character set */
 #define	NPN	20	/* numbers in "-o" */
 #define	FBUFSZ	512	/* field buf size words */
 #define	OBUFSZ	4096	/* bytes */
-#define	IBUFSZ	4096	/* bytes */
+#define	IBUFSZ	4096L	/* bytes */
 #define	NC	1024	/* cbuf size words */
 #define	NOV	10	/* number of overstrike chars */
 #define	NPP	10	/* pads per field */
