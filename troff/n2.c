@@ -285,7 +285,7 @@ outascii (	/* print i in best-guess ascii */
 		oput(' ');
 		return;
 	}
-	if (j < 0177 && j >= ' ' || j == '\n') {
+	if ((j < 0177 && j >= ' ') || j == '\n') {
 		oput(j);
 		return;
 	}
@@ -383,7 +383,7 @@ done(int x)
 		tbreak();
 		donep = 0;
 	}
-	if (i = em) {
+	if ((i = em)) {
 		donef = -1;
 		em = 0;
 		if (control(i, 0))

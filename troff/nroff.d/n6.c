@@ -290,10 +290,8 @@ setps(void)
 tchar 
 setht (void)		/* set character height from \H'...' */
 {
-	int	n;
-
 	getch();
-	n = inumb(&apts);
+	inumb(&apts);
 	getch();
 	return(0);
 }
@@ -432,7 +430,7 @@ mot(void)
 
 	j = HOR;
 	delim = getch(); /*eat delim*/
-	if (n = atoi()) {
+	if ((n = atoi())) {
 		if (vflag)
 			j = VERT;
 		i = makem(quant(n, j));
@@ -617,7 +615,7 @@ setuc0(int n)
 	if (n & ~0177) {
 #ifdef	EUC
 		int	k;
-		k = n + nchtab + _SPECCHAR_ST | chbits;
+		k = (n + nchtab + _SPECCHAR_ST) | chbits;
 		if (k >= NCHARS)
 			morechars(k);
 		return k;
@@ -654,7 +652,7 @@ setanchor(void)
 tchar
 setlink(void)
 {
-	if (linkin = !linkin)
+	if ((linkin = !linkin))
 		discard();
 	return 0;
 }
@@ -662,7 +660,7 @@ setlink(void)
 tchar
 setulink(void)
 {
-	if (linkin = !linkin)
+	if ((linkin = !linkin))
 		discard();
 	return 0;
 }

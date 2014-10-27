@@ -304,24 +304,24 @@ specnames(void)
 		int	*n;
 		char	*v;
 	} spnames[] = {
-		&c_hyphen, "hy",
-		&c_emdash, "em",
-		&c_endash, "en",
-		&c_rule, "ru",
-		&c_minus, "\\-",
-		&c_fi, "fi",
-		&c_fl, "fl",
-		&c_ff, "ff",
-		&c_ffi, "Fi",
-		&c_ffl, "Fl",
-		&c_acute, "aa",
-		&c_grave, "ga",
-		&c_under, "ul",
-		&c_rooten, "rn",
-		&c_boxrule, "br",
-		&c_lefthand, "lh",
-		&c_dagger, "dg",
-		0, 0
+		{ &c_hyphen  , "hy" },
+		{ &c_emdash  , "em" },
+		{ &c_endash  , "en" },
+		{ &c_rule    , "ru" },
+		{ &c_minus   , "\\-"},
+		{ &c_fi      , "fi" },
+		{ &c_fl      , "fl" },
+		{ &c_ff      , "ff" },
+		{ &c_ffi     , "Fi" },
+		{ &c_ffl     , "Fl" },
+		{ &c_acute   , "aa" },
+		{ &c_grave   , "ga" },
+		{ &c_under   , "ul" },
+		{ &c_rooten  , "rn" },
+		{ &c_boxrule , "br" },
+		{ &c_lefthand, "lh" },
+		{ &c_dagger  , "dg" },
+		{ 0          , 0    }
 	};
 	static int	twice;
 	int	i;
@@ -726,10 +726,10 @@ okern(tchar *pi, tchar *pend, int outsize)
 	int	j;
 
 	for (j = outsize; &pi[j] < pend; j++)
-		if (cbits(pi[j]) != XFUNC || fbits(pi[j]) != LETSP &&
+		if (cbits(pi[j]) != XFUNC || (fbits(pi[j]) != LETSP &&
 				fbits(pi[j]) != NLETSP &&
 				fbits(pi[j]) != LETSH &&
-				fbits(pi[j]) != NLETSH)
+				fbits(pi[j]) != NLETSH))
 			break;
 	if (&pi[j] < pend)
 		return getkw(pi[0], pi[j]);
@@ -779,7 +779,7 @@ ptps(void)
 	s = u2pts(k);
 	if ((z = zoomtab[xfont]) != 0 && dev.anysize && xflag)
 		s *= z;
-	if (dev.anysize && xflag && (!found || z != 0 && z != 1))
+	if (dev.anysize && xflag && (!found || (z != 0 && z != 1)))
 		fdprintf(ptid, "s-23 %g\n", s);
 	else
 		fdprintf(ptid, "s%d\n", (int)s);	/* really should put out string rep of size */

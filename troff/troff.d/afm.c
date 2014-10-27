@@ -617,7 +617,7 @@ afmremap(struct afmtab *a)
 		if (a->nametab[i]) {
 			tp = a->nametab[i];
 			a->nametab[i] = space;
-			while (*space++ = *tp++);
+			while ((*space++ = *tp++));
 		}
 	}
 }
@@ -854,7 +854,7 @@ afmalloc(struct afmtab *a, int n)
 	a->nametab = malloc((n+NCHARLIB+1)*sizeof *a->nametab);
 	a->nametab[0] = 0;
 	a->nchars = 1;
-	addcharlib(a, a->base[0]=='S' && a->base[1]==0 || a->spec&SPEC_S);
+	addcharlib(a, (a->base[0]=='S' && a->base[1]==0) || a->spec&SPEC_S);
 	a->nameprime = nextprime(n+NCHARLIB+1);
 	a->namecache = calloc(a->nameprime, sizeof *a->namecache);
 	for (i = 0; i < a->nameprime; i++) {
@@ -1043,7 +1043,7 @@ addkernpair(struct afmtab *a, char *_line)
 		lp += 2;
 		if (*lp == 'X')
 			lp++;
-		while (*lp && *lp == ' ' || *lp == '\t')
+		while ((*lp && *lp == ' ') || *lp == '\t')
 			lp++;
 		cp = lp;
 		while (*lp && *lp != '\n' && *lp != '\r' &&
@@ -1054,7 +1054,7 @@ addkernpair(struct afmtab *a, char *_line)
 		*lp = 0;
 		np1 = afmnamelook(a, cp);
 		*lp = c;
-		while (*lp && *lp == ' ' || *lp == '\t')
+		while ((*lp && *lp == ' ') || *lp == '\t')
 			lp++;
 		cp = lp;
 		while (*lp && *lp != '\n' && *lp != '\r' &&
@@ -1168,8 +1168,8 @@ unhex(int c)
 static int
 xdigit(int c)
 {
-	return c >= 'A' && c <= 'F' || c >= 'a' && c <= 'f' ||
-		c >= '0' && c <= '9';
+	return (c >= 'A' && c <= 'F') || (c >= 'a' && c <= 'f') ||
+		(c >= '0' && c <= '9');
 }
 
 char *

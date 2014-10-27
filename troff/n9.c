@@ -149,7 +149,7 @@ s0:
 		*i++ = makem(-(w - length - temp));
 		goto s1;
 	}
-	if (rem = length % w) {
+	if ((rem = length % w)) {
 		if (connectchar(c))
 			*i++ = c | ZBIT;
 		*i++ = makem(rem);
@@ -1003,11 +1003,11 @@ getpsbb(const char *name, double bb[4])
 				continue;
 			}
 		}
-		if (n == 0 || state == 0 &&
+		if (n == 0 || (state == 0 &&
 				(getcom(buf, "%%EndComments") != NULL ||
 				 buf[0] != '%' || buf[1] == ' ' ||
 				 buf[1] == '\t' || buf[1] == '\r' ||
-				 buf[1] == '\n')) {
+				 buf[1] == '\n'))) {
 		eof:	if (found == 0 && (atend == 0 || n == 0))
 				errprint("%s lacks a %%%%BoundingBox: DSC "
 					"comment", name);

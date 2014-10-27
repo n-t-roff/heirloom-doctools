@@ -603,7 +603,7 @@ loop:
 	while ((c = *fmt++) != '%') {
 		if (c == '\0') {
 			if (fd == 2)
-				write(stderr, pfbuf, pfbp - pfbuf);
+				write(STDERR_FILENO, pfbuf, pfbp - pfbuf);
 			else {
 				*pfbp = 0;
 				pfbp = pfbuf;
@@ -627,7 +627,7 @@ loop:
 		putchar(va_arg(ap, int) & 0177);
 	} else if (c == 's') {
 		s = va_arg(ap, char *);
-		while (c = *s++)
+		while ((c = *s++))
 			putchar(c);
 	} else if (c == 'D') {
 		printn(va_arg(ap, long), 10);
@@ -640,7 +640,7 @@ loop:
 		char	fmt[] = "%%";
 		fmt[1] = c;
 		sprintf(s = tmp, fmt, va_arg(ap, double));
-		while (c = *s++)
+		while ((c = *s++))
 			putchar(c);
 	} else if (c == 'p') {
 		i = (intptr_t)va_arg(ap, void *);
@@ -744,7 +744,7 @@ static void printn(register long n, register long b)
 		putchar('-');
 		n = -n;
 	}
-	if (a = n / b)
+	if ((a = n / b))
 		printn(a, b);
 	putchar("0123456789ABCDEF"[(int)(n%b)]);
 }
@@ -781,7 +781,7 @@ loop:
 		*str++ = va_arg(ap, int) & 0177;
 	} else if (c == 's') {
 		s = va_arg(ap, char *);
-		while (c = *s++)
+		while ((c = *s++))
 			*str++ = c;
 	} else if (c == 'D') {
 		str = sprintn(str, va_arg(ap, long), 10);
@@ -853,7 +853,7 @@ static char *sprintn(register char *s, register long n, int b)
 		*s++ = '-';
 		n = -n;
 	}
-	if (a = n / b)
+	if ((a = n / b))
 		s = sprintn(s, a, b);
 	*s++ = "0123456789ABCDEF"[(int)(n%b)];
 	return s;
@@ -942,7 +942,7 @@ rgetach(void)
 	extern const char	nmctab[];
 	int	i;
 
-	if ((i = getach()) == 0 || xflag && i < ' ' && nmctab[i])
+	if ((i = getach()) == 0 || (xflag && i < ' ' && nmctab[i]))
 		return(0);
 	return(i);
 }
@@ -1008,7 +1008,7 @@ getch(void)
 	struct numtab	*np;
 
 g0:
-	if (i = ch) {
+	if ((i = ch)) {
 #ifdef	DEBUG
 		if (debug & DB_GETC)
 			fprintf(stderr, "getch: ch is %x (%c)\n",
@@ -1270,11 +1270,11 @@ copy:
 		setwd();
 		goto g0;
 	case 'v':	/* vert mot */
-		if (i = vmot())
+		if ((i = vmot()))
 			return(i);
 		goto g0;
 	case 'h': 	/* horiz mot */
-		if (i = hmot())
+		if ((i = hmot()))
 			return(i);
 		goto g0;
 	case 'z':	/* zero with char */
@@ -1326,7 +1326,7 @@ copy:
 		return(makem((int)(EM)/12));
 #endif
 	case 'x':	/* extra line space */
-		if (i = xlss())
+		if ((i = xlss()))
 			return(i);
 		goto g0;
 	case 'u':	/* half em up */
@@ -1741,7 +1741,7 @@ getach(void)
 	while (isxfunc(i, CHAR))
 		i = charout[sbits(i)].ch;
 	j = cbits(i);
-	if (ismot(i) || j == XFUNC && fbits(i) || j == ' ' || j == '\n' ||
+	if (ismot(i) || (j == XFUNC && fbits(i)) || j == ' ' || j == '\n' ||
 			j & 0200) {
 		if (!ismot(i) && j >= 0200)
 			illseq(j, NULL, -3);
@@ -2137,7 +2137,7 @@ casecp(void)
 #endif
 		gflag = 1;
 		noscale++;
-		if (skip(1) || atoi() && !nonumb)
+		if (skip(1) || (atoi() && !nonumb))
 			xflag = 1;
 		else
 			xflag = 3;
@@ -2451,7 +2451,7 @@ setgA(void)
 		return 0;
 	}
 	while (k = cbits(c = getch()), !issame(c, delim) && !nlflg)
-		if (ismot(c) || k < ' ' && nmctab[k] || k == ' ' || k >= 0200)
+		if (ismot(c) || (k < ' ' && nmctab[k]) || k == ' ' || k >= 0200)
 			y = 0;
 	if (nlflg)
 		y = 0;

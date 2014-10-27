@@ -1752,7 +1752,7 @@ onechar(int gid, int sid)
 	char	*N;
 	int	*b = NULL, B[4] = { 0, 0, 0, 0};
 
-	if (gid == 0 && sid != 0 || sid == 0 && gid != 0)
+	if ((gid == 0 && sid != 0) || (sid == 0 && gid != 0))
 		return;		/* require .notdef to be GID 0 */
 	if (gid >= nc)
 		return;
@@ -2091,22 +2091,22 @@ got_mapping(int c, int gid, int addchar)
 static int
 get_ms_unicode_cmap4(int o, int addchar)
 {
-	int	length;
+	/* int	length; */
 	int	segCount;
 	int	endCount;
 	int	startCount;
 	int	idDelta;
 	int	idRangeOffset;
-	int	glyphIdArray;
+	/* int	glyphIdArray; */
 	int	c, e, i, d, r, s, gid, x;
 
-	length = pbe16(&contents[o+2]);
+	/* length = */ pbe16(&contents[o+2]);
 	segCount = pbe16(&contents[o+6]) / 2;
 	endCount = o + 14;
 	startCount = endCount + 2*segCount + 2;
 	idDelta = startCount + 2*segCount;
 	idRangeOffset = idDelta + 2*segCount;
-	glyphIdArray = idRangeOffset + 2*segCount;
+	/* glyphIdArray = idRangeOffset + 2*segCount; */
 	for (i = 0; i < segCount; i++) {
 		s = pbe16(&contents[startCount+2*i]);
 		e = pbe16(&contents[endCount+2*i]);
@@ -2135,14 +2135,14 @@ get_ms_unicode_cmap4(int o, int addchar)
 static int
 get_ms_unicode_cmap12(int o, int addchar)
 {
-	int	length;
+	/* int	length; */
 	int	nGroups;
 	int	startCharCode;
 	int	endCharCode;
 	int	startGlyphID;
 	int	c, i, gid;
 
-	length = pbe32(&contents[o+4]);
+	/* length = */ pbe32(&contents[o+4]);
 	nGroups = pbe32(&contents[o+12]);
 	o += 16;
 	for (i = 0; i < nGroups; i++) {
@@ -2206,10 +2206,10 @@ get_cmap(int addchar)
 	for (i = 0; i < numTables; i++) {
 		platformID = pbe16(&contents[o+4+8*i]);
 		encodingID = pbe16(&contents[o+4+8*i+2]);
-		if (platformID == 3 && encodingID == 10 ||
-				want_tbl < 0 &&
-				(platformID == 3 && (encodingID == 0 || encodingID == 1) ||
-				platformID == 0))
+		if ((platformID == 3 && encodingID == 10) ||
+				(want_tbl < 0 &&
+				((platformID == 3 && (encodingID == 0 || encodingID == 1)) ||
+				platformID == 0)))
 			want_tbl = i;
 	}
 	if (want_tbl >= 0) {

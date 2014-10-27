@@ -334,9 +334,9 @@ getcw(register int i)
 	}
 	if (!bd)
 		bd = bdtab[ofont];
-	if (cs = cstab[ofont]) {
+	if ((cs = cstab[ofont])) {
 		nocache = 1;
-		if (ccs = ccstab[ofont])
+		if ((ccs = ccstab[ofont]))
 			x = pts2u(ccs); 
 		else 
 			x = xpts;
@@ -459,12 +459,12 @@ kernadjust(tchar c, tchar d)
 	if (!kern || ismot(c) || ismot(d))
 		return 0;
 	if (!isdi(c)) {
-		c = trtab[cbits(c)] | c & SFMASK;
-		c = ftrans(fbits(c), cbits(c)) | c & SFMASK;
+		c = trtab[cbits(c)] | (c & SFMASK);
+		c = ftrans(fbits(c), cbits(c)) | (c & SFMASK);
 	}
 	if (!isdi(d)) {
-		d = trtab[cbits(d)] | d & SFMASK;
-		d = ftrans(fbits(d), cbits(d)) | d & SFMASK;
+		d = trtab[cbits(d)] | (d & SFMASK);
+		d = ftrans(fbits(d), cbits(d)) | (d & SFMASK);
 	}
 	return getkw(c, d);
 }
@@ -725,7 +725,7 @@ tchar setch(int delim)
 			temp[n-1] = 0;
 			break;
 		}
-		if (delim == '[' && c == ']' || delim == 'C' && c == d[0]) {
+		if ((delim == '[' && c == ']') || (delim == 'C' && c == d[0])) {
 			temp[n] = 0;
 			break;
 		}
@@ -753,7 +753,7 @@ tchar setch(int delim)
 	if (c == 0)
 		for (j = 0; j < nchtab; j++)
 			if (strcmp(&chname[chtab[j]], temp) == 0) {
-				c = j + 128 | chbits;
+				c = (j + 128) | chbits;
 				break;
 			}
 	if (c == 0 && delim == '(')
@@ -1152,7 +1152,7 @@ tchar mot(void)
 
 	j = HOR;
 	delim = getch(); /*eat delim*/
-	if (n = atoi()) {
+	if ((n = atoi())) {
 		if (vflag)
 			j = VERT;
 		i = makem(quant(n, j));
@@ -1231,7 +1231,7 @@ tchar getlg(tchar i)
 			pushback(pb);
 			return(i);
 		}
-		k = i & SFMASK | lp->to | AUTOLIG;
+		k = (i & SFMASK) | lp->to | AUTOLIG;
 		if (lp->link == NULL || ++n > lgn)
 			return(k);
 		lp = lp->link;
@@ -1332,7 +1332,7 @@ addlig(int f, tchar *from, int to)
 			lgrevtab[f] = calloc(NCHARS, sizeof **lgrevtab);
 		lgrevtab[f][to] = malloc((j+2) * sizeof ***lgrevtab);
 		j = 0;
-		while (lgrevtab[f][to][j] = cbits(from[j]))
+		while ((lgrevtab[f][to][j] = cbits(from[j])))
 			j++;
 	}
 	/*
@@ -1340,18 +1340,18 @@ addlig(int f, tchar *from, int to)
 	 * Fi, and Fl, hide them. The ".flig" request is intended for
 	 * use in combination with expert fonts only.
 	 */
-	if ((to == LIG_FF || cbits(from[0]) == 'f' && cbits(from[1]) == 'f' &&
-			     cbits(from[2]) == 0) &&
+	if ((to == LIG_FF || (cbits(from[0]) == 'f' && cbits(from[1]) == 'f' &&
+			      cbits(from[2]) == 0)) &&
 			fitab[f][LIG_FF-32] != NOCODE)
 		if (codetab[f][fitab[f][LIG_FF-32]] < 32)
 			fitab[f][LIG_FF-32] = 0;
-	if ((to == LIG_FFI || cbits(from[0]) == 'f' && cbits(from[1]) == 'f' &&
-			      cbits(from[2]) == 'i' && cbits(from[3]) == 0) &&
+	if ((to == LIG_FFI || (cbits(from[0]) == 'f' && cbits(from[1]) == 'f' &&
+			       cbits(from[2]) == 'i' && cbits(from[3]) == 0)) &&
 			fitab[f][LIG_FFI-32] != NOCODE)
 		if (codetab[f][fitab[f][LIG_FFI-32]] < 32)
 			fitab[f][LIG_FFI-32] = 0;
-	if ((to == LIG_FFL || cbits(from[0]) == 'f' && cbits(from[1]) == 'f' &&
-			      cbits(from[2]) == 'l' && cbits(from[3]) == 0) &&
+	if ((to == LIG_FFL || (cbits(from[0]) == 'f' && cbits(from[1]) == 'f' &&
+			       cbits(from[2]) == 'l' && cbits(from[3]) == 0)) &&
 			fitab[f][LIG_FFL-32] != NOCODE)
 		if (codetab[f][fitab[f][LIG_FFL-32]] < 32)
 			fitab[f][LIG_FFL-32] = 0;
@@ -2612,7 +2612,7 @@ getfeature(struct afmtab *a, int f)
 			break;
 	}
 	name[i+1] = 0;
-	for (i = 0; fp = a->features[i]; i++)
+	for (i = 0; (fp = a->features[i]); i++)
 		if (strcmp(fp->name, name) == 0) {
 			for (j = 0; j < fp->npairs; j++) {
 				ch1 = fp->pairs[j].ch1;
@@ -2644,8 +2644,8 @@ casefeature(void)
 	if ((f = findft(i, 1)) < 0)
 		return;
 	if ((j = (fontbase[f]->afmpos) - 1) < 0 ||
-			(a = afmtab[j])->type != TYPE_OTF &&
-			a->type != TYPE_TTF) {
+			((a = afmtab[j])->type != TYPE_OTF &&
+			a->type != TYPE_TTF)) {
 		errprint("font %s is not an OpenType font", macname(i));
 		return;
 	}
@@ -2759,7 +2759,7 @@ un2tr(int c, int *fp)
 					return i;
 			}
 		*fp = font;
-		if (c < 040 && c == ifilt[c] || c >= 040 && c < 0177)
+		if ((c < 040 && c == ifilt[c]) || (c >= 040 && c < 0177))
 			return c;
 		else if ((c & ~0177) == 0) {
 			illseq(c, NULL, 0);
@@ -2870,7 +2870,7 @@ _setlink(struct ref **rstart, int oncode, int offcode, int *cnt)
 	int	sv;
 
 	sv = linkin;
-	if (linkin = !linkin) {
+	if ((linkin = !linkin)) {
 		if ((np = getref()) != NULL) {
 			rp = calloc(1, sizeof *rp);
 			rp->cnt = ++*cnt;

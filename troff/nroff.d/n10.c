@@ -620,7 +620,7 @@ getstr (	/* find next string in s, copy to t */
 			if (isdigit((unsigned char)s[0]) &&
 			    isdigit((unsigned char)s[1]) &&
 			    isdigit((unsigned char)s[2])) {
-				*t++ = (s[0]-'0')<<6 | (s[1]-'0')<<3 | s[2]-'0';
+				*t++ = (s[0]-'0')<<6 | (s[1]-'0')<<3 | (s[2]-'0');
 				s += 2;
 			} else if (isdigit((unsigned char)s[0])) {
 				*t++ = *s - '0';
@@ -914,7 +914,7 @@ ptout1(void)
 					oput(' ');
 					allesc = 0;
 				} else {
-					if (isesc = *codep=='%') /* escape */
+					if ((isesc = *codep=='%')) /* escape */
 						codep++;
 					else
 						allesc = 0;

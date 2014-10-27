@@ -819,7 +819,7 @@ abc0(int i, int (*f)(tchar))
 	register int j, k;
 
 	k = 0;
-	if (j = i / 26)
+	if ((j = i / 26))
 		k = abc0(j - 1, f);
 	return(k + (*f)((i % 26 + nform) | nrbits));
 }
@@ -896,14 +896,14 @@ _atoi(int flt)
 			nonumb = 1;
 	}
 	if (flt) {
-		if (!nonumb && (n.f<0 && n.f<-FLT_MAX || n.f>0 && n.f>FLT_MAX)) {
+		if (!nonumb && ((n.f<0 && n.f<-FLT_MAX) || (n.f>0 && n.f>FLT_MAX))) {
 			if (warn & WARN_NUMBER)
 				errprint("floating-point arithmetic overflow");
 			if (xflag)
 				nonumb = 1;
 		}
 	} else {
-		if (!nonumb && (n.n<0 && n.n <INT_MIN || n.n>0 && n.n>INT_MAX)) {
+		if (!nonumb && ((n.n<0 && n.n <INT_MIN) || (n.n>0 && n.n>INT_MAX))) {
 			if (warn & WARN_NUMBER)
 				errprint("arithmetic overflow");
 			if (xflag)
@@ -982,7 +982,7 @@ a0:
 		i = ckph(flt);
 		if (nonumb)
 			break;
-		if (!flt && i.n == 0 || flt && i.f == 0) {
+		if ((!flt && i.n == 0) || (flt && i.f == 0)) {
 			flusho();
 			errprint("divide by zero.");
 			acc.n = 0;
@@ -1319,7 +1319,7 @@ a1:
 			ch = ii;
 			goto a2;
 		}
-		if ((i >= 'a' && i <= 'z' || i >= 'A' && i <= 'Z') &&
+		if (((i >= 'a' && i <= 'z') || (i >= 'A' && i <= 'Z')) &&
 				warn & WARN_SCALE) {
 			errprint("undefined scale indicator %c", i);
 			illscale = 1;
@@ -1563,7 +1563,7 @@ casnr1(int flt, int local)
 	 * now to avoid a warning because of an illegal number.
 	 */
 	j = cbits(ch);
-	if ((j >= 'a' && j <= 'z' || j >= 'A' && j <= 'Z') &&
+	if (((j >= 'a' && j <= 'z') || (j >= 'A' && j <= 'Z')) &&
 			warn & WARN_SCALE)
 		goto rtns;
 	skip(0);
@@ -1636,7 +1636,7 @@ caseaf(void)
 	if (numtp->flags & FLAG_WATCH) {
 		char	b[40];
 		int	x;
-		if (k & BYTEMASK > ' ') {
+		if ((k & BYTEMASK) > ' ') {
 			b[0] = k & BYTEMASK;
 			b[1] = 0;
 		} else {

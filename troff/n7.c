@@ -188,7 +188,7 @@ restart:
 	adrem = (adrem / resol) * resol;
 	for (i = line; nc > 0; ) {
 		if ((c = cbits(j = *i++)) == ' ' || c == STRETCH) {
-			if (xflag && !fi && dilev || iszbit(j) || isadjspc(j))
+			if ((xflag && !fi && dilev) || iszbit(j) || isadjspc(j))
 				goto std;
 			pad = 0;
 			if (i > &line[1])
@@ -329,11 +329,12 @@ text(void)
 	}
 	if (pendw)
 		goto t4;
-	if (pendt)
+	if (pendt) {
 		if (spcnt)
 			goto t2; 
 		else 
 			goto t3;
+	}
 	pendt++;
 	if (spcnt)
 		goto t2;
@@ -380,7 +381,7 @@ t3:
 t4:
 		if (getword(0)) {
 			if (!pendw) {
-				if (brnl || brpnl && spread)
+				if (brnl || (brpnl && spread))
 					goto tb;
 				if (brpnl)
 					goto t5;
@@ -530,7 +531,7 @@ ckul(void)
 		font = sfont;
 		mchbits();
 	}
-	if (it && !pglines && (!itc || !pendw && !pendnf) &&
+	if (it && !pglines && (!itc || (!pendw && !pendnf)) &&
 			(--it == 0) && itmac)
 		control(itmac, 0);
 }
@@ -576,7 +577,7 @@ getlsp(tchar c)
 
 	if (!ad || admod || ismot(c))
 		return 0;
-	if (iszbit(c) || cbits(c) <= ' ' && !isxfunc(c, CHAR))
+	if (iszbit(c) || (cbits(c) <= ' ' && !isxfunc(c, CHAR)))
 		return 0;
 	while (isxfunc(c, CHAR))
 		c = charout[sbits(c)].ch;
@@ -682,7 +683,7 @@ newline(int a)
 nl1:
 	ejf = dip->hnl = numtab[NL].val = 0;
 	ejl = frame->tail_cnt;
-	if (donef || ndone && pgchars && !pglines) {
+	if (donef || (ndone && pgchars && !pglines)) {
 		if ((!nc && !wch && !pglines) || ndone)
 			done1(0);
 		ndone++;
@@ -1000,10 +1001,10 @@ movword(void)
 	*linep = *wp;
 	lastlp = linep;
 	mnel = ad && !admod ? (sps - minsps) * nwd : 0;
-	if (nel >= 0 || nel + lsplow + lshlow >= 0 &&
-			lspnc - (nwd ? nwd : 1) > 0) {
-		if (nel >= 0 && nwd && nel - adspc < 0 && nel / nwd < sps ||
-				nel < 0 && nel + lsplow + lshlow >= 0) {
+	if (nel >= 0 || (nel + lsplow + lshlow >= 0 &&
+			lspnc - (nwd ? nwd : 1) > 0)) {
+		if ((nel >= 0 && nwd && nel - adspc < 0 && nel / nwd < sps) ||
+				(nel < 0 && nel + lsplow + lshlow >= 0)) {
 			wholewd = 1;
 			goto m0;
 		}
@@ -1066,10 +1067,10 @@ m1:
 	wholewd = 0;
 m1a:
 #ifndef	NROFF
-	if (minspsz && ad && !admod &&
-			wch < savwch && nwd && nel / nwd > 0 && nel < mnel ||
-			nel + lsplow + lshlow >= (wholewd ? 0 : hys + lgw) &&
-			nel < (wholewd ? 0 : hys + lgw)) {
+	if ((minspsz && ad && !admod &&
+			wch < savwch && nwd && nel / nwd > 0 && nel < mnel) ||
+			(nel + lsplow + lshlow >= (wholewd ? 0 : hys + lgw) &&
+			nel < (wholewd ? 0 : hys + lgw))) {
 		optlgs = lgs, optlge = lge, optlgw = lgw, optlgr = lgr;
 		optlinep = linep, optwp = wp, optnc = nc, optnel = nel,
 		optne = ne, optadspc = adspc, optwne = wne, optwch = wch;
@@ -1093,7 +1094,7 @@ m2:
 		lsplow = optlsplow, lsphigh = optlsphigh, lspnc = optlspnc;
 		fldcnt = optfldcnt;
 		lshwid = optlshwid, lshlow = optlshlow, lshhigh = optlshhigh;
-		if (wholewd = optwholewd)
+		if ((wholewd = optwholewd))
 			goto m3;
 	} else if (optlinep && wch == savwch && !nhyp)
 		goto m4;
@@ -1199,7 +1200,7 @@ getword(int x)
 			*pendw = 0;
 			goto rtn;
 		}
-	if (wordp = pendw)
+	if ((wordp = pendw))
 		goto g1;
 	hyp = hyptr;
 	wordp = word;
@@ -1223,7 +1224,7 @@ getword(int x)
 			hyoff = 1;	/* 1 => don't hyphenate */
 			continue;
 		}
-		if ((j == ' ' || padj && j == STRETCH) && !iszbit(i)) {
+		if ((j == ' ' || (padj && j == STRETCH)) && !iszbit(i)) {
 			lastsp = j;
 			n++;
 			if (isadjspc(i))
@@ -1373,7 +1374,7 @@ g1:		nexti = GETCH();
 		static int transchar[] =
 			{ '"', '\'', ')', ']', '*', 0, 0 };
 		transchar[5] = DAGGER;
-		if (j != '\n' && j != ' ' && (!padj || j != STRETCH) ||
+		if ((j != '\n' && j != ' ' && (!padj || j != STRETCH)) ||
 				ismot(i) || iszbit(i) ||
 				isadjspc(i))
 #if defined (EUC) && defined (NROFF) && defined (ZWDELIMS)
@@ -2037,7 +2038,7 @@ parword(void)
 			} }
 #endif	/* !NROFF */
 		}
-		if (pghyphw[pgwords] || wp > word && maybreak(wp[-1])) {
+		if (pghyphw[pgwords] || (wp > word && maybreak(wp[-1]))) {
 			if (pghyphw[pgwords])
 				pghyphw[pgwords] -= kernadjust(wp[-1], wp[0]);
 			pgne += pgwordw[pgwords];
@@ -2235,7 +2236,7 @@ parpr(struct s *s)
 		nwd += stretches;
 		nw++;
 	}
-	pbreak(nel - adspc < 0 && nwd > 1 || _spread, 1, s);
+	pbreak((nel - adspc < 0 && nwd > 1) || _spread, 1, s);
 	if (pgflags[pgwords] & PG_NEWIN)
 		savin = pgwdin[pgwords];
 	if (pgflags[pgwords] & PG_NEWLL)

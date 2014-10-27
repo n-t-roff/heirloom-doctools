@@ -1256,7 +1256,7 @@ caseev(void)
 		if ((evlist = realloc(evlist, evlsz * sizeof *evlist)) == NULL)
 			goto cannot;
 	}
-	if (name && findev(&nxev, name) == NULL || nxev >= Nev) {
+	if ((name && findev(&nxev, name) == NULL) || nxev >= Nev) {
 		if ((evp = realloc(evp, (Nev-NEV+1) * sizeof *evp)) == NULL ||
 				(evnames = realloc(evnames,
 				   (Nev-NEV+1) * sizeof *evnames)) == NULL)
@@ -1285,13 +1285,14 @@ e1:
 	*op = env;
 	env = *np;
 	ev = nxev;
-	if (evname == NULL)
+	if (evname == NULL) {
 		if (name)
 			evname = name;
 		else {
 			evname = malloc(20);
 			roff_sprintf(evname, "%d", ev);
 		}
+	}
 }
 
 void
@@ -1750,7 +1751,7 @@ void
 casewhile(void)
 {
 	tchar	c;
-	int	k, level, nl;
+	int	k, level;
 	filep	newip;
 
 	if (dip != d)
@@ -1765,7 +1766,7 @@ casewhile(void)
 	wbf(XFUNC);	/* caseif */
 	wbf(' ');
 	copyf++, clonef++;
-	nl = level = 0;
+	level = 0;
 	do {
 		nlflg = 0;
 		k = cbits(c = getch());
@@ -1822,7 +1823,7 @@ casecontinue(int _break)
 	}
 	flushi();
 	nflush++;
-	while (i > 1 || _break && i > 0) {
+	while (i > 1 || (_break && i > 0)) {
 		if (frame->loopf) {
 			frame->loopf = LOOP_FREE;
 			i--;
@@ -2108,7 +2109,7 @@ T:
 			j = 0;
 			n = (i ? tabtab[i-1] : 0) & TABMASK;
 		}
-		tabtab[i++] = n + (T[j] & TABMASK) | T[j] & ~TABMASK;
+		tabtab[i++] = (n + (T[j] & TABMASK)) | (T[j] & ~TABMASK);
 		j++;
 	}
 	tabtab[i] = 0;

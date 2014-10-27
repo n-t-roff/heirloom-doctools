@@ -536,7 +536,7 @@ _findmn(register int i, int als, int forcelocal)
 	struct contab	*contp;
 
 	s = macframe();
-	if (forcelocal || s != stk && s->mhash) {
+	if (forcelocal || (s != stk && s->mhash)) {
 		if (s->mhash == NULL)
 			return NULL;
 		if ((contp = findmn1(s->mhash, i, als)) != NULL)
@@ -607,9 +607,9 @@ finds(register int mn, int als, int globonly)
 	apptr = (filep)0;
 	if (oldmn != NULL)
 		flags = oldmn->flags;
-	if (globonly && (dl || oldmn && oldmn->flags & FLAG_LOCAL)) {
+	if (globonly && (dl || (oldmn && oldmn->flags & FLAG_LOCAL))) {
 		errprint("refusing to create local %s %s",
-			diflg || oldmn && oldmn->flags & FLAG_DIVERSION ?
+			diflg || (oldmn && oldmn->flags & FLAG_DIVERSION) ?
 				"diversion" : "macro",
 			macname(mn));
 		app = 0;
@@ -646,8 +646,8 @@ finds(register int mn, int als, int globonly)
 				break;
 		}
 		nextb = 0;
-		if (i == *NMp && _growcontab(contp, NMp, hashp) == NULL ||
-				als && (nextb = alloc()) == 0) {
+		if ((i == *NMp && _growcontab(contp, NMp, hashp) == NULL) ||
+				(als && (nextb = alloc()) == 0)) {
 			app = 0;
 			if (macerr++ > 1)
 				done2(02);
@@ -855,7 +855,7 @@ wbf (			/*store i into blist[offset] (?) */
 	if (!((++offset) & (BLK - 1))) {
 		wbfl();
 		j = blisti(--offset);
-		if (j < 0 || j >= nblist && growblist() == NULL) {
+		if (j < 0 || (j >= nblist && growblist() == NULL)) {
 			errprint("Out of temp file space");
 			done2(01);
 		}
@@ -891,7 +891,7 @@ rbf (void)		/*return next char from blist[] block*/
 	register filep j, p;
 
 	if (ip == -1) {		/* for rdtty */
-		if (j = rdtty())
+		if ((j = rdtty()))
 			return(j);
 		else
 			return(popi());
@@ -1674,15 +1674,15 @@ casetl(void)
 #ifdef NROFF
 	horiz(po);
 #endif
-	while (i = *tp++)
+	while ((i = *tp++))
 		pchar(i);
 	if (w[1] || w[2])
 		horiz(j = quant((lt - w[1]) / 2 - w[0], HOR));
-	while (i = *tp++)
+	while ((i = *tp++))
 		pchar(i);
 	if (w[2]) {
 		horiz(lt - w[0] - w[1] - w[2] - j);
-		while (i = *tp++)
+		while ((i = *tp++))
 			pchar(i);
 	}
 	newline(0);
@@ -2173,7 +2173,7 @@ mgetach(void)
 		i = charout[sbits(i)].ch;
 	j = cbits(i);
 	if (ismot(i) || j == ' ' || j == '\n' || j >= 0200 ||
-			j < sizeof nmctab && nmctab[j]) {
+			(j < sizeof nmctab && nmctab[j])) {
 		if (!ismot(i) && j >= 0200)
 			illseq(j, NULL, -3);
 		ch = i;
@@ -2277,7 +2277,7 @@ getls(int termc, int *strp, int create)
 			nodelim(termc);
 	}
 	buf[--i] = 0;
-	if (i == 0 || c != termc && (!strp || nlflg))
+	if (i == 0 || (c != termc && (!strp || nlflg)))
 		j = 0;
 	else if (i <= 2) {
 		j = PAIR(buf[0], buf[1]);

@@ -249,8 +249,8 @@ extern	int	NCHARS;	/* maximum size of troff character set */
 #define	ismot(n)	((n) & MOT)
 #define	isvmot(n)	((n) & VMOT)	/* must have tested MOT previously */
 #define	isnmot(n)	((n) & NMOT)	/* ditto */
-#define	absmot(n)	(unsigned long)(BMBITS&(n) | ((n)&XMBITS)>>XMSHIFT)
-#define	sabsmot(n)	(!xflag || (n) <= MAXMOT ? (n)&BMBITS | ((n)&~BMBITS)<<XMSHIFT : moflo(n))
+#define	absmot(n)	(unsigned long)((BMBITS&(n)) | ((n)&XMBITS)>>XMSHIFT)
+#define	sabsmot(n)	(!xflag || (n) <= MAXMOT ? ((n)&BMBITS) | ((n)&~BMBITS)<<XMSHIFT : moflo(n))
 
 #define	ZBIT		(01ULL << 63) 	/* zero width char */
 #define	iszbit(n)	((n) & ZBIT)
@@ -284,7 +284,7 @@ extern	int	NCHARS;	/* maximum size of troff character set */
 #define	setsbits(n,s)	n = (n & ~SMASK) | (tchar)(s) << 40
 #define	setfbits(n,f)	n = (n & ~FMASK) | (tchar)(f) << 32
 #define	setsfbits(n,sf)	n = (n & ~SFMASK) | (tchar)(sf) << 32
-#define	setcbits(n,c)	n = (n & ~0x001FFFFFLL | (c))	/* set character bits */
+#define	setcbits(n,c)	n = ((n & ~0x001FFFFFLL) | (c))	/* set character bits */
 
 #define	BYTEMASK	0377
 #define	BYTE	8

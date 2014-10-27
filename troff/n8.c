@@ -124,13 +124,13 @@ hyphen(tchar *wp)
 			if (cbits(*i) == '-' || cbits(*i) == EMDASH ||
 					i == _wdend) {
 				while (wdstart <= i && (punct(*wdstart) ||
-						cbits(*wdstart) >= '0' &&
-						cbits(*wdstart) <= '9'))
+						(cbits(*wdstart) >= '0' &&
+						 cbits(*wdstart) <= '9')))
 					wdstart++;
 				for (wdend = wdstart; wdend <= i; wdend++) {
 					if (!alph(*wdend) ||
-							cbits(*wdend) >= '0' &&
-							cbits(*wdend) <= '9')
+							(cbits(*wdend) >= '0' &&
+							 cbits(*wdend) <= '9'))
 						break;
 				}
 				hyend = --wdend;
@@ -210,8 +210,8 @@ alph(tchar j)
 		return hyext ? iswalnum(u) : iswalpha(u);
 	} else
 #endif	/* EUC */
-	if (!ismot(j) && i >= 'a' && i <= 'z' || i >= 'A' && i <= 'Z' ||
-			hyext && i >= '0' && i <= '9')
+	if ((!ismot(j) && i >= 'a' && i <= 'z') || (i >= 'A' && i <= 'Z') ||
+			(hyext && i >= '0' && i <= '9'))
 		return(1);
 	else
 		return(0);
@@ -572,16 +572,16 @@ addc(int m, char **cp, tchar **wp, int **wpp, int distance)
 		*(*cp)++ = m;
 		*(*wpp)++ = distance;
 	} else if (m >= 0x80 && m <= 0x7ff) {
-		*(*cp)++ = m >> 6 & 037 | 0300;
+		*(*cp)++ = (m >> 6 & 037) | 0300;
 		*(*wpp)++ = distance;
-		*(*cp)++ = m & 077 | 0200;
+		*(*cp)++ = (m & 077) | 0200;
 		*(*wpp)++ = -1000;
 	} else if (m >= 0x800 && m <= 0xffff) {
-		*(*cp)++ = m >> 12 & 017 | 0340;
+		*(*cp)++ = (m >> 12 & 017) | 0340;
 		*(*wpp)++ = distance;
-		*(*cp)++ = m >> 6 & 077 | 0200;
+		*(*cp)++ = (m >> 6 & 077) | 0200;
 		*(*wpp)++ = -1000;
-		*(*cp)++ = m & 077 | 0200;
+		*(*cp)++ = (m & 077) | 0200;
 		*(*wpp)++ = -1000;
 	} else
 		return 0;
@@ -594,7 +594,7 @@ hyphenhnj(void)
 	tchar	*wp;
 	char	*cb, *cp, *hb;
 	int	*wpos, *wpp;
-	int	f, i, j, k, m;
+	int	i, j, k;
 
 	i = 12 * (wdend - wdstart) + 1;
 	cb = malloc(i * sizeof *cb);
@@ -603,9 +603,9 @@ hyphenhnj(void)
 	cp = cb;
 	wpp = wpos;
 	for (wp = wdstart; wp <= wdend; wp++) {
-		m = cbits(*wp);
-		f = fbits(*wp);
 #ifndef	NROFF
+		int m = cbits(*wp);
+		int f = fbits(*wp);
 		if (islig(*wp) && lgrevtab && lgrevtab[f] && lgrevtab[f][m]) {
 			for (i = 0; lgrevtab[f][m][i]; i++) {
 				if (addc(lgrevtab[f][m][i], &cp, &wp, &wpp,
@@ -628,7 +628,7 @@ hyphenhnj(void)
 	for (i = 0; i < j; i++) {
 		if (wpos[i+1] >= 0)
 			k = wpos[i+1];
-		if (hb[i] - '0' & 1 && wpos[i+1] >= -3) {
+		if ((hb[i] - '0') & 1 && wpos[i+1] >= -3) {
 			if (wpos[i+1] >= 0)
 				*hyp = &wdstart[wpos[i+1]];
 			else {
