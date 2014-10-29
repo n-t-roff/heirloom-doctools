@@ -1,3 +1,7 @@
+2014-10-29
+    Documentation revised by Pierre-Jean Fichet:  doc/fonts/
+    changed to use free available OTF fonts.
+
 2014-10-27
     col(1) bugfix: Avoid to access chars before string.
 
