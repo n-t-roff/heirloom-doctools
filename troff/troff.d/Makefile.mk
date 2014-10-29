@@ -6,7 +6,7 @@ OBJ = t10.o t6.o hytab.o n1.o n2.o n3.o n4.o n5.o \
 
 FLAGS = -DUSG $(EUC) -I. -I.. -DMACDIR='"$(MACDIR)"' \
 	-DFNTDIR='"$(FNTDIR)"' -DTABDIR='"$(TABDIR)"' -DHYPDIR='"$(HYPDIR)"' \
-	-DSHELL='"$(SHELL)"'
+	-DSHELL='"$(SHELL)"' -DRELEASE='"$(RELEASE)"'
 
 .c.o:
 	$(CC) $(CFLAGS) $(WARN) $(CPPFLAGS) $(FLAGS) -c $<

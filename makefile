@@ -28,7 +28,7 @@ MAKEFILES = $(SUBDIRS:=/Makefile)
 
 .SUFFIXES: .mk
 .mk:
-	cat mk.config $< >$@
+	cat version.mk mk.config $< >$@
 
 dummy: $(MAKEFILES) all
 

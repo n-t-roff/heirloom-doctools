@@ -301,7 +301,8 @@ main(int argc, char **argv)
 #endif	/* DEBUG */
 			continue;
 		case 'V':
-			fprintf(stdout, "Heirloom doctools %croff\n",
+			fprintf(stdout, "Heirloom doctools %croff, " RELEASE
+			    "\n",
 #ifdef NROFF
 			    'n'
 #else
