@@ -1,9 +1,15 @@
-The source code can be downloaded as a zip archive with the "Download ZIP" button
+For information about the Heirloom doctools please visit the project
+[webpage](http://n-t-roff.github.io/heirloom/doctools.html).
+
+Stable source code versions are available in the
+[releases archive](https://github.com/n-t-roff/heirloom-doctools/releases).
+
+Development snapshots can be downloaded as a zip archive with the "Download ZIP" button
 or with the git command
 ```bash
 git clone https://github.com/n-t-roff/heirloom-doctools.git
 ```
-Installation paths and compiler settings can be adjusted in `mk.config`.
+Installation paths and compiler settings are adjusted in `mk.config`.
 The software is build with `make` and installed with `make install`.
 Generated files are removed with `make mrproper` afterwards.
 A git repository can be kept up-to-date with
@@ -12,5 +18,5 @@ A git repository can be kept up-to-date with
 Bugs can be reported at the
 [issue list](https://github.com/n-t-roff/heirloom-doctools/issues).
 
-If there are any problems mail can be send to
+If there are any problems please send a mail to
 &lt;troff [at] arcor [dot] de&gt;.
