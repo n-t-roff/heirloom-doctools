@@ -220,5 +220,5 @@ of commas, hyphens, &c. to the page margins.
 .in 0
 Heirloom \fItroff\fP is free software;
 its \fIC\fP source code can be obtained at no charge from
-\[less]http\&://heirloom.sourceforge.net/doctools.html\[greater].
+\[less]http\&://n-t-roff.github.io/heirloom/doctools.html\[greater]
 It runs on a wide variety of Unix systems.

@@ -892,7 +892,7 @@ Availability and Contact Information
 The source code of the \fIHeirloom Documentation Tools\fR
 and accompanying materials
 are freely available from
-<\W'http://heirloom.sourceforge.net/doctools.html'http://heirloom.sourceforge.net/\:doctools.html\W>.
+<\W'http://n-t-roff.github.io/heirloom/doctools.html'http://n-t-roff.github.io/heirloom/\:doctools.html\W>.
 Comments and bug reports should be sent to Gunnar Ritter,
 <gunnarr@acm.org>.
 .pg
@@ -6678,7 +6678,7 @@ The \fIuri\fR part is not interpreted by \*(TR,
 but just written to the generated output.
 Typically, this will be a link to a web page,
 as in
-<\W'http://heirloom.sourceforge.net/doctools.html'\eW'http://heirloom.sourceforge.net/doctools.html'http://heirloom.sourceforge.net/\:doctools.html\eW\W>.
+<\W'http://n-t-roff.github.io/heirloom/doctools.html'\eW'http://n-t-roff.github.io/heirloom/doctools.html'http://n-t-roff.github.io/heirloom/\:doctools.html\eW\W>.
 .pg
 The appearance of links can be changed;
 links are normally surrounded by an 1 point wide blue border.
