@@ -331,9 +331,9 @@ for(c=0; c<ncol; c++)
 			}
 		}
 	if (s<128)
-		fprintf(tabout, ".%c+\n",s);
+		fprintf(tabout, ".%c+\n",(int)s);
 	else
-		fprintf(tabout, ".do %d+\n",s);
+		fprintf(tabout, ".do %ld+\n",s);
 	fprintf(tabout, ".in -\\n(%du\n", SIND);
 	if (*fn>0) putfont("P");
 	fprintf(tabout, ".mk %d\n", S2);

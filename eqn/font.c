@@ -70,10 +70,7 @@ font(int p1, int p2) {
 
 void
 fatbox(int p) {
-	int sh;
-
 	yyval.token = p;
-	sh = ps / 4;
 	nrwid(p, ps, p);
 	printf(".ds %d \\*(%d\\h'-\\n(%du+0.05m'\\*(%d\n", p, p, p, p);
 	if(dbg)printf(".\tfat %d, sh=0.05m\n", p);

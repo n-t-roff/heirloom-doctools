@@ -43,7 +43,7 @@ void pushsrc(int type, char *ptr)	/* new input source */
 	srcp->type = type;
 	srcp->sp = ptr;
 	if (dbg > 1) {
-		printf("\n%3d ", srcp - src);
+		printf("\n%3d ", (int)(srcp - src));
 		switch (srcp->type) {
 		case File:
 			printf("push file %s\n",
@@ -75,7 +75,7 @@ void popsrc(void)	/* restore an old one */
 	if (srcp <= src)
 		FATAL("too many inputs popped");
 	if (dbg > 1) {
-		printf("%3d ", srcp - src);
+		printf("%3d ", (int)(srcp - src));
 		switch (srcp->type) {
 		case File:
 			printf("pop file\n");
@@ -205,7 +205,7 @@ void dodef(struct symtab *stp)	/* collect args and switch input to defn */
 		ap->argstk[i] = "";
 	if (dbg)
 		for (i = 0; i < argcnt; i++)
-			printf("arg %d.%d = <%s>\n", ap-args, i+1, ap->argstk[i]);
+			printf("arg %d.%d = <%s>\n", (int)(ap-args), i+1, ap->argstk[i]);
 	argfp = ap;
 	pushsrc(Macro, stp->s_val.p);
 }
@@ -398,7 +398,7 @@ void do_thru(void)	/* read one line, make into a macro expansion */
 		ap->argstk[i] = "";
 	if (dbg)
 		for (i = 0; i < argcnt; i++)
-			printf("arg %d.%d = <%s>\n", ap-args, i+1, ap->argstk[i]);
+			printf("arg %d.%d = <%s>\n", (int)(ap-args), i+1, ap->argstk[i]);
 	if (strcmp(ap->argstk[0], ".PE") == 0) {
 		thru = 0;
 		thrudef = 0;

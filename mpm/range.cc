@@ -281,7 +281,7 @@ static void readslugs(FILE *fp)
 			break;
 	}
 	*++slugp = eofslug();
-	printf("# %d slugs\n", slugp-slugs);
+	printf("# %d slugs\n", (int)(slugp-slugs));
 }
 
 static slug *findend(slug *sp)

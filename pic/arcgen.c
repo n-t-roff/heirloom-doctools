@@ -23,11 +23,12 @@ obj *arcgen(int type)	/* handles circular and (eventually) elliptical arcs */
 	static double prevw = HT10;
 	static double prevh = HT5;
 	static double prevrad = HT2;
-	static int dtox[2][4] ={ 1, -1, -1, 1, 1, 1, -1, -1 };
-	static int dtoy[2][4] ={ 1, 1, -1, -1, -1, 1, 1, -1 };
-	static int dctrx[2][4] ={ 0, -1, 0, 1, 0, 1, 0, -1 };
-	static int dctry[2][4] ={ 1, 0, -1, 0, -1, 0, 1, 0 };
-	static int nexthv[2][4] ={ U_DIR, L_DIR, D_DIR, R_DIR, D_DIR, R_DIR, U_DIR, L_DIR };
+	static int dtox[2][4] ={ {1, -1, -1, 1}, {1, 1, -1, -1} };
+	static int dtoy[2][4] ={ {1, 1, -1, -1}, {-1, 1, 1, -1} };
+	static int dctrx[2][4] ={ {0, -1, 0, 1}, {0, 1, 0, -1} };
+	static int dctry[2][4] ={ {1, 0, -1, 0}, {-1, 0, 1, 0} };
+	static int nexthv[2][4] ={ {U_DIR, L_DIR, D_DIR, R_DIR}, {D_DIR,
+	    R_DIR, U_DIR, L_DIR} };
 	double dx2, dy2, ht, phi, r, d;
 	int i, head, to, at, cw, invis, ddtype, battr;
 	obj *p, *ppos;

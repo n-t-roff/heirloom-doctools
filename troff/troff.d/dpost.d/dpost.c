@@ -473,7 +473,7 @@ struct  {
 	int	fontslant;		/* angle from x S ... */
 
 
-} fontname[NFONT+1] = {NULL, 0};
+} fontname[NFONT+1];
 
 
 /*
@@ -988,7 +988,7 @@ header(FILE *fp)
 		    -bp->Count : bp->Count);
 		fprintf(fp, "  /Dest /Bookmark$%d\n"
 		            "/OUT pdfmark\n",
-		    bp - &Bookmarks[0]);
+		    (int)(bp - &Bookmarks[0]));
 	}
     }
 

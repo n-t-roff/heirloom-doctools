@@ -64,53 +64,53 @@ static struct brstr {
 } br[MAXBR] = {
 	/* A few bare bones troff commands */
 #define	SZ	0
-	"sz",	"sz",	/* also \s */
+	{ "sz",	"sz" },	/* also \s */
 #define	FT	1
-	"ft",	"ft",	/* also \f */
+	{ "ft",	"ft" },	/* also \f */
 	/* the -mm package */
-	"AL",	"LE",
-	"AS",	"AE",
-	"BL",	"LE",
-	"BS",	"BE",
-	"DF",	"DE",
-	"DL",	"LE",
-	"DS",	"DE",
-	"FS",	"FE",
-	"ML",	"LE",
-	"NS",	"NE",
-	"RL",	"LE",
-	"VL",	"LE",
+	{ "AL",	"LE" },
+	{ "AS",	"AE" },
+	{ "BL",	"LE" },
+	{ "BS",	"BE" },
+	{ "DF",	"DE" },
+	{ "DL",	"LE" },
+	{ "DS",	"DE" },
+	{ "FS",	"FE" },
+	{ "ML",	"LE" },
+	{ "NS",	"NE" },
+	{ "RL",	"LE" },
+	{ "VL",	"LE" },
 	/* the -ms package */
-	"AB",	"AE",
-	"BD",	"DE",
-	"CD",	"DE",
-	"DS",	"DE",
-	"FS",	"FE",
-	"ID",	"DE",
-	"KF",	"KE",
-	"KS",	"KE",
-	"LD",	"DE",
-	"LG",	"NL",
-	"QS",	"QE",
-	"RS",	"RE",
-	"SM",	"NL",
-	"XA",	"XE",
-	"XS",	"XE",
+	{ "AB",	"AE" },
+	{ "BD",	"DE" },
+	{ "CD",	"DE" },
+	{ "DS",	"DE" },
+	{ "FS",	"FE" },
+	{ "ID",	"DE" },
+	{ "KF",	"KE" },
+	{ "KS",	"KE" },
+	{ "LD",	"DE" },
+	{ "LG",	"NL" },
+	{ "QS",	"QE" },
+	{ "RS",	"RE" },
+	{ "SM",	"NL" },
+	{ "XA",	"XE" },
+	{ "XS",	"XE" },
 	/* The -me package */
-	"(b",	")b",
-	"(c",	")c",
-	"(d",	")d",
-	"(f",	")f",
-	"(l",	")l",
-	"(q",	")q",
-	"(x",	")x",
-	"(z",	")z",
+	{ "(b",	")b" },
+	{ "(c",	")c" },
+	{ "(d",	")d" },
+	{ "(f",	")f" },
+	{ "(l",	")l" },
+	{ "(q",	")q" },
+	{ "(x",	")x" },
+	{ "(z",	")z" },
 	/* Things needed by preprocessors */
-	"EQ",	"EN",
-	"TS",	"TE",
+	{ "EQ",	"EN" },
+	{ "TS",	"TE" },
 	/* Refer */
-	"[",	"]",
-	0,	0
+	{ "[",	"]" },
+	{ NULL,	NULL }
 };
 
 /*
