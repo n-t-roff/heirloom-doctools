@@ -22,10 +22,10 @@ queue	ufqueue;
 
 // We use the stream function current() to access a queue's head.
 // Thus, queue member curr should always point to its first range.
-void queue::check(char *whence)
+void queue::check(const char *whence)
 {
 	if (dbg & 8) {
-		char *p;
+		const char *p;
 		if (this == &squeue)
 			p = "squeue";
 		else if (this == &bfqueue)

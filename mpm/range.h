@@ -331,7 +331,7 @@ class queue : public stream {
 	strblk	*newguy;
   protected:
 	int	blocked;
-	void	check(char *);
+	void	check(const char *);
   public:
 	queue() : blocked(0)	{ }
 	range	*enqueue(range *r);

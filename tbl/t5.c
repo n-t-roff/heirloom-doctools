@@ -89,7 +89,7 @@ for (nlin=nslin=0; ocbase=cbase, gets1(&cbase, &cstore, &linesize); nlin++)
 		if (match(cstore, "T{")) /* text follows */
 			/* get_text was originally gettext and was renamed */
 			table[nlin][icol].col =
-				(char *)get_text(cstore, nlin, icol,
+				(char *)(intptr_t)get_text(cstore, nlin, icol,
 					font[stynum[nlin]][icol],
 					csize[stynum[nlin]][icol]);
 		else

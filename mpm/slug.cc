@@ -73,7 +73,7 @@ char *slug::headstr()
 	return buf;
 }
 
-static char *strindex(char s[], char t[])	// index of earliest t[] in s[]
+static char *strindex(char s[], const char t[])	// index of earliest t[] in s[]
 {
 	for (int i = 0; s[i] != '\0'; i++) {
 		int j, k;
@@ -121,7 +121,7 @@ void slug::slugout(int col)
 char *slug::typname()
 {
 	static char buf[50];
-	char *p = buf;		// return value
+	const char *p = buf;		// return value
 	switch(type) {
 	case EOF:	p = "EOF"; break;
 	case VBOX:	p = "VBOX"; break;
@@ -142,7 +142,7 @@ char *slug::typname()
 	case PARM:	p = "PARM"; break;
 	default:	sprintf(buf, "weird type %d", type);
 	}
-	return p;
+	return (char *)p;
 }
 
 // ================================================================================
