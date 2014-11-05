@@ -91,8 +91,8 @@ FWS	([ \t]|\\\n)
 <A>"]"		{ BEGIN br; return(ST); }
 <A>"{"{WS}*(#.*)?\n+	{ return(yylval.i = yytext[0]); }
 
-<A>^".PS".*	{ if (curfile == infile) WARNING(".PS found inside .PS/.PE"); }
-<A>^".PE".*	{ if (curfile == infile) {
+<A>^"."{WS}*"PS".*	{ if (curfile == infile) WARNING(".PS found inside .PS/.PE"); }
+<A>^"."{WS}*"PE".*	{ if (curfile == infile) {
 			yylval.p = PEstring = tostring(yytext);
 			return(EOF);
 		  }

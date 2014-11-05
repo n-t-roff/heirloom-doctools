@@ -218,7 +218,21 @@ void getdata(void)
 	printlf(1, curfile->fname);
 	while (fgetline(&buf, &size, NULL, curfile->fin) != NULL) {
 		curfile->lineno++;
-		if (*buf == '.' && *(buf+1) == 'P' && *(buf+2) == 'S') {
+		if (buf[0] == '.' && buf[1] == 'l' && buf[2] == 'f') {
+			buf1 = realloc(buf1, size);
+			if (sscanf(buf+3, "%d %s", &ln, buf1) == 2) {
+				free(curfile->fname);
+				printlf(curfile->lineno = ln, curfile->fname = tostring(buf1));
+			} else
+				printlf(curfile->lineno = ln, NULL);
+		} else if (*buf == '.') {
+			for (p = buf + 1; *p && (*p == ' ' || *p == '\t');
+			    p++);
+			if (!*p) continue;
+			if (p[0] != 'P' || p[1] != 'S') {
+				fputs(buf, stdout);
+				continue;
+			}
 			for (p = &buf[3]; *p == ' '; p++)
 				;
 			if (*p++ == '<') {
@@ -265,13 +279,6 @@ void getdata(void)
 			}
 			printlf(curfile->lineno+1, NULL);
 			fflush(stdout);
-		} else if (buf[0] == '.' && buf[1] == 'l' && buf[2] == 'f') {
-			buf1 = realloc(buf1, size);
-			if (sscanf(buf+3, "%d %s", &ln, buf1) == 2) {
-				free(curfile->fname);
-				printlf(curfile->lineno = ln, curfile->fname = tostring(buf1));
-			} else
-				printlf(curfile->lineno = ln, NULL);
 		} else
 			fputs(buf, stdout);
 	}
