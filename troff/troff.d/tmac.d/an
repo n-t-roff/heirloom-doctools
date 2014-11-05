@@ -65,6 +65,7 @@
 'sp .5i
 .ev
 .ns
+.if \n(cR .wh 0 
 ..
 '	# handle the foot of the page
 .de }F
@@ -72,7 +73,8 @@
 .ft 1
 .ps \\nS
 'sp .5i
-.tl \\*(]W\\*(]L%
+.ie !\n(cR .tl \\*(]W\\*(]L%
+.el .tl \\*(]W\\*(]L\\*(]H
 'bp
 .ev
 ..
@@ -112,9 +114,10 @@
 .ds ]W \\$4
 .ds ]D \\$5
 .wh 0 }H
-.if t .wh -1i }F
-.if n .wh -1.167i }F
-.em }M
+.ie t .wh -1i }F
+.el .if !\n(cR .wh -1.167i }F
+.ie !\n(cR .em }M
+.el .em }F
 .if \\n(nl .bp 1
 .}E
 .DT
