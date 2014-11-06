@@ -40,6 +40,20 @@ while ((c= *small++) == *big++)
 	if (c==0) return(1);
 return(c==0);
 }
+
+/* returns: 1 for match, 0 else */
+int
+cprefix(char *ctl, char *line)
+{
+	char c;
+
+	if (*line++ != '.') return 0;
+	while (*line == ' ' || *line == '\t') line++;
+	while ((c = *ctl++) == *line++)
+		if (!c) return 1;
+	return !c;
+}
+
 int 
 letter(int ch)
 	{

@@ -51,6 +51,9 @@ The input files are copied to the standard output,
 except for lines between .TS and .TE
 command lines, which are assumed to describe tables
 and reformatted.
+Arbitrary whitespace can be inserted between the dot and the commands TS or
+TE.
+Macros with these names are ignored by tbl if "'" is used instead of ".".
 With the
 .I \-mx
 options, the respective macro packages

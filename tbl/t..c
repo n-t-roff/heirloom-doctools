@@ -186,6 +186,7 @@ int ineqn(char *, char *);
 /* ts.c */
 int match(char *, char *);
 int prefix(char *, char *);
+int cprefix(char *, char *);
 int letter(int);
 int numb(char *);
 int digit(int);

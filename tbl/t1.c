@@ -76,7 +76,7 @@ setinp(argc,argv);
 while (gets1(&line, &line, &linesize))
 	{
 	fprintf(tabout, "%s\n",line);
-	if (prefix(".TS", line))
+	if (cprefix("TS", line))
 		tableput();
 	}
 fclose(tabin);

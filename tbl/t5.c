@@ -40,12 +40,12 @@ for (nlin=nslin=0; ocbase=cbase, gets1(&cbase, &cstore, &linesize); nlin++)
 	{
 	cspace += cbase - ocbase;
 	stynum[nlin]=nslin;
-	if (prefix(".TE", cstore))
+	if (cprefix("TE", cstore))
 		{
 		leftover=0;
 		break;
 		}
-	if (prefix(".TC", cstore) || prefix(".T&", cstore))
+	if (cprefix("TC", cstore) || cprefix("T&", cstore))
 		{
 		readspec();
 		nslin++;

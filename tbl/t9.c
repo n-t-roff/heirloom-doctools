@@ -45,7 +45,7 @@ int
 domore(char *dataln)
 {
 	int icol, ch;
-if (prefix(".TE", dataln))
+if (cprefix("TE", dataln))
 	return(0);
 if (dataln[0] == '.' && !isdigit((unsigned char)dataln[1]))
 	{
