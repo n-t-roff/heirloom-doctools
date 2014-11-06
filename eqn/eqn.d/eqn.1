@@ -32,26 +32,26 @@
 .\" WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
 .\" OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
 .\" EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-.TH EQN 1B "12/12/05" "Heirloom Documentation Tools" "BSD System Compatibility"
+.TH EQN 1 "12/12/05" "Heirloom Documentation Tools" "BSD System Compatibility"
 .EQ
 delim $$
 .EN
 .SH NAME
-eqn, neqn, checkeq \- (BSD) typeset mathematics
+eqn, neqn, checkeq \- typeset mathematics
 .SH SYNOPSIS
-\fB/usr/ucb/eqn\fR
+\fBeqn\fR
 [\fB\-d\fIxy\fR]
 [\fB\-f\fIn\fR]
 [\fB\-s\fIn\fR]
 [\fIfile\fR] ...
 .br
-\fB/usr/ucb/neqn\fR [\fIfile\fR] ...
+\fBneqn\fR [\fIfile\fR] ...
 .br
-\fB/usr/ucb/checkeq\fR
+\fBcheckeq\fR
 .SH DESCRIPTION
 .I Eqn
 is a
-troff(1B)
+troff(1)
 preprocessor
 for typesetting mathematics
 on a phototypesetter,
@@ -304,7 +304,7 @@ Greek letters are spelled out in the desired case, as in
 or
 .I GAMMA.
 Mathematical words like sin, cos, log are made Roman automatically.
-.IR Troff (1B)
+.IR Troff (1)
 four-character escapes like \e(bs (\(bs)
 can be used anywhere.
 Strings enclosed in double quotes "..."
@@ -316,7 +316,7 @@ with
 when all else fails.
 .SH "SEE ALSO"
 .PP
-troff(1B), tbl(1B), ms(7), eqnchar(7B)
+troff(1), tbl(1), ms(7), eqnchar(7)
 .br
 B. W. Kernighan and L. L. Cherry,
 .ul

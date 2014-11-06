@@ -70,15 +70,15 @@
 .\"
 .\"
 .\".TH REFER 1 "May 12, 1986"
-.TH REFER 1B "12/12/05" "Heirloom Documentation Tools" "BSD System Compatibility"
+.TH REFER 1 "12/12/05" "Heirloom Documentation Tools" "BSD System Compatibility"
 .AT 3
 .SH NAME
-refer \- (BSD) find and insert literature references in documents
+refer \- find and insert literature references in documents
 .SH SYNOPSIS
 .HP
 .ad l
 .nh
-\fB/usr/ucb/refer\fR
+\fBrefer\fR
 [\fB\-abcenPS\fR]
 [\fB\-f\fIn\fR]
 [\fB\-k\fIx\fR]
@@ -95,7 +95,7 @@ refer \- (BSD) find and insert literature references in documents
 is a preprocessor for
 .I nroff
 or
-.IR troff (1B)
+.IR troff (1)
 that finds and formats references for footnotes or endnotes.
 It is also the base for a series of programs designed to
 index, search, sort, and print stand-alone bibliographies,
@@ -116,7 +116,7 @@ The reference data, from whatever source, are assigned to a set of
 .I troff
 strings.
 Macro packages such as
-.IR ms (7B)
+.IR ms (7)
 print the finished reference text from these strings.
 By default references are flagged by footnote numbers.
 .PP
@@ -256,7 +256,7 @@ Produce references in the Natural or Social Science format.
 To use your own references,
 put them in the format described below.
 They can be searched more rapidly by running
-.IR indxbib (1B)
+.IR indxbib (1)
 on them before using
 .I refer;
 failure to index results in a linear search.
@@ -291,7 +291,7 @@ is controlled by the macros specified for
 (for stand-alone bibliographies).
 For a list of the most common key-letters
 and their corresponding fields, see
-.IR addbib (1B).
+.IR addbib (1).
 An example of a
 .I refer
 entry is given below.
@@ -312,7 +312,7 @@ entry is given below.
 .br
 /usr/ucblib/reftools  	directory of companion programs
 .SH SEE ALSO
-addbib(1B), sortbib(1B), roffbib(1B), indxbib(1B), lookbib(1B)
+addbib(1), sortbib(1), roffbib(1), indxbib(1), lookbib(1)
 .SH NOTES
 Blank spaces at the end of lines in bibliography fields
 will cause the records to sort and reverse incorrectly.

@@ -42,15 +42,15 @@
 .\"
 .\" Sccsid @(#)vgrind.1b	1.3 (gritter) 11/6/05
 .\"
-.TH VGRIND 1B "11/6/05" "Heirloom Documentation Tools" "BSD System Compatibility"
+.TH VGRIND 1 "11/6/05" "Heirloom Documentation Tools" "BSD System Compatibility"
 .UC 4
 .SH NAME
-vgrind \- (BSD) grind nice listings of programs
+vgrind \- grind nice listings of programs
 .SH SYNOPSIS
 .HP
 .ad l
 .nh
-\fB/usr/ucb/vgrind\fR
+\fBvgrind\fR
 [\fB\-2ftnxw\fR]
 [\fB\-s\fIn\fR]
 [\fB\-h\ \fIheader\fR]
@@ -67,7 +67,7 @@ vgrind \- (BSD) grind nice listings of programs
 .I Vgrind
 formats the program sources which are arguments 
 in a nice style using
-.IR troff (1B).
+.IR troff (1).
 Comments are placed in italics, keywords in bold face,
 and the name of the current function is listed down the margin of each
 page as it is encountered.
@@ -76,7 +76,7 @@ page as it is encountered.
 runs in two basic modes, filter mode or regular mode.  In filter mode 
 .I vgrind
 acts as a filter in a manner similar to
-.IR tbl (1B).
+.IR tbl (1).
 The standard input is passed directly to the standard output except
 for lines bracketed by the 
 .I troff-like
@@ -90,14 +90,14 @@ These lines are formatted as described above.  The output from this
 filter can be passed to 
 .I troff 
 for output.  There need be no particular ordering with 
-.IR eqn (1B)
+.IR eqn (1)
 or
-.IR tbl (1B).
+.IR tbl (1).
 .PP
 In regular mode 
 .I vgrind
 accepts input files, processes them, and passes them to 
-.IR troff (1B)
+.IR troff (1)
 for output.  
 .PP
 In both modes 
@@ -185,7 +185,7 @@ index	file where source for index is created
 .br
 /usr/ucblib/vgrindefs	language descriptions
 .SH SEE ALSO
-troff(1B)
+troff(1)
 .SH NOTES
 Vfontedpr assumes that a certain programming style is followed:
 .PP
