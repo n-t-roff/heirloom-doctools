@@ -32,7 +32,7 @@
 .\" WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
 .\" OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
 .\" EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-.TH EQNCHAR 7B "12/9/05" "Heirloom Documentation Tools" "BSD System Compatibility"
+.TH EQNCHAR 7 "12/9/05" "Heirloom Documentation Tools" "BSD System Compatibility"
 .EQ
 tdefine ciplus % "\o'\(pl\(ci'" %
 ndefine ciplus % O+ %
@@ -129,14 +129,14 @@ eqnchar \- special character definitions for eqn
 .HP
 .ad l
 .nh
-.B /usr/ucb/eqn /usr/pub/eqnchar
+.B eqn /usr/pub/eqnchar
 .RB [ files ]
-.B | /usr/ucb/troff
+.B | troff
 .RB [ options ]
 .HP
-.B /usr/ucb/neqn /usr/pub/eqnchar
+.B neqn /usr/pub/eqnchar
 .RB [ files ]
-.B | /usr/ucb/nroff
+.B | nroff
 .RB [ options ]
 .br
 .hy 1
@@ -209,4 +209,4 @@ definitions for the following characters
 .SH FILES
 /usr/pub/eqnchar
 .SH SEE ALSO
-troff(1B), eqn(1B)
+troff(1), eqn(1)

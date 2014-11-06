@@ -29,7 +29,7 @@ install:
 	$(STRIP) $(ROOT)$(BINDIR)/ta
 	$(INSTALL) -c otfdump $(ROOT)$(BINDIR)/otfdump
 	$(STRIP) $(ROOT)$(BINDIR)/otfdump
-	$(INSTALL) -c -m 644 troff.1b $(ROOT)$(MANDIR)/man1b/troff.1b
+	$(INSTALL) -c -m 644 troff.1 $(ROOT)$(MANDIR)/man1/troff.1
 	$(INSTALL) -c -m 644 otfdump.1 $(ROOT)$(MANDIR)/man1/otfdump.1
 
 clean:

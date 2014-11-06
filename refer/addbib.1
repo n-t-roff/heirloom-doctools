@@ -67,76 +67,103 @@
 .\" OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
 .\" EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 .\"
-.\" Sccsid @(#)sortbib.1b	1.4 (gritter) 12/12/05
+.\" Sccsid @(#)addbib.1b	1.4 (gritter) 12/12/05
 .\"
-.\"	from 4.3BSD-Tahoe sortbib.1	6.1 (Berkeley) 4/29/85
 .\"
-.\".TH SORTBIB 1 "April 29, 1985"
-.TH SORTBIB 1B "12/12/05" "Heirloom Documentation Tools" "BSD System Compatibility"
+.\"	from 4.3BSD-Tahoe addbib.1	6.1 (Berkeley) 4/29/85
+.\"
+.\".TH ADDBIB 1 "April 29, 1985"
+.TH ADDBIB 1 "12/12/05" "Heirloom Documentation Tools" "BSD System Compatibility"
 .UC 5
 .SH NAME
-sortbib \- (BSD) sort bibliographic database
+addbib \- create or extend bibliographic database
 .SH SYNOPSIS
-\fB/usr/ucb/sortbib\fR [\fB\-s\ \fIKEYS\fR] \fIdatabase\fR ...
+\fBaddbib\fR
+[\fB\-p\fI\ promptfile\fR] [\fB\-a\fR] \fIdatabase\fR
 .SH DESCRIPTION
-.I Sortbib
-sorts files of records containing
-.I refer
-key-letters by user-specified keys.
-Records may be separated by blank lines,
-or by \&.[ and \&.] delimiters,
-but the two styles may not be mixed together.
-This program reads through each
+When this program starts up, answering ``y''
+to the initial ``Instructions?'' prompt yields directions;
+typing ``n'' or \s-2RETURN\s0 skips them.
+.I Addbib
+then prompts for various bibliographic fields,
+reads responses from the terminal,
+and sends output records to a
+.I database.
+A null response (just \s-2RETURN\s0) means to leave out that field.
+A minus sign (\-) means to go back to the previous field.
+A trailing backslash allows a field to be continued on the next line.
+The repeating ``Continue?'' prompt allows the user
+either to resume by typing ``y'' or \s-2RETURN\s0,
+to quit the current session by typing ``n'' or ``q'',
+or to edit the
 .I database
-and pulls out key fields, which are sorted separately.
-The sorted key fields contain the file pointer,
-byte offset, and length of corresponding records.
-These records are delivered using disk seeks and reads, so
-.I sortbib
-may not be used in a pipeline to read standard input.
+with any system editor \fI(vi, ex, edit, ed).\fP
 .PP
-By default,
-.I sortbib
-alphabetizes by the first %A and the %D fields,
-which contain the senior author and date.
 The
-.B \-s
-option is used to specify new
-.IR \s-1KEYS\s0 .
-For instance,
-.BR \-s ATD
-will sort by author, title, and date,
-while
-.BR \-s A+D
-will sort by all authors, and date.
-Sort keys past the fourth are not meaningful.
-No more than 16 databases may be sorted together at one time.
-Records longer than 4096 characters will be truncated.
+.B \-a
+option suppresses prompting for an abstract;
+asking for an abstract is the default.
+Abstracts are ended with a \s-2CTRL\s0-d.
+The
+.B \-p
+option causes
+.I addbib
+to use a new prompting skeleton, defined in
+.I promptfile.
+This file should contain prompt strings, a tab,
+and the key-letters to be written to the
+.I database.
 .PP
-.I Sortbib
-sorts on the last word on the %A line,
-which is assumed to be the author's last name.
-A word in the final position, such as ``jr.'' or ``ed.'',
-will be ignored if the name beforehand ends with a comma.
-Authors with two-word last names or unusual constructions
-can be sorted correctly by using the
-.I nroff
-convention ``\e0'' in place of a blank.
-A %Q field is considered to be the same as %A,
-except sorting begins with the first, not the last, word.
-.I Sortbib
-sorts on the last word of the %D line, usually the year.
-It also ignores leading articles (like ``A'' or ``The'')
-when sorting by titles in the %T or %J fields;
-it will ignore articles of any modern European language.
-If a sort-significant field is absent from a record,
-.I sortbib
-places that record before other records containing that field.
+The most common key-letters and their meanings are given below.
+.I Addbib
+insulates you from these key-letters,
+since it gives you prompts in English,
+but if you edit the bibliography file later on,
+you will need to know this information.
+.sp
+.nf
+	%A	Author's name
+	%B	Book containing article referenced
+	%C	City (place of publication)
+	%D	Date of publication
+	%E	Editor of book containing article referenced
+	%F	Footnote number or label (supplied by \fIrefer\fP\|)
+	%G	Government order number
+	%H	Header commentary, printed before reference
+	%I	Issuer (publisher)
+	%J	Journal containing article
+	%K	Keywords to use in locating reference
+	%L	Label field used by \fB\-k\fP option of \fIrefer\fP
+	%M	Bell Labs Memorandum (undefined)
+	%N	Number within volume
+	%O	Other commentary, printed at end of reference
+	%P	Page number(s)
+	%Q	Corporate or Foreign Author (unreversed)
+	%R	Report, paper, or thesis (unpublished)
+	%S	Series title
+	%T	Title of article or book
+	%V	Volume number
+	%X	Abstract \(em used by \fIroffbib\fP, not by \fIrefer\fP
+	%Y,Z	ignored by \fIrefer\fP
+.fi
+.sp
+Except for `A', each field should be given just once.
+Only relevant fields should be supplied.
+An example is:
+.sp
+.nf
+	%A	Bill Tuthill
+	%T	Refer \(em A Bibliography System
+	%I	Computing Services
+	%C	Berkeley
+	%D	1982
+	%O	\s-1UNX\s0 4.3.5.
+.fi
+.sp
+.SH FILES
+.DT
+promptfile	optional file to define prompting
 .SH SEE ALSO
-refer(1B), addbib(1B), roffbib(1B), indxbib(1B), lookbib(1B)
+refer(1), sortbib(1), roffbib(1), indxbib(1), lookbib(1)
 .SH NOTES
-Records with missing author fields
-should probably be sorted by title.
-.PP
-Written by
-Greg Shenaut & Bill Tuthill.
+Written by Al Stangenberger & Bill Tuthill.

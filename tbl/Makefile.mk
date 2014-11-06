@@ -14,7 +14,7 @@ tbl: $(OBJ)
 install:
 	$(INSTALL) -c tbl $(ROOT)$(BINDIR)/tbl
 	$(STRIP) $(ROOT)$(BINDIR)/tbl
-	$(INSTALL) -c -m 644 tbl.1b $(ROOT)$(MANDIR)/man1b/tbl.1b
+	$(INSTALL) -c -m 644 tbl.1 $(ROOT)$(MANDIR)/man1/tbl.1
 
 clean:
 	rm -f $(OBJ) tbl core log *~

@@ -73,12 +73,12 @@ install: all
 	$(INSTALL) -c papers/Rv7man $(ROOT)$(REFDIR)/papers/Rv7man
 	$(INSTALL) -c papers/runinv $(ROOT)$(REFDIR)/papers/runinv
 	cd $(ROOT)$(REFDIR)/papers && PATH=$(ROOT)$(REFDIR):$$PATH ./runinv
-	for i in addbib.1b lookbib.1b refer.1b roffbib.1b sortbib.1b; \
+	for i in addbib.1 lookbib.1 refer.1 roffbib.1 sortbib.1; \
 	do \
-		$(INSTALL) -c -m 644 $$i $(ROOT)$(MANDIR)/man1b/$$i || exit; \
+		$(INSTALL) -c -m 644 $$i $(ROOT)$(MANDIR)/man1/$$i || exit; \
 	done
-	rm -f $(ROOT)$(MANDIR)/man1b/indxbib.1b
-	ln -s lookbib.1b $(ROOT)$(MANDIR)/man1b/indxbib.1b
+	rm -f $(ROOT)$(MANDIR)/man1/indxbib.1
+	ln -s lookbib.1 $(ROOT)$(MANDIR)/man1/indxbib.1
 
 clean:
 	rm -f $(ROBJ) refer $(AOBJ) addbib $(LOBJ) lookbib \
