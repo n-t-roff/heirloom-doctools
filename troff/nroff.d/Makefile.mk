@@ -21,7 +21,7 @@ nroff: $(OBJ) $(LIBHNJ)/libhnj.a
 install:
 	$(INSTALL) -c nroff $(ROOT)$(BINDIR)/nroff
 	$(STRIP) $(ROOT)$(BINDIR)/nroff
-	$(INSTALL) -c -m 644 nroff.1b $(ROOT)$(MANDIR)/man1b/nroff.1b
+	$(INSTALL) -c -m 644 nroff.1 $(ROOT)$(MANDIR)/man1/nroff.1
 
 clean:
 	rm -f $(OBJ) nroff core log *~

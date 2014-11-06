@@ -26,7 +26,7 @@ install:
 	$(INSTALL) -c vfontedpr $(ROOT)$(LIBDIR)/vfontedpr
 	$(STRIP) $(ROOT)$(LIBDIR)/vfontedpr
 	$(INSTALL) -c -m 644 vgrindefs.src $(ROOT)$(LIBDIR)/vgrindefs
-	$(INSTALL) -c -m 644 vgrind.1b $(ROOT)$(MANDIR)/man1b/vgrind.1b
+	$(INSTALL) -c -m 644 vgrind.1 $(ROOT)$(MANDIR)/man1/vgrind.1
 
 clean:
 	rm -f $(OBJ) vfontedpr vgrind retest retest.o core log *~

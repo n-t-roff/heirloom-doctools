@@ -23,10 +23,10 @@ install:
 	test -d $(ROOT)$(BINDIR) || mkdir -p $(ROOT)$(BINDIR)
 	$(INSTALL) -c eqn $(ROOT)$(BINDIR)/eqn
 	$(STRIP) $(ROOT)$(BINDIR)/eqn
-	test -d $(ROOT)$(MANDIR)/man1b || mkdir -p $(ROOT)$(MANDIR)/man1b
-	test -d $(ROOT)$(MANDIR)/man7b || mkdir -p $(ROOT)$(MANDIR)/man7b
-	$(INSTALL) -c -m 644 eqn.1b $(ROOT)$(MANDIR)/man1b/eqn.1b
-	$(INSTALL) -c -m 644 eqnchar.7b $(ROOT)$(MANDIR)/man7b/eqnchar.7b
+	test -d $(ROOT)$(MANDIR)/man1 || mkdir -p $(ROOT)$(MANDIR)/man1
+	test -d $(ROOT)$(MANDIR)/man7 || mkdir -p $(ROOT)$(MANDIR)/man7
+	$(INSTALL) -c -m 644 eqn.1 $(ROOT)$(MANDIR)/man1/eqn.1
+	$(INSTALL) -c -m 644 eqnchar.7 $(ROOT)$(MANDIR)/man7/eqnchar.7
 
 clean:
 	rm -f $(OBJ) eqn e.c y.tab.* core log *~

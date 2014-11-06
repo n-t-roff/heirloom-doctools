@@ -13,7 +13,7 @@ soelim: $(OBJ)
 install:
 	$(INSTALL) -c soelim $(ROOT)$(BINDIR)/soelim
 	$(STRIP) $(ROOT)$(BINDIR)/soelim
-	$(INSTALL) -c -m 644 soelim.1b $(ROOT)$(MANDIR)/man1b/soelim.1b
+	$(INSTALL) -c -m 644 soelim.1 $(ROOT)$(MANDIR)/man1/soelim.1
 
 clean:
 	rm -f $(OBJ) soelim core log *~

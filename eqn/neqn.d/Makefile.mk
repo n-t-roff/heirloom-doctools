@@ -22,8 +22,8 @@ y.tab.h: e.c
 install:
 	$(INSTALL) -c neqn $(ROOT)$(BINDIR)/neqn
 	$(STRIP) $(ROOT)$(BINDIR)/neqn
-	rm -f $(ROOT)$(MANDIR)/man1b/neqn.1b
-	ln -s eqn.1b $(ROOT)$(MANDIR)/man1b/neqn.1b
+	rm -f $(ROOT)$(MANDIR)/man1/neqn.1
+	ln -s eqn.1 $(ROOT)$(MANDIR)/man1/neqn.1
 
 clean:
 	rm -f $(OBJ) neqn e.c y.tab.* core log *~
