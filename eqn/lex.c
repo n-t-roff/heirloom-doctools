@@ -133,7 +133,7 @@ yylex(void) {
 		return(EOF);
 
 	putbak(c);
-	getstr(token, SSIZE);
+	if (getstr(token, SSIZE)) return EOF;
 	if (dbg)printf(".\tlex token = |%s|\n", token);
 	if ((tp = lookup(deftbl, token, NULL)) != NULL) {
 		putbak(' ');
@@ -164,10 +164,12 @@ yylex(void) {
 	goto beg;
 }
 
-void
+/* returns: 1 if ".{WS}+EN" found, 0 else */
+int
 getstr(char *s, register int n) {
 	register int c;
 	register char *p;
+	enum { INI = 0, OTH, SP, C1, C2, PB } st = INI;
 
 	p = s;
 	while ((c = gtc()) == ' ' || c == '\n')
@@ -176,20 +178,46 @@ getstr(char *s, register int n) {
 		*s = 0;
 		return;
 	}
-	while (c != ' ' && c != '\t' && c != '\n' && c != '{' && c != '}'
-	  && c != '"' && c != '~' && c != '^' && c != righteq) {
+	while (((c != ' ' && c != '\t') || st == SP) && c != '\n' && c != '{'
+	    && c != '}' && c != '"' && c != '~' && c != '^' && c != righteq) {
 		if (c == '\\')
 			if ((c = gtc()) != '"')
 				*p++ = '\\';
+		switch (st) {
+		case INI:
+			st = c == '.' ? SP : OTH;
+			break;
+		case SP:
+			if (c == 'E') st = C1;
+			else if (c != ' ' && c != '\t') st = PB;
+			break;
+		case C1:
+			st = c == 'N' ? C2 : PB;
+			break;
+		case C2:
+			st = PB;
+			break;
+		default: ;
+		}
 		*p++ = c;
-		if (--n <= 0)
-			error(FATAL, "token %.20s... too long", s);
-		c = gtc();
+		if (st == PB)
+			goto TF;
+		else {
+			if (--n <= 0)
+				error(FATAL, "token %.20s... too long", s);
+			c = gtc();
+		}
 	}
 	if (c=='{' || c=='}' || c=='"' || c=='~' || c=='^' || c=='\t' || c==righteq)
 		putbak(c);
+TF:
+	if (st == SP || st == C1 || st == PB) {
+		while (--p != s) putbak(*p);
+		p++;
+	}
 	*p = '\0';
 	yylval.str = s;
+	return st == C2;
 }
 
 int

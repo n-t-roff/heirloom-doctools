@@ -226,10 +226,8 @@ void getdata(void)
 			} else
 				printlf(curfile->lineno = ln, NULL);
 		} else if (*buf == '.') {
-			for (p = buf + 1; *p && (*p == ' ' || *p == '\t');
-			    p++);
-			if (!*p) continue;
-			if (p[0] != 'P' || p[1] != 'S') {
+			for (p = buf + 1; *p == ' ' || *p == '\t'; p++);
+			if (!*p || *p != 'P' || p[1] != 'S') {
 				fputs(buf, stdout);
 				continue;
 			}

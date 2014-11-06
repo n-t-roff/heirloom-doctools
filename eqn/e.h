@@ -138,7 +138,7 @@ int gtc(void);
 int openinfile(void);
 void pbstr(register char *);
 int yylex(void);
-void getstr(char *, register int);
+int getstr(char *, register int);
 int cstr(char *, int, int);
 void define(int);
 void space(void);

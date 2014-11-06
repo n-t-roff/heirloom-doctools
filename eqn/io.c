@@ -57,9 +57,14 @@ eqn(int argc,char **argv) {
 	init_tbl();	/* install keywords in tables */
 	while ((type=getline(&in, &insize)) != EOF) {
 		eqline = linect;
-		if (in[0]=='.' && in[1]=='E' && in[2]=='Q') {
-			for (i=11; i<100; used[i++]=0);
+		if (type == lefteq)
+			do_inline();
+		else if (*in == '.') {
+			char *p;
 			printf("%s",in);
+			for (p = in + 1; *p == ' ' || *p == '\t'; p++);
+			if (!*p || *p != 'E' || p[1] != 'Q') continue;
+			for (i=11; i<100; used[i++]=0);
 			printf(".nr 99 \\n(.s\n.nr 98 \\n(.f\n");
 			printf(".if \\n(.X .nrf 99 \\n(.s\n");
 			markline = 0;
@@ -82,10 +87,7 @@ eqn(int argc,char **argv) {
 			}
 			if (putchar(lastchar) != '\n')
 				while (putchar(gtc()) != '\n');
-		}
-		else if (type == lefteq)
-			do_inline();
-		else
+		} else
 			printf("%s",in);
 	}
 	return(0);
