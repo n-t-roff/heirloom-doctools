@@ -79,6 +79,7 @@
 .nr Ic 10n
 .nr Li 16n
 .nr Ms 6n
+.nr Mt 32n
 .nr Nm 10n
 .nr No 12n
 .nr Ns 2
@@ -143,10 +144,16 @@
 .if !"\\$2"" \{\
 .	ds cH \\$2
 .\" .	if "\\$3"" \{\
-.		if \\$2>=1 .if \\$2<=8 \{\
-.			ds vT BSD Reference Manual
-.			if \\$2>1 .if \\$2<6 .ds vT BSD Programmer's Manual
-.			if "\\$2"8" .ds vT BSD System Manager's Manual
+.		if \\$2>=1 .if \\$2<=9 \{\
+.			ie     \\$2=1 .ds vT General Commands Manual
+.			el .ie \\$2=2 .ds vT System Calls Manual
+.			el .ie \\$2=3 .ds vT Library Functions Manual
+.			el .ie \\$2=4 .ds vT Kernel Interfaces Manual
+.			el .ie \\$2=5 .ds vT File Formats Manual
+.			el .ie \\$2=6 .ds vT Games Manual
+.			el .ie \\$2=7 .ds vT Miscellaneous Information Manual
+.			el .ie \\$2=8 .ds vT System Manager's Manual
+.			el            .ds vT Kernel Developer's Manual
 .			nr sN \\$2
 .		\}
 .		if "\\$2"unass"  .ds vT DRAFT
@@ -181,7 +188,7 @@
 .de Os
 .ds oS Null
 .if "\\$1"" \{\
-.	ds oS 4.4BSD
+.	ds oS BSD
 .\}
 .if "\\$2"" \{\
 .	ds aa Non-Null
@@ -214,10 +221,15 @@
 .if "\\*(aa"Non-Null" .as oS \0\\$2
 .rm aa
 ..
+.de Ox
+OpenBSD \\$1\\$2
+..
 .de Dd
 .if !"\\*(dD"" .nr gX 1
 .ie \\n(.$>0 \{\
-.	ie \\n(.$==3 \{\
+.	ie \\$1$Mdocdate: \
+.		ds dD \\$2\\ \\$3, \\$4
+.	el .ie \\n(.$==3 \{\
 .		ds dD \\$1 \\$2 \\$3
 .	\}
 .	el \{\
@@ -233,7 +245,8 @@
 .		if "\\n(mo"10" .ds dD October
 .		if "\\n(mo"11" .ds dD November
 .		if "\\n(mo"12" .ds dD December
-.		as dD \&\ \\n(dy, 19\\n(yr
+.		nr xX 1900+\\n(yr \" local register
+.		as dD \&\ \\n(dy, \\n(xX
 .	\}
 .\}
 .el \{\
@@ -255,7 +268,7 @@
 .	pL
 .	if !\\n(cR \{\
 '		sp \\n(Fmu
-.		tl @\\*(Hs\\*(oS\fP@\\*(Vs\\*(dD\fP@%@
+.		tl @\\*(Hs\\*(oS\fP@\\*(Vs\\*(dD\fP@\\*(Hs\\*(oS\fP@
 '		bp
 .	\}
 .	ev
@@ -265,7 +278,7 @@
 .fl
 .if \\n(cR \{\
 '	sp
-.	tl @\\*(Hs\\*(oS\fP@\\*(Vs\\*(dD\fP@%@
+.	tl @\\*(Hs\\*(oS\fP@\\*(Vs\\*(dD\fP@\\*(Hs\\*(oS\fP@
 .       pl \\n(nlu
 .\}
 ..
