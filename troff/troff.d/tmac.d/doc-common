@@ -77,7 +77,9 @@
 .nr I2 12n
 .nr I3 18n
 .nr Ic 10n
+.nr In 12n
 .nr Li 16n
+.nr Lk 32n
 .nr Ms 6n
 .nr Mt 32n
 .nr Nm 10n
@@ -86,11 +88,13 @@
 .nr Oo 10n
 .nr Oc 3
 .nr Op 14n
+.nr Ox 10n
 .nr Pa 32n
 .nr Pf 12n
 .nr Pc 3
 .nr Po 12n
 .nr Pq 12n
+.nr Qc 3
 .nr Ql 16n
 .nr Sc 3
 .nr So 12n
@@ -112,6 +116,8 @@
 .ds tV \&\\t\&
 .\" Punctuation values (3 = closing punctuation, 4 = opening)
 .nr z. 3
+.nr z! 3
+.nr z? 3
 .nr z, 3
 .nr z: 3
 .nr z; 3
@@ -140,10 +146,10 @@
 .ds dT UNTITLED
 .ds vT LOCAL
 .ds cH Null
-.if !"\\$1"" .ds dT \\$1
-.if !"\\$2"" \{\
+.if !\\$1 .ds dT \\$1
+.if !\\$2 \{\
 .	ds cH \\$2
-.\" .	if "\\$3"" \{\
+.\" .	if \\$3 \{\
 .		if \\$2>=1 .if \\$2<=9 \{\
 .			ie     \\$2=1 .ds vT General Commands Manual
 .			el .ie \\$2=2 .ds vT System Calls Manual
@@ -156,28 +162,28 @@
 .			el            .ds vT Kernel Developer's Manual
 .			nr sN \\$2
 .		\}
-.		if "\\$2"unass"  .ds vT DRAFT
-.		if "\\$2"draft"  .ds vT DRAFT
-.		if "\\$2"paper"  .ds vT UNTITLED
+.		if \\$2unass  .ds vT DRAFT
+.		if \\$2draft  .ds vT DRAFT
+.		if \\$2paper  .ds vT UNTITLED
 .\" .	\}
 .\}
-.if !"\\$3"" \{\
-.	if "\\$3"USD"   .ds vT BSD User's Supplementary Documents
-.	if "\\$3"PS1"   .ds vT BSD Programmers's Supplementary Documents
-.	if "\\$3"AMD"   .ds vT BSD Ancestral Manual Documents
-.	if "\\$3"SMM"   .ds vT BSD System Manager's Manual
-.	if "\\$3"URM"   .ds vT BSD Reference Manual
-.	if "\\$3"PRM"   .ds vT BSD Programmers's Manual
-.	if "\\$3"IND"   .ds vT BSD Manual Master Index
-.\" .	if "\\$3"CON"   .ds vT BSD Contributed Software Manual
-.\" .	if "\\$3"IMP"	.ds vT BSD Implementation Notes
-.\" .	if "\\$3"HOW"	.ds vT BSD How Pocket Manual
-.	if "\\$3"LOCAL" .ds vT BSD Local Manual
-.	if "\\$3"tahoe" .as vT \ (Tahoe Architecture)
-.	if "\\$3"vax" .as vT \ (VAX Architecture)
-.	if "\\$3"hp300" .as vT \ (HP300 Architecture)
-.	if "\\$3"sparc" .as vT \ (SPARC Architecture)
-.	if "\\*(vT"LOCAL" .ds vT \\$3
+.if !\\$3 \{\
+.	if \\$3USD   .ds vT BSD User's Supplementary Documents
+.	if \\$3PS1   .ds vT BSD Programmers's Supplementary Documents
+.	if \\$3AMD   .ds vT BSD Ancestral Manual Documents
+.	if \\$3SMM   .ds vT BSD System Manager's Manual
+.	if \\$3URM   .ds vT BSD Reference Manual
+.	if \\$3PRM   .ds vT BSD Programmers's Manual
+.	if \\$3IND   .ds vT BSD Manual Master Index
+.\" .	if \\$3CON   .ds vT BSD Contributed Software Manual
+.\" .	if \\$3IMP	.ds vT BSD Implementation Notes
+.\" .	if \\$3HOW	.ds vT BSD How Pocket Manual
+.	if \\$3LOCAL .ds vT BSD Local Manual
+.	if \\$3tahoe .as vT \ (Tahoe Architecture)
+.	if \\$3vax .as vT \ (VAX Architecture)
+.	if \\$3hp300 .as vT \ (HP300 Architecture)
+.	if \\$3sparc .as vT \ (SPARC Architecture)
+.	if \\*(vTLOCAL .ds vT \\$3
 .\}
 ..
 .\" NS Os macro - Operating System (behaviour changes after first call)
@@ -187,45 +193,42 @@
 .\" .ds dD \s+4\f(CIDRAFT\fP\s-4\ \ \-\-\ \ \\*(dD\ \ \-\-\ \ \s+4\f(CIDRAFT\s-4
 .de Os
 .ds oS Null
-.if "\\$1"" \{\
+.if \\$1 \{\
 .	ds oS BSD
 .\}
-.if "\\$2"" \{\
+.if \\$2 \{\
 .	ds aa Non-Null
 .\}
-.if "\\$1"ATT"   \{\
+.if \\$1ATT   \{\
 .	ds oS AT&T
-.	if "\\$2""    .as oS \0UNIX
-.	if "\\$2"7th" .as oS \07th Edition
-.	if "\\$2"7"   .as oS \07th Edition
-.	if "\\$2"III" .as oS \0System III
-.	if "\\$2"3"   .as oS \0System III
-.	if "\\$2"V"   .as oS \0System V
-.	if "\\$2"V.2" .as oS \0System V Release 2
-.	if "\\$2"V.3" .as oS \0System V Release 3
-.	if "\\$2"V.4" .as oS \0System V Release 4
+.	if \\$2    .as oS \0UNIX
+.	if \\$27th .as oS \07th Edition
+.	if \\$27   .as oS \07th Edition
+.	if \\$2III .as oS \0System III
+.	if \\$23   .as oS \0System III
+.	if \\$2V   .as oS \0System V
+.	if \\$2V.2 .as oS \0System V Release 2
+.	if \\$2V.3 .as oS \0System V Release 3
+.	if \\$2V.4 .as oS \0System V Release 4
 .\}
-.if "\\$1"BSD" \{\
-.	if "\\$2"3"    .ds oS 3rd Berkeley Distribution
-.	if "\\$2"4"    .ds oS 4th Berkeley Distribution
-.	if "\\$2"4.1"  .ds oS 4.1 Berkeley Distribution
-.	if "\\$2"4.2"  .ds oS 4.2 Berkeley Distribution
-.	if "\\$2"4.3"  .ds oS 4.3 Berkeley Distribution
-.	if "\\$2"4.3T" .ds oS 4.3-Tahoe Berkeley Distribution
-.	if "\\$2"4.3R" .ds oS 4.3-Reno Berkeley Distribution
-.	if "\\$2"4.3t" .ds oS 4.3-Tahoe Berkeley Distribution
-.	if "\\$2"4.3r" .ds oS 4.3-Reno Berkeley Distribution
-.	if "\\$2"4.4"  .ds oS 4.4BSD
+.if \\$1BSD \{\
+.	if \\$23    .ds oS 3rd Berkeley Distribution
+.	if \\$24    .ds oS 4th Berkeley Distribution
+.	if \\$24.1  .ds oS 4.1 Berkeley Distribution
+.	if \\$24.2  .ds oS 4.2 Berkeley Distribution
+.	if \\$24.3  .ds oS 4.3 Berkeley Distribution
+.	if \\$24.3T .ds oS 4.3-Tahoe Berkeley Distribution
+.	if \\$24.3R .ds oS 4.3-Reno Berkeley Distribution
+.	if \\$24.3t .ds oS 4.3-Tahoe Berkeley Distribution
+.	if \\$24.3r .ds oS 4.3-Reno Berkeley Distribution
+.	if \\$24.4  .ds oS 4.4BSD
 .\}
-.if "\\*(oS"Null" .ds oS \0\\$1
-.if "\\*(aa"Non-Null" .as oS \0\\$2
+.if \\*(oSNull .ds oS \0\\$1
+.if \\*(aaNon-Null .as oS \0\\$2
 .rm aa
 ..
-.de Ox
-OpenBSD \\$1\\$2
-..
 .de Dd
-.if !"\\*(dD"" .nr gX 1
+.if !\\*(dD .nr gX 1
 .ie \\n(.$>0 \{\
 .	ie \\$1$Mdocdate: \
 .		ds dD \\$2\\ \\$3, \\$4
@@ -233,18 +236,18 @@ OpenBSD \\$1\\$2
 .		ds dD \\$1 \\$2 \\$3
 .	\}
 .	el \{\
-.		if "\\n(mo"1"  .ds dD January
-.		if "\\n(mo"2"  .ds dD February
-.		if "\\n(mo"3"  .ds dD March
-.		if "\\n(mo"4"  .ds dD April
-.		if "\\n(mo"5"  .ds dD May
-.		if "\\n(mo"6"  .ds dD June
-.		if "\\n(mo"7"  .ds dD July
-.		if "\\n(mo"8"  .ds dD August
-.		if "\\n(mo"9"  .ds dD September
-.		if "\\n(mo"10" .ds dD October
-.		if "\\n(mo"11" .ds dD November
-.		if "\\n(mo"12" .ds dD December
+.		if \\n(mo1  .ds dD January
+.		if \\n(mo2  .ds dD February
+.		if \\n(mo3  .ds dD March
+.		if \\n(mo4  .ds dD April
+.		if \\n(mo5  .ds dD May
+.		if \\n(mo6  .ds dD June
+.		if \\n(mo7  .ds dD July
+.		if \\n(mo8  .ds dD August
+.		if \\n(mo9  .ds dD September
+.		if \\n(mo10 .ds dD October
+.		if \\n(mo11 .ds dD November
+.		if \\n(mo12 .ds dD December
 .		nr xX 1900+\\n(yr \" local register
 .		as dD \&\ \\n(dy, \\n(xX
 .	\}
@@ -284,7 +287,7 @@ OpenBSD \\$1\\$2
 ..
 .de Pp
 .sp \\n(Ppu
-.ne 2
+.if !\\n(cR .ne 2
 .ns
 ..
 .de Lp
@@ -304,7 +307,7 @@ OpenBSD \\$1\\$2
 ..
 .de Ss
 .sp
-.ne 2
+.if !\\n(cR .ne 2
 .ti -.25i
 \&\\*(sH\\$1 \|\\$2 \|\\$3 \|\\$4 \|\\$5 \|\\$6 \|\\$7 \|\\$8 \|\\$9
 \&\fP\s0
@@ -447,3 +450,4 @@ OpenBSD \\$1\\$2
 .tm xX==\\n(xX local register
 .tm END OF REGISTER DUMP
 ..
+.\" vim:set syntax=nroff:

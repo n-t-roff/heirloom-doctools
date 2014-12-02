@@ -85,7 +85,7 @@
 .nr Pp .5v
 .ds lS \0
 .nr lS \w'\0'u
-.nr dI 6n
+.nr __dI 6n
 .de pL
 .nr Hm .5i
 .nr Fm .5i

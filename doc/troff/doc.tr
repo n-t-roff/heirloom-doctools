@@ -2537,7 +2537,7 @@ will set the line length to 1/2 the sum of 4.25 inches \(pl 2 picas \(pl 30 poin
 .pg
 The \A'e_B'\fB\eB\fI'string'\fR escape sequence
 checks whether \fIstring\fR is a valid numerical expression
-and evaluates to ``1' if it does and to ``0'' otherwise.
+and evaluates to ``1'' if it does and to ``0'' otherwise.
 .sc
 Notation.
 Numerical parameters are indicated in this manual in two ways.

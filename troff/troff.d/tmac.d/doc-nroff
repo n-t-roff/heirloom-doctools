@@ -34,6 +34,11 @@
 .\" tmac.mdoc-nroff
 .\"     %beginstrip%
 .\"
+.hy 0
+.de hy
+.	nh
+..
+.sentchar .?!
 .ds aD \fI
 .ds aR \fI
 .ds cM \fB
@@ -81,7 +86,7 @@
 .nr Pp 1v
 .ds lS \0\0
 .nr lS \w'\0\0'u
-.nr dI 6n
+.nr __dI 6n
 .\"
 .de pL
 .ie \\n(cR .nr Hm 0
@@ -118,7 +123,6 @@
 .ds If infinity
 .ds Na \fINaN\fP
 .ds Ba \fR\&|\fP
-
 .\"
 .de hK
 .nr % 1
@@ -130,7 +134,6 @@
 .if "\\*(cH"Null" .if !"\\*(gP"Null" .as hT \&\|(\|\\*(gP\|)
 .ie \\n(cR \{\
 .	hM
-.	wh -1v fM
 .\}
 .el \{\
 .	wh 0 hM
@@ -218,8 +221,9 @@
 .if !\\n(cR .ne 3
 'fi
 \&\\*(sH\\$1 \|\\$2 \|\\$3 \|\\$4 \|\\$5 \|\\$6 \|\\$7 \|\\$8 \|\\$9
-\&\fP\s0\&
+\&\fR\s10\&
 .in \\n(.iu+\\n(Tiu
 .if "\\$1"SEE" .nr sE 1
 .ns
 ..
+.\" vim:set syntax=nroff:

@@ -219,7 +219,7 @@ main(int argc, char **argv)
 
 		case SO:
 			greek = GREEK;
-			greeked++;
+			/* greeked++; FIXME: temporarily disabled */
 			continue;
 
 		case SI:
