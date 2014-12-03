@@ -53,6 +53,7 @@
 .nr Bl 1
 .nr Bo 12n
 .nr Bq 12n
+.nr Brq 12n
 .nr Cd 12n
 .nr Cm 10n
 .nr Dc 3
@@ -96,6 +97,7 @@
 .nr Pq 12n
 .nr Qc 3
 .nr Ql 16n
+.nr Qq 12n
 .nr Sc 3
 .nr So 12n
 .nr Sq 12n

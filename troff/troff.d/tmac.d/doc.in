@@ -169,17 +169,10 @@
 ..
 .\" NS aI macro - append arg to arg vector: .aI [arg] [type] (used by .En only)
 .de aI
-.ie \\n(aC<9 \{\
 .	nr aC \\n(aC+1
 .	ds A\\n(aC \\$1
 .	nr C\\n(aC \\$2
 .	s\\$2
-.	ds xV S\\n(aC
-.\}
-.el \{\
-.	tm Usage: Too many arguments (maximum of 8 accepted) (#\\n(.c)
-.	tm \\*(A1 \\*(A2 \\*(A3 \\*(A4 \\*(A5 \\*(A6 \\*(A7 \\*(A8 \\*(A9
-.\}
 ..
 .\"
 .\" NS aZ macro - print buffer (pB) and clean up arg vectors (aY)
@@ -1368,48 +1361,6 @@
 .\" NS aU macro - argument type (same as .aT but uses A[1-9] strings
 .\" NS aT register argument type
 .\" NS b0 string local temporary
-.if \n(.g \{\
-.de aT
-.nr aT 0
-.ie \\n(sW>2:(\A'\\$1'==0) \{\
-.	nr aT 2
-.\}
-.el \{\
-.	if \\n(sW==1 \{\
-.		ie \\n(z\\$1>2 \{\
-.			nr aT \\n(z\\$1
-.		\}
-.		el .nr aT 2
-.	\}
-.	if \\n(sW==2 \{\
-.		ie \\n(\\$1 \{\
-.			nr aT 1
-.		\}
-.		el .nr aT 2
-.	\}
-.\}
-..
-.de aU
-.nr aT 0
-.aW \\$1
-.ie \\n(sW>2:(\A'\\*(A\\$1'==0) .nr aT 2
-.el \{\
-.	if \\n(sW==1 \{\
-.		ie \\n(z\\*(A\\$1>2 \{\
-.			nr aT \\n(z\\*(A\\$1
-.		\}
-.		el .nr aT 2
-.	\}
-.	if \\n(sW==2 \{\
-.		ie (\\n(\\*(A\\$1) \{\
-.			nr aT 1
-.		\}
-.		el .nr aT 2
-.	\}
-.\}
-..
-.\}
-.if !\n(.g \{\
 .de aT
 .nr aT 0
 .ie \\n(sW>2 \{\
@@ -1435,7 +1386,10 @@
 .	aW \\$1
 .	ds b0 "\\*[A\\$1]
 .	length jM "\\*(b0
-.	ie \\n(jM>2 .nr aT 2
+.	ie \\n(jM>2 \{\
+.		ie \\*(b0Brq .nr aT 1
+.		el .nr aT 2
+.	\}
 .	el .ie \\*(b0 .nr aT 2
 .	el .ie \\n(jM=1 \{\
 .		ie \\*(b0  .nr aT 2
@@ -1460,7 +1414,6 @@
 .	rm b0
 .	rr jM jN jO
 ..
-.\}
 .\" NS s1 macro - set spacing for class type 1
 .\" NS s2 macro - set spacing for class type 2
 .\" NS s3 macro - set spacing for class type 3
