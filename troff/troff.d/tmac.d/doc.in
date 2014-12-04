@@ -91,7 +91,19 @@
 .\" jM local register
 .de aV
 .nr aC \\n(aC+1
-.ie !\\$1| .nr jM 0
+.lds _$1_ "\\$1
+.lnr _l_ 0
+.length _l_ "\\*[_$1_]
+.if \\n[_l_]=2 \{\
+.	lnr _i_ -2
+.	index _i_ _$1_ \@
+.	ie \\n[_i_]=0 .lds _$1_ @
+.	el \{\
+.		index _i_ _$1_ \;
+.		if \\n[_i_]=0 .lds _$1_ \&;\&
+.	\}
+.\}
+.ie !\\*[_$1_]| .nr jM 0
 .el \{\
 .	ie     \\*(mNOp .nr jM 1
 .	el .ie \\*(mNAr .nr jM 1
@@ -102,7 +114,7 @@
 .	el .nr jM 0
 .\}
 .ie \\n(jM .ds A\\n(aC \fR\\$1\fP
-.el .ds A\\n(aC \\$1
+.el .ds A\\n(aC \\*[_$1_]
 .aU \\n(aC
 .nr C\\n(aC \\n(aT
 .s\\n(aT
@@ -1020,7 +1032,6 @@
 .		pB
 .	\}
 .	el \{\
-.\".		as mN (En)
 .		aV \\$*
 .		as b1 \&\\*(qL
 .	\}
