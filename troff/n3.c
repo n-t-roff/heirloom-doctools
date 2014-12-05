@@ -1983,8 +1983,13 @@ caseunformat(int flag)
 				}
 			} else if (isadjmot(c))
 				continue;
-			else if (cbits(c) == PRESC)
-				setcbits(c, eschar);
+			else if (cbits(c) == PRESC) {
+				if (!noout) {
+					wbf(eschar);
+					wbf('e');
+				}
+				continue;
+			}
 			if (flag & 1 && !ismot(c) && cbits(c) != SLANT) {
 #ifndef	NROFF
 				int	m = cbits(c);

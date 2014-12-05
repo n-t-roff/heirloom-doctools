@@ -256,6 +256,7 @@
 .di
 .ev
 .ie \\n(dl:\\n(dn \{\
+.	unformat eB
 .	ie \\$1 \{\
 .		ds b0 \&\\*(eB\\
 .	\}
