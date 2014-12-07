@@ -97,6 +97,7 @@
 .nr Pq 12n
 .nr Qc 3
 .nr Ql 16n
+.nr Qo 12n
 .nr Qq 12n
 .nr Sc 3
 .nr So 12n

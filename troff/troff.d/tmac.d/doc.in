@@ -432,6 +432,7 @@
 .                       nR
 .		\}
 .       \}
+.	if \\n(aC=\\n(aP .aY
 .\}
 ..
 .\" NS Ad macro - Addresses
@@ -1254,7 +1255,9 @@
 .		ie \\n(oM==0 \{\
 .			aZ
 .		\}
-.		el .aY
+.		el \{\
+.			aY
+.		\}
 .	\}
 .	el \{\
 .		nr aa \\n(aP+1
@@ -2997,7 +3000,7 @@
 .		nr Kl \\n(Kl+1
 .		ds rS U\\n(uK
 .		ds mN %A
-.		aV \\$*
+.		aV \\$@
 .	\}
 .\}
 .if \\n(aC>\\n(aP \{\
