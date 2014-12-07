@@ -1020,8 +1020,6 @@
 .	el .aZ
 .\}
 ..
-.\" .tm En beg arg(A[\\n(aP])==\\*[A\\n(aP];
-.\" .tm En oM==\\n(oM; dZ==\\n(dZ; Xt==\\n(Xt; aC==\\n(aC
 .\" NS En macro - Enclose string with given args (eg [ and ] etc)
 .\" NS qL string variable set by calling macro
 .\" NS qR string variable set by calling macro
@@ -1190,6 +1188,7 @@
 .\" NS eO macro - enclose string open
 .\" NS oM register (extension possible)
 .de eO
+.nr Xt \\n(Xt+1
 .nr oM \\n(oM+1
 .ie \\n(aC==0 \{\
 .       ie \\n(.$>0 \{\
@@ -1208,7 +1207,9 @@
 .ie \\n(aC>0 \{\
 .	if \\n(aC>\\n(aP \{\
 .		nr aP \\n(aP+1
-.		ie \\n[C\\n(aP]==1 .\\*[A\\n(aP]
+.		ie \\n[C\\n(aP]==1 \{\
+.			\\*[A\\n(aP]
+.		\}
 .		el  \{\
 .			nr aP \\n(aP-1
 .			No
@@ -1216,7 +1217,7 @@
 .	\}
 .	if \\n(aC==\\n(aP \{\
 .		if \\n(tP==1 \{\
-.			nr Xt 1
+.\".			nr Xt \\n(Xt+1
 .		\}
 .		aY
 .	\}
@@ -1231,7 +1232,6 @@
 .de eC
 .if !\\n[__di_nz] .if \\*(b1 .rm __last_S
 .nr oM \\n(oM-1
-.\" tm eC last arg==A[\\n(aC]==\\*(A\\n(aC; aP==\\n(aP; oM==\\n(oM; dZ==\\n(dZ;
 .as b1 \\*(qR
 .if \\n(aC==0 \{\
 .       ie \\n(.$>0 \{\
@@ -1244,7 +1244,7 @@
 .		el \{\
 .			pB
 .			\\*(L\\n(lC
-.			nr Xt 0
+.\".			nr Xt 0
 .			ds xB
 .		\}
 .	\}
@@ -1259,16 +1259,17 @@
 .	el \{\
 .		nr aa \\n(aP+1
 .		if \\n[C\\n(aa]==2 .as b1 \\*[S\\n(aC]
-.\" tm CURRENT arg (aP==\\*[A\\n(aP] and ap+1==\\*(A\\n(aa) tP==\\n(tP Xt==\\n(Xt
 .		rr aa
 .		if \\n(tP>0 \{\
-.\".tm eC UNSETTING Xt==\\n(Xt!!!!
-.			if \\n(Xt>0 .nr Xt \\n(Xt-1
-.\".tm eC NOW Xt==\\n(Xt!!!!
+.			if \\n(Xt>0 \{\
+.\".				nr Xt \\n(Xt-1
+.			\}
 .		\}
 .		No
 .	\}
 .\}
+.\".if \\n(tP .nr Xt \\n(Xt-1
+.nr Xt \\n(Xt-1
 ..
 .\"------------------------------------------------------------------------
 .\" NS Pf macro - Prefix (calls .pF)
@@ -1974,9 +1975,6 @@
 .	\}
 .	if \\n(iD==0 \{\
 .		fV
-.\" tm ------------------------------------------------------------------------
-.\" tm It list-type==\\*(L\\n(lC, aP==\\n(aP
-.\" tm It beg arg(A[1])==\\*(A1; oM==\\n(oM; dZ==\\n(dZ; Xt==\\n(Xt; aC==\\n(aC
 .		nr oM \\n(oM+1
 .		nr tP 1
 .		nr aP \\n(aP+1
@@ -1993,8 +1991,6 @@
 .			nr aP \\n(aP-1
 .			No
 .		\}
-.\" tm in It here is b1==\\*(b1
-.\" tm It mid arg(A[1])==\\*(A1; oM==\\n(oM; dZ==\\n(dZ; Xt==\\n(Xt; aC==\\n(aC
 .		ie \\n(Xt==1 .ds xB \&\\*(L\\n(lC
 .		el \{\
 .			\\*(L\\n(lC
@@ -2079,7 +2075,6 @@
 .ie \w\\*(b1u>=(\\n(w\\n(lCu) \&\\*(b1
 .el \&\\*(b1\h'|\\n(bbu'\c
 .nr oM \\n(oM-1
-.\" .nr dZ \\n(dZ+1
 .ds b1
 .nr tP 0
 .aY
@@ -2124,7 +2119,6 @@
 .\}
 .nr oM \\n(oM-1
 .nr tP 0
-.\" .nr dZ \\n(dZ+1
 .ds b1
 .aY
 'fi

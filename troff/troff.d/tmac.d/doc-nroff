@@ -38,6 +38,7 @@
 .de hy
 .	nh
 ..
+.breakchar
 .sentchar .?!
 .ds aD \fI
 .ds aR \fI
