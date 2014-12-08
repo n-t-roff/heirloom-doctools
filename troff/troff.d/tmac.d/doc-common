@@ -32,6 +32,7 @@
 .\"     from 4.4BSD doc-common	8.1 (Berkeley) 6/8/93
 .\"
 .\" Portions Copyright (c) 2005 Gunnar Ritter, Freiburg i. Br., Germany
+.\" Portions Copyright (c) 2014 Carsten Kunze <carsten.kunze@arcor.de>
 .\"
 .\" Sccsid @(#)doc-common	1.2 (gritter) 11/16/05
 .\"
@@ -110,6 +111,7 @@
 .nr Tv 1
 .nr Tx 22n
 .nr Va 12n
+.nr Vt 12n
 .nr Xc 3
 .nr Xo 1
 .nr Xr 10n
@@ -263,7 +265,9 @@
 .ev 1
 .pL
 .if !\\n(cR 'sp \\n(Hmu
-.tl @\\*(Hs\\*(hT\fP@\\*(Vs\\*(vT\fP@\\*(Hs\\*(hT\fP@
+.ie \w\\*(Hs\\*(hT+2n*2+\w\\*(Hs\\*(hT>78n \
+.	tl @\\*(Hs\\*(hT\fP@@\\*(Vs\\*(vT\fP@
+.el .tl @\\*(Hs\\*(hT\fP@\\*(Vs\\*(vT\fP@\\*(Hs\\*(hT\fP@
 'sp \\n(Hmu
 .ev
 ..
@@ -309,19 +313,30 @@
 \&\-\& \\$*
 ..
 .de Ss
-.sp
-.if !\\n(cR .ne 2
-.ti -.25i
-\&\\*(sH\\$1
-.shift
-.while \\n(.$ \{\
-\|\\$1
-.shift
-.\}
-\&\fR\s10
-.ta .5i 1i 1.5i 2i 2.5i 3i 3.5i 4i 4.5i 5i 5.5i 6i 6.5i
-.if !\\n(cR .ne 2
-.br
+.	if !\\n(aC \{\
+.		sp
+.		if !\\n(cR .ne 2
+.		ti -.25i
+.		ds b1 \&\\*(sH
+.		ds mN Ss
+.		aV \\$@
+.	\}
+.	if \\n(aC>\\n(aP \{\
+.		nr aP \\n(aP+1
+.		if \\n(aP>1 .as b1 " \|
+.		ie \\n[C\\n(aP]=1 .\\*[A\\n(aP]
+.		el \{\
+.			as b1 \\*[A\\n(aP]
+.		\}
+.	\}
+.	ie \\n(aC>\\n(aP .Ss
+.	el \{\
+.		as b1 \&\fR\s10
+.		aZ
+.		ta .5i 1i 1.5i 2i 2.5i 3i 3.5i 4i 4.5i 5i 5.5i 6i 6.5i
+.		if !\\n(cR .ne 2
+.		br
+.	\}
 ..
 .de Rd
 .tm MDOC REGISTER DUMP

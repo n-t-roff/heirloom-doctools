@@ -156,3 +156,9 @@ rf 1 |
 lc 1 |
 rc 1 |
 ba 1 |
+la 1 <
+ra 1 >
+a~ 1 ~
+sh 1 #
+ha 1 ^
+Do 1 $

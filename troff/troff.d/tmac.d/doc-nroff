@@ -106,13 +106,16 @@
 .ds <= \&<\&=
 .ds >= \&>\&=
 .ds Rq ''
+.ds rq ''
 .ds Lq ``
+.ds lq ``
 .ds ua ^
 .ds aa \'
 .ds ga \`
 .ds sL `
 .ds sR '
 .ds q \&"
+.ds Am &
 .\" Math stuff
 .ds Pi pi
 .ds Ne !=
@@ -128,11 +131,11 @@
 .de hK
 .nr % 1
 .ds hT \\*(dT
-.if !"\\*(cH"Null" \{\
-.	ie !"\\*(gP"Null" .as hT \|(\|\\*(cH\\*(gP\|)
+.if !\\*(cHNull \{\
+.	ie !\\*(gPNull .as hT \|(\|\\*(cH\\*(gP\|)
 .	el .as hT \\|(\\|\\*(cH\\|)
 .\}
-.if "\\*(cH"Null" .if !"\\*(gP"Null" .as hT \&\|(\|\\*(gP\|)
+.if \\*(cHNull .if !\\*(gPNull .as hT \&\|(\|\\*(gP\|)
 .ie \\n(cR \{\
 .	hM
 .\}
@@ -185,7 +188,7 @@
 .nr nS 0
 .nr sE 0
 .nr iS 0
-.ie "\\$1"NAME" \{\
+.ie \\$1NAME \{\
 .       hK
 '       in 0
 .\}
@@ -197,18 +200,18 @@
 .       nr nY 0
 .       nr aN 0
 .       nr oT 0
-.       if "\\$1"SEE" .nr nA 1
-.       if "\\$1"FILES" .nr nF 1
-.       if "\\$1"STANDARDS" .nr nT 1
-.       if "\\$1"SYNOPSIS" .nr nS 1
-.       if "\\$1"DESCRIPTION" \{\
+.       if \\$1SEE .nr nA 1
+.       if \\$1FILES .nr nF 1
+.       if \\$1STANDARDS .nr nT 1
+.       if \\$1SYNOPSIS .nr nS 1
+.       if \\$1DESCRIPTION \{\
 .               rr fB
 .               rr Fb
 .               ds Fb
 .               nr fY 0
 .               nr fZ 0
 .       \}
-.	if "\\$1"AUTHORS" .nr nY 1
+.	if \\$1AUTHORS .nr nY 1
 .       in 0
 .\}
 .pL
@@ -225,7 +228,7 @@
 .\}
 \&\fR\s10\&
 .in \\n(.iu+\\n(Tiu
-.if "\\$1"SEE" .nr sE 1
+.if \\$1SEE .nr sE 1
 .ns
 ..
 .\" vim:set syntax=nroff:
