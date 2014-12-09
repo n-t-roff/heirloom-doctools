@@ -707,12 +707,22 @@ postchar(const char *temp, int *fp)
 	return 0;
 }
 
+const struct amap {
+	char *alias;
+	char *trname;
+} amap[] = {
+	{ "lq", "``" },
+	{ "rq", "''" },
+	{ NULL, NULL }
+};
+
 tchar setch(int delim)
 {
 	register int j;
 	char	temp[NC];
 	tchar	c, d[2] = {0, 0};
 	int	f, n;
+	const struct amap *ap;
 
 	n = 0;
 	if (delim == 'C')
@@ -735,6 +745,18 @@ tchar setch(int delim)
 			break;
 		}
 	} while (c);
+	for (ap = amap; ap->alias; ap++)
+		if (!strcmp(ap->alias, temp)) {
+			size_t l;
+			char *s = ap->trname;
+			if ((l = strlen(s) + 1) > NC) {
+				fprintf(stderr, "%s %i: strlen(%s)+1 > %d\n",
+				    __FILE__, __LINE__, s, NC);
+				break;
+			}
+			memcpy(temp, s, l);
+			break;
+		}
 	if (delim == '[' && c != ']') {
 		nodelim(']');
 		return ' ';

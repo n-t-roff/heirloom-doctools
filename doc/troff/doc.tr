@@ -8034,5 +8034,9 @@ insulate the appearance of equations from the choice of standard fonts.
 	\(rf	\\(rf	right floor (right bottom)
 	\(lc	\\(lc	left ceiling (left top)
 	\(rc	\\(rc	right ceiling (right top)
+	\(``	\\(``	left double quote
+	\(lq	\\(lq	left double quote
+	\(''	\\(''	right double quote
+	\(rq	\\(rq	right double quote
 .rm EM
 .ds EM
