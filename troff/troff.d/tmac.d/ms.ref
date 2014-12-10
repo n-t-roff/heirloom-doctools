@@ -40,10 +40,8 @@
 .if \\$1>4 .tm %M undefined (Bell Labs)
 .[\\$1
 ..
-.if n .ds [o \&"
-.if n .ds [c \&"
-.if t .ds [o ``
-.if t .ds [c ''
+.ds [o \(lq
+.ds [c \(rq
 .ds <. .
 .ds <, ,
 .	\" [0 - other type of citation

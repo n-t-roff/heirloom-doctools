@@ -105,10 +105,10 @@
 ..
 .ds <= \&<\&=
 .ds >= \&>\&=
-.ds Rq ''
-.ds rq ''
-.ds Lq ``
-.ds lq ``
+.ds Rq \(rq
+.ds rq \(rq
+.ds Lq \(lq
+.ds lq \(lq
 .ds ua ^
 .ds aa \'
 .ds ga \`
