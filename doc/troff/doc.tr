@@ -8038,5 +8038,9 @@ insulate the appearance of equations from the choice of standard fonts.
 	\(lq	\\(lq	left double quote
 	\(''	\\(''	right double quote
 	\(rq	\\(rq	right double quote
+	\(dq	\\(dq	double quote
+	\(oq	\\(oq	left single quote
+	\(cq	\\(cq	right single quote
+	\(aq	\\(aq	single quote
 .rm EM
 .ds EM

@@ -27,6 +27,9 @@ eq 1 =
 ** 1 *
 sc 1 j\bf
 aa 1 '
+aq 1 '
+oq 1 '
+cq 1 '
 ga 1 `
 ul 1 _
 sl 1 /

@@ -72,6 +72,9 @@ const struct names {
 	{ "12",	"onehalf" },
 	{ "14",	"onequarter" },
 	{ "34",	"threequarters" },
+	{ "aq", "quotesingle" },
+	{ "oq", "quoteleft" },
+	{ "cq", "quoteright" },
 	{ 0,	0 }
 };
 
