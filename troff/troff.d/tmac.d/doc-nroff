@@ -112,8 +112,8 @@
 .ds ua ^
 .ds aa \'
 .ds ga \`
-.ds sL `
-.ds sR '
+.ds sL \(oq
+.ds sR \(cq
 .ds q \&"
 .ds Am &
 .\" Math stuff
