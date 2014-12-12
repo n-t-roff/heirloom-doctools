@@ -181,10 +181,25 @@
 ..
 .\" NS aI macro - append arg to arg vector: .aI [arg] [type] (used by .En only)
 .de aI
+.	if !\\n[__aI_ini_aC] .nr __aI_ini_aC \\n(aC
 .	nr aC \\n(aC+1
 .	ds A\\n(aC \\$1
 .	nr C\\n(aC \\$2
 .	s\\$2
+..
+.de __if_aI_aC
+.	if \\n[__aI_ini_aC] \{\
+.		lnr _aP_ \\n(aP
+.		nr aP \\n[__aI_ini_aC]
+.		while \\n(aP<\\n(aC \{\
+.			nr aP \\n(aP+1
+.			ie \\n[C\\n(aP]=1 .\\*[A\\n(aP]
+.			el .as b1 \\*[A\\n(aP]
+.		\}
+.		nr aP \\n[_aP_]
+.		nr aC \\n[__aI_ini_aC]
+.		rr __aI_ini_aC
+.	\}
 ..
 .\"
 .\" NS aZ macro - print buffer (pB) and clean up arg vectors (aY)
@@ -198,6 +213,7 @@
 .rm A0 A1 A2 A3 A4 A5 A6 A7 A8 A9
 .rm S1 S2 S3 S4 S5 S6 S7 S8 S9
 .nr aC 0
+.nr __aI_ini_aC 0
 .nr aP 0
 .rm mN __inline_mN
 ..
@@ -1423,6 +1439,8 @@
 .		el .ie \\*(b0nl .lnr _mac_ 0
 .		el .ie \\*(b0ll .lnr _mac_ 0
 .		el .ie \\*(b0v1 .lnr _mac_ 0
+.		el .ie \\*(b0dV .lnr _mac_ 0
+.		el .ie \\*(b0mo .lnr _mac_ 0
 .		el .ie \\n(jN>=0:(\\n(jO>=0):(\\n(jP>=0):(\\n[_us_]>=0) .lnr _mac_ 0
 .		el .lnr _mac_ \\n(\\*(b0
 .		ie \\n[_mac_] .nr aT 1
@@ -2318,18 +2336,18 @@
 ..
 .de W4
 .ta \w\\*(A1    u +\w\\*(A2    u +\w\\*(A3    u +\w\\*(A4    u
-.nr eW \w\\*(A1    u+\w\\*(A2    u +\w\\*(A3    u +\w\\*(A4    u
+.nr eW \w\\*(A1    u+\w\\*(A2    u+\w\\*(A3    u+\w\\*(A4    u
 'in \\n(.iu+\\n(eWu+\\n(o\\n(lCu
 ..
 .de W5
 .ta \w\\*(A1   u +\w\\*(A2   u +\w\\*(A3   u +\w\\*(A4   u +\w\\*(A5   u
-.nr eW \w\\*(A1   u +\w\\*(A2   u +\w\\*(A3   u +\w\\*(A4   u +\w\\*(A5   u
+.nr eW \w\\*(A1   u+\w\\*(A2   u+\w\\*(A3   u+\w\\*(A4   u+\w\\*(A5   u
 '	in \\n(.iu+\\n(eWu+\\n(o\\n(lCu
 ..
 .\" This is packed abnormally close, intercol width should be an option
 .de W6
 .ta \w\\*(A1 u +\w\\*(A2 u +\w\\*(A3 u +\w\\*(A4 u +\w\\*(A5 u +\w\\*(A6
-.nr eW \w\\*(A1 u +\w\\*(A2 u +\w\\*(A3 u +\w\\*(A4 u +\w\\*(A5 u +\w\\*(A6
+.nr eW \w\\*(A1 u+\w\\*(A2 u+\w\\*(A3 u+\w\\*(A4 u+\w\\*(A5 u+\w\\*(A6
 '	in \\n(.iu+\\n(eWu+\\n(o\\n(lCu
 ..
 .\" NS cL macro - column items
@@ -2355,6 +2373,7 @@
 .\" NS Ta macro - append tab (\t)
 .de Ta
 .ie \\n(aC>0 \{\
+.	__if_aI_aC
 .	nr aP \\n(aP+1
 .	ie \\n(aC>=\\n(aP \{\
 .		if \\*[A\\n(aP]Ta \{\

@@ -1,7 +1,8 @@
 charset
-em 1 -
+em 2 --
 hy 1 -
 \- 1 -
+en 1 -
 rs 1 %\134
 dq 1 %\042
 bu 1 +\bo
@@ -114,6 +115,7 @@ mo 1 -\bC
 br 1 |
 dd 1 |\b=
 rh 2 =>
+rA 2 =>
 lh 2 <=
 or 1 |
 ci 1 O
@@ -128,5 +130,12 @@ lf 1 |
 rf 1 |
 lc 1 |
 rc 1 |
+ba 1 |
+la 1 <
+ra 1 >
+a~ 1 ~
+sh 1 #
+ha 1 ^
+Do 1 $
 lq 1 \"
 rq 1 \"
