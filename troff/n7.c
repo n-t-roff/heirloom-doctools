@@ -34,6 +34,8 @@
  * Portions Copyright (c) 2005 Gunnar Ritter, Freiburg i. Br., Germany
  *
  * Sccsid @(#)n7.c	1.181 (gritter) 6/19/11
+ *
+ * Portions Copyright (c) 2014 Carsten Kunze <carsten.kunze@arcor.de>
  */
 
 /*
@@ -363,16 +365,24 @@ t1:
 	ch = i;
 	if (spcnt) {
 t2:
+		lsn = spcnt;
+		glss = spcnt * sps + k;
+		if (lsmac) {
+			spcnt = 0;
+			control(lsmac, 0);
+			goto rtn;
+		} else {
 		tbreak();
 		if (nc || wch)
 			goto rtn;
-		un += spcnt * sps + k;
+		un += glss;
 		spcnt = 0;
 		setnel();
 		if (trap)
 			goto rtn;
 		if (nlflg)
 			goto t1;
+		}
 	}
 t3:
 	if (spread && !brpnl)

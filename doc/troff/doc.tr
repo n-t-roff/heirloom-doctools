@@ -585,6 +585,8 @@ Joseph F. Ossanna
 Brian W. Kernighan
 .br
 Gunnar Ritter
+.br
+and others
 .ft R
 .ce 0
 .sp 2
@@ -1346,6 +1348,8 @@ Text Filling, Adjusting, and Centering
 .bt
 \T'br'\fB&br\fR	\(en	\(en	B	Break.\T
 .b1
+\T'lsm'\fB&lsm\fI|xx\fR	none	none	\(en	Leading space macro is \fIxx\fR.\T
+.b1
 \T'brp'\fB&brp\fR	\(en	\(en	B	Break and spread.\T
 .b1
 .lg 0
@@ -1867,6 +1871,7 @@ refer to the detailed description on how to include it.
 \T'lnrf'lnrf	8\T
 \T'lpfx'lpfx	20\T
 \T'ls'ls	5\T
+\T'lsm'lsm	4\T
 \T'lt'lt	14\T
 \T'mc'mc	20\T
 \T'mediasize'mediasize	3\T
@@ -2238,6 +2243,10 @@ using \fB\ex\fI\'N\'\fR.\T
 \T'n_.X'1.1\T	\T'n_.X'\fB&X\fR\T	\T'n_.X'Current extension level.\T
 \T'n_.y'6\T	\T'n_.y'\fB&y\fR\T	\T'n_.y'Current indent including temporary indent, if any.*\T
 \T'n_.z'7.4\T	\T'n_.z'\fB&z\fR\T	\T'n_.z'Name [sic] of current diversion.\T
+\T'n_lsn'4.1\T	\T'n_lsn'\fBlsn\fR\T	\T'n_lsn'Number of leading spaces\
+ of a input line in fill mode.\T
+\T'n_lss'4.1\T	\T'n_lss'\fBlss\fR\T	\T'n_lsn'Horizontal space\
+ corresponding to a line with leading spaces in fill mode.\T
 .TE
 .in 0
 .fi
@@ -3245,6 +3254,21 @@ is in the \A'n_.k'\fB.k\fR register.
 The \A'n_.x'\fB.x\fR register indicates
 the remaining horizontal space on the current output line.
 .pg
+Text lines beginning with space characters
+and empty text lines (blank lines) cause a break.
+The filling of the line currently
+being collected is stopped and
+the line is output without adjustment.
+The \fB.blm\fR request can be used to redefine the processing
+of blank input lines.
+With the \fB.lsm\fR request the effect of lines beginning with
+spaces is changed.
+The read-only number register \fBlsn\fR contains the number of
+leading spaces.
+The read-only number register \fBlss\fR contains the horizontal
+space which corresponds to the leading spaces.
+Both registers are set also if \fB.lsm\fR is not used.
+.pg
 \*(TR can optionally decrease word spacings,
 change the letter spacing,
 and reshape letters
@@ -3457,7 +3481,21 @@ The filling of the line currently
 being collected is stopped and
 the line is output without adjustment.
 Text lines beginning with space characters
-and empty text lines (blank lines) also cause a break.
+and empty text lines (blank lines) also cause a break
+(This can be changed with the \fB.blm\fR and \fB.lsm\fR
+requests.).
+.br
+.tr &&
+.bta lsm
+\&\fB.lsm\fI|xx\fR	none	none	\(en	Whenever a line
+beginning with spaces is encountered,
+the macro \fIxx\fR is invoked
+instead of the default behavior to cause a break.
+If the spaces are followed by an escape, that may be processed
+before the macro is called (e.g. font changes).
+To avoid this prepend that escape with \fB\e&\fR.
+.br
+.tr &.
 .bta brp
 \fB&brp\fR	\(en	\(en	B	Break and spread;
 same effect as the \T'e_p'\fB\ep\fR\T escape sequence

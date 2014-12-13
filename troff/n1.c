@@ -1010,11 +1010,6 @@ getch(void)
 
 g0:
 	if ((i = ch)) {
-#ifdef	DEBUG
-		if (debug & DB_GETC)
-			fprintf(stderr, "getch: ch is %x (%c)\n",
-				(int)ch, (ch&0177) < 040 ? 0177 : ch&0177);
-#endif	/* DEBUG */
 		if (cbits(i) == '\n') {
 			nlflg++;
 			tailflg = istail(i);
@@ -1023,19 +1018,9 @@ g0:
 		return(i);
 	}
 
-#ifdef	DEBUG
-	if (nlflg)
-		if (debug & DB_GETC)
-			fprintf(stderr,"getch: nlflg is %x\n", nlflg);
-#endif	/* DEBUG */
 	if (nlflg)
 		return('\n');
 	i = getch0();
-#ifdef	DEBUG
-	if (debug & DB_GETC)
-		fprintf(stderr, "getch: getch0 returns %x (%c)\n",
-			(int)i, (i&0177) < 040 ? 0177 : i&0177);
-#endif	/* DEBUG */
 	if (ismot(i))
 		return(i);
 	k = cbits(i);

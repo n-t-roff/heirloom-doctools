@@ -155,6 +155,7 @@ static const struct {
 	{ "lnr",		(void(*)(int))caselnr },
 	{ "lnrf",		(void(*)(int))caselnrf },
 	{ "lpfx",		(void(*)(int))caselpfx },
+	{ "lsm",		(void(*)(int))caselsm },
 	{ "mediasize",		(void(*)(int))casemediasize },
 	{ "minss",		(void(*)(int))caseminss },
 	{ "nhychar",		(void(*)(int))casenhychar },

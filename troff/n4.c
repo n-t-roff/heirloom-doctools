@@ -513,7 +513,11 @@ sl:
 			i = dpenal ? dpenal - INFPENALTY0 - 1 : 0;
 		else
 			goto s0;
-	} else {
+	} else if (strcmp(name, "lss") == 0)
+		i = glss;
+	else if (strcmp(name, "lsn") == 0)
+		i = lsn;
+	else {
 s0:
 		TMNO;
 		if ((numtp = _findr(i, 1, 2, 0, &j)) == NULL) {

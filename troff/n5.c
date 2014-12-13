@@ -1119,6 +1119,14 @@ caseblm(void)
 		blmac = 0;
 }
 
+void
+caselsm(void)
+{
+	if (!skip(0))
+		lsmac = getrq(1);
+	else
+		lsmac = 0;
+}
 
 void
 casert(void)
