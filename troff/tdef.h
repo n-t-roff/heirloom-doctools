@@ -34,6 +34,8 @@
  * Portions Copyright (c) 2005 Gunnar Ritter, Freiburg i. Br., Germany
  *
  * Sccsid @(#)tdef.h	1.165 (gritter) 10/23/09
+ *
+ * Portions Copyright (c) 2014 Carsten Kunze <carsten.kunze@arcor.de>
  */
 
 /*
@@ -327,6 +329,10 @@ extern	int	NCHARS;	/* maximum size of troff character set */
 #else
 #define	ftrans(f, c)	(f >= 0 && f <= nfonts ? ftrtab[f][ftrtab[f][c]] : (c))
 #endif
+
+#define hex2nibble(x) ((x)>='0' && (x)<='9' ? (x)-'0'    : \
+                       (x)>='A' && (x)<='F' ? (x)-'A'+10 : \
+                                              (x)-'a'+10 )
 
 /*
  * "temp file" parameters.  macros and strings
