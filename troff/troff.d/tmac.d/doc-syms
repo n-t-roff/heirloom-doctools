@@ -38,9 +38,9 @@
 .de Ux
 .nr cF \\n(.f
 .nr cZ \\n(.s
-.ds aa \&\f\\n(cF\s\\n(cZ
-.as b1 \&\\*(tNUNIX\\*(aa
-.rm aa
+.ds __aa \&\f\\n(cF\s\\n(cZ
+.as b1 \&\\*(tNUNIX\\*[__aa]
+.rm __aa
 .if \\n(aC==0 \{\
 .       if \\n(.$>0 .aV \\$*
 .\}
@@ -57,10 +57,10 @@
 .de Bx
 .nr cF \\n(.f
 .nr cZ \\n(.s
-.ds aa \&\f\\n(cF\s\\n(cZ
+.ds __aa \&\f\\n(cF\s\\n(cZ
 .if \\n(aC==0 \{\
-.\" .       ie \\n(.$==0 \&\\*(tNBSD\\*(aa \\*(tNUNIX\\*(aa
-.       ie \\n(.$==0 \&\\*(tNBSD\\*(aa
+.\" .       ie \\n(.$==0 \&\\*(tNBSD\\*[__aa] \\*(tNUNIX\\*[__aa]
+.       ie \\n(.$==0 \&\\*(tNBSD\\*[__aa]
 .       el .aV \\$*
 .\}
 .if \\$1-alpha \{\
@@ -78,7 +78,7 @@
 .if \\n(aC>\\n(aP \{\
 .       nr aP \\n(aP+1
 .	ie \\n[C\\n(aP]==2 \{\
-.		as b1 \&\\*[A\\n(aP]\&\\*(tNBSD\\*(aa
+.		as b1 \&\\*[A\\n(aP]\&\\*(tNBSD\\*[__aa]
 .		ie \\n(aC>\\n(aP \{\
 .			nr jj \\n(aP+1
 .			ie \\n[C\\n(jj]==2 \{\
@@ -114,7 +114,7 @@
 .		el .aZ
 .	\}
 .	el \{\
-.	       as b1 \&\\*(tNBSD\\*(aa
+.	       as b1 \&\\*(tNBSD\\*[__aa]
 .	       nR
 .	\}
 .\}
@@ -127,11 +127,11 @@
 .de At
 .	nr cF \\n(.f
 .	nr cZ \\n(.s
-.	ds aa \&\f\\n(cF\s\\n(cZ
+.	ds __aa \&\f\\n(cF\s\\n(cZ
 .	ds A1 \\$1
 .	aU 1
 .	ie \\n(.$=0:(\\n(aT>2) \{\
-.		ds b1 \&\\*(tNAT&T UNIX\\*(aa
+.		ds b1 \&\\*(tNAT&T UNIX\\*[__aa]
 .		if \\n(.$ .as b1 \\$1
 .	\}
 .	el \{\
@@ -143,14 +143,14 @@
 .		el .ie \\$1v5  .ds b1 \&Version 5 \\*(tNAT&T UNIX
 .		el .ie \\$1v6  .ds b1 \&Version 6 \\*(tNAT&T UNIX
 .		el .ie \\$1v7  .ds b1 \&Version 7 \\*(tNAT&T UNIX
-.		el .ie \\$1III .ds b1 \&\\*(tNAT&T\\*(aa System III \\*(tNUNIX
-.		el .ie \\$1V   .ds b1 \&\\*(tNAT&T\\*(aa System V \\*(tNUNIX
-.		el .ie \\$1V.1 .ds b1 \&\\*(tNAT&T\\*(aa System V Release 1 \\*(tNUNIX
-.		el .ie \\$1V.2 .ds b1 \&\\*(tNAT&T\\*(aa System V Release 2 \\*(tNUNIX
-.		el .ie \\$1V.3 .ds b1 \&\\*(tNAT&T\\*(aa System V Release 3 \\*(tNUNIX
-.		el .ie \\$1V.4 .ds b1 \&\\*(tNAT&T\\*(aa System V Release 4 \\*(tNUNIX
+.		el .ie \\$1III .ds b1 \&\\*(tNAT&T\\*[__aa] System III \\*(tNUNIX
+.		el .ie \\$1V   .ds b1 \&\\*(tNAT&T\\*[__aa] System V \\*(tNUNIX
+.		el .ie \\$1V.1 .ds b1 \&\\*(tNAT&T\\*[__aa] System V Release 1 \\*(tNUNIX
+.		el .ie \\$1V.2 .ds b1 \&\\*(tNAT&T\\*[__aa] System V Release 2 \\*(tNUNIX
+.		el .ie \\$1V.3 .ds b1 \&\\*(tNAT&T\\*[__aa] System V Release 3 \\*(tNUNIX
+.		el .ie \\$1V.4 .ds b1 \&\\*(tNAT&T\\*[__aa] System V Release 4 \\*(tNUNIX
 .		el .tm .At: Unknown AT&T UNIX version "\\$1" (#\\n(.c)
-.		as b1 \\*(aa
+.		as b1 \\*[__aa]
 .		ie \\n(.$=2 .as b1 \\$2
 .		el .if \\n(.$>2 .tm .At: More than 2 arguments (#\\n(.c)
 .	\}
@@ -222,116 +222,116 @@
 .if \\n(aC>\\n(aP \{\
 .	nr cF \\n(.f
 .	nr cZ \\n(.s
-.	ds aa \&\f\\n(cF\s\\n(cZ
+.	ds __aa \&\f\\n(cF\s\\n(cZ
 .	nr aP \\n(aP+1
 .	ie     \\*[A\\n(aP]-p1003.1 \{\
-.		ds b1 \&\\*(tNIEEE Std\\*(aa 1003.1\\*(sV
-.		as b1 (\\*(Lq\\*(tN\\*(Px.1\\*(aa\\*(Rq)
+.		ds b1 \&\\*(tNIEEE Std\\*[__aa] 1003.1\\*(sV
+.		as b1 (\\*(Lq\\*(tN\\*(Px.1\\*[__aa]\\*(Rq)
 .	\}
 .	el .ie \\*[A\\n(aP]-p1003.1b \{\
-.		ds b1 \&\\*(tNIEEE Std\\*(aa 1003.1b\\*(sV
-.		as b1 (\\*(Lq\\*(tN\\*(Px.1b\\*(aa\\*(Rq)
+.		ds b1 \&\\*(tNIEEE Std\\*[__aa] 1003.1b\\*(sV
+.		as b1 (\\*(Lq\\*(tN\\*(Px.1b\\*[__aa]\\*(Rq)
 .	\}
 .	el .ie \\*[A\\n(aP]-p1003.1-88 \{\
-.		ds b1 \&\\*(tNIEEE Std\\*(aa 1003.1-1988\\*(sV
-.		as b1 (\\*(Lq\\*(tN\\*(Px.1\\*(aa\\*(Rq)
+.		ds b1 \&\\*(tNIEEE Std\\*[__aa] 1003.1-1988\\*(sV
+.		as b1 (\\*(Lq\\*(tN\\*(Px.1\\*[__aa]\\*(Rq)
 .	\}
 .	el .ie \\*[A\\n(aP]-p1003.1-90 \{\
-.		ds b1 \&\\*(tNIEEE Std\\*(aa 1003.1-1990\\*(sV
-.		as b1 (\\*(Lq\\*(tN\\*(Px.1\\*(aa\\*(Rq)
+.		ds b1 \&\\*(tNIEEE Std\\*[__aa] 1003.1-1990\\*(sV
+.		as b1 (\\*(Lq\\*(tN\\*(Px.1\\*[__aa]\\*(Rq)
 .	\}
 .	el .ie \\*[A\\n(aP]-p1003.1b-93 \{\
-.		ds b1 \&\\*(tNIEEE Std\\*(aa 1003.1b-1993\\*(sV
-.		as b1 (\\*(Lq\\*(tN\\*(Px.1b\\*(aa\\*(Rq)
+.		ds b1 \&\\*(tNIEEE Std\\*[__aa] 1003.1b-1993\\*(sV
+.		as b1 (\\*(Lq\\*(tN\\*(Px.1b\\*[__aa]\\*(Rq)
 .	\}
 .	el .ie \\*[A\\n(aP]-p1003.1-96 \{\
-.		ds b1 \&\\*(tNISO/IEC\\*(aa 9945-1:1996\\*(sV
-.		as b1 (\\*(Lq\\*(tN\\*(Px.1\\*(aa\\*(Rq)
+.		ds b1 \&\\*(tNISO/IEC\\*[__aa] 9945-1:1996\\*(sV
+.		as b1 (\\*(Lq\\*(tN\\*(Px.1\\*[__aa]\\*(Rq)
 .	\}
 .	el .ie \\*[A\\n(aP]-p1003.1d-99 \{\
-.		ds b1 \&\\*(tNIEEE Std\\*(aa 1003.1d-1999\\*(sV
-.		as b1 (\\*(Lq\\*(tN\\*(Px.1d\\*(aa\\*(Rq)
+.		ds b1 \&\\*(tNIEEE Std\\*[__aa] 1003.1d-1999\\*(sV
+.		as b1 (\\*(Lq\\*(tN\\*(Px.1d\\*[__aa]\\*(Rq)
 .	\}
 .	el .ie \\*[A\\n(aP]-p1003.1g-2000 \{\
-.		ds b1 \&\\*(tNIEEE Std\\*(aa 1003.1g-2000\\*(sV
-.		as b1 (\\*(Lq\\*(tN\\*(Px.1g\\*(aa\\*(Rq)
+.		ds b1 \&\\*(tNIEEE Std\\*[__aa] 1003.1g-2000\\*(sV
+.		as b1 (\\*(Lq\\*(tN\\*(Px.1g\\*[__aa]\\*(Rq)
 .	\}
 .	el .ie \\*[A\\n(aP]-p1003.1-2001 \{\
-.		ds b1 \&\\*(tNIEEE Std\\*(aa 1003.1-2001\\*(sV
-.		as b1 (\\*(Lq\\*(tN\\*(Px.1\\*(aa\\*(Rq)
+.		ds b1 \&\\*(tNIEEE Std\\*[__aa] 1003.1-2001\\*(sV
+.		as b1 (\\*(Lq\\*(tN\\*(Px.1\\*[__aa]\\*(Rq)
 .	\}
 .	el .ie \\*[A\\n(aP]-p1003.1-2004 \{\
-.		ds b1 \&\\*(tNIEEE Std\\*(aa 1003.1-2004\\*(sV
-.		as b1 (\\*(Lq\\*(tN\\*(Px.1\\*(aa\\*(Rq)
+.		ds b1 \&\\*(tNIEEE Std\\*[__aa] 1003.1-2004\\*(sV
+.		as b1 (\\*(Lq\\*(tN\\*(Px.1\\*[__aa]\\*(Rq)
 .	\}
 .	el .ie \\*[A\\n(aP]-p1003.1-2008 \{\
-.		ds b1 \&\\*(tNIEEE Std\\*(aa 1003.1-2008\\*(sV
-.		as b1 (\\*(Lq\\*(tN\\*(Px.1\\*(aa\\*(Rq)
+.		ds b1 \&\\*(tNIEEE Std\\*[__aa] 1003.1-2008\\*(sV
+.		as b1 (\\*(Lq\\*(tN\\*(Px.1\\*[__aa]\\*(Rq)
 .	\}
 .	el .ie \\*[A\\n(aP]-p1003.2 \{\
-.		ds b1 \&\\*(tNIEEE Std\\*(aa 1003.2\\*(sV
-.		as b1 (\\*(Lq\\*(tN\\*(Px.2\\*(aa\\*(Rq)
+.		ds b1 \&\\*(tNIEEE Std\\*[__aa] 1003.2\\*(sV
+.		as b1 (\\*(Lq\\*(tN\\*(Px.2\\*[__aa]\\*(Rq)
 .	\}
 .	el .ie \\*[A\\n(aP]-p1003.2-92 \{\
-.		ds b1 \&\\*(tNIEEE Std\\*(aa 1003.2-1992\\*(sV
-.		as b1 (\\*(Lq\\*(tN\\*(Px.2\\*(aa\\*(Rq)
+.		ds b1 \&\\*(tNIEEE Std\\*[__aa] 1003.2-1992\\*(sV
+.		as b1 (\\*(Lq\\*(tN\\*(Px.2\\*[__aa]\\*(Rq)
 .	\}
 .	el .ie \\*[A\\n(aP]-ansiC \{\
-.		ds b1 \&\\*(tNANSI\\*(aa X3.159-1989\\*(sV
-.		as b1 (\\*(Lq\\*(tNANSI C89\\*(aa\\*(Rq)
+.		ds b1 \&\\*(tNANSI\\*[__aa] X3.159-1989\\*(sV
+.		as b1 (\\*(Lq\\*(tNANSI C89\\*[__aa]\\*(Rq)
 .	\}
 .	el .ie \\*[A\\n(aP]-ansiC-89 \{\
-.		ds b1 \&\\*(tNANSI\\*(aa X3.159-1989\\*(sV
-.		as b1 (\\*(Lq\\*(tNANSI C89\\*(aa\\*(Rq)
+.		ds b1 \&\\*(tNANSI\\*[__aa] X3.159-1989\\*(sV
+.		as b1 (\\*(Lq\\*(tNANSI C89\\*[__aa]\\*(Rq)
 .	\}
 .	el .ie \\*[A\\n(aP]-ansiC-99 \{\
-.		ds b1 \&\\*(tNANSI/ISO/IEC\\*(aa 9899-1999\\*(sV
-.		as b1 (\\*(Lq\\*(tNANSI C99\\*(aa\\*(Rq)
+.		ds b1 \&\\*(tNANSI/ISO/IEC\\*[__aa] 9899-1999\\*(sV
+.		as b1 (\\*(Lq\\*(tNANSI C99\\*[__aa]\\*(Rq)
 .	\}
 .	el .ie \\*[A\\n(aP]-isoC-99 \{\
-.		ds b1 \&\\*(tNISO/IEC\\*(aa 9899:1999\\*(sV
-.		as b1 (\\*(Lq\\*(tNISO C99\\*(aa\\*(Rq)
+.		ds b1 \&\\*(tNISO/IEC\\*[__aa] 9899:1999\\*(sV
+.		as b1 (\\*(Lq\\*(tNISO C99\\*[__aa]\\*(Rq)
 .	\}
 .	el .ie \\*[A\\n(aP]-isoC-amd1 \{\
-.		ds b1 \&\\*(tNISO/IEC\\*(aa 9899/AMD1:1995\\*(sV
-.		as b1 (\\*(Lq\\*(tNISO C90, Amendment 1\\*(aa\\*(Rq)
+.		ds b1 \&\\*(tNISO/IEC\\*[__aa] 9899/AMD1:1995\\*(sV
+.		as b1 (\\*(Lq\\*(tNISO C90, Amendment 1\\*[__aa]\\*(Rq)
 .	\}
 .	el .ie \\*[A\\n(aP]-iso8601 \{\
-.		ds b1 \&\\*(tNISO\\*(aa 8601\\*(sV
+.		ds b1 \&\\*(tNISO\\*[__aa] 8601\\*(sV
 .	\}
 .	el .ie \\*[A\\n(aP]-iso8802-3 \{\
-.		ds b1 \&\\*(tNISO\\*(aa 8802-3: 1989\\*(sV
+.		ds b1 \&\\*(tNISO\\*[__aa] 8802-3: 1989\\*(sV
 .	\}
 .	el .ie \\*[A\\n(aP]-ieee754 \{\
-.		ds b1 \&\\*(tNIEEE Std\\*(aa 754-1985\\*(sV
+.		ds b1 \&\\*(tNIEEE Std\\*[__aa] 754-1985\\*(sV
 .	\}
 .	el .ie \\*[A\\n(aP]-xcu5 \{\
-.		ds b1 \&\\*(tNX/Open Commands and Utilities Issue 5\\*(aa\\*(sV
-.		as b1 (\\*(Lq\\*(tNXCU5\\*(aa\\*(Rq)
+.		ds b1 \&\\*(tNX/Open Commands and Utilities Issue 5\\*[__aa]\\*(sV
+.		as b1 (\\*(Lq\\*(tNXCU5\\*[__aa]\\*(Rq)
 .	\}
 .	el .ie \\*[A\\n(aP]-xpg3 \{\
-.		ds b1 \&\\*(tNX/Open Portability Guide Issue 3\\*(aa\\*(sV
-.		as b1 (\\*(Lq\\*(tNXPG3\\*(aa\\*(Rq)
+.		ds b1 \&\\*(tNX/Open Portability Guide Issue 3\\*[__aa]\\*(sV
+.		as b1 (\\*(Lq\\*(tNXPG3\\*[__aa]\\*(Rq)
 .	\}
 .	el .ie \\*[A\\n(aP]-xpg4 \{\
-.		ds b1 \&\\*(tNX/Open Portability Guide Issue 4\\*(aa\\*(sV
-.		as b1 (\\*(Lq\\*(tNXPG4\\*(aa\\*(Rq)
+.		ds b1 \&\\*(tNX/Open Portability Guide Issue 4\\*[__aa]\\*(sV
+.		as b1 (\\*(Lq\\*(tNXPG4\\*[__aa]\\*(Rq)
 .	\}
 .	el .ie \\*[A\\n(aP]-xpg4.2 \{\
-.		ds b1 \&\\*(tNX/Open Portability Guide Issue 4, Version 2\\*(aa\\*(sV
-.		as b1 (\\*(Lq\\*(tNXPG4.2\\*(aa\\*(Rq)
+.		ds b1 \&\\*(tNX/Open Portability Guide Issue 4, Version 2\\*[__aa]\\*(sV
+.		as b1 (\\*(Lq\\*(tNXPG4.2\\*[__aa]\\*(Rq)
 .	\}
 .	el .ie \\*[A\\n(aP]-xpg4.3 \{\
-.		ds b1 \&\\*(tNX/Open Portability Guide Issue 4, Version 3\\*(aa\\*(sV
-.		as b1 (\\*(Lq\\*(tNXPG4.3\\*(aa\\*(Rq)
+.		ds b1 \&\\*(tNX/Open Portability Guide Issue 4, Version 3\\*[__aa]\\*(sV
+.		as b1 (\\*(Lq\\*(tNXPG4.3\\*[__aa]\\*(Rq)
 .	\}
 .	el .ie \\*[A\\n(aP]-susv2 \{\
-.		ds b1 \&\\*(tNVersion 2 of the Single UNIX Specification\\*(aa\\*(sV
-.		as b1 (\\*(Lq\\*(tNSUSv2\\*(aa\\*(Rq)
+.		ds b1 \&\\*(tNVersion 2 of the Single UNIX Specification\\*[__aa]\\*(sV
+.		as b1 (\\*(Lq\\*(tNSUSv2\\*[__aa]\\*(Rq)
 .	\}
 .	el .ie \\*[A\\n(aP]-svid4 \{\
-.		ds b1 \&\\*(tNSystem V Interface Definition, Fourth Edition\\*(aa\\*(sV
-.		as b1 (\\*(Lq\\*(tNSVID4\\*(aa\\*(Rq)
+.		ds b1 \&\\*(tNSystem V Interface Definition, Fourth Edition\\*[__aa]\\*(sV
+.		as b1 (\\*(Lq\\*(tNSVID4\\*[__aa]\\*(Rq)
 .	\}
 .	el .tm .St: Unknown standard "\\*[A\\n(aP]" (#\\n(.c)
 .	ie \\n(aC>\\n(aP \{\

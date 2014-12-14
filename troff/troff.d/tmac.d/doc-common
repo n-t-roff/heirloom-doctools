@@ -202,7 +202,7 @@
 .	ds oS BSD
 .\}
 .if \\$2 \{\
-.	ds aa Non-Null
+.	ds __aa Non-Null
 .\}
 .if \\$1ATT   \{\
 .	ds oS AT&T
@@ -229,8 +229,8 @@
 .	if \\$24.4  .ds oS 4.4BSD
 .\}
 .if \\*(oSNull .ds oS \0\\$1
-.if \\*(aaNon-Null .as oS \0\\$2
-.rm aa
+.if \\*[__aa]Non-Null .as oS \0\\$2
+.rm __aa
 ..
 .de Dd
 .if !\\*(dD .nr gX 1

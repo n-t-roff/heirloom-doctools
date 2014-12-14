@@ -1585,7 +1585,7 @@
 .tm Usage: .Bd [-literal | -filled | -ragged | -unfilled] [-offset [string]] [-compact] (#\\n(.c)
 .\}
 .el \{\
-.	ds aa
+.	ds __aa
 .	nr bV 0
 .       nr iD 0
 .	nr dP \\n(dP+1
