@@ -116,7 +116,7 @@ rn 1 %\342%\216%\272
 ~= 1 %\342%\211%\203
 ~~ 1 %\342%\211%\210
 ap 1 %\342%\210%\274
-!= 1 %\342%\211%\223
+!= 1 %\xe2%\x89%\xa0 # U+2260 NOT EQUAL TO
 -> 1 %\342%\206%\222
 <- 1 %\342%\206%\220
 ua 1 %\342%\206%\221
@@ -170,25 +170,65 @@ lf 1 %\342%\216%\212
 rf 1 %\342%\216%\213
 lc 1 %\342%\216%\210
 rc 1 %\342%\216%\211
-ba 1 %\x7c           #        bar
-rl 1 %\xe2%\x80%\xbe # U+203E OVERLINE
-bb 1 %\xc2%\xa6      #        broken bar
+ba 1 %\x7c # bar
+rl 1 %\xe2%\x80%\xbe # U+203E OVERLINE (sic?)
+bb 1 %\xc2%\xa6 # broken bar
 lz 1 %\xe2%\x97%\x8a # U+25CA LOZENGE
-ps 1 %\xc2%\xB6      #        paragraph
-at 1 %\x40           #        at
-sh 1 %\x23           #        hash (pound)
+ps 1 %\xc2%\xB6 # paragraph
+at 1 %\x40 # at
+sh 1 %\x23 # hash (pound)
 CR 1 %\xe2%\x86%\xb5 # U+21B5 DOWNWARDS ARROW WITH CORNER LEFTWARDS
 OK 1 %\xe2%\x9c%\x93 # U+2713 CHECK MARK
-r! 1 %\xc2%\xA1      #        upside-down exclamation
-r? 1 %\xc2%\xBF      #        upside-down question
+r! 1 %\xc2%\xA1 # upside-down exclamation
+r? 1 %\xc2%\xBF # upside-down question
 Bq 1 %\xe2%\x80%\x9e # U+201E DOUBLE LOW-9 QUOTATION MARK
 bq 1 %\xe2%\x80%\x9a # U+201A SINGLE LOW-9 QUOTATION MARK
-Fo 1 %\xc2%\xAB      #        left guillemet
-Fc 1 %\xc2%\xBB      #        right guillemet
+Fo 1 %\xc2%\xAB # left guillemet
+Fc 1 %\xc2%\xBB # right guillemet
 fo 1 %\xe2%\x80%\xb9 # U+2039 SINGLE LEFT-POINTING ANGLE QUOTATION MARK
 fc 1 %\xe2%\x80%\xba # U+203A SINGLE RIGHT-POINTING ANGLE QUOTATION MARK
-lB 1 %\x5b           #        bracketleft
-rB 1 %\x5d           #        bracketright
-lC 1 %\x7b           #        braceleft
-rC 1 %\x7d           #        braceright
+lB 1 %\x5b # bracketleft
+rB 1 %\x5d # bracketright
+lC 1 %\x7b # braceleft
+rC 1 %\x7d # braceright
+la 1 %\xe2%\x9f%\xa8 # U+27E8 MATHEMATICAL LEFT ANGLE BRACKET
+ra 1 %\xe2%\x9f%\xa9 # U+27E9 MATHEMATICAL RIGHT ANGLE BRACKET
+braceex 1 %\xe2%\x8e%\xaa # U+23AA CURLY BRACKET EXTENSION
 bracketlefttp 1 %\xe2%\x8e%\xa1 # U+23A1 LEFT SQUARE BRACKET UPPER CORNER
+bracketleftbp 1 %\xe2%\x8e%\xa3 # U+23A3 LEFT SQUARE BRACKET LOWER CORNER (sic?)
+bracketleftex 1 %\xe2%\x8e%\xa2 # U+23A2 LEFT SQUARE BRACKET EXTENSION
+bracketrighttp 1 %\xe2%\x8e%\xa4 # U+23A4 RIGHT SQUARE BRACKET UPPER CORNER
+bracketrightbp 1 %\xe2%\x8e%\xa6 # U+23A6 RIGHT SQUARE BRACKET LOWER CORNER (sic?)
+bracketrightex 1 %\xe2%\x8e%\xa5 # U+23A5 RIGHT SQUARE BRACKET EXTENSION
+bracelefttp 1 %\xe2%\x8e%\xa7 # U+23A7 LEFT CURLY BRACKET UPPER HOOK
+braceleftmid 1 %\xe2%\x8e%\xa8 # U+23A8 LEFT CURLY BRACKET MIDDLE PIECE
+braceleftbp 1 %\xe2%\x8e%\xa9 # U+23A9 LEFT CURLY BRACKET LOWER HOOK (sic?)
+braceleftex 1 %\xe2%\x8e%\xaa # U+23AA CURLY BRACKET EXTENSION
+bracerighttp 1 %\xe2%\x8e%\xab # U+23AB RIGHT CURLY BRACKET UPPER HOOK
+bracerightmid 1 %\xe2%\x8e%\xac # U+23AC RIGHT CURLY BRACKET MIDDLE PIECE
+bracerightbp 1 %\xe2%\x8e%\xad # U+23AD RIGHT CURLY BRACKET LOWER HOOK (sic?)
+bracerightex 1 %\xe2%\x8e%\xaa # U+23AA CURLY BRACKET EXTENSION
+parenlefttp 1 %\xe2%\x8e%\x9b # U+239B LEFT PARENTHESIS UPPER HOOK
+parenleftbp 1 %\xe2%\x8e%\x9d # U+239D LEFT PARENTHESIS LOWER HOOK (sic?)
+parenleftex 1 %\xe2%\x8e%\x9c # U+239C LEFT PARENTHESIS EXTENSION
+parenrighttp 1 %\xe2%\x8e%\x9e # U+239E RIGHT PARENTHESIS UPPER HOOK
+parenrightbp 1 %\xe2%\x8e%\xa0 # U+23A0 RIGHT PARENTHESIS LOWER HOOK (sic?)
+parenrightex 1 %\xe2%\x8e%\x9f # U+239F RIGHT PARENTHESIS EXTENSION
+<> 1 %\xe2%\x86%\x94 # U+2194 LEFT RIGHT ARROW
+va 1 %\xe2%\x86%\x95 # U+2195 UP DOWN ARROW
+lA 1 %\xe2%\x87%\x90 # U+21D0 LEFTWARDS DOUBLE ARROW
+rA 1 %\xe2%\x87%\x92 # U+21D2 RIGHTWARDS DOUBLE ARROW
+hA 1 %\xe2%\x87%\x94 # U+21D4 LEFT RIGHT DOUBLE ARROW
+uA 1 %\xe2%\x87%\x91 # U+21D1 UPWARDS DOUBLE ARROW
+dA 1 %\xe2%\x87%\x93 # U+21D3 DOWNWARDS DOUBLE ARROW
+vA 1 %\xe2%\x87%\x95 # U+21D5 UP DOWN DOUBLE ARROW
+AN 1 %\xe2%\x88%\xa7 # U+2227 LOGICAL AND
+OR 1 %\xe2%\x88%\xa8 # U+2228 LOGICAL OR
+tno 1 %\xC2%\xac
+st 1 %\xe2%\x88%\x8b # U+220B CONTAINS AS MEMBER
+tf 1 %\xe2%\x88%\xb4 # U+2234 THEREFORE
+3d 1 %\xe2%\x88%\xb4 # U+2234 THEREFORE
+t+- 1 %\xc2%\xb1
+f/ 1 %\xe2%\x81%\x84 # U+2044 FRACTION SLASH
+<< 1 %\xe2%\x89%\xaa # U+226A MUCH LESS-THAN
+>> 1 %\xe2%\x89%\xab # U+226B MUCH GREATER-THAN
