@@ -54,7 +54,6 @@ n10.c
 Device interfaces
 */
 
-#include <stdio.h>
 #include <limits.h>
 #include <ctype.h>
 #include <sys/types.h>
