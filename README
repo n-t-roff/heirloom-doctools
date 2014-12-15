@@ -59,17 +59,12 @@ so it should not be too dramatic if it is missing.
 In order to use the utilities for formatting manual pages, note the
 following:
 
-- You will normally want to use "nroff -Tlp". By default, nroff generates
+- You will normally want to use "nroff -Tlocale". By default, nroff generates
   output for a Teletype Model 37 with half-line capabilities which will
   lead to weird results with any xterm or CRT terminal.
 
-- Another choice is "nroff -Tlocale". This will generate UTF-8 output if
-  permitted by the current setting of the LC_CTYPE locale, and the same
-  as "nroff -Tlp" otherwise. UTF-8 output looks nicer and helps to spot
-  out typesetting errors in manual pages like using "-" instead of "\-",
-  so it is recommended for developers. (End users might prefer to wait
-  some time until more of the many pages which do this wrong have been
-  fixed.)
+- "nroff -Tlocale" will generate UTF-8 output if permitted by the current
+  setting of the LC_CTYPE locale, and the same as "nroff -Tlp" otherwise.
 
 - Macro names are normally restricted to two characters for compatibility
   with previous versions of nroff. With "nroff -mg", long macro names and
@@ -78,10 +73,6 @@ following:
   groff in mind than manual pages that require strict Unix compatibility.
 
 - You need to filter the output of nroff through "col -x". 
-
-- The terminal descriptions for "-Tlp" and "-Tlocale" are built-in with
-  nroff. For a small system distribution, it is thus not necessary to
-  install the "nterm" directory.
 
 - You need at least the "an" macro file to format manual pages. If
   you also want to use the Berkeley "doc" macros, you also need
@@ -101,12 +92,12 @@ following:
   own version.
 
 - Thus a complete pipeline to format manual pages for viewing is:
-  tbl input.1 | neqn | nroff -Tlp -mg -msafe -mpadj -mandoc | col -x
+  tbl input.1 | neqn | nroff -Tlocale -mg -msafe -mpadj -mandoc | col -x
 
 - If you like italic text to appear underlined and boldfaced text to
   appear bold on a CRT or X Window System terminal, also add a call
   to the "ul" filter:
-  tbl input.1 | neqn | nroff -Tlp -mg -msafe -mpadj -mandoc | col -x | ul
+  tbl input.1 | neqn | nroff -Tlocale -mg -msafe -mpadj -mandoc | col -x | ul
 
 - To print manual pages with troff, use
   tbl input.1 | eqn | troff -mg -msafe -mpadj -mandoc | dpost | lp

@@ -1,3 +1,14 @@
+2014-12-15
+    nroff: Compiled in "tab.lp" and "tab.utf8" removed.  The
+    "nterm" directory is now required for nroff (at least with
+    file "tab.lp" or "tab.utf8").
+
+2014-12-13
+    Macro 'lsm' and number registers 'lsn' and 'lss' added.
+
+Release 141029
+==============
+
 2014-10-29
     Documentation revised by Pierre-Jean Fichet:  doc/fonts/
     changed to use free available OTF fonts.

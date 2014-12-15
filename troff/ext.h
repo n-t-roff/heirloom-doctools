@@ -344,7 +344,6 @@ extern	tchar	popi(void);
 extern	int	pushi(filep, int, enum flags);
 extern	void	sfree(struct s *);
 extern 	struct s	*macframe(void);
-extern	char	*setbrk(int);
 extern	int	getsn(int);
 extern	int	setstr(void);
 extern	void	collect(void);

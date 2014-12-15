@@ -72,7 +72,7 @@ tab.4000A: tab.4000a
 
 install: all
 	test -d $(ROOT)$(TABDIR) || mkdir -p $(ROOT)$(TABDIR)
-	for i in $(TABS); \
+	for i in $(TABS) tab.utf8; \
 	do \
 		$(INSTALL) -c -m 644 $$i $(ROOT)$(TABDIR)/$$i || exit; \
 	done

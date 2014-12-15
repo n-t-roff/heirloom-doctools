@@ -54,6 +54,7 @@ n10.c
 Device interfaces
 */
 
+#include <stdio.h>
 #include <limits.h>
 #include <ctype.h>
 #include <sys/types.h>
@@ -117,356 +118,6 @@ int	c_isalnum;
 
 int	utf8;
 
-static char tab_lp[] = "\
-lp\n\
-bset	0\n\
-breset	0\n\
-Hor	24\n\
-Vert	40\n\
-Newline	40\n\
-Char	24\n\
-Em	24\n\
-Halfline	20\n\
-Adj	24\n\
-twinit	\"\"\n\
-twrest	\"\"\n\
-twnl	\"\\n\"\n\
-hlr	\"\"\n\
-hlf	\"\"\n\
-flr	\"\\0337\"\n\
-bdon	\"\"\n\
-bdoff	\"\"\n\
-iton	\"\"\n\
-itoff	\"\"\n\
-ploton	\"\"\n\
-plotoff	\"\"\n\
-up	\"\"\n\
-down	\"\"\n\
-right	\"\"\n\
-left	\"\"\n\
-\n\
-charset\n\
-em 1 -\n\
-hy 1 -\n\
-\\- 1 -\n\
-rs 1 %\\134\n\
-dq 1 %\\042\n\
-bu 1 +\\bo\n\
-sq 2 \\[]\n\
-ru 1 _\n\
-14 3 1/4\n\
-12 3 1/2\n\
-34 3 3/4\n\
-fi 2 fi\n\
-fl 2 fl\n\
-ff 2 ff\n\
-Fi 3 ffi\n\
-Fl 3 ffl\n\
-de 1 \\344o\\304\n\
-dg 1 |\\b-\n\
-fm 1 '\n\
-ct 1 c\\b/\n\
-rg 1 r\\bO\n\
-co 1 c\\bO\n\
-pl 1 +\n\
-mi 1 -\n\
-eq 1 =\n\
-** 1 *\n\
-sc 1 j\\bf\n\
-aa 1 '\n\
-ga 1 `\n\
-ul 1 _\n\
-sl 1 /\n\
-*a 1 <\\ba\n\
-*b 1 ,\\bB\n\
-*g 1 <\\by\n\
-*d 1 <\\bo\n\
-*e 1 -\\bc\n\
-*z 1 ,\\bL\n\
-*y 1 ,\\bn\n\
-*h 1 -\\b0\n\
-*i 1 ,\\bi\n\
-*k 1 k\n\
-*l 1 \\\\\\b>\n\
-*m 1 ,\\bu\n\
-*n 1 ,\\bv\n\
-*c 1 ,\\b3\n\
-*o 1 o\n\
-*p 1 -\\bn\n\
-*r 1 p\n\
-*s 1 -\\bo\n\
-*t 1 ~\\bt\n\
-*u 1 u\n\
-*f 1 /\\bo\n\
-*x 1 x\n\
-*q 1 |\\bu\n\
-*w 1 u\\bw\n\
-*A 1 A\n\
-*B 1 B\n\
-*G 2 ~\\b|~\n\
-*D 2 _\\b/_\\b\\\\\n\
-*E 1 E\n\
-*Z 1 Z\n\
-*Y 1 H\n\
-*H 1 -\\bO\n\
-*I 1 I\n\
-*K 1 K\n\
-*L 2 /\\\\\n\
-*M 1 M\n\
-*N 1 N\n\
-*C 1 _\\b-\\b~\n\
-*O 1 O\n\
-*P 2 ~\\b|~\\b|\n\
-*R 1 P\n\
-*S 1 ~\\b_\\b>\n\
-*T 1 T\n\
-*U 1 Y\n\
-*F 1 |\\bO\n\
-*X 1 X\n\
-*Q 1 |\\bU\n\
-*W 2 _\\b(_\\b)\n\
-ts 1 s\n\
-sr 2 \\\\/\n\
-rn 1 \\0337_\\n\n\
->= 1 _\\b>\n\
-<= 1 _\\b<\n\
-== 1 _\\b=\n\
-~= 1 ~\\b=\n\
-ap 1 ~\n\
-!= 1 =\\b/\n\
--> 2 ->\n\
-<- 2 <-\n\
-ua 1 |\\b^\n\
-da 1 |\\bv\n\
-mu 1 x\n\
-di 1 -\\b:\n\
-+- 1 +\\b_\n\
-cu 1 U\n\
-ca 3 (^)\n\
-sb 2 (_\\b~\n\
-sp 2 _\\b~)\n\
-ib 2 (~\\b_\\b=\n\
-ip 2 ~\\b_\\b=)\n\
-if 2 oo\n\
-pd 1 6\n\
-gr 1 ~\\bV\n\
-no 1 -\n\
-is 1 '\\b,\\bI\n\
-pt 2 oc\n\
-es 1 /\\bO\n\
-mo 1 -\\bC\n\
-br 1 |\n\
-dd 1 |\\b=\n\
-rh 2 =>\n\
-lh 2 <=\n\
-or 1 |\n\
-ci 1 O\n\
-lt 1 (\n\
-lb 1 (\n\
-rt 1 )\n\
-rb 1 )\n\
-lk 1 |\n\
-rk 1 |\n\
-bv 1 |\n\
-lf 1 |\n\
-rf 1 |\n\
-lc 1 |\n\
-rc 1 |\n";
-
-#ifdef	EUC
-static char tab_utf8[] =
-    "utf8\n"
-    "bset	0\n"
-    "breset	0\n"
-    "Hor	24\n"
-    "Vert	40\n"
-    "Newline	40\n"
-    "Char	24\n"
-    "Em	24\n"
-    "Halfline	20\n"
-    "Adj	24\n"
-    "twinit	\"\"\n"
-    "twrest	\"\"\n"
-    "twnl	\"\\n\"\n"
-    "hlr	\"\"\n"
-    "hlf	\"\"\n"
-    "flr	\"\\0337\"\n"
-    "bdon	\"\"\n"
-    "bdoff	\"\"\n"
-    "iton	\"\"\n"
-    "itoff	\"\"\n"
-    "ploton	\"\"\n"
-    "plotoff	\"\"\n"
-    "up	\"\"\n"
-    "down	\"\"\n"
-    "right	\"\"\n"
-    "left	\"\"\n"
-    "\n"
-    "charset\n"
-    "em 1 %\\342%\\200%\\224\n"
-    "en 1 %\\342%\\200%\\223\n"
-    "hy 1 %\\342%\\200%\\220\n"
-    "\\- 1 -\n"
-    "rs 1 %\\134\n"
-    "dq 1 %\\042\n"
-    "bu 1 %\\342%\\200%\\242\n"
-    "sq 1 %\\342%\\226%\\241\n"
-    "ru 1 %\\342%\\216%\\275\n"
-    "14 1 %\\302%\\274\n"
-    "12 1 %\\302%\\275\n"
-    "34 1 %\\302%\\276\n"
-    "fi 2 fi\n"
-    "fl 2 fl\n"
-    "ff 2 ff\n"
-    "Fi 3 ffi\n"
-    "Fl 3 ffl\n"
-    "de 1 %\\302%\\260\n"
-    "dg 1 %\\342%\\200%\\240\n"
-    "fm 1 '\n"
-    "ct 1 %\\302%\\242\n"
-    "rg 1 %\\302%\\256\n"
-    "co 1 %\\302%\\251\n"
-    "pl 1 +\n"
-    "mi 1 %\\342%\\210%\\222\n"
-    "eq 1 =\n"
-    "** 1 *\n"
-    "sc 1 %\\302%\\247\n"
-    "aa 1 '\n"
-    "aq 1 '\n"
-    "ga 1 `\n"
-    "ul 1 %\\137\n"
-    "sl 1 /\n"
-    "*a 1 %\\316%\\261\n"
-    "*b 1 %\\316%\\262\n"
-    "*g 1 %\\316%\\263\n"
-    "*d 1 %\\316%\\264\n"
-    "*e 1 %\\316%\\265\n"
-    "*z 1 %\\316%\\266\n"
-    "*y 1 %\\316%\\267\n"
-    "*h 1 %\\316%\\270\n"
-    "*i 1 %\\316%\\271\n"
-    "*k 1 %\\316%\\272\n"
-    "*l 1 %\\316%\\273\n"
-    "*m 1 %\\316%\\274\n"
-    "*n 1 %\\316%\\275\n"
-    "*c 1 %\\316%\\276\n"
-    "*o 1 %\\316%\\277\n"
-    "*p 1 %\\317%\\200\n"
-    "*r 1 %\\317%\\201\n"
-    "*s 1 %\\317%\\203\n"
-    "*t 1 %\\317%\\204\n"
-    "*u 1 %\\317%\\205\n"
-    "*f 1 %\\317%\\206\n"
-    "*x 1 %\\317%\\207\n"
-    "*q 1 %\\317%\\210\n"
-    "*w 1 %\\317%\\211\n"
-    "*A 1 %\\316%\\221\n"
-    "*B 1 %\\316%\\222\n"
-    "*G 1 %\\316%\\223\n"
-    "*D 1 %\\316%\\224\n"
-    "*E 1 %\\316%\\225\n"
-    "*Z 1 %\\316%\\226\n"
-    "*Y 1 %\\316%\\227\n"
-    "*H 1 %\\316%\\230\n"
-    "*I 1 %\\316%\\231\n"
-    "*K 1 %\\316%\\232\n"
-    "*L 1 %\\316%\\233\n"
-    "*M 1 %\\316%\\234\n"
-    "*N 1 %\\316%\\235\n"
-    "*C 1 %\\316%\\236\n"
-    "*O 1 %\\316%\\237\n"
-    "*P 1 %\\316%\\240\n"
-    "*R 1 %\\316%\\241\n"
-    "*S 1 %\\316%\\243\n"
-    "*T 1 %\\316%\\244\n"
-    "*U 1 %\\316%\\245\n"
-    "*F 1 %\\316%\\246\n"
-    "*X 1 %\\316%\\247\n"
-    "*Q 1 %\\316%\\250\n"
-    "*W 1 %\\316%\\251\n"
-    "ts 1 %\\317%\\202\n"
-    "sr 1 %\\342%\\210%\\232\n"
-    "rn 1 %\\342%\\216%\\272\n"
-    ">= 1 %\\342%\\211%\\245\n"
-    "<= 1 %\\342%\\211%\\244\n"
-    "== 1 %\\342%\\211%\\241\n"
-    "~= 1 %\\342%\\211%\\203\n"
-    "~~ 1 %\\342%\\211%\\210\n"
-    "ap 1 %\\342%\\210%\\274\n"
-    "!= 1 %\\342%\\211%\\223\n"
-    "-> 1 %\\342%\\206%\\222\n"
-    "<- 1 %\\342%\\206%\\220\n"
-    "ua 1 %\\342%\\206%\\221\n"
-    "da 1 %\\342%\\206%\\223\n"
-    "mu 1 %\\303%\\227\n"
-    "di 1 %\\303%\\267\n"
-    "+- 1 %\\302%\\261\n"
-    "cu 1 %\\342%\\210%\\252\n"
-    "ca 1 %\\342%\\210%\\251\n"
-    "sb 1 %\\342%\\212%\\202\n"
-    "sp 1 %\\342%\\212%\\201\n"
-    "ib 1 %\\342%\\212%\\207\n"
-    "ip 1 %\\342%\\212%\\206\n"
-    "if 1 %\\342%\\210%\\236\n"
-    "pd 1 %\\342%\\210%\\202\n"
-    "gr 1 %\\342%\\210%\\207\n"
-    "no 1 %\\302%\\254\n"
-    "is 1 %\\342%\\210%\\253\n"
-    "pt 1 %\\342%\\210%\\235\n"
-    "es 1 %\\342%\\210%\\205\n"
-    "mo 1 %\\342%\\210%\\210\n"
-    "br 1 %\\342%\\224%\\202\n"
-    "dd 1 %\\342%\\200%\\241\n"
-    "rh 1 %\\342%\\230%\\236\n"
-    "lh 1 %\\342%\\230%\\234\n"
-    "or 1 |\n"
-    "ci 1 %\\342%\\227%\\213\n"
-    "bx 1 %\\342%\\226%\\240\n"
-    "Sl 1 %\\342%\\204%\\223\n"
-    "fa 1 %\\342%\\210%\\200\n"
-    "te 1 %\\342%\\210%\\203\n"
-    "al 1 %\\342%\\204%\\265\n"
-    "Ox 1 %\\342%\\212%\\227\n"
-    "O+ 1 %\\342%\\212%\\225\n"
-    "tm 1 %\\342%\\204%\\242\n"
-    "`` 1 %\\342%\\200%\\234\n"
-    "lq 1 %\\342%\\200%\\234\n"
-    "'' 1 %\\342%\\200%\\235\n"
-    "rq 1 %\\342%\\200%\\235\n"
-    "oq 1 %\\342%\\200%\\230\n"
-    "cq 1 %\\342%\\200%\\231\n"
-    "-+ 1 %\\342%\\210%\\223\n"
-    "lt 1 %\\342%\\216%\\247\n"
-    "lb 1 %\\342%\\216%\\251\n"
-    "rt 1 %\\342%\\216%\\253\n"
-    "rb 1 %\\342%\\216%\\255\n"
-    "lk 1 %\\342%\\216%\\250\n"
-    "rk 1 %\\342%\\216%\\254\n"
-    "bv 1 %\\342%\\216%\\252\n"
-    "lf 1 %\\342%\\216%\\212\n"
-    "rf 1 %\\342%\\216%\\213\n"
-    "lc 1 %\\342%\\216%\\210\n"
-    "rc 1 %\\342%\\216%\\211\n"
-    "ba 1 %\\x7c\n"             /*        bar */
-    "rl 1 %\\xe2%\\x80%\\xbe\n" /* U+203E OVERLINE */
-    "bb 1 %\\xc2%\\xa6\n"       /*        broken bar */
-    "lz 1 %\\xe2%\\x97%\\x8a\n" /* U+25CA LOZENGE */
-    "ps 1 %\\xc2%\\xB6\n"       /*        paragraph */
-    "at 1 %\\x40\n"             /*        at */
-    "sh 1 %\\x23\n"             /*        hash (pound) */
-    "CR 1 %\\xe2%\\x86%\\xb5\n" /* U+21B5 DOWNWARDS ARROW WITH CORNER LEFTWARDS */
-    "OK 1 %\\xe2%\\x9c%\\x93\n" /* U+2713 CHECK MARK */
-    "r! 1 %\\xc2%\\xA1\n"       /*        upside-down exclamation */
-    "r? 1 %\\xc2%\\xBF\n"       /*        upside-down question */
-    "Bq 1 %\\xe2%\\x80%\\x9e\n" /* U+201E DOUBLE LOW-9 QUOTATION MARK */
-    "bq 1 %\\xe2%\\x80%\\x9a\n" /* U+201A SINGLE LOW-9 QUOTATION MARK */
-    "Fo 1 %\\xc2%\\xAB\n"       /*        left guillemet */
-    "Fc 1 %\\xc2%\\xBB\n"       /*        right guillemet */
-    "fo 1 %\\xe2%\\x80%\\xb9\n" /* U+2039 SINGLE LEFT-POINTING ANGLE QUOTATION MARK */
-    "fc 1 %\\xe2%\\x80%\\xba\n" /* U+203A SINGLE RIGHT-POINTING ANGLE QUOTATION MARK */
-    ;
-#endif	/* EUC */
-
 void
 ptinit(void)
 {
@@ -477,6 +128,7 @@ ptinit(void)
 	struct stat stbuf;
 	char check[50];
 	extern int initbdtab[], initfontlab[];
+	int nl;
 
 	t.codetab = calloc(NROFFCHARS-_SPECCHAR_ST, sizeof *t.codetab);
 	t.width = calloc(NROFFCHARS, sizeof *t.width);
@@ -488,40 +140,29 @@ ptinit(void)
 	fontlab = initfontlab;
 	tt = malloc(strlen(termtab) + strlen(devname) + 1);
 	strcpy(tt, termtab);
-	strcat(tt, devname);
-	termtab = tt;
-	if (strcmp(devname, "locale") == 0) {
+	if (strcmp(devname, "locale")) strcat(tt, devname);
+	else {
 #ifdef	EUC
 		wchar_t	wc;
-		if (mb_cur_max > 1 &&
-				mbtowc(&wc, "\303\266", 2) == 2 &&
-					wc == 0xF6 &&
-				mbtowc(&wc, "\342\202\254", 3) == 3 &&
-					wc == 0x20AC) {
-			codestr = tab_utf8;
-			nread = sizeof tab_utf8 - 1;
+		if (mb_cur_max > 1 && mbtowc(&wc, "\303\266", 2) == 2 &&
+		    wc == 0xF6 && mbtowc(&wc, "\342\202\254", 3) == 3 &&
+		    wc == 0x20AC) {
 			csi_width[0] = 0;
 			utf8 = 1;
+			strcat(tt, "utf8"); /* shorter than "locale" */
 		} else
-#endif	/* EUC */
-		{
-			codestr = tab_lp;
-			nread = sizeof tab_lp - 1;
-		}
-	} else if ((fd = open(termtab, O_RDONLY)) < 0) {
-		if (strcmp(devname, "lp")) {
-			errprint("cannot open %s", termtab);
-			exit(-1);
-		}
-		codestr = tab_lp;
-		nread = sizeof tab_lp - 1;
-	} else {
-		fstat(fd, &stbuf);
-		codestr = setbrk((int) stbuf.st_size);
-
-		nread = read(fd, codestr, (int) stbuf.st_size);
-		close(fd);
+#endif
+			strcat(tt, "lp"); /* shorter than "locale" */
 	}
+	if ((fd = open(tt, O_RDONLY)) < 0) {
+		errprint("cannot open %s", tt);
+		exit(-1);
+	}
+	fstat(fd, &stbuf);
+	codestr = malloc(stbuf.st_size + 1);
+	nread = read(fd, codestr, stbuf.st_size);
+	close(fd);
+	codestr[stbuf.st_size] = 0;
 
 	p = codestr;
 	p = skipstr(p);		/* skip over type, could check */
@@ -563,11 +204,20 @@ ptinit(void)
 	i = 0;
 /* this ought to be a pointer array and in place in codestr */
 	cp = chname + 1;	/* bug if starts at 0, in setch */
+	nl = 1;
 	while (p < codestr + nread) {
-		while (*p == ' ' || *p == '\t' || *p == '\n')
+		while (*p == ' ' || *p == '\t' || *p == '\n') {
+			if (*p == '\n') nl = 1;
 			p++;
+		}
+		if (*p == '#' && !nl) {
+			while (*p && *p != '\n') p++;
+			while (*p == '\n') p++;
+		}
+		if (!*p) break; /* last line ends with comment */
+		nl = 0;
 		if (i + _SPECCHAR_ST >= NROFFCHARS) {
-			errprint("too many names in charset for %s", termtab);
+			errprint("too many names in charset for %s", tt);
 			exit(1);
 		}
 		chtab[i] = cp - chname;	/* index, not pointer */

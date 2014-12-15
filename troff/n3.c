@@ -1051,14 +1051,6 @@ macframe(void)
 	return(p);
 }
 
-
-char *
-setbrk(int x)
-{
-	return(calloc(x, 1));
-}
-
-
 static int
 _getsn(int *strp, int create)
 {
