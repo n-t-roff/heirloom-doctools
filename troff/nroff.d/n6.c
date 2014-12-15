@@ -50,6 +50,7 @@
  * contributors.
  */
 
+#include <stdio.h>
 #ifdef	EUC
 #include <limits.h>
 #include <stdlib.h>
@@ -160,6 +161,8 @@ setch(int delim)
 			*s = '\0';
 			if (j != ']')
 				nodelim(']');
+			else if ((j = findch(temp)) > 0)
+				return j | chbits;
 			else if (warn & WARN_CHAR)
 				errprint("missing glyph \\[%s]", temp);
 			return 0;

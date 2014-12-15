@@ -76,7 +76,7 @@ int	hpos	 = 0;	/* ditto horizontal */
 
 int	initbdtab[NFONT+1];
 
-short	*chtab;
+size_t	*chtab;
 char	*chname;
 int	**fontab;
 char	**kerntab;
@@ -224,7 +224,7 @@ ptinit(void)
 	pstab = (int *) filebase;
 	for (i = 0; pstab[i]; i++)
 		pstab[i] = pts2u(pstab[i]);
-	chtab = (short *)(pstab + nsizes + 1);
+	chtab = (size_t *)(pstab + nsizes + 1);
 	chname = (char *) (chtab + dev.nchtab);
 	p = chname + dev.lchname;
 	specnames();	/* install names like "hyphen", etc. */

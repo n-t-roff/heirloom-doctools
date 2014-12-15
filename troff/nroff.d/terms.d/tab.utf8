@@ -191,3 +191,4 @@ lB 1 %\x5b           #        bracketleft
 rB 1 %\x5d           #        bracketright
 lC 1 %\x7b           #        braceleft
 rC 1 %\x7d           #        braceright
+bracketlefttp 1 %\xe2%\x8e%\xa1 # U+23A1 LEFT SQUARE BRACKET UPPER CORNER

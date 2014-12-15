@@ -54,6 +54,7 @@ n10.c
 Device interfaces
 */
 
+#include <stdio.h>
 #include <limits.h>
 #include <ctype.h>
 #include <sys/types.h>
@@ -78,10 +79,10 @@ int	plotmode;
 int	esct;
 
 char	*xchname;		/* hy, em, etc. */
-short	*xchtab;		/* indexes into chname[] */
+size_t	*xchtab;		/* indexes into chname[] */
 char	*codestr;
 char	*chname;
-short	*chtab;
+size_t	*chtab;
 int	nchtab = 0;
 
 int	*bdtab;
@@ -125,16 +126,13 @@ ptinit(void)
 	char *tt;
 	int nread, fd;
 	struct stat stbuf;
-	char check[50];
+	char *check;
 	extern int initbdtab[], initfontlab[];
 	int nl;
+	size_t chnmsiz;
+	int nch;
 
-	t.codetab = calloc(NROFFCHARS-_SPECCHAR_ST, sizeof *t.codetab);
-	t.width = calloc(NROFFCHARS, sizeof *t.width);
-	xchname = calloc(4 * (NROFFCHARS-_SPECCHAR_ST), sizeof *xchname);
-	xchtab = calloc(NROFFCHARS-_SPECCHAR_ST, sizeof *xchtab);
-	chname = xchname;
-	chtab = xchtab;
+	check = malloc(1024);
 	bdtab = initbdtab;
 	fontlab = initfontlab;
 	tt = malloc(strlen(termtab) + strlen(devname) + 1);
@@ -164,6 +162,44 @@ ptinit(void)
 	codestr[stbuf.st_size] = 0;
 
 	p = codestr;
+	while (1) {
+		int i = 0;
+		char c;
+		while ((c = *p) && c != '\n') {
+			check[i++] = c;
+			p++;
+		}
+		check[i] = 0;
+		if (!c) {
+			errprint("Unexpected end of %s", tt);
+			exit(1);
+		}
+		while (*p == '\n') p++;
+		if (!strcmp(check, "charset")) break;
+	}
+	chnmsiz = 0;
+	nch = 0;
+	while (1) {
+		char c;
+		while ((c = *p) && c != ' ' && c != '\t' && c != '\n') {
+			p++;
+			chnmsiz++;
+		}
+		chnmsiz++;
+		nch++;
+		while ((c = *p) && c != '\n') p++;
+		if (!c) break;
+		while (*p == '\n') p++;
+	}
+
+	t.codetab = calloc(NROFFCHARS-_SPECCHAR_ST, sizeof *t.codetab);
+	t.width = calloc(NROFFCHARS, sizeof *t.width);
+	xchname = calloc(chnmsiz+1, sizeof *xchname);
+	xchtab = calloc(nch+1, sizeof *xchtab);
+	chname = xchname;
+	chtab = xchtab;
+
+	p = codestr;
 	p = skipstr(p);		/* skip over type, could check */
 	p = skipstr(p); p = getint(p, &t.bset);
 	p = skipstr(p); p = getint(p, &t.breset);
@@ -191,7 +227,7 @@ ptinit(void)
 	p = skipstr(p); p = getstr(p, t.right = p);
 	p = skipstr(p); p = getstr(p, t.left = p);
 
-	getstr(p, check);
+	p = getstr(p, check);
 	if (strcmp(check, "charset") != 0) {
 		errprint("device table apparently curdled");
 		exit(1);
@@ -220,8 +256,7 @@ ptinit(void)
 			exit(1);
 		}
 		chtab[i] = cp - chname;	/* index, not pointer */
-		*cp++ = *p++;	/* 2-char names */
-		*cp++ = *p++;
+		while (*p != ' ' && *p != '\t') *cp++ = *p++;
 		*cp++ = '\0';
 		while (*p == ' ' || *p == '\t')
 			p++;
@@ -251,6 +286,7 @@ ptinit(void)
 	specnames();	/* install names like "hyphen", etc. */
 	if (eqflg)
 		t.Adj = t.Hor;
+	free(check);
 }
 
 char *
