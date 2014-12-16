@@ -45,18 +45,18 @@ Fi 3 ffi
 Fl 3 ffl
 de 1 %\302%\260
 dg 1 %\342%\200%\240
-fm 1 '
+fm 1 %\xe2%\x80%\xb2 # U+2032 PRIME
 ct 1 %\302%\242
 rg 1 %\302%\256
 co 1 %\302%\251
 pl 1 +
 mi 1 %\342%\210%\222
 eq 1 =
-** 1 *
+** 1 %\xe2%\x88%\x97 # U+2217 ASTERISK OPERATOR
 sc 1 %\302%\247
-aa 1 '
-aq 1 '
-ga 1 `
+aa 1 %\xc2%\xb4 # U+00B4 ACUTE ACCENT
+aq 1 %\x27
+ga 1 %\x60
 ul 1 %\137
 sl 1 /
 *a 1 %\316%\261
@@ -79,7 +79,7 @@ sl 1 /
 *s 1 %\317%\203
 *t 1 %\317%\204
 *u 1 %\317%\205
-*f 1 %\317%\206
+*f 1 %\xcf%\x95 # U+03D5 GREEK PHI SYMBOL
 *x 1 %\317%\207
 *q 1 %\317%\210
 *w 1 %\317%\211
@@ -113,7 +113,7 @@ rn 1 %\342%\216%\272
 >= 1 %\342%\211%\245
 <= 1 %\342%\211%\244
 == 1 %\342%\211%\241
-~= 1 %\342%\211%\203
+~= 1 %\xe2%\x89%\x85 # U+2245 APPROXIMATELY EQUAL TO 
 ~~ 1 %\342%\211%\210
 ap 1 %\342%\210%\274
 != 1 %\xe2%\x89%\xa0 # U+2260 NOT EQUAL TO
@@ -127,9 +127,9 @@ di 1 %\303%\267
 cu 1 %\342%\210%\252
 ca 1 %\342%\210%\251
 sb 1 %\342%\212%\202
-sp 1 %\342%\212%\201
-ib 1 %\342%\212%\207
-ip 1 %\342%\212%\206
+sp 1 %\xe2%\x8a%\x83 # U+2283 SUPERSET OF
+ib 1 %\xe2%\x8a%\x86 # U+2286 SUBSET OF OR EQUAL TO
+ip 1 %\xe2%\x8a%\x87 # U+2287 SUPERSET OF OR EQUAL TO
 if 1 %\342%\210%\236
 pd 1 %\342%\210%\202
 gr 1 %\342%\210%\207
@@ -166,10 +166,10 @@ rb 1 %\342%\216%\255
 lk 1 %\342%\216%\250
 rk 1 %\342%\216%\254
 bv 1 %\342%\216%\252
-lf 1 %\342%\216%\212
-rf 1 %\342%\216%\213
-lc 1 %\342%\216%\210
-rc 1 %\342%\216%\211
+lf 1 %\xe2%\x8c%\x8a # U+230A LEFT FLOOR
+rf 1 %\xe2%\x8c%\x8b # U+230B RIGHT FLOOR
+lc 1 %\xe2%\x8c%\x88 # U+2308 LEFT CEILING
+rc 1 %\xe2%\x8c%\x89 # U+2309 RIGHT CEILING
 ba 1 %\x7c # bar
 rl 1 %\xe2%\x80%\xbe # U+203E OVERLINE (sic?)
 bb 1 %\xc2%\xa6 # broken bar
@@ -345,3 +345,7 @@ Fn 1 %\xc6%\x92 # U+0192 LATIN SMALL LETTER F WITH HOOK
 %0 1 %\xe2%\x80%\xb0 # U+2030 PER MILLE SIGN
 sd 1 %\xe2%\x80%\xb3 # U+2033 DOUBLE PRIME
 mc 1 %\xc2%\xb5 # U+00B5 MICRO SIGN
++h 1 %\xcf%\x91 # U+03D1 GREEK THETA SYMBOL
++f 1 %\xcf%\x86 # U+03C6 GREEK SMALL LETTER PHI
++p 1 %\xcf%\x96 # U+03D6 GREEK PI SYMBOL
++e 1 %\xcf%\xb5 # U+03F5 GREEK LUNATE EPSILON SYMBOL
