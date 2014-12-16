@@ -246,11 +246,11 @@ ptinit(void)
 	nl = 1;
 next_line:
 	while (p < codestr + nread) {
-		while (*p == ' ' || *p == '\t' || *p == '\n') {
-			if (*p == '\n') nl = 1;
+		while ((c = *p) == ' ' || c == '\t' || c == '\n') {
+			if (c == '\n') nl = 1;
 			p++;
 		}
-		if (*p == '#' && !nl) {
+		if (c == '#' && !nl) {
 			while (*p && *p != '\n') p++;
 			while (*p == '\n') p++;
 		}
@@ -263,13 +263,14 @@ next_line:
 		chtab[i] = cp - chname;	/* index, not pointer */
 		j = 0;
 		while ((c = *p) != ' ' && c != '\t') {
-			if (++j == 2 && cp[-1] == '#' && c == ' ') {
-				cp--;
-				while (*p && *p != '\n') p++;
-				goto next_line;
-			}
 			*cp++ = c;
 			p++;
+			j++;
+		}
+		if (j == 1 && cp[-1] == '#' && c == ' ') {
+			cp--;
+			while (*p && *p != '\n') p++;
+			goto next_line;
 		}
 		*cp++ = '\0';
 		while (*p == ' ' || *p == '\t')
