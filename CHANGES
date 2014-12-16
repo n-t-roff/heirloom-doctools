@@ -1,3 +1,13 @@
+2014-12-16
+    mdoc updated for processing up-to-date manpages.  Still much
+    work needs to be done on mdoc.
+
+    nroff: Special character names of arbitrary length are now
+    possible.
+
+    nroff: Many special characters to -Tlp and -Tlocale (UTF-8)
+    added.
+
 2014-12-15
     nroff: Compiled in "tab.lp" and "tab.utf8" removed.  The
     "nterm" directory is now required for nroff (at least with
@@ -5,6 +15,17 @@
 
 2014-12-13
     Macro 'lsm' and number registers 'lsn' and 'lss' added.
+
+2014-11-06
+    Distingtion between BSD and non-BSD manuals removed (Anthony
+    J. Bentley).
+
+    pic, tbl, eqn: Allow whitespace between '.' and PS, PE, PF,
+    TS, TE, EQ, EN.
+
+2014-11-05
+    With command line option '-rcR=1' -man manpages are displayed
+    as one large single page.
 
 Release 141029
 ==============
