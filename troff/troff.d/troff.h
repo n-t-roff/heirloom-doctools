@@ -53,7 +53,6 @@ extern	float		*zoomtab;
 
 extern	int		nchtab;
 extern	char		*chname;
-extern	size_t		*chtab;
 extern	int		c_endash;
 
 extern	int		kern;

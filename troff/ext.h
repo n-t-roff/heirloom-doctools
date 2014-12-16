@@ -73,7 +73,11 @@ extern	filep	nextb;
 extern	filep	offset;
 extern	filep	roff;
 extern	filep	woff;
+#ifdef NROFF
 extern	size_t	*chtab;
+#else
+extern	short	*chtab;
+#endif
 extern	int	*pnp;
 extern	int	*pstab;
 extern	int	app;

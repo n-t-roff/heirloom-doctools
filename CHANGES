@@ -16,6 +16,9 @@
 2014-12-13
     Macro 'lsm' and number registers 'lsn' and 'lss' added.
 
+2014-12-05
+    Bugfix: .unformat: \e gets restored now.
+
 2014-11-06
     Distingtion between BSD and non-BSD manuals removed (Anthony
     J. Bentley).
