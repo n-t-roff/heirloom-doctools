@@ -121,8 +121,8 @@ int	utf8;
 void
 ptinit(void)
 {
-	register int i;
-	register char *p, *cp;
+	int i, j;
+	char *p, *cp, c;
 	char *tt;
 	int nread, fd;
 	struct stat stbuf;
@@ -163,8 +163,7 @@ ptinit(void)
 
 	p = codestr;
 	while (1) {
-		int i = 0;
-		char c;
+		i = 0;
 		while ((c = *p) && c != '\n') {
 			check[i++] = c;
 			p++;
@@ -180,12 +179,17 @@ ptinit(void)
 	chnmsiz = 0;
 	nch = 0;
 	while (1) {
-		char c;
+		char name[2];
+		i = 0;
+		chnmsiz++;
 		while ((c = *p) && c != ' ' && c != '\t' && c != '\n') {
 			p++;
 			chnmsiz++;
+			if (i < 2) name[i] = c;
+			if (i == 1 && name[0] == '#' && name[1] == ' ')
+				chnmsiz -= 3;
+			i++;
 		}
-		chnmsiz++;
 		nch++;
 		while ((c = *p) && c != '\n') p++;
 		if (!c) break;
@@ -240,6 +244,7 @@ ptinit(void)
 /* this ought to be a pointer array and in place in codestr */
 	cp = chname + 1;	/* bug if starts at 0, in setch */
 	nl = 1;
+next_line:
 	while (p < codestr + nread) {
 		while (*p == ' ' || *p == '\t' || *p == '\n') {
 			if (*p == '\n') nl = 1;
@@ -256,7 +261,16 @@ ptinit(void)
 			exit(1);
 		}
 		chtab[i] = cp - chname;	/* index, not pointer */
-		while (*p != ' ' && *p != '\t') *cp++ = *p++;
+		j = 0;
+		while ((c = *p) != ' ' && c != '\t') {
+			if (++j == 2 && cp[-1] == '#' && c == ' ') {
+				cp--;
+				while (*p && *p != '\n') p++;
+				goto next_line;
+			}
+			*cp++ = c;
+			p++;
+		}
 		*cp++ = '\0';
 		while (*p == ' ' || *p == '\t')
 			p++;
