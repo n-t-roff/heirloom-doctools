@@ -80,7 +80,6 @@ int	esct;
 
 char	*xchname;		/* hy, em, etc. */
 size_t	*xchtab;		/* indexes into chname[] */
-char	*codestr;
 char	*chname;
 size_t	*chtab;
 int	nchtab = 0;
@@ -122,15 +121,17 @@ void
 ptinit(void)
 {
 	int i, j;
-	char *p, *cp, c;
+	char *p, *cp, c, *p2;
 	char *tt;
 	int nread, fd;
 	struct stat stbuf;
 	char *check;
 	extern int initbdtab[], initfontlab[];
 	int nl;
-	size_t chnmsiz;
+	size_t chnmsiz, codsiz;
 	int nch;
+	char *codestr;
+	char *code;
 
 	check = malloc(1024);
 	bdtab = initbdtab;
@@ -162,6 +163,7 @@ ptinit(void)
 	codestr[stbuf.st_size] = 0;
 
 	p = codestr;
+	codsiz = 0;
 	while (1) {
 		i = 0;
 		while ((c = *p) && c != '\n') {
@@ -175,22 +177,40 @@ ptinit(void)
 		}
 		while (*p == '\n') p++;
 		if (!strcmp(check, "charset")) break;
+		j = 0;
+		while (j < i &&  check[j] != ' ' && check[j] != '\t' ) j++;
+		while (j < i && (check[j] == ' ' || check[j] == '\t')) j++;
+		codsiz += i-j;
 	}
 	chnmsiz = 0;
 	nch = 0;
 	while (1) {
-		char name[2];
+		char c0;
+		int cmt;
 		i = 0;
-		chnmsiz++;
 		while ((c = *p) && c != ' ' && c != '\t' && c != '\n') {
 			p++;
 			chnmsiz++;
-			if (i < 2) name[i] = c;
-			if (i == 1 && name[0] == '#' && name[1] == ' ')
-				chnmsiz -= 3;
-			i++;
+			if (!i++) c0 = c;
+		}
+		if (i == 1 && c0 == '#' && c == ' ') {
+			chnmsiz--;
+			cmt = 1;
+		} else {
+			chnmsiz++;
+			cmt = 0;
 		}
 		nch++;
+		if (!cmt) {
+			while ((c = *p) && (c == ' ' || c == '\t')) p++;
+			while ((c = *p) && c >= '0' && c <= '9') p++;
+			while ((c = *p) && (c == ' ' || c == '\t')) p++;
+			while ((c = *p) && c != ' ' && c != '\t' && c != '\n') {
+				p++;
+				codsiz++;
+			}
+			codsiz++;
+		}
 		while ((c = *p) && c != '\n') p++;
 		if (!c) break;
 		while (*p == '\n') p++;
@@ -200,10 +220,12 @@ ptinit(void)
 	t.width = calloc(NROFFCHARS, sizeof *t.width);
 	xchname = calloc(chnmsiz+1, sizeof *xchname);
 	xchtab = calloc(nch+1, sizeof *xchtab);
+	code = malloc(codsiz);
 	chname = xchname;
 	chtab = xchtab;
 
 	p = codestr;
+	p2 = code;
 	p = skipstr(p);		/* skip over type, could check */
 	p = skipstr(p); p = getint(p, &t.bset);
 	p = skipstr(p); p = getint(p, &t.breset);
@@ -214,22 +236,22 @@ ptinit(void)
 	p = skipstr(p); p = getint(p, &t.Em);
 	p = skipstr(p); p = getint(p, &t.Halfline);
 	p = skipstr(p); p = getint(p, &t.Adj);
-	p = skipstr(p); p = getstr(p, t.twinit = p);
-	p = skipstr(p); p = getstr(p, t.twrest = p);
-	p = skipstr(p); p = getstr(p, t.twnl = p);
-	p = skipstr(p); p = getstr(p, t.hlr = p);
-	p = skipstr(p); p = getstr(p, t.hlf = p);
-	p = skipstr(p); p = getstr(p, t.flr = p);
-	p = skipstr(p); p = getstr(p, t.bdon = p);
-	p = skipstr(p); p = getstr(p, t.bdoff = p);
-	p = skipstr(p); p = getstr(p, t.iton = p);
-	p = skipstr(p); p = getstr(p, t.itoff = p);
-	p = skipstr(p); p = getstr(p, t.ploton = p);
-	p = skipstr(p); p = getstr(p, t.plotoff = p);
-	p = skipstr(p); p = getstr(p, t.up = p);
-	p = skipstr(p); p = getstr(p, t.down = p);
-	p = skipstr(p); p = getstr(p, t.right = p);
-	p = skipstr(p); p = getstr(p, t.left = p);
+	p = skipstr(p); p = getstr(p, t.twinit  = p2); p2 += strlen(p2)+1;
+	p = skipstr(p); p = getstr(p, t.twrest  = p2); p2 += strlen(p2)+1;
+	p = skipstr(p); p = getstr(p, t.twnl    = p2); p2 += strlen(p2)+1;
+	p = skipstr(p); p = getstr(p, t.hlr     = p2); p2 += strlen(p2)+1;
+	p = skipstr(p); p = getstr(p, t.hlf     = p2); p2 += strlen(p2)+1;
+	p = skipstr(p); p = getstr(p, t.flr     = p2); p2 += strlen(p2)+1;
+	p = skipstr(p); p = getstr(p, t.bdon    = p2); p2 += strlen(p2)+1;
+	p = skipstr(p); p = getstr(p, t.bdoff   = p2); p2 += strlen(p2)+1;
+	p = skipstr(p); p = getstr(p, t.iton    = p2); p2 += strlen(p2)+1;
+	p = skipstr(p); p = getstr(p, t.itoff   = p2); p2 += strlen(p2)+1;
+	p = skipstr(p); p = getstr(p, t.ploton  = p2); p2 += strlen(p2)+1;
+	p = skipstr(p); p = getstr(p, t.plotoff = p2); p2 += strlen(p2)+1;
+	p = skipstr(p); p = getstr(p, t.up      = p2); p2 += strlen(p2)+1;
+	p = skipstr(p); p = getstr(p, t.down    = p2); p2 += strlen(p2)+1;
+	p = skipstr(p); p = getstr(p, t.right   = p2); p2 += strlen(p2)+1;
+	p = skipstr(p); p = getstr(p, t.left    = p2); p2 += strlen(p2)+1;
 
 	p = getstr(p, check);
 	if (strcmp(check, "charset") != 0) {
@@ -278,8 +300,9 @@ next_line:
 		t.width[i+_SPECCHAR_ST] = *p++ - '0';
 		while (*p == ' ' || *p == '\t')
 			p++;
-		t.codetab[i] = p;
-		p = getstr(p, p);	/* compress string */
+		t.codetab[i] = p2;
+		p = getstr(p, p2);	/* compress string */
+		p2 += strlen(p2) + 1;
 		p++;
 		i++;
 		nchtab++;
@@ -302,6 +325,7 @@ next_line:
 	if (eqflg)
 		t.Adj = t.Hor;
 	free(check);
+	free(codestr);
 }
 
 char *
