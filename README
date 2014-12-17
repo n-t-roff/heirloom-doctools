@@ -32,7 +32,7 @@ aid for device independence.
 The source code has been compiled successfully on:
 
 OpenBSD		5.6
-NetBSD		6.1.4
+NetBSD		6.1.5
 FreeBSD		10.0
 Linux		Slackware 14.1, OpenSuse 13.1
 

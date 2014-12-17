@@ -176,7 +176,7 @@ getstr(char *s, register int n) {
 		;
 	if (c == EOF) {
 		*s = 0;
-		return;
+		return 0;
 	}
 	while (((c != ' ' && c != '\t') || st == SP) && c != '\n' && c != '{'
 	    && c != '}' && c != '"' && c != '~' && c != '^' && c != righteq) {
