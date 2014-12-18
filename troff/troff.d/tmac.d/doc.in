@@ -273,12 +273,7 @@
 .ev
 .ie \\n(dl:\\n(dn \{\
 .	unformat eB
-.	ie \\$1 \{\
-.		ds b0 \&\\*(eB\\
-.	\}
-.	el \{\
-.		ds b0 \&\\*(eB
-.	\}
+.	ds b0 \&\\*(eB\c
 .	ds b1 \\*(b2\\*[__last_S]\\*(b0\\*(b1
 .\}
 .el .ds b1 \\*(b2\\*[__last_S]\\*(b1
