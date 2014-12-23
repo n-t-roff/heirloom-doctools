@@ -1,3 +1,6 @@
+Release 141217
+==============
+
 2014-12-16
     mdoc updated for processing up-to-date manpages.  Still much
     work needs to be done on mdoc.
@@ -51,7 +54,7 @@ Release 141029
     OpenSolaris col(1) added.
 
 2014-10-06
-    Drawing of filled polygone (\D'P ...'), filled circle (\D'C
+    Drawing of filled polygon (\D'P ...'), filled circle (\D'C
     ...') and filled ellipse (\D'E ...') added.
 
 2014-09-21

@@ -285,6 +285,7 @@
 .\}
 ..
 .de lM
+.if \\n(cR .pl +3v
 .fl
 .if \\n(cR \{\
 '	sp
