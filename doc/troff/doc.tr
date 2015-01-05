@@ -107,7 +107,7 @@
 .fallback BI BIE
 .flig BI 31
 ..
-.ds Sccsdate 10/23/09
+.ds Sccsdate 01/05/15
 .ds Str \*[Sccsdate]
 .substring Str 0 0
 .if '\*[Str]'%' \{\
@@ -878,7 +878,7 @@ As with the second edition,
 the design and the principal parts of \*(TR have remained the same,
 despite of additions and modifications.
 This is particularly remarkable since
-much of it is now more than 30 years old,
+much of it is now more than 40 years old,
 but serves its purpose as well as on day one.
 .pg
 I am grateful to Sun, Caldera, and Lucent
@@ -895,8 +895,9 @@ The source code of the \fIHeirloom Documentation Tools\fR
 and accompanying materials
 are freely available from
 <\W'http://n-t-roff.github.io/heirloom/doctools.html'http://n-t-roff.github.io/heirloom/\:doctools.html\W>.
-Comments and bug reports should be sent to Gunnar Ritter,
-<gunnarr@acm.org>.
+Comments and bug reports should be added at
+<\W'https://github.com/n-t-roff/heirloom-doctools/issues'https://github.com/n-t-roff/heirloom-doctools/issues\W>
+or send to <troff@arcor.de>.
 .pg
 .sp .4
 .ft B
@@ -911,7 +912,7 @@ References
 ..
 .ns
 .ref 1
-M. D. McIllroy, B. W. Kernighan (Eds.),
+M. D. McIlroy, B. W. Kernighan (Eds.),
 .ul
 Unix Programmer's Manual,
 Vol.\|2,
