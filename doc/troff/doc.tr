@@ -1332,7 +1332,7 @@ Page Control
 .b1
 \T'bleedat'\fB&bleedat\fI|L|T|W|H\fR	ignored	T,\fBp\fR	Set the ``BleedBox'' page parameter for \*[PDF] generation.\T
 .b1
-\T'bp'\fB&bp|\fI\(+-N\fR	\fIN\(eq\fR1	\(en	B,\fBv\fR	\
+\T'bp'\fB&bp|\fI\(+-N\fR	\fIN\(eq\fR1	\(en	B	\
 Eject current page; next page number \fIN\fR.\T
 .b1
 \T'pn'\fB&pn\fI|\(+-N	N\(eq\fR1	ignored	\(en	Next page number \fIN\fR.\T
@@ -1508,7 +1508,7 @@ Number Registers
 .mht s_tabs
 Tabs, Leaders, and Fields
 .bt
-\T'ta'\fB&ta\fI|Nt|...\fR	0.8\|n;|0.5\|i	none	E,\fBm\fR	Tab settings; \fIleft\fR type, unless \fIt=\fBR\fR(right), \fBC\fR(centered).\T
+\T'ta'\fB&ta\fI|Nt|...\fR	8\|n;|0.5\|i	none	E,\fBm\fR	Tab settings; \fIleft\fR type, unless \fIt=\fBR\fR(right), \fBC\fR(centered).\T
 .b1
 \T'tc'\fB&tc\fI|c\fR	none	none	E	Tab repetition character.\T
 .b1 0
@@ -3158,7 +3158,7 @@ Cut marks, color bars, and other
 information for the printing office should be positioned outside
 the BleedBox.
 .bta bp
-\fB&bp\fI|\(+-N\fR	\fIN\(eq\fR1	\(en	B,\fBv\fR	Begin page.
+\fB&bp\fI|\(+-N\fR	\fIN\(eq\fR1	\(en	B	Begin page.
 The current page is ejected and a new page is begun.
 If \fI\(+-N\fR is given, the new page number will be \fI\(+-N\fR.
 Also see request \T'ns'\fBns\fR\T.
@@ -4683,7 +4683,7 @@ specifies a right-adjusted string with the string \fIxxx\fR centered
 in the remaining space.
 .h1
 .bta ta
-\fB&ta\fI|Nt|...\fR	0.8;|0.5in	none	E,\fBm\fR	\
+\fB&ta\fI|Nt|...\fR	8\|n;|0.5\|i	none	E,\fBm\fR	\
 Set tab stops and types.
 \fIt=\fBR\fR, right adjusting;
 \fIt=\fBC\fR, centering;
