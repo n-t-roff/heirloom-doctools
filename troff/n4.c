@@ -78,6 +78,7 @@ static struct acc	_atoi0(int);
 static struct acc	ckph(int);
 static struct acc	atoi1(tchar, int);
 static struct acc	_inumb(int *, float *, int, int *);
+static void	print_tab_setting(char *);
 
 static void *
 _grownumtab(struct numtab **numtp, int *NNp, struct numtab ***hashp)
@@ -116,6 +117,30 @@ void *
 grownumtab(void)
 {
 	return _grownumtab(&numtab, &NN, &nhash);
+}
+
+static void
+print_tab_setting(char *tb) {
+	char *cp;
+	int i;
+	for (i = 0; tabtab[i]; i++);
+	while (--i >= 0) {
+		cp = tb;
+		if (i)
+			*cp++ = ' ';
+		cp = roff_sprintf(cp, "%d", tabtab[i]&TABMASK);
+		*cp++ = 'u';
+		switch (tabtab[i] & ~TABMASK) {
+		case RTAB:
+			*cp++ = 'R';
+			break;
+		case CTAB:
+			*cp++ = 'C';
+			break;
+		}
+		*cp = 0;
+		cpushback(tb);
+	}
 }
 
 #define	TMYES	if (tm) return(1)
@@ -269,6 +294,10 @@ sl:
 		case 'F':
 			TMYES;
 			cpushback(cfname[ifi] ? cfname[ifi] : "");
+			return(0);
+		case 'S':
+			TMYES;
+			print_tab_setting(tb);
 			return(0);
 		case 'X':
 			if (xflag) {
@@ -450,24 +479,7 @@ sl:
 #endif	/* NROFF */
 		} else if (strcmp(&name[1], "tabs") == 0) {
 			TMYES;
-			for (i = 0; tabtab[i]; i++);
-			while (--i >= 0) {
-				cp = tb;
-				if (i)
-					*cp++ = ' ';
-				cp = roff_sprintf(cp, "%d", tabtab[i]&TABMASK);
-				*cp++ = 'u';
-				switch (tabtab[i] & ~TABMASK) {
-				case RTAB:
-					*cp++ = 'R';
-					break;
-				case CTAB:
-					*cp++ = 'C';
-					break;
-				}
-				*cp = 0;
-				cpushback(tb);
-			}
+			print_tab_setting(tb);
 			return(0);
 		} else if (strcmp(&name[1], "lpfx") == 0) {
 			TMYES;

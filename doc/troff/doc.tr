@@ -107,7 +107,7 @@
 .fallback BI BIE
 .flig BI 31
 ..
-.ds Sccsdate 01/05/15
+.ds Sccsdate 02/12/15
 .ds Str \*[Sccsdate]
 .substring Str 0 0
 .if '\*[Str]'%' \{\
@@ -2230,6 +2230,7 @@ using \fB\ex\fI\'N\'\fR.\T
 \T'n_.sr'2.3\T	\T'n_.sr'\fB&sr\fR\T	\T'n_.sr'Last requested point size (may be a decimal fraction).\T
 \T'n_.ss'2\T	\T'n_.ss'\fB&ss\fR\T	\T'n_.ss'Current space size.\T
 \T'n_.sss'2\T	\T'n_.sss'\fB&sss\fR\T	\T'n_.sss'Current sentence space size.\T
+\T'n_.S'9.1\T	\T'n_.S'\fB&S\fR\T	\T'n_.S'Current tab stops such that they can be passed back to \fBta\fR.\T
 \T'n_.t'7.5\T	\T'n_.t'\fB&t\fR\T	\T'n_.t'Distance to the next trap.\T
 \T'n_.tabs'9.1\T	\T'n_.tabs'\fB&tabs\fR\T	\T'n_.tabs'Current tab stops such that they can be passed back to \fBta\fR.\T
 \T'n_.transchar'4.1\T	\T'n_.transchar'\fB&transchar\fR\T	\T'n_.transchar'Current characters transparent for sentence-ending [sic].\T
@@ -4339,6 +4340,10 @@ to recapture internal storage space for newer registers.
 If a macro is removed while it is in use,
 associated storage is not released,
 and a \T's_warning'warning of the \fBmac\fR category\T is emitted.
+.xx
+\fBrm\fR may have an unlimited number of arguments.
+However for creating portable documents only one argument to
+\fBrm\fR should be used.
 .bta rn
 \fB&rn\fI|xx|yy\fR	\(en	ignored	\(en	Rename request, macro, or string
 \fIxx\fR to \fIyy\fR.
@@ -4599,6 +4604,10 @@ may become necessary to remove no longer used registers
 to recapture internal storage space for newer registers.
 The register \fB.R\fR contains the number
 of number registers still available.
+.xx
+\fBrr\fR may have an unlimited number of arguments.
+However for creating portable documents only one argument to
+\fBrr\fR should be used.
 .bta rnn
 \fB&rnn\fI|R|S\fR	\(en	\(en	\(en	Rename register \fIR\fR to \fIS\fR.
 If \fIS\fR exists, it is first removed.
@@ -4693,10 +4702,15 @@ Set tab stops and types.
 The stop values are separated by spaces, and
 a value preceded by \fB+\fR
 is treated as an increment to the previous stop value.
-The \A'n_.tabs'\fB&tabs\fR register
-holds a string with the current tab stops
+The \A'n_.S'\fB&S\fR register*
+and the \A'n_.tabs'\fB&tabs\fR register
+hold a string with the current tab stops
 in a form that is acceptable for the \fBta\fR request;
 it can thus be used to save and restore tab stops.
+.fn
+.sp .3
+\(**\|Register \fB&S\fR is available for compatibility with DWB.
+.ef
 .bt
 \fB&ta\fI|Mv|...|Nw|\fBT\fI|At|...|Zu\fRa	\fIN\fR=0	E,\fBm\fR\
 	Set repeated tab stops and types at \fIMv\fR, ..., \fINw\fR,
