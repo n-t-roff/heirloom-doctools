@@ -815,6 +815,7 @@ int
 findft(register int i, int required)
 {
 	register int k;
+	int nk;
 	char	*mn, *mp;
 
 	if ((k = i - '0') >= 0 && k <= nfonts && k < smnt && fontbase[k])
@@ -822,9 +823,16 @@ findft(register int i, int required)
 	for (k = 0; k > nfonts || fontlab[k] != i; k++)
 		if (k > nfonts) {
 			mn = macname(i);
+			nk = k;
 			if ((k = strtol(mn, &mp, 10)) >= 0 && *mp == 0 &&
 					mp > mn && k <= nfonts && fontbase[k])
 				break;
+			if (setfp(nk, i, NULL) == -1)
+				return -1;
+			else {
+				fontlab[nk] = i;
+				return nk;
+			}
 			if (required && warn & WARN_FONT)
 				errprint("%s: no such font", mn);
 			return(-1);

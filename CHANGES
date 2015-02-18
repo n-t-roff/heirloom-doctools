@@ -1,3 +1,14 @@
+2015-02-18
+    Bugfix: When there were several .ft requests to not mounted
+    fonts in short succession the output was wrong.
+
+2015-02-12
+    Read-only register .S added for DWB compatibility.
+
+2014-12-23
+    mdoc: Footer had not been displayed if page length was
+    reached.
+
 Release 141217
 ==============
 
