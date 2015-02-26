@@ -1063,7 +1063,7 @@ Currently defined names are \fB37\fR for the (default) Model 37 Teletype\(rg,
 \fB300\fR for the \s-1DASI\s+1-300,
 and
 \fB450\fR for the \s-1DASI\s+1-450 (Diablo Hyterm).
-A special names, \fBlocale\fR, is also supported.
+A special name, \fBlocale\fR, is also supported.
 It generates \s-1UTF\s+1-8 output if permitted
 by the current \s-1LC_CTYPE\s+1 locale,
 and has the same effect as \fBlp\fR otherwise.

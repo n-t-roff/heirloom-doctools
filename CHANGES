@@ -1,3 +1,8 @@
+2015-02-26
+    Bugfix: The zero width flag (set e.g. by \z or \L) did not
+    work for Unicode characters.  As a consequence e.g. \L could
+    not be used width \U'2551' to draw a double vertical line.
+
 2015-02-18
     Bugfix: When there were several .ft requests to not mounted
     fonts in short succession the output was wrong.

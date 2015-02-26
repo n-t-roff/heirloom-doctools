@@ -561,6 +561,8 @@ ptout1(void)
 			if ((jj = wcwidth(jj)) < 0)
 				jj = 0;
 			phyw = w = t.Char * csi_width[jj];
+			if (iszbit(i))
+				w = 0;
 		} else {
 #endif /* EUC */
 		phyw = w = t.Char * t.width[k];
