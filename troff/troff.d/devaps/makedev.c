@@ -129,7 +129,7 @@ char	alt_code[FSIZE];	/* code for alternate font */
 int	alt_font[FSIZE];	/* alternate font to use */
 
 int	dbg = 0;		/* debug flag */
-
+int	verbose = 0;
 
 #define	NFONT	60	/* max number of default fonts */
 char	fname[NFONT][10];	/* temp space to hold default font names */
@@ -151,8 +151,14 @@ main(int argc, char *argv[])
 	char cmd[100], *p;
 	int i, totfont, v;
 
+	if (!strcmp(argv[1], "-v")) {
+		verbose = 1;
+		argv++;
+		argc--;
+	}
+
 	if (argc < 2) {
-		fprintf(stderr, "Usage:  makedev [DESC] [fonts]\n");
+		fprintf(stderr, "Usage:  makedev [-v] [DESC] [fonts]\n");
 		exit(1);
 	}
 
@@ -421,8 +427,9 @@ dofont(char *name)
 		dump_font();
 
 	v = sizeof (struct Font) + 3 * n + dev.nchtab + 128-32;
-	fprintf(stderr, "%3s: %3d chars, width %3d, size %3d\n",
-		font.namefont, nw, width[0], v);
+	if (verbose)
+		fprintf(stderr, "%3s: %3d chars, width %3d, size %3d\n",
+			font.namefont, nw, width[0], v);
 	return (v);
 
 }	/* End of dofont */

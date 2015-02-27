@@ -37,7 +37,6 @@ makefiles: $(MAKEFILES)
 .DEFAULT:
 	+ for i in $(SUBDIRS); \
 	do \
-		echo "cd $$i"; \
 		(cd "$$i" && $(MAKE) $@) || exit; \
 	done
 
