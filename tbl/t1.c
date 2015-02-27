@@ -26,6 +26,7 @@
 # include "t..c"
 #include <signal.h>
 #include <stdlib.h>
+#include <string.h>
 #include <libgen.h>
 #include <locale.h>
 # ifdef gcos
