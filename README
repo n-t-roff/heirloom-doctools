@@ -92,15 +92,15 @@ following:
   own version.
 
 - Thus a complete pipeline to format manual pages for viewing is:
-  tbl input.1 | neqn | nroff -Tlocale -mg -msafe -mpadj -mandoc | col -x
+  tbl -Tlocale input.1|neqn|nroff -Tlocale -mg -msafe -mpadj -mandoc|col -x
 
 - If you like italic text to appear underlined and boldfaced text to
   appear bold on a CRT or X Window System terminal, also add a call
   to the "ul" filter:
-  tbl input.1 | neqn | nroff -Tlocale -mg -msafe -mpadj -mandoc | col -x | ul
+  tbl -Tlocale input.1|neqn|nroff -Tlocale -mg -msafe -mpadj -mandoc|col -x|ul
 
 - To print manual pages with troff, use
-  tbl input.1 | eqn | troff -mg -msafe -mpadj -mandoc | dpost | lp
+  tbl -g input.1 | eqn | troff -mg -msafe -mpadj -mandoc | dpost | lp
 
 - You should of course configure your "man" command such that it
   executes these pipelines automatically for you. For the "man"
@@ -109,7 +109,7 @@ following:
 
 	NROFF=/usr/local/ucb/nroff -Tlocale -mg -msafe -mpadj
 	TROFF=/usr/local/ucb/troff -mg -msafe -mpadj
-	TBL=/usr/local/ucb/tbl
+	TBL=/usr/local/ucb/tbl -Tlocale
 	EQN=/usr/local/ucb/eqn
 	NEQN=/usr/local/ucb/neqn
 	TCAT=/usr/local/ucb/dpost

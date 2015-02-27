@@ -1,3 +1,7 @@
+2015-02-27
+    tbl:  Option -Tlocale added which (in an UTF-8 locale) en-
+    ables output of table lines with Unicode glyphs.
+
 2015-02-26
     Bugfix: The zero width flag (set e.g. by \z or \L) did not
     work for Unicode characters.  As a consequence e.g. \L could

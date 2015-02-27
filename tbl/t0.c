@@ -22,7 +22,6 @@
  */
 
  /* t0.c: storage allocation */
-#
 # include "t..c"
 int MAXLIN;
 int MAXCOL;
@@ -79,3 +78,4 @@ char *exstore, *exlim;
 const char *progname;
 FILE *tabin  /*= stdin */;
 FILE *tabout  /* = stdout */;
+int utf8;

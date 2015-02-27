@@ -28,25 +28,25 @@
 void
 runout(void)
 {
-int i;
-if ((boxflg || allflg || dboxflg) && !nokeep) need();
-if (ctrflg)
+	int i;
+	if ((boxflg || allflg || dboxflg) && !nokeep) need();
+	if (ctrflg)
 	{
-	fprintf(tabout, ".nr #I \\n(.i\n");
-	fprintf(tabout, ".in +(\\n(.lu-\\n(TWu-\\n(.iu)/2u\n");
+		fprintf(tabout, ".nr #I \\n(.i\n");
+		fprintf(tabout, ".in +(\\n(.lu-\\n(TWu-\\n(.iu)/2u\n");
 	}
-fprintf(tabout, ".fc %c %c\n", F1, F2);
-fprintf(tabout, ".nr #T 0-1\n");
-deftail();
-for(i=0; i<nlin; i++)
-	putline(i,i);
-if (leftover)
-	yetmore();
-fprintf(tabout, ".fc\n");
-fprintf(tabout, ".nr T. 1\n");
-fprintf(tabout, ".T# 1\n");
-if (ctrflg)
-	fprintf(tabout, ".in \\n(#Iu\n");
+	fprintf(tabout, ".fc %c %c\n", F1, F2);
+	fprintf(tabout, ".nr #T 0-1\n");
+	deftail();
+	for(i=0; i<nlin; i++)
+		putline(i,i);
+	if (leftover)
+		yetmore();
+	fprintf(tabout, ".fc\n");
+	fprintf(tabout, ".nr T. 1\n");
+	fprintf(tabout, ".T# 1\n");
+	if (ctrflg)
+		fprintf(tabout, ".in \\n(#Iu\n");
 }
 void
 runtabs(int lform, int ldata)
@@ -117,15 +117,15 @@ need(void)
 void
 deftail(void)
 {
-int i, c, lf, lwid;
-for(i=0; i<MAXHEAD; i++)
-	if (linestop[i])
-		fprintf(tabout, ".nr #%c 0-1\n", linestop[i]+'a'-1);
-fprintf(tabout, ".nr #a 0-1\n");
-fprintf(tabout, ".eo\n");
-fprintf(tabout, ".de T# 00\n");
-fprintf(tabout, ".ds #d .d\n");
-fprintf(tabout, ".if \\(ts\\n(.z\\(ts\\(ts .ds #d nl\n");
+	int i, c, lf, lwid;
+	for(i=0; i<MAXHEAD; i++)
+		if (linestop[i])
+			fprintf(tabout, ".nr #%c 0-1\n", linestop[i]+'a'-1);
+	fprintf(tabout, ".nr #a 0-1\n");
+	fprintf(tabout, ".eo\n");
+	fprintf(tabout, ".de T# 00\n");
+	fprintf(tabout, ".ds #d .d\n");
+	fprintf(tabout, ".if \\(ts\\n(.z\\(ts\\(ts .ds #d nl\n");
 	fprintf(tabout, ".mk ##\n");
 	fprintf(tabout, ".nr ## -1v\n");
 	if (graphics)
@@ -134,34 +134,38 @@ fprintf(tabout, ".if \\(ts\\n(.z\\(ts\\(ts .ds #d nl\n");
 	for(i=0; i<MAXHEAD; i++)
 		if (linestop[i])
 			fprintf(tabout, ".if \\n(#T>=0 .nr #%c \\n(#T\n",linestop[i]+'a'-1);
-if (boxflg || allflg || dboxflg) { /* bottom of table line */
-	if (!pr1403)
-		fprintf(tabout, ".if \\n(T. .vs \\n(.vu-\\n(.sp\n");
-	fprintf(tabout, ".if \\n(T. ");
-	drawline(nlin,0,ncol, dboxflg ? '=' : '-',1,0);
-	fprintf(tabout, "\n.if \\n(T. .vs\n");
-	/* T. is really an argument to a macro but because of 
+	if (boxflg || allflg || dboxflg) { /* bottom of table line */
+		if (!(pr1403 || utf8))
+			fprintf(tabout, ".if \\n(T. .vs \\n(.vu-\\n(.sp\n");
+		fprintf(tabout, ".if \\n(T. ");
+		drawline(nlin,0,ncol, dboxflg ? '=' : '-',1,0);
+		fprintf(tabout, "\n");
+		if (!(pr1403 || utf8))
+			fprintf(tabout, ".if \\n(T. .vs\n");
+		/* T. is really an argument to a macro but because of 
 		   eqn we don't dare pass it as an argument and reference by $1 */
-}
-	for(c=0; c<ncol; c++)
+	}
+	if (!utf8) {
+		for(c=0; c<ncol; c++)
 		{
-		if (nlin>0 && (lf=left(nlin-1,c, &lwid))>=0)
+			if (nlin>0 && (lf=left(nlin-1,c, &lwid))>=0)
 			{
-			fprintf(tabout, ".if \\n(#%c>=0 .sp -1\n",linestop[lf]+'a'-1);
-			fprintf(tabout, ".if \\n(#%c>=0 ", linestop[lf]+'a'-1);
-			tohcol(c);
-			drawvert(lf, nlin-1, c, lwid);
-			fprintf(tabout, "\\h'|\\n(TWu'\n");
+				fprintf(tabout, ".if \\n(#%c>=0 .sp -1\n",linestop[lf]+'a'-1);
+				fprintf(tabout, ".if \\n(#%c>=0 ", linestop[lf]+'a'-1);
+				tohcol(c);
+				drawvert(lf, nlin-1, c, lwid);
+				fprintf(tabout, "\\h'|\\n(TWu'\n");
 			}
 		}
-	if (boxflg || allflg || dboxflg) /* right hand line */
+		if (boxflg || allflg || dboxflg) /* right hand line */
 		{
-		fprintf(tabout, ".if \\n(#a>=0 .sp -1\n");
-		fprintf(tabout, ".if \\n(#a>=0 \\h'|\\n(TWu'");
-		drawvert (0, nlin-1, ncol, dboxflg? 2 : 1);
-		fprintf(tabout, "\n");
+			fprintf(tabout, ".if \\n(#a>=0 .sp -1\n");
+			fprintf(tabout, ".if \\n(#a>=0 \\h'|\\n(TWu'");
+			drawvert (0, nlin-1, ncol, dboxflg? 2 : 1);
+			fprintf(tabout, "\n");
 		}
-fprintf(tabout, ".ls\n");
-fprintf(tabout, ".00\n");
-fprintf(tabout, ".ec\n");
+	}
+	fprintf(tabout, ".ls\n");
+	fprintf(tabout, ".00\n");
+	fprintf(tabout, ".ec\n");
 }

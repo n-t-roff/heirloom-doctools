@@ -27,6 +27,7 @@
 #include <signal.h>
 #include <stdlib.h>
 #include <libgen.h>
+#include <locale.h>
 # ifdef gcos
 /* required by GCOS because file is passed to "tbl" by troff preprocessor */
 # define _f1 _f
@@ -97,8 +98,9 @@ setinp(int argc, char **argv)
 int 
 swapin(void)
 {
+	char *optarg;
 	while (sargc>0 && **sargv=='-') /* Mem fault if no test on sargc */
-		{
+	{
 		if (sargc<=0) return(0);
 		if (match("-me", *sargv))
 			{
@@ -115,10 +117,31 @@ swapin(void)
 			*sargv = PYMACSS;
 			break;
 			}
-		if (match("-TX", *sargv))
-			pr1403=1;
+		if ((*sargv)[1] == 'T') {
+			optarg = *sargv + 2;
+			if (!*optarg) {
+				sargc--; sargv++;
+				if (!sargc || **sargv == '-') {
+					fprintf(stderr, "%s: Argument expected"
+					    " after option -T\n", progname);
+					exit(1);
+				}
+				optarg = *sargv;
+			}
+			if (*optarg == 'X' && !optarg[1]) {
+				pr1403=1;
+			} else if (!strcmp(optarg, "locale")) {
+				if (strstr(setlocale(LC_ALL, ""), "UTF-8")) {
+					utf8 = 1;
+					Graphics = 0;
+				}
+			}
+		}
 		else if (match("-g", *sargv))
+		{
 			Graphics=1;
+			utf8 = 0;
+		}
 		else {
 			(void) fprintf(stderr, "%s: Invalid option "
 			    "(%s).\n", progname, *sargv);
@@ -127,7 +150,7 @@ swapin(void)
 			exit(1);
 		}
 		sargc--; sargv++;
-		}
+	}
 	if (sargc<=0) return(0);
 # ifndef gcos
 /* file closing is done by GCOS troff preprocessor */

@@ -87,6 +87,7 @@ extern int linstart;
 extern int nokeep;
 
 extern const char *progname;
+extern int utf8;
 
 extern FILE *tabin, *tabout;
 # define CRIGHT 80

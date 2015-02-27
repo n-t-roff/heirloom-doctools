@@ -32,14 +32,13 @@
 .\" WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
 .\" OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
 .\" EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-.TH TBL 1 "9/9/06" "Heirloom Documentation Tools" "BSD System Compatibility"
+.TH TBL 1 "February 21, 2015" "Heirloom Documentation Tools"
 .SH NAME
 tbl \- format tables for nroff or troff
 .SH SYNOPSIS
 \fBtbl\fR
-[\fB\-g\fR]
+[\fB\-g\fR|\fB\-TX\fR|\fB\-Tlocale\fR]
 [\fB\-me\fR|\fB\-mm\fR|\fB\-ms\fR]
-[\fB\-TX\fR]
 [\fIfiles\fR] ...
 .SH DESCRIPTION
 .I Tbl
@@ -120,13 +119,27 @@ pipes.
 .I tbl
 normally uses line drawing commands with repeated
 underline and box rule characters
-(i.e.
-.I troff
-\el and \eL).
+(\el and \eL).
 With the
 .B \-g
 option,
-graphic drawing commands (i.e. \eD) are used instead.
+graphic drawing commands (\eD) are used instead.
+(This should only be used when processing troff input.)
+Option
+.B \-g
+overrides a previous
+.BR \-Tlocale .
+.PP
+If
+.I tbl
+is used to process nroff input in an UTF-8 locale and
+.B \-Tlocale
+is given lines are printed using Unicode box characters
+instead of underline and box rule characters.
+Option
+.B \-Tlocale
+overrides a previous
+.BR \-g .
 .PP
 The
 .B \-TX
