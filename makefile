@@ -12,7 +12,6 @@ SUBDIRS = eqn/eqn.d \
 	troff/libhnj/hyphen.d \
 	troff/troff.d/font \
 	troff/troff.d/dpost.d \
-	troff/troff.d/devaps \
 	troff/troff.d/tmac.d \
 	troff/troff.d/postscript \
 	troff/troff.d \
@@ -24,11 +23,15 @@ SUBDIRS = eqn/eqn.d \
 	soelim \
 	col
 
+# Removed from SUBDIRS. Add again if required.
+#	troff/troff.d/devaps
+
 MAKEFILES = $(SUBDIRS:=/Makefile)
 
 .SUFFIXES: .mk
 .mk:
-	cat version.mk mk.config $< >$@
+	echo SYSTEM = SYS_`uname` >$@
+	cat version.mk mk.config $< >>$@
 
 dummy: $(MAKEFILES) all
 

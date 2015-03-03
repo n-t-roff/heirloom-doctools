@@ -54,6 +54,11 @@
 #ifndef iswascii
 # define iswascii(c) isascii(c)
 #endif
+#if defined(SYS_OpenBSD)
+# define col_wcscpy(dst, src, size) wcslcpy(dst, src, size)
+#else
+# define col_wcscpy(dst, src, size) wcscpy(dst, src)
+#endif
 
 wchar_t	*page[PL];
 wchar_t	lbuff[LINELN], *line;
@@ -376,7 +381,8 @@ outc(wchar_t c)
 				}
 				*line = c;
 				if (p1 < lbuffend) {
-					(void) wcscpy(line+1, p1);
+					col_wcscpy(line+1, p1, lbuffend -
+					    line - 1);
 				} else {
 					(void) fprintf(stderr,
 					    gettext("col: Line too long.\n"));
@@ -465,16 +471,17 @@ outc(wchar_t c)
 static void
 store(int lno)
 {
+	size_t bufsiz;
 	lno %= PL;
 	if (page[lno] != 0)
 		free((char *)page[lno]);
-	page[lno] = (wchar_t *)malloc((unsigned)(wcslen(lbuff) + 2)
-		* sizeof (wchar_t));
+	bufsiz = wcslen(lbuff) + 2;
+	page[lno] = (wchar_t *)malloc(bufsiz * sizeof(wchar_t));
 	if (page[lno] == 0) {
 		/* fprintf(stderr, "%s: no storage\n", pgmname); */
 		exit(2);
 	}
-	(void) wcscpy(page[lno], lbuff);
+	col_wcscpy(page[lno], lbuff, bufsiz);
 }
 
 static void
@@ -489,7 +496,7 @@ fetch(int lno)
 	line = lbuff;
 	lp = 0;
 	if (page[lno])
-		(void) wcscpy(line, page[lno]);
+		col_wcscpy(line, page[lno], LINELN);
 }
 
 static void
