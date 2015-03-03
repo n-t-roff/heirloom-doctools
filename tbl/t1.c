@@ -95,6 +95,7 @@ setinp(int argc, char **argv)
 	sargc--; sargv++;
 	if (sargc>0)
 		swapin();
+	if (pr1403 || utf8 || tlp) nflm = 1;
 }
 int 
 swapin(void)
@@ -131,10 +132,17 @@ swapin(void)
 			}
 			if (*optarg == 'X' && !optarg[1]) {
 				pr1403=1;
+			} else if (!strcmp(optarg, "lp")) {
+				tlp = 1;
+				utf8 = 0;
+				Graphics = 0;
 			} else if (!strcmp(optarg, "locale")) {
+				Graphics = 0;
 				if (strstr(setlocale(LC_ALL, ""), "UTF-8")) {
 					utf8 = 1;
-					Graphics = 0;
+					tlp = 0;
+				} else {
+					tlp = 1;
 				}
 			}
 		}
@@ -142,12 +150,13 @@ swapin(void)
 		{
 			Graphics=1;
 			utf8 = 0;
+			tlp = 0;
 		}
 		else {
 			(void) fprintf(stderr, "%s: Invalid option "
 			    "(%s).\n", progname, *sargv);
 			(void) fprintf(stderr, "Usage: %s [ -me ] "
-			    "[ -mm ] [ -ms ] [ filename ] ...\n", progname);
+			    "[ -mm ] [ -ms ] [ filename ... ]\n", progname);
 			exit(1);
 		}
 		sargc--; sargv++;

@@ -1,21 +1,29 @@
+2015-03-02
+    tbl:  Option -Tlp configures output of table lines with ASCII
+    characters -, =, |, and + (similar to GNU nroff -Tascii).
+    Option -Tlocale in a non-UTF-8 locale now behaves as -Tlp.
+
+    Bugfix:  tbl with option -TX:  Double lines had not been
+    displayed correctly.
+
 2015-02-27
     tbl:  Option -Tlocale added which (in an UTF-8 locale) en-
     ables output of table lines with Unicode glyphs.
 
 2015-02-26
-    Bugfix: The zero width flag (set e.g. by \z or \L) did not
+    Bugfix:  The zero width flag (set e.g. by \z or \L) did not
     work for Unicode characters.  As a consequence e.g. \L could
     not be used width \U'2551' to draw a double vertical line.
 
 2015-02-18
-    Bugfix: When there were several .ft requests to not mounted
+    Bugfix:  When there were several .ft requests to not mounted
     fonts in short succession the output was wrong.
 
 2015-02-12
     Read-only register .S added for DWB compatibility.
 
 2014-12-23
-    mdoc: Footer had not been displayed if page length was
+    mdoc:  Footer had not been displayed if page length was
     reached.
 
 Release 141217
@@ -25,10 +33,10 @@ Release 141217
     mdoc updated for processing up-to-date manpages.  Still much
     work needs to be done on mdoc.
 
-    nroff: Special character names of arbitrary length are now
+    nroff:  Special character names of arbitrary length are now
     possible.
 
-    nroff: Many special characters to -Tlp and -Tlocale (UTF-8)
+    nroff:  Many special characters to -Tlp and -Tlocale (UTF-8)
     added.
 
 2014-12-15
@@ -40,7 +48,7 @@ Release 141217
     Macro 'lsm' and number registers 'lsn' and 'lss' added.
 
 2014-12-05
-    Bugfix: .unformat: \e gets restored now.
+    Bugfix:  .unformat: \e gets restored now.
 
 2014-11-06
     Distingtion between BSD and non-BSD manuals removed (Anthony
@@ -61,12 +69,12 @@ Release 141029
     changed to use free available OTF fonts.
 
 2014-10-27
-    col(1) bugfix: Avoid to access chars before string.
+    col(1) bugfix:  Avoid to access chars before string.
 
-    troff: fdprintf changed back to libc fprintf.
+    troff:  fdprintf changed back to libc fprintf.
 
-    troff: 32 bit bug in register and macro allocation fixed (Bug
-    reported by Anthony J. Bentley).
+    troff:  32 bit bug in register and macro allocation fixed
+    (Bug reported by Anthony J. Bentley).
 
     nroff/troff made -Wall clean.
 

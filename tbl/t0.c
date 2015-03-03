@@ -79,3 +79,5 @@ const char *progname;
 FILE *tabin  /*= stdin */;
 FILE *tabout  /* = stdout */;
 int utf8;
+int tlp;
+int nflm;

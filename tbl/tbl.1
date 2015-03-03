@@ -32,14 +32,15 @@
 .\" WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
 .\" OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
 .\" EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-.TH TBL 1 "February 21, 2015" "Heirloom Documentation Tools"
+.TH TBL 1 "March 2, 2015" "Heirloom Documentation Tools"
 .SH NAME
 tbl \- format tables for nroff or troff
 .SH SYNOPSIS
-\fBtbl\fR
-[\fB\-g\fR|\fB\-TX\fR|\fB\-Tlocale\fR]
-[\fB\-me\fR|\fB\-mm\fR|\fB\-ms\fR]
-[\fIfiles\fR] ...
+.B tbl
+.RB [ \-g | \-T\c
+.IR name ]
+.RB [ \-me | \-mm | \-ms ]
+.RI [ "files ..." ]
 .SH DESCRIPTION
 .I Tbl
 is a preprocessor for formatting tables for
@@ -53,12 +54,64 @@ and reformatted.
 Arbitrary whitespace can be inserted between the dot and the commands TS or
 TE.
 Macros with these names are ignored by tbl if "'" is used instead of ".".
+.SH OPTIONS
+.TP
+.B \-g
+.I tbl
+normally uses line drawing commands with repeated
+underline and box rule characters
+(\el and \eL).
 With the
-.I \-mx
-options, the respective macro packages
+.B \-g
+option,
+graphic drawing commands (\eD) are used instead.
+(This should only be used when processing troff input.)
+Option
+.B \-g
+overrides a previous
+.BI \-T name\c
+\&.
+.TP
+.BR \-me | \-mm | \-ms
+With these options the respective macro packages
 are copied to the beginning of the output.
 Details are given in the reference manual.
-.PP
+.TP
+.BI \-T name
+Configure nroff input processing.
+.I name
+can be one of:
+.RS
+.TP
+.B locale
+If
+.I tbl
+is used to process nroff input in an UTF-8 locale and
+.B \-Tlocale
+is given lines are printed using Unicode box characters
+instead of underline and box rule characters.
+If the current locale does not support UTF-8 this Option
+has the same effect as
+.BR \-Tlp .
+Option
+.B \-Tlocale
+overrides a previous
+.BR \-g .
+.TP
+.B lp
+Use ASCII characters (\-, =, |, +)
+instead of underline and box rule characters.
+Overrides a previous
+.BR \-g .
+.TP
+.B X
+The
+.B \-TX
+option causes
+.I tbl
+not to produce fractional line motions.
+.RE
+.SH EXAMPLE
 As an example, letting \\t represent a tab (which should
 be typed as a genuine tab)
 the input
@@ -115,37 +168,6 @@ the
 command should be first, to minimize the volume
 of data passed through
 pipes.
-.PP
-.I tbl
-normally uses line drawing commands with repeated
-underline and box rule characters
-(\el and \eL).
-With the
-.B \-g
-option,
-graphic drawing commands (\eD) are used instead.
-(This should only be used when processing troff input.)
-Option
-.B \-g
-overrides a previous
-.BR \-Tlocale .
-.PP
-If
-.I tbl
-is used to process nroff input in an UTF-8 locale and
-.B \-Tlocale
-is given lines are printed using Unicode box characters
-instead of underline and box rule characters.
-Option
-.B \-Tlocale
-overrides a previous
-.BR \-g .
-.PP
-The
-.B \-TX
-option causes
-.I tbl
-not to produce fractional line motions.
 .SH SEE ALSO
 troff(1), eqn(1)
 .br

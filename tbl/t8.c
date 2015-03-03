@@ -118,7 +118,7 @@ putline (
 		fullwide(i,'-');
 	once=1;
 	runtabs(i, nl);
-	if (allh(nl) && !(pr1403 || utf8))
+	if (allh(nl) && !nflm)
 	{
 		fprintf(tabout, ".nr %d \\n(.v\n", SVS);
 		fprintf(tabout, ".vs \\n(.vu-\\n(.sp\n");
@@ -126,21 +126,23 @@ putline (
 	if (chfont)
 		fprintf(tabout, ".nr %2d \\n(.f\n", S1);
 	fprintf(tabout, ".nr 35 1m\n");
-	if (utf8 && (boxflg || allflg || dboxflg)) { /* right hand line */
+	if ((utf8 || tlp) && (boxflg || allflg || dboxflg)) { /* right hand line */
 		fprintf(tabout, "\\h'|\\n(TWu'");
-		fprintf(tabout, "%s", dboxflg ? "\\U'2551'" : /* ║ */
+		fprintf(tabout, "%s", tlp     ? "|"         :
+		                      dboxflg ? "\\U'2551'" : /* ║ */
 		                                "\\U'2502'"); /* │ */
 	}
 	fprintf(tabout, "\\&");
 	vct = 0;
 	for(c=0; c<ncol; c++)
 	{
-		if (utf8) {
+		if (utf8 || tlp) {
 			char *s = table[nl][c ? c-1 : 0].col;
 			if ((lwid = lefdata(i, c)) && (!ifline(s) ||
 			    *s == '\\')) {
 				tohcol(c);
 				fprintf(tabout, "%s",
+				    tlp       ? "|"         :
 				    lwid == 2 ? "\\U'2551'" : /* ║ */
 				                "\\U'2502'"); /* │ */
 				vct += 2;
@@ -276,7 +278,7 @@ putline (
 		}
 	}
 	fprintf(tabout, "\n");
-	if (allh(nl) && !(pr1403 || utf8)) fprintf(tabout, ".vs \\n(%du\n", SVS);
+	if (allh(nl) && !nflm) fprintf(tabout, ".vs \\n(%du\n", SVS);
 	if (watchout)
 		funnies(i,nl);
 	if (vspf)
@@ -361,7 +363,7 @@ funnies(int stl, int lin)
 	fprintf(tabout, ".sp |\\n(%du\n", S1);
 	for(c=dv=0; c<ncol; c++)
 	{
-		if (utf8) {
+		if (utf8 || tlp) {
 			if ((lwid = lefdata(stl,c))) {
 				if (!dv++)
 					fprintf(tabout, ".sp -1\n");
@@ -369,6 +371,7 @@ funnies(int stl, int lin)
 				dv++;
 				fprintf(tabout,
 				    "\\L'-(\\n(%du-\\n(##u)%s'", S1,
+				    tlp       ? "|"         :
 				    lwid == 2 ? "\\U'2551'" : /* ║ */
 				                "\\U'2502'"); /* │ */
 				fprintf(tabout, "\\v'\\n(%du-\\n(##u'", S1);
@@ -383,12 +386,13 @@ funnies(int stl, int lin)
 			drawvert(lf, stl, c, lwid);
 		}
 	}
-	if (utf8 && (allflg || boxflg || dboxflg)) {
+	if ((utf8 || tlp) && (allflg || boxflg || dboxflg)) {
 		if (!dv++)
 			fprintf(tabout, ".sp -1\n");
 		fprintf(tabout, "\\h'|\\n(TWu'");
 		fprintf(tabout,
 		    "\\L'-(\\n(%du-\\n(##u)%s'", S1,
+		    tlp       ? "|"         :
 		    lwid == 2 ? "\\U'2551'" : /* ║ */
 		                "\\U'2502'"); /* │ */
 		fprintf(tabout, "\\v'\\n(%du-\\n(##u'", S1);

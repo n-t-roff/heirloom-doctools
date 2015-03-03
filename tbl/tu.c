@@ -111,7 +111,7 @@ void
 fullwide(int i, int lintype)
 {
 	int cr, cl;
-	if (!(pr1403 || utf8))
+	if (!nflm)
 		fprintf(tabout, ".nr %d \\n(.v\n.vs \\n(.vu-\\n(.sp\n", SVS);
 	cr= 0;
 	while (cr<ncol)
@@ -126,7 +126,7 @@ fullwide(int i, int lintype)
 			drawline(i,cl,(cr<ncol?cr-1:cr),lintype,1,0);
 	}
 	fprintf(tabout, "\n");
-	if (!(pr1403 || utf8))
+	if (!nflm)
 		fprintf(tabout, ".vs \\n(%du\n", SVS);
 }
 
@@ -140,12 +140,12 @@ drawline(int i, int cl, int cr, int lintype, int noheight, int shortl)
 	switch(lintype)
 	{
 	case '-': lcount=1;break;
-	case '=': lcount = (pr1403 || utf8) ? 1 : 2; break;
+	case '=': lcount = nflm ? 1 : 2; break;
 	case SHORTLINE: lcount=1; break;
 	}
 	if (lcount<=0) return;
 	nodata = cr-cl>=ncol || noheight || allh(i);
-	if (!utf8) {
+	if (!nflm) {
 		if (!nodata)
 			fprintf(tabout, "\\v'-.5m'");
 		if (graphics)
@@ -211,7 +211,8 @@ drawline(int i, int cl, int cr, int lintype, int noheight, int shortl)
 			else
 				fprintf(tabout, "\\l'|\\n(%du%s'", cr+CRIGHT,
 				    utf8 ?  "\\U'2500'" : /* ─ */
-				    "");
+				    tlp  ?  "\\-"       :
+				            "");
 		}
 		else if (graphics) {
 			if (cr+1>=ncol)
@@ -226,9 +227,11 @@ drawline(int i, int cl, int cr, int lintype, int noheight, int shortl)
 			if (utf8)
 				lnch = lintype == '=' ? "\\U'2550'" : /* ═ */
 				                        "\\U'2500'" ; /* ─ */
+			else if (tlp)
+				lnch = lintype == '=' ? "\\&=" : "\\-";
 			else
 			if (pr1403)
-				lnch = lintype == '=' ? "=" : "\\(ru";
+				lnch = lintype == '=' ? "\\&=" : "\\(ru";
 			if (cr+1>=ncol)
 				fprintf(tabout, "\\l'|\\n(TWu%s%s'", exhr,lnch);
 			else
@@ -246,7 +249,7 @@ drawline(int i, int cl, int cr, int lintype, int noheight, int shortl)
 		fprintf(tabout, "\\v'-\\n(#Du'");
 	if (!nodata)
 		fprintf(tabout, "\\v'+.5m'");
-	if (!shortl && utf8) {
+	if (!shortl && (utf8 || tlp)) {
 		int corred, tl, bl, c, ccr, licr;
 		char *s;
 		ccr = cr;
@@ -286,16 +289,23 @@ static char *glibe(int i, int c, int cl, int cr, int lintype) {
 	if (!i) {
 		bl = lefdata(1, c);
 		if (bl >= 1 && bl <= 2)
-			s = udbdc[lintype][0][bl][cx];
+			s = tlp ? "+" :
+			    udbdc[lintype][0][bl][cx];
 	} else if (i < nlin - 1) {
 		tl = lefdata(i - 1, c);
 		bl = lefdata(i + 1, c);
 		if (tl >= 0 && tl <= 2 && bl >= 0 && bl <= 2)
-			s = udbdc[lintype][tl][bl][cx];
+		{
+			if (tlp) {
+				if (tl || bl) s = "+";
+			} else
+				s = udbdc[lintype][tl][bl][cx];
+		}
 	} else {
 		tl = lefdata(i - 1, c);
 		if (tl >= 1 && tl <= 2)
-			s = udbdc[lintype][tl][0][cx];
+			s = tlp ? "+" :
+			    udbdc[lintype][tl][0][cx];
 	}
 	return s;
 }
@@ -307,7 +317,9 @@ static char *grbe(int i, int lintype) {
 	     dboxflg ? 2 : 1;
 	bl = i && i >= nlin - 1 ? 0 :
 	     dboxflg            ? 2 : 1;
-	return udbdc[lintype][tl][bl][2];
+	if (utf8) return udbdc[lintype][tl][bl][2];
+	else if (tl || bl) return "+";
+	else return NULL;
 }
 
 void

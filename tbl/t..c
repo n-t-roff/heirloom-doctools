@@ -88,6 +88,8 @@ extern int nokeep;
 
 extern const char *progname;
 extern int utf8;
+extern int tlp;
+extern int nflm;
 
 extern FILE *tabin, *tabout;
 # define CRIGHT 80

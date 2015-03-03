@@ -135,17 +135,17 @@ deftail(void)
 		if (linestop[i])
 			fprintf(tabout, ".if \\n(#T>=0 .nr #%c \\n(#T\n",linestop[i]+'a'-1);
 	if (boxflg || allflg || dboxflg) { /* bottom of table line */
-		if (!(pr1403 || utf8))
+		if (!nflm)
 			fprintf(tabout, ".if \\n(T. .vs \\n(.vu-\\n(.sp\n");
 		fprintf(tabout, ".if \\n(T. ");
 		drawline(nlin,0,ncol, dboxflg ? '=' : '-',1,0);
 		fprintf(tabout, "\n");
-		if (!(pr1403 || utf8))
+		if (!nflm)
 			fprintf(tabout, ".if \\n(T. .vs\n");
 		/* T. is really an argument to a macro but because of 
 		   eqn we don't dare pass it as an argument and reference by $1 */
 	}
-	if (!utf8) {
+	if (!(utf8 || tlp)) {
 		for(c=0; c<ncol; c++)
 		{
 			if (nlin>0 && (lf=left(nlin-1,c, &lwid))>=0)
