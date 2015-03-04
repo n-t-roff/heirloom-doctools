@@ -44,7 +44,7 @@ main(int argc, char **argv)	/* look in biblio for record matching keywords */
 	}
 	snprintf(s, sizeof s, "%s.ia", argv[1]);
 	if (access(s, 0) == -1) {
-		sprintf (s, "%s", argv[1]);
+		snprintf (s, sizeof(s), "%s", argv[1]);
 		if (access(s, 0) == -1) {
 			perror(s);
 			fprintf(stderr, "\tNeither index file %s.ia \

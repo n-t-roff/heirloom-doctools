@@ -47,7 +47,8 @@ putsig (int nf, char **flds, int nref, char *nstline,
 
 	if (labels) {
 		if (nf == 0)	/* old */
-			sprintf(t, "%s%c", labtab[nref], labc[nref]);
+			snprintf(t, sizeof(t), "%s%c", labtab[nref],
+			    labc[nref]);
 		else {
 			*t = 0;
 			if (keywant)
@@ -55,12 +56,12 @@ putsig (int nf, char **flds, int nref, char *nstline,
 			if (science && t[0] == 0) {
 				if (fpar(nf, flds, t, 'A', 1, 0) != 0) {
 					if (fpar(nf, flds, t2, 'D', 1, 0) != 0) {
-						strcat(t, ", ");
-						strcat(t, t2);
+						n_strcat(t, ", ", sizeof(t));
+						n_strcat(t, t2, sizeof(t));
 					}
 				}
 			} else if (t[0] == 0) {
-				sprintf(format,
+				snprintf(format, sizeof(format),
 					nmlen>0 ? "%%.%ds%%s" : "%%s%%s",
 					nmlen);
 				/* format is %s%s for default labels */
@@ -77,7 +78,7 @@ putsig (int nf, char **flds, int nref, char *nstline,
 				}
 				t1[0] = 0;
 				fpar(nf, flds, t1, 'A', 1, 0);
-				sprintf(t, format, t1, sd);
+				snprintf(t, sizeof(t), format, t1, sd);
 			}
 			if (keywant) {
 				addon = 0;
@@ -98,9 +99,9 @@ putsig (int nf, char **flds, int nref, char *nstline,
 	}
 	else {
 		if (sort)
-			sprintf(t, "%c%d%c", FLAG, nref, FLAG);
+			snprintf(t, sizeof(t), "%c%d%c", FLAG, nref, FLAG);
 		else
-			sprintf(t, "%d", nref);
+			snprintf(t, sizeof(t), "%d", nref);
 	}
 	another = (sd = lookat()) ? prefix(".[", sd) : 0;
 	if (another && (strcmp(".[\n", sd) != SAME))
@@ -108,7 +109,7 @@ putsig (int nf, char **flds, int nref, char *nstline,
 			Ifile, Iline, sd);
 	if ((strlen(sig) + strlen(t)) > MXSIG)
 		err("sig overflow (%d)", MXSIG);
-	strcat(sig, t);
+	n_strcat(sig, t, sizeof(sig));
 #if EBUG
 	fprintf(stderr, "sig is now %s leng %d\n",sig,strlen(sig));
 #endif
@@ -116,7 +117,7 @@ putsig (int nf, char **flds, int nref, char *nstline,
 	trimnl(endline);
 	stline = stbuff;
 	if (prevsig == 0) {
-		strcpy (stline, nstline);
+		n_strcpy (stline, nstline, sizeof(stbuff));
 		prevsig=1;
 	}
 	if (stline[2] || endline[2]) {
@@ -133,7 +134,8 @@ putsig (int nf, char **flds, int nref, char *nstline,
 	}
 	if (bare == 0) {
 		if (!another) {
-			sprintf(t1, "%s%s%s\n", stline, sig, endline);
+			snprintf(t1, sizeof(t1), "%s%s%s\n", stline, sig,
+			    endline);
 			if (strlen(t1) > MXSIG)
 				err("t1 overflow (%d)", MXSIG);
 			append(t1);
@@ -153,7 +155,7 @@ putsig (int nf, char **flds, int nref, char *nstline,
 		}
 		else {
 			if (labels) {
-				strcat(sig, ",\\|");
+				n_strcat(sig, ",\\|", sizeof(sig));
 			} else {
 				/*
 				 * Seperate reference numbers with AFLAG
@@ -161,10 +163,11 @@ putsig (int nf, char **flds, int nref, char *nstline,
 				 */
 				t1[0] = AFLAG;
 				t1[1] = '\0';
-				strcat(sig, t1);
+				n_strcat(sig, t1, sizeof(sig));
 			}
 			if (fo == ftemp) {	/* hide if need be */
-				sprintf(hidenam, "/tmp/rj%dc", (int)getpid());
+				snprintf(hidenam, NTFILE,
+				    "/tmp/rj%dc", (int)getpid());
 #if EBUG
 				fprintf(stderr, "hiding in %s\n", hidenam);
 #endif
@@ -261,7 +264,7 @@ putkey(int nf, char **flds, int nref, char *keystr)
 void
 tokeytab (const char *t, int nref)
 {
-	strcpy(labtab[nref]=lbp, t);
+	n_strcpy(labtab[nref]=lbp, t, sizeof(bflab) - (lbp - bflab));
 	while (*lbp++)
 		;
 }

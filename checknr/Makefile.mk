@@ -1,6 +1,6 @@
 OBJ = checknr.o
 
-FLAGS =
+FLAGS = -D$(SYSTEM)
 
 .c.o:
 	$(CC) $(CFLAGS) $(WARN) $(CPPFLAGS) $(FLAGS) -c $<

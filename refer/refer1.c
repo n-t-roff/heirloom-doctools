@@ -111,7 +111,7 @@ main(int argc,char **argv)		/* process command-line arguments */
 	else if (nodeflt == 0)
 		*search++ = REFDIR "/papers/Ind";
 	if (sort && !labels) {
-		sprintf(ofile, "/tmp/rj%db", (int)getpid());
+		snprintf(ofile, NTFILE, "/tmp/rj%db", (int)getpid());
 		ftemp = fopen(ofile, "w");
 		if (ftemp == NULL) {
 			fprintf(stderr, "Can't open scratch file\n");
@@ -119,7 +119,7 @@ main(int argc,char **argv)		/* process command-line arguments */
 		}
 	}
 	if (endpush) {
-		sprintf(tfile, "/tmp/rj%da", (int)getpid());
+		snprintf(tfile, NTFILE, "/tmp/rj%da", (int)getpid());
 		fo = fopen(tfile, "w");
 		if (fo == NULL) {
 			fo = ftemp;

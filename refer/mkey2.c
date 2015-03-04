@@ -105,7 +105,7 @@ grec (char *s, FILE *f)
 		if (tm[0] == '%' || tm[0] == '.')
 			curtype = tm[1];
 		if (tlen < MAXLINE && mindex(iglist,curtype)==0)
-			strcat(s, tm);
+			n_strcat(s, tm, MAXLINE);
 		len = tlen;
 		if (wholefile==0 && tm[0] == '\n')
 			return(len);

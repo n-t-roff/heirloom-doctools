@@ -135,17 +135,17 @@ main(int argc,char **argv)
 	}
 	if(argc < 2)
 		exit(1);
-	strcpy (nma, todir(argv[1]));
+	n_strcpy (nma, todir(argv[1]), sizeof(nma));
 	if (was == 0 || strcmp (oldname, nma) !=0)
 	{
-		strcpy (oldname,nma);
-		strcpy (nmb, nma); 
-		strcpy (nmc, nmb); 
-		strcpy(nmd,nma);
-		strcat (nma, ".ia");
-		strcat (nmb, ".ib");
-		strcat (nmc, ".ic");
-		strcat (nmd, ".id");
+		n_strcpy (oldname,nma, sizeof(oldname));
+		n_strcpy (nmb, nma, sizeof(nmb)); 
+		n_strcpy (nmc, nmb, sizeof(nmc)); 
+		n_strcpy(nmd,nma, sizeof(nma));
+		n_strcat (nma, ".ia", sizeof(nma));
+		n_strcat (nmb, ".ib", sizeof(nmb));
+		n_strcat (nmc, ".ic", sizeof(nmc));
+		n_strcat (nmd, ".id", sizeof(nmd));
 		if (was)
 		{
 			fclose(fa); 
@@ -156,7 +156,8 @@ main(int argc,char **argv)
 		fa = fopen(nma, "r");
 		if (fa==NULL)
 		{
-			strcpy(*fgnamp++ = calloc(strlen(oldname)+2,1), oldname);
+			size_t s = strlen(oldname)+2;
+			n_strcpy(*fgnamp++ = calloc(s,1), oldname, s);
 			fb=NULL;
 			goto search;
 		}
@@ -222,8 +223,9 @@ search:
 			grepquery[0]=0;
 			for(k=0; k<nitem; k++)
 			{
-				strcat(grepquery, " ");
-				strcat(grepquery, qitem[k]);
+				n_strcat(grepquery, " ", sizeof(grepquery));
+				n_strcat(grepquery, qitem[k],
+				    sizeof(grepquery));
 			}
 # if D1
 			fprintf(stderr, "grepquery %s\n",grepquery);
@@ -285,7 +287,7 @@ todir(char *t)
 	*s++ = 0;
 	t = (*t ? t : "/");
 	chdir (t);
-	strcpy (usedir,t);
+	n_strcpy (usedir,t, sizeof(usedir));
 	return(s);
 }
 int

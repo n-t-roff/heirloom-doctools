@@ -39,7 +39,7 @@ output(const char *s)
 		gate = 1;
 	if (strlen(s) > sizeof buff)
 		err("one buff too big (%d)!", sizeof buff);
-	strcpy(buff, s);
+	n_strcpy(buff, s, sizeof(buff));
 }
 
 void
@@ -65,7 +65,7 @@ append(char *s)
 			*p++ = lch;
 			*p = 0;
 		}
-	strcat(buff, s);
+	n_strcat(buff, s, sizeof(buff));
 	if (postpunct)
 		switch(lch) {
 		case '.': 

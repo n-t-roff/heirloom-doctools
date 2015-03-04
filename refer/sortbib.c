@@ -31,6 +31,14 @@
 #define	BUF BUFSIZ
 #define	MXFILES 16
 
+#if defined(SYS_OpenBSD)
+# define n_strcpy(dst, src, siz) strlcpy(dst, src, siz)
+# define n_strcat(dst, src, siz) strlcat(dst, src, siz)
+#else
+# define n_strcpy(dst, src, siz) strcpy(dst, src)
+# define n_strcat(dst, src, siz) strcat(dst, src)
+#endif
+
 char tempfile[32];		/* temporary file for sorting keys */
 int tmpfd = -1;
 char *keystr = "AD";		/* default sorting on author and date */
@@ -76,7 +84,8 @@ main(int argc, char **argv)	/* sortbib: sort bibliographic database in place */
 	for (i = 1; i < argc; i++)		/* open files in arg list */
 		if ((fp[i-1] = fopen(argv[i], "r")) == NULL)
 			error(argv[i]);
-	strcpy(tempfile, "/tmp/SbibXXXXXX");	/* tempfile for sorting keys */
+	/* tempfile for sorting keys */
+	n_strcpy(tempfile, "/tmp/SbibXXXXXX", sizeof(tempfile));
 	if ((tmpfd = mkstemp(tempfile)) == -1)
 		error(tempfile);
 
@@ -182,7 +191,8 @@ deliver(FILE **fp, FILE *tfp)	/* deliver sorted entries out of database(s) */
 	int i, length;
 
 	/* when sorting, ignore case distinctions; tab char is ':' */
-	sprintf(cmd, "sort +4f +0n +1n %s -o %s", tempfile, tempfile);
+	snprintf(cmd, sizeof(cmd), "sort +4f +0n +1n %s -o %s", tempfile,
+	    tempfile);
 	if (system(cmd) == 127) {
 		unlink(tempfile);
 		error("sortbib");
@@ -233,35 +243,35 @@ parse(char *line, char fld[][BUF])	/* get fields out of line, prepare for sortin
 				if (oneauth && !multauth)	/* no repeat */
 					break;
 				else if (oneauth)		/* mult auths */
-					strcat(fld[i], "~~");
+					n_strcat(fld[i], "~~", BUF);
 				if (!endcomma(wd[n-2]))		/* surname */
-					strcat(fld[i], wd[n-1]);
+					n_strcat(fld[i], wd[n-1], BUF);
 				else {				/* jr. or ed. */
-					strcat(fld[i], wd[n-2]);
+					n_strcat(fld[i], wd[n-2], BUF);
 					n--;
 				}
-				strcat(fld[i], " ");
+				n_strcat(fld[i], " ", BUF);
 				for (j = 1; j < n-1; j++)
-					strcat(fld[i], wd[j]);
+					n_strcat(fld[i], wd[j], BUF);
 				oneauth = 1;
 			} else if (wd[0][1] == 'D') {
-				strcat(fld[i], wd[n-1]);	/* year */
+				n_strcat(fld[i], wd[n-1], BUF);	/* year */
 				if (n > 2)
-					strcat(fld[i], wd[1]);	/* month */
+					n_strcat(fld[i], wd[1], BUF);	/* month */
 			} else if (wd[0][1] == 'T' || wd[0][1] == 'J') {
 				j = 1;
 				if (article(wd[1]))	/* skip article */
 					j++;
 				for (; j < n; j++)
-					strcat(fld[i], wd[j]);
+					n_strcat(fld[i], wd[j], BUF);
 			} else  /* any other field */
 				for (j = 1; j < n; j++)
-					strcat(fld[i], wd[j]);
+					n_strcat(fld[i], wd[j], BUF);
 		}
 		/* %Q quorporate or queer author - unreversed %A */
 		else if (wd[0][1] == 'Q' && keystr[i] == 'A')
 			for (j = 1; j < n; j++)
-				strcat(fld[i], wd[j]);
+				n_strcat(fld[i], wd[j], BUF);
 	}
 }
 

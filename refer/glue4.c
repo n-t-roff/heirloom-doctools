@@ -42,9 +42,9 @@ grepcall (char *in, char *out, char *arg)
 	FILE *gf;
 	int c, oldc = 0, alph = 0, nv = 0;
 	int sv0, sv1;
-	strcpy (argig, arg); 
-	strcat(argig, ".ig");
-	strcpy (inp=inb, in);
+	n_strcpy (argig, arg, sizeof(argig)); 
+	n_strcat(argig, ".ig", sizeof(argig));
+	n_strcpy (inp=inb, in, sizeof(inb));
 	if (gfile[0]==0)
 		sprintf(gfile, "/tmp/rj%dg", (int)getpid());
 # if D1

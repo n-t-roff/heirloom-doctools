@@ -140,7 +140,7 @@ char *slug::typname()
 	case NE:	p = "NE"; break;
 	case CMD:	p = "CMD"; break;
 	case PARM:	p = "PARM"; break;
-	default:	sprintf(buf, "weird type %d", type);
+	default:	snprintf(buf, sizeof(buf), "weird type %d", type);
 	}
 	return (char *)p;
 }
@@ -373,7 +373,7 @@ slug getslug(FILE *fp)
 				ret.dv = n - baseV;
 				baseV = n;
 			} else {
-				sprintf(buf, "v%d", n - curV);
+				snprintf(buf, sizeof(buf), "v%d", n - curV);
 				adds(buf);
 			}
 			curV = n;
@@ -384,7 +384,7 @@ slug getslug(FILE *fp)
 			if (firstH++ == 0) {
 				ret.hpos = n;
 			} else {
-				sprintf(buf, "h%d", n - curH);
+				snprintf(buf, sizeof(buf), "h%d", n - curH);
 				adds(buf);
 			}
 			curH = n;
@@ -508,7 +508,8 @@ slug getslug(FILE *fp)
 			ret.base = m;
 			getc(fp);	// newline
 			linenum++;
-			sprintf(buf, "n%d %d\n", ret.ht, ret.base);
+			snprintf(buf, sizeof(buf), "n%d %d\n", ret.ht,
+			    ret.base);
 			adds(buf);
 			if (!firstV++)
 				baseV = curV;
@@ -540,17 +541,19 @@ slug getslug(FILE *fp)
 				fscanf(fp, "%d", &isize);
 				if (isize == -23) {
 					fscanf(fp, "%f", &size);
-					sprintf(buf, "s-23 %g\n", size);
+					snprintf(buf, sizeof(buf),
+					    "s-23 %g\n", size);
 				} else {
 					size = isize;
-					sprintf(buf, "s%d\n", isize);
+					snprintf(buf, sizeof(buf),
+					    "s%d\n", isize);
 				}
 				adds(buf);
 			}
 			break;
 		case 'f':	// font fnnn
 			fscanf(fp, "%d", &font);
-			sprintf(buf, "f%d\n", font);
+			snprintf(buf, sizeof(buf), "f%d\n", font);
 			adds(buf);
 			break;
 		case '\n':

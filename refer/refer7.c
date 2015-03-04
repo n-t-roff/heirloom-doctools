@@ -41,7 +41,7 @@ chkdup(const char *tag)
 	reftable[refnum+1] = rtp;
 	if (refnum >= NRFTBL)
 		err("too many references (%d) for table", refnum);
-	strcpy(rtp, tag);
+	n_strcpy(rtp, tag, NRFTXT - (rtp - reftext));
 	while (*rtp++);
 	if (rtp > reftext + NRFTXT)
 		err("reference pointers too long (%d)", rtp-reftext);
@@ -60,7 +60,7 @@ dumpold(void)
 	fo = NULL;
 	if (sort) {
 		char comm[100];
-		sprintf(comm, "sort -f %s -o %s", tfile, tfile);
+		snprintf(comm, sizeof(comm), "sort -f %s -o %s", tfile, tfile);
 		system(comm);
 	}
 	fi = fopen(tfile, "r");
@@ -165,14 +165,14 @@ condense(int *wref, int wcnt, char *sig)
 	qsort(wref, wcnt, sizeof(int), wswap);
 	sig[0] = 0;
 	while (i < wcnt) {
-		sprintf(wt,"%d",wref[i]);
-		strcat(sig,wt);
+		snprintf(wt, sizeof(wt), "%d",wref[i]);
+		n_strcat(sig,wt, MXSIG);
 		if ((i+2 < wcnt) && (wref[i] == (wref[i+2] - 2))) {
 			while (wref[i] == (wref[i+1] - 1))
 				i++;
-			strcat(sig, "-");
+			n_strcat(sig, "-", MXSIG);
 		} else if (++i < wcnt)
-			strcat(sig,",\\|");
+			n_strcat(sig,",\\|", MXSIG);
 	}
 }
 

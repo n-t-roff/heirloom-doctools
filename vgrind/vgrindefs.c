@@ -23,6 +23,11 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <unistd.h>
+#if defined(SYS_OpenBSD)
+# define n_strcpy(dst, src, size) strlcpy(dst, src, size)
+#else
+# define n_strcpy(dst, src, size) strcpy(dst, src)
+#endif
 /*
  * grindcap - routines for dealing with the language definitions data base
  *	(code stolen almost totally from termcap)
@@ -134,7 +139,7 @@ tnchktc(void)
 	/* p now points to beginning of last field */
 	if (p[0] != 't' || p[1] != 'c')
 		return(1);
-	strcpy(tcname,p+3);
+	n_strcpy(tcname, p+3, 16);
 	q = tcname;
 	while (q && *q != ':')
 		q++;
@@ -154,7 +159,7 @@ tnchktc(void)
 		write(2, vgrind_msg, strlen(vgrind_msg));
 		q[BUFSIZ - (p-tbuf)] = 0;
 	}
-	strcpy(p, q+1);
+	n_strcpy(p, q+1, BUFSIZ - (p - holdtbuf));
 	tbuf = holdtbuf;
 	return(1);
 }

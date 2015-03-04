@@ -95,14 +95,14 @@ main(int argc, char **argv)
 		argc--;
 		argv++;
 	}
-	strcpy (nma, argc >= 2 ? argv[1] : "Index");
-	strcpy (nmb, nma);
-	strcpy (nmc, nma);
-	strcpy (nmd, nma);
-	strcat (nma, ".ia");
-	strcat (nmb, ".ib");
-	strcat (nmc, ".ic");
-	strcat (nmd, ".id");
+	n_strcpy (nma, argc >= 2 ? argv[1] : "Index", sizeof(nma));
+	n_strcpy (nmb, nma, sizeof(nmb));
+	n_strcpy (nmc, nma, sizeof(nmc));
+	n_strcpy (nmd, nma, sizeof(nmd));
+	n_strcat (nma, ".ia", sizeof(nma));
+	n_strcat (nmb, ".ib", sizeof(nmb));
+	n_strcat (nmc, ".ic", sizeof(nmc));
+	n_strcat (nmd, ".id", sizeof(nmd));
 
 	snprintf(tmpa, sizeof tmpa, "junk%di", (int)getpid());
 	if (pipein)

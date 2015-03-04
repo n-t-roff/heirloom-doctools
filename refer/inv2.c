@@ -53,11 +53,11 @@ newkeys (FILE *outf, FILE *inf, FILE *recf, int nhash, FILE *fd, int *iflong)
 		fputs(line, recf);
 		if (fd)
 		{
-			sprintf(bkeys, ";%ld", ld);
+			snprintf(bkeys, sizeof(bkeys), ";%ld", ld);
 			ll = strlen(p);
 			lt = strlen(bkeys);
 			fputs(bkeys, recf);
-			sprintf(bkeys, ",%d", ll);
+			snprintf(bkeys, sizeof(bkeys), ",%d", ll);
 			lt += strlen(bkeys);
 			fputs(bkeys, recf);
 			ld += ll;
@@ -84,7 +84,7 @@ newkeys (FILE *outf, FILE *inf, FILE *recf, int nhash, FILE *fd, int *iflong)
 # endif
 		if (more) /* allow more than LINESIZ keys */
 		{
-			strcpy(key, keyv[nk]);
+			n_strcpy(key, keyv[nk], sizeof(key));
 			for(s=key; *s; s++);
 			while ( (c=getc(inf)) != '\n')
 			{

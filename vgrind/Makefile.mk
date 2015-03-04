@@ -1,6 +1,6 @@
 OBJ = regexp.o vfontedpr.o vgrindefs.o version.o
 
-FLAGS = $(EUC) -DLIBDIR='"$(LIBDIR)"'
+FLAGS = $(EUC) -DLIBDIR='"$(LIBDIR)"' -D$(SYSTEM)
 
 .c.o:
 	$(CC) $(CFLAGS) $(WARN) $(FLAGS) $(CPPFLAGS) -c $<

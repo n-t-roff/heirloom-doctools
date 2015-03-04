@@ -25,6 +25,11 @@
 #else
 #define	USED
 #endif
+#if defined(SYS_OpenBSD)
+# define n_strcpy(dst, src, size) strlcpy(dst, src, size)
+#else
+# define n_strcpy(dst, src, size) strcpy(dst, src)
+#endif
 static const char sccsid[] USED = "@(#)/usr/ucb/checknr.sl	1.3 (gritter) 11/6/05";
 
 /*
@@ -211,6 +216,7 @@ main(int argc, char **argv)
 				;
 			cp = &argv[1][3];
 			while (*cp) {
+				size_t s;
 				if (i >= MAXBR - 3) {
 					printf("Only %d known pairs allowed\n",
 							MAXBR/2);
@@ -220,15 +226,17 @@ main(int argc, char **argv)
 				if (*cq != '.')
 					usage();
 				*cq = 0;
-				br[i].opbr = malloc(cq - cp + 1);
-				strcpy(br[i].opbr, cp);
+				s = cq - cp + 1;
+				br[i].opbr = malloc(s);
+				n_strcpy(br[i].opbr, cp, s);
 				*cq = '.';
 				cp = &cq[1];
 				for (cq = cp; *cq && *cq != '.'; cq++);
 				c = *cq;
 				*cq = 0;
-				br[i].clbr = malloc(cq - cp + 1);
-				strcpy(br[i].clbr, cp);
+				s = cq - cp + 1;
+				br[i].clbr = malloc(s);
+				n_strcpy(br[i].clbr, cp, s);
 				*cq = c;
 				cp = c ? &cq[1] : cq;
 				/* knows pairs are also known cmds */
@@ -570,6 +578,7 @@ static void
 addmac(char *mac)
 {
 	char **src, **dest, **loc;
+	size_t s;
 
 	if (binsrch(mac) >= 0) {	/* it's OK to redefine something */
 #ifdef DEBUG
@@ -590,8 +599,9 @@ printf("binsrch(%s) -> %d\n", mac, slot);
 	dest = src+1;
 	while (dest > loc)
 		*dest-- = *src--;
-	*loc = malloc(strlen(mac) + 1);
-	strcpy(*loc, mac);
+	s = strlen(mac) + 1;
+	*loc = malloc(s);
+	n_strcpy(*loc, mac, s);
 	ncmds++;
 #ifdef DEBUG
 	printf("after: %s %s %s %s %s, %d cmds\n",
