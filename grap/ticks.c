@@ -351,15 +351,17 @@ void print_ticks(int type, int explicit, Obj *p, char *lenstr, char *descstr)
 	if (i >= ntick && type == TICKS)	/* no, so use values */
 		for (i = 0; i < ntick; i++) {
 			if (tickval[i] >= 0.0)
-				sprintf(buf, "%g", tickval[i]);
+				snprintf(buf, sizeof(buf), "%g", tickval[i]);
 			else
-				sprintf(buf, "\\-%g", -tickval[i]);
+				snprintf(buf, sizeof(buf), "\\-%g",
+				    -tickval[i]);
 			tickstr[i] = tostring(buf);
 		}
 	else
 		for (i = 0; i < ntick; i++) {
 			if (tickstr[i] != NULL) {
-				sprintf(buf, tickstr[i], tickval[i]);
+				snprintf(buf, sizeof(buf), tickstr[i],
+				    tickval[i]);
 				free(tickstr[i]);
 				tickstr[i] = tostring(buf);
 			}
@@ -489,7 +491,7 @@ char *desc_str(Attr *a)	/* convert DOT to "dotted", etc. */
 	default:	p = "";
 	}
 	if (a->fval != 0.0) {
-		sprintf(buf, "%s %g", p, a->fval);
+		snprintf(buf, sizeof(buf), "%s %g", p, a->fval);
 		return buf;
 	} else
 		return p;

@@ -164,7 +164,7 @@ void graph(char *s)	/* graph statement */
 		for (p=graphname; (c = *s) != ' ' && c != '\t' && c != '\0'; )
 			*p++ = *s++;
 		*p = '\0';
-		strcpy(graphpos, s);
+		n_strcpy(graphpos, s, sizeof(graphpos));
 		dprintf("graphname = <%s>, graphpos = <%s>\n", graphname, graphpos);
 		free(os);
 	}
@@ -181,8 +181,8 @@ void setup(void)		/* done at each .G1 */
 	if (firstG1++ == 0)
 		do_first();
 	codegen = synerr = 0;
-	strcpy(graphname, "Graph");
-	strcpy(graphpos, "");
+	n_strcpy(graphname, "Graph", sizeof(graphname));
+	n_strcpy(graphpos, "", sizeof(graphpos));
 }
 
 void do_first(void)	/* done at first .G1:  definitions, etc. */
@@ -193,11 +193,12 @@ void do_first(void)	/* done at first .G1:  definitions, etc. */
 	FILE *fp;
 	extern int getpid(void);
 
-	sprintf(buf, "define pid /%d/\n", getpid());
+	snprintf(buf, sizeof(buf), "define pid /%d/\n", getpid());
 	pbstr(buf);	
 	if (lib != 0) {
 		if ((fp = fopen(lib_defines, "r")) != NULL) {
-			sprintf(buf1, "copy \"%s\"\n", lib_defines);
+			snprintf(buf1, sizeof(buf1), "copy \"%s\"\n",
+			    lib_defines);
 			pbstr(buf1);
 			fclose(fp);
 		} else {

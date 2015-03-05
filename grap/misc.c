@@ -46,11 +46,13 @@ void setsize(int op, double expr)
 char *tostring(char *s)
 {
 	register char *p;
+	size_t l;
 
-	p = malloc(strlen(s)+1);
+	l = strlen(s)+1;
+	p = malloc(l);
 	if (p == NULL)
 		FATAL("out of space in tostring on %s", s);
-	strcpy(p, s);
+	n_strcpy(p, s, l);
 	return(p);
 }
 
@@ -209,7 +211,7 @@ char *slprint(Attr *stringlist)	/* print strings from stringlist */
 	last_fval = 0.0;
 	for (ntext = 0, ap = stringlist; ap != NULL; ap = ap->next)
 		ntext++;
-	sprintf(buf, "box invis wid 0 ht %d*textht", ntext);
+	snprintf(buf, sizeof(buf), "box invis wid 0 ht %d*textht", ntext);
 	n = strlen(buf);
 	for (ap = stringlist; ap != NULL; ap = ap->next) {
 		if (ap->op == 0) {	/* propagate last value */
@@ -219,11 +221,12 @@ char *slprint(Attr *stringlist)	/* print strings from stringlist */
 			last_op = ap->op;
 			last_fval = ap->fval;
 		}
-		sprintf(buf+n, " \"%s\"", ps_set || ap->op ? sizeit(ap) : ap->sval);
+		snprintf(buf+n, sizeof(buf) - n, " \"%s\"",
+		    ps_set || ap->op ? sizeit(ap) : ap->sval);
 		if (ap->just)
 			last_just = ap->just;
 		if (last_just)
-			strcat(buf+n, juststr(last_just));
+			n_strcat(buf+n, juststr(last_just), sizeof(buf) - n);
 		n = strlen(buf);
 	}
 	return buf;	/* watch it:  static */
@@ -235,13 +238,13 @@ char *juststr(int j)	/* convert RJUST, etc., into string */
 
 	buf[0] = '\0';
 	if (j & RJUST)
-		strcat(buf, " rjust");
+		n_strcat(buf, " rjust", sizeof(buf));
 	if (j & LJUST)
-		strcat(buf, " ljust");
+		n_strcat(buf, " ljust", sizeof(buf));
 	if (j & ABOVE)
-		strcat(buf, " above");
+		n_strcat(buf, " above", sizeof(buf));
 	if (j & BELOW)
-		strcat(buf, " below");
+		n_strcat(buf, " below", sizeof(buf));
 	return buf;	/* watch it:  static */
 }
 
@@ -257,18 +260,20 @@ char *sprntf(char *s, Attr *ap)	/* sprintf(s, attrlist ap) */
 	case 0:
 		return s;
 	case 1:
-		sprintf(buf, s, ap->fval);
+		snprintf(buf, sizeof(buf), s, ap->fval);
 		break;
 	case 2:
-		sprintf(buf, s, ap->fval, ap->next->fval);
+		snprintf(buf, sizeof(buf), s, ap->fval, ap->next->fval);
 		break;
 	case 3:
-		sprintf(buf, s, ap->fval, ap->next->fval, ap->next->next->fval);
+		snprintf(buf, sizeof(buf), s, ap->fval, ap->next->fval,
+		    ap->next->next->fval);
 		break;
 	case 5:
 		WARNING("too many expressions in sprintf");
 	case 4:
-		sprintf(buf, s, ap->fval, ap->next->fval, ap->next->next->fval, ap->next->next->next->fval);
+		snprintf(buf, sizeof(buf), s, ap->fval, ap->next->fval,
+		    ap->next->next->fval, ap->next->next->next->fval);
 		break;
 	}
 	free(s);

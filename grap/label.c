@@ -92,7 +92,8 @@ char *sizeit(Attr *ap)		/* add \s..\s to ap->sval */
 
 	if (!ap->op) {	/* no explicit size command */
 		if (ps_set) {
-			sprintf(buf, "\\s%d%s\\s0", pointsize, ap->sval);
+			snprintf(buf, sizeof(buf), "\\s%d%s\\s0", pointsize,
+			    ap->sval);
 			return buf;
 		} else
 			return ap->sval;
@@ -100,13 +101,15 @@ char *sizeit(Attr *ap)		/* add \s..\s to ap->sval */
 		n = (int) ap->fval;
 		switch (ap->op) {
 		case ' ':	/* absolute size */
-			sprintf(buf, "\\s%d%s\\s0", n, ap->sval);
+			snprintf(buf, sizeof(buf), "\\s%d%s\\s0", n, ap->sval);
 			break;
 		case '+':	/* better be only one digit! */
-			sprintf(buf, "\\s+%d%s\\s-%d", n, ap->sval, n);
+			snprintf(buf, sizeof(buf), "\\s+%d%s\\s-%d", n,
+			    ap->sval, n);
 			break;
 		case '-':
-			sprintf(buf, "\\s-%d%s\\s+%d", n, ap->sval, n);
+			snprintf(buf, sizeof(buf), "\\s-%d%s\\s+%d", n,
+			    ap->sval, n);
 			break;
 		case '*':
 		case '/':
@@ -118,13 +121,15 @@ char *sizeit(Attr *ap)		/* add \s..\s to ap->sval */
 		n = (int) ap->fval;
 		switch (ap->op) {
 		case ' ':	/* absolute size */
-			sprintf(buf, "\\s%d%s\\s0", n, ap->sval);
+			snprintf(buf, sizeof(buf), "\\s%d%s\\s0", n, ap->sval);
 			break;
 		case '+':
-			sprintf(buf, "\\s%d%s\\s0", pointsize+n, ap->sval);
+			snprintf(buf, sizeof(buf), "\\s%d%s\\s0", pointsize+n,
+			    ap->sval);
 			break;
 		case '-':
-			sprintf(buf, "\\s%d%s\\s0", pointsize-n, ap->sval);
+			snprintf(buf, sizeof(buf), "\\s%d%s\\s0", pointsize-n,
+			    ap->sval);
 			break;
 		case '*':
 		case '/':

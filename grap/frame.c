@@ -78,6 +78,6 @@ void frameside(int type, Attr *desc)	/* create and remember sides */
 	case LEFT:	n = 2; break;
 	case RIGHT:	n = 3; break;
 	}
-	sprintf(buf, "%s %s", sides[n], desc_str(desc));
+	snprintf(buf, sizeof(buf), "%s %s", sides[n], desc_str(desc));
 	newsides[n] = tostring(buf);
 }

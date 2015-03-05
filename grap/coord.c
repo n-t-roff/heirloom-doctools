@@ -52,7 +52,7 @@ void coord(Obj *p)	/* set coord range */
 	ncoord++;
 	if (ncoord > 1 && strcmp(p->name, dflt_coord) == 0) {
 		/* resetting default coordinate by implication */
-		sprintf(buf, "gg%d", ncoord);
+		snprintf(buf, sizeof(buf), "gg%d", ncoord);
 		dflt_coord = buf;
 		p = lookup(dflt_coord, 1);
 	}

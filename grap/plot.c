@@ -51,7 +51,7 @@ char *xyname(Point pt)	/* generate xy name macro for point p */
 			FATAL("can't take log of y coord %g", pt.y);
 		logit(pt.y);
 	}
-	sprintf(buf, "xy_%s(%g,%g)", p->name, pt.x, pt.y);
+	snprintf(buf, sizeof(buf), "xy_%s(%g,%g)", p->name, pt.x, pt.y);
 	return buf;	/* WATCH IT:  static */
 }
 
@@ -104,12 +104,12 @@ void plotnum(double f, char *fmt, Point pt)	/* plot value f at point */
 	char buf[100];
 
 	if (fmt) {
-		sprintf(buf, fmt, f);
+		snprintf(buf, sizeof(buf), fmt, f);
 		free(fmt);
 	} else if (f >= 0.0)
-		sprintf(buf, "%g", f);
+		snprintf(buf, sizeof(buf), "%g", f);
 	else
-		sprintf(buf, "\\-%g", -f);
+		snprintf(buf, sizeof(buf), "\\-%g", -f);
 	fprintf(tfd, "\"%s\" at %s\n", buf, xyname(pt));
 	range(pt);
 }

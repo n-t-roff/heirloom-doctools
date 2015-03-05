@@ -60,7 +60,7 @@ main(int argc, char *argv[])
 		case 'd':
 			dbg = 1;
 			tfd = stdout;
-			strcpy(tempfile, "grap.temp");
+			n_strcpy(tempfile, "grap.temp", sizeof(tempfile));
 			unlink(tempfile);
 			fprintf(stderr, "%s\n", version);
 			break;
