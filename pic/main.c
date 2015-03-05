@@ -93,7 +93,7 @@ main(int argc, char *argv[])
 	text = (Text *) grow((char *)text, "text", ntextlist += 1000, sizeof(Text));
 	attr = (Attr *) grow((char *)attr, "attr", nattrlist += 100, sizeof(Attr));
 
-	sprintf(buf, "/%d/", getpid());
+	snprintf(buf, sizeof(buf), "/%d/", getpid());
 	pushsrc(String, buf);
 	definition("pid");
 

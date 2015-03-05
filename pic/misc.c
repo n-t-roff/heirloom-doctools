@@ -105,7 +105,8 @@ char *sprintgen(char *fmt)
 {
 	char buf[1000];
 
-	sprintf(buf, fmt, exprlist[0], exprlist[1], exprlist[2], exprlist[3], exprlist[4]);
+	snprintf(buf, sizeof(buf), fmt, exprlist[0], exprlist[1], exprlist[2],
+	    exprlist[3], exprlist[4]);
 	nexpr = 0;
 	free(fmt);
 	return tostring(buf);
@@ -179,11 +180,13 @@ void printpos(obj *p)	/* print position for debugging */
 char *tostring(char *s)
 {
 	register char *p;
+	size_t l;
 
-	p = malloc(strlen(s)+1);
+	l = strlen(s)+1;
+	p = malloc(l);
 	if (p == NULL)
 		FATAL("out of space in tostring on %s", s);
-	strcpy(p, s);
+	n_strcpy(p, s, l);
 	return(p);
 }
 

@@ -2,7 +2,7 @@ OBJ = arcgen.o blockgen.o boxgen.o circgen.o for.o input.o linegen.o \
 	main.o misc.o movegen.o picl.o picy.o pltroff.o print.o symtab.o \
 	textgen.o version.o
 
-FLAGS =
+FLAGS = -D$(SYSTEM)
 
 YFLAGS = -d
 
