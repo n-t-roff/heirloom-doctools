@@ -312,8 +312,9 @@ void interrupt(
 char *
 tempname(const char *sfx)
 {
-    char *pat = malloc(strlen(TEMPDIR) + strlen(sfx) + 10);
-    sprintf(pat, "%s/%sXXXXXX", TEMPDIR, sfx);
+    size_t l = strlen(TEMPDIR) + strlen(sfx) + 10;
+    char *pat = malloc(l);
+    snprintf(pat, l, "%s/%sXXXXXX", TEMPDIR, sfx);
     if (close(mkstemp(pat)) < 0)
 	return NULL;
     return pat;

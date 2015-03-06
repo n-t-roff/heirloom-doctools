@@ -60,11 +60,14 @@ putline (
 				for(ip=nl; ip<nlin; ip=next(ip))
 					if (!vspen(s=table[ip][c].col)) break;
 				if (s!=(char *)0 && !point((intptr_t)s))
-					fprintf(tabout, ".ne %su+\\n(.Vu\n",nreg(space,s,'|'));
+					fprintf(tabout, ".ne %su+\\n(.Vu\n",
+					    nreg(space, sizeof(space), s,
+					    '|'));
 				continue;
 			}
 			if (point((intptr_t)s)) continue;
-			fprintf(tabout, ".ne %su+\\n(.Vu\n",nreg(space,s,'|'));
+			fprintf(tabout, ".ne %su+\\n(.Vu\n",
+			    nreg(space, sizeof(space), s, '|'));
 			watchout=1;
 		}
 	if (linestop[nl])
@@ -106,7 +109,7 @@ putline (
 		chfont |= (intptr_t)(font[stynum[nl]][c]);
 		if (point((intptr_t)s) ) continue;
 		lf=prev(nl);
-		nreg(space,s,'|');
+		nreg(space, sizeof(space), s, '|');
 		warnoff();
 		if (lf>=0 && vspen(table[lf][c].col))
 			fprintf(tabout, ".if (%s+\\n(^%c-1v)>\\n(#- .nr #- +(%s+\\n(^%c-\\n(#--1v)\n",space,'a'+c,space,'a'+c);
@@ -326,7 +329,9 @@ funnies(int stl, int lin)
 		{
 		case 'n':
 		case 'c':
-			fprintf(tabout, "(\\n(%du+\\n(%du-%su)/2u\n",c+CLEFT,c-1+ctspan(lin,c)+CRIGHT, nreg(space, (char *)s, '-'));
+			fprintf(tabout, "(\\n(%du+\\n(%du-%su)/2u\n",
+			    c + CLEFT, c - 1 + ctspan(lin, c) + CRIGHT,
+			    nreg(space, sizeof(space), (char *)s, '-'));
 			break;
 		case 'l':
 			fprintf(tabout, "\\n(%du\n",c+CLEFT);
@@ -335,7 +340,8 @@ funnies(int stl, int lin)
 			fprintf(tabout, "\\n(%du\n",c+CMID);
 			break;
 		case 'r':
-			fprintf(tabout, "\\n(%du-%su\n", c+CRIGHT, nreg(space, (char *)s, '-'));
+			fprintf(tabout, "\\n(%du-%su\n", c + CRIGHT,
+			    nreg(space, sizeof(space), (char *)s, '-'));
 			break;
 		}
 		fprintf(tabout, ".in +\\n(%du\n", SIND);
@@ -347,7 +353,10 @@ funnies(int stl, int lin)
 			fprintf(tabout, ".sp |\\n(^%cu\n", 'a'+c);
 			if (ctop[stynum[stl]][c]==0)
 			{
-				fprintf(tabout, ".nr %d \\n(#-u-\\n(^%c-%s+1v\n",TMP, 'a'+c, nreg(space, (char *)s, '|'));
+				fprintf(tabout,
+				    ".nr %d \\n(#-u-\\n(^%c-%s+1v\n", TMP,
+				    'a' + c, nreg(space, sizeof(space),
+				    (char *)s, '|'));
 				fprintf(tabout, ".if \\n(%d>0 .sp \\n(%du/2u\n", TMP, TMP);
 			}
 		}

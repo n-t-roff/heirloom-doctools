@@ -1678,7 +1678,7 @@ devcntrl(
 		if (dev.afmfonts || devname[0] == 'p' && devname[1] == 's')
 		    realdev = devname;
 		else
-		    strcpy(devname, realdev);
+		    n_strcpy(devname, realdev, sizeof(devname));
 		break;
 
 	case 't':			/* trailer */
@@ -1915,6 +1915,7 @@ loadfont (
     int		nw;			/* number of width table entries */
     char	*p;
     char	*path;
+    size_t	l;
 
 
 /*
@@ -1977,8 +1978,9 @@ loadfont (
 	    goto fail;
 	}
 	close(fin);
-	a->path = malloc(strlen(path) + 1);
-	strcpy(a->path, path);
+	l = strlen(path) + 1;
+	a->path = malloc(l);
+	n_strcpy(a->path, path, l);
 	if (path != temp)
 	    free(path);
 	a->file = s;
@@ -2229,8 +2231,10 @@ getdevmap(void)
 	    if ( temp[0] != '#' && strlen(temp) < 3 )
 		if ( sget(&temp[3], sizeof temp - 3, fp) == 1 &&
 				strlen(&temp[3]) < 3 )  {
-		    strcpy((devfontmap + i)->name, temp);
-		    strcpy((devfontmap + i)->use, &temp[3]);
+		    n_strcpy((devfontmap + i)->name, temp,
+		        sizeof(devfontmap->name));
+		    n_strcpy((devfontmap + i)->use, &temp[3],
+		        sizeof(devfontmap->use));
 		    if ( ++i % 10 == 0 )
 			devfontmap = (Devfontmap *) realloc(devfontmap, (i + 10) * sizeof(Devfontmap));
 		}   /* End if */
@@ -4479,7 +4483,7 @@ mbs2pdf(char *mp)
     }
 #ifdef	EUC
     ustr = malloc(sz = 16);
-    c = i = sprintf(ustr, "<FEFF");
+    c = i = snprintf(ustr, sz, "<FEFF");
     while (mp += n, *mp) {
 	if ((n = mbtowc(&wc, mp, mb_cur_max)) <= 0) {
 	    error(NON_FATAL,
@@ -4494,7 +4498,7 @@ mbs2pdf(char *mp)
 	}
 	if (i + 8 >= sz)
 	    ustr = realloc(ustr, sz += 16);
-	w = sprintf(&ustr[i], "%04X", (int)wc);
+	w = snprintf(&ustr[i], sz - i * sizeof(*ustr), "%04X", (int)wc);
 	i += w;
 	c += w;
 	if (c >= 60) {

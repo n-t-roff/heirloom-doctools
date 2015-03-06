@@ -178,7 +178,7 @@ void svgraph(void);
 /* tg.c */
 int get_text(char *, int, int, char *, char *);
 void untext(void);
-char *nreg(char *, const char *, int);
+char *nreg(char *, size_t, const char *, int);
 /* ti.c */
 int interv(int, int);
 int interh(int, int);

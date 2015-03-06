@@ -115,7 +115,7 @@
 
 #include "gen.h"			/* general purpose definitions */
 #include "ext.h"			/* external variable definitions */
-
+#include "global.h"		/* global heirloom doctools definitions */
 
 #define DEFAULTCOLOR	"black"
 
@@ -203,7 +203,7 @@ newcolor (
 	else color[i] = *p;
 
     if ( i == 0 )
-	strcpy(color, DEFAULTCOLOR);
+	n_strcpy(color, DEFAULTCOLOR, sizeof(color));
     else color[i] = '\0';
 
     if ( strcmp(color, DEFAULTCOLOR) != 0 )

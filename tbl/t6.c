@@ -64,7 +64,8 @@ maktab(void)
 						if (doubled[icol]==0)
 							fprintf(tabout, ".nr %d 0\n.nr %d 0\n",S1,S2);
 						doubled[icol]=1;
-						nreg(space, s, '-');
+						nreg(space, sizeof(space), s,
+						    '-');
 						fprintf(tabout, ".if %s>\\n(%d .nr %d %s\n",space,S2,S2,space);
 					}
 				case 'n':
@@ -212,19 +213,19 @@ maktab(void)
 void
 wide(char *s, char *fn, char *size)
 {
-char space[40];
-if (point((intptr_t)s))
+	char space[40];
+	if (point((intptr_t)s))
 	{
-	fprintf(tabout, "\\w%c", F1);
-	if (*fn>0) putfont(fn);
-	if (*size) putsize(size);
-	fprintf(tabout, "%s", s);
-	if (*fn>0) putfont("P");
-	if (*size) putsize("0");
-	fprintf(tabout, "%c",F1);
+		fprintf(tabout, "\\w%c", F1);
+		if (*fn>0) putfont(fn);
+		if (*size) putsize(size);
+		fprintf(tabout, "%s", s);
+		if (*fn>0) putfont("P");
+		if (*size) putsize("0");
+		fprintf(tabout, "%c",F1);
 	}
-else
-	fprintf(tabout, "%s", nreg(space, s, '-'));
+	else
+		fprintf(tabout, "%s", nreg(space, sizeof(space), s, '-'));
 }
 int 
 filler(char *s)

@@ -107,17 +107,17 @@ get_text(char *sp, int ilin, int icol, char *fn, char *sz)
 void
 untext(void)
 {
-rstofill();
-fprintf(tabout, ".nf\n");
-fprintf(tabout, ".ll \\n(%du\n", SL);
+	rstofill();
+	fprintf(tabout, ".nf\n");
+	fprintf(tabout, ".ll \\n(%du\n", SL);
 }
 char *
-nreg(char *space, const char *_n, int c)
+nreg(char *space, size_t siz, const char *_n, int c)
 {
-int n = (intptr_t)_n;
-if (n < 128)
-	sprintf(space, "\\n(%c%c", n, c);
-else
-	sprintf(space, "\\n[%d%c]", n, c);
-return(space);
+	int n = (intptr_t)_n;
+	if (n < 128)
+		snprintf(space, siz, "\\n(%c%c", n, c);
+	else
+		snprintf(space, siz, "\\n[%d%c]", n, c);
+	return(space);
 }
