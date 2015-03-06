@@ -2225,6 +2225,7 @@ get_ttf_post_3_0(int o)
 	int	i, n;
 	int	gotit;
 	char	*sp;
+	size_t	l;
 
 	ttf = 2;
 	got_gid = calloc(numGlyphs, sizeof *got_gid);
@@ -2232,8 +2233,9 @@ get_ttf_post_3_0(int o)
 	if (gotit <= 0) {
 		ttf = 3;
 		ExtraStrings = calloc(numGlyphs, sizeof *ExtraStrings);
-		sp = ExtraStringSpace = malloc(n = 12 * numGlyphs);
-		strcpy(sp, ".notdef");
+		l = n = 12 * numGlyphs;
+		sp = ExtraStringSpace = malloc(l);
+		n_strcpy(sp, ".notdef", l);
 		ExtraStrings[0] = sp;
 		sp += 8;
 		nExtraStrings = 1;
@@ -2278,9 +2280,10 @@ ttfname(void)
 			const char *base = a->Font.namefont[0] ?
 				a->Font.namefont :
 				a->base;
-			a->fontname = malloc(strlen(base) + 5);
-			strcpy(a->fontname, base);
-			strcat(a->fontname, ".TTF");
+			size_t l = strlen(base) + 5;
+			a->fontname = malloc(l);
+			n_strcpy(a->fontname, base, l);
+			n_strcat(a->fontname, ".TTF", l);
 		}
 #ifdef	DUMP
 		print(SHOW_NAME, "name %s", a->fontname);

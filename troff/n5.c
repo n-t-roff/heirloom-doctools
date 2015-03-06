@@ -981,7 +981,7 @@ open1(int flags)
 		return;
 	streams = realloc(streams, sizeof *streams * ++nstreams);
 	streams[ns].name = malloc(NS);
-	strcpy(streams[ns].name, nextf);
+	n_strcpy(streams[ns].name, nextf, NS);
 	getname();
 	if ((streams[ns].fd = open(nextf, flags, 0666)) < 0) {
 		errprint("can't open file %s", nextf);
@@ -1297,8 +1297,9 @@ e1:
 		if (name)
 			evname = name;
 		else {
-			evname = malloc(20);
-			roff_sprintf(evname, "%d", ev);
+			size_t l = 20;
+			evname = malloc(l);
+			roff_sprintf(evname, l, "%d", ev);
 		}
 	}
 }

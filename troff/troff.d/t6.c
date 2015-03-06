@@ -1560,11 +1560,14 @@ casefp(int spec)
 				goto bad;
 			setfp(i, j, 0);
 		} else {		/* 3rd argument = filename */
-			file = malloc(strlen(nextf) + 1);
-			strcpy(file, nextf);
+			size_t l;
+			l = strlen(nextf) + 1;
+			file = malloc(l);
+			n_strcpy(file, nextf, l);
 			if (!skip(0) && getname()) {
-				supply = malloc(strlen(nextf) + 1);
-				strcpy(supply, nextf);
+				l = strlen(nextf) + 1;
+				supply = malloc(l);
+				n_strcpy(supply, nextf, l);
 			} else
 				supply = NULL;
 			if (loadafm(i?i:-1, j, file, supply, 0, spec) == 0) {
@@ -1937,20 +1940,23 @@ char *
 onefont(char *prefix, char *file, char *type)
 {
 	char	*path, *fp, *tp;
+	size_t	l;
 
-	path = malloc(strlen(prefix) + strlen(file) + 2);
-	strcpy(path, prefix);
-	strcat(path, "/");
-	strcat(path, file);
+	l = strlen(prefix) + strlen(file) + 2;
+	path = malloc(l);
+	n_strcpy(path, prefix, l);
+	n_strcat(path, "/", l);
+	n_strcat(path, file, l);
 	if (type) {
 		for (fp = file; *fp; fp++);
 		for (tp = type; *tp; tp++);
 		while (tp >= type && fp >= file && *fp-- == *tp--);
 		if (tp >= type) {
-			tp = malloc(strlen(path) + strlen(type) + 2);
-			strcpy(tp, path);
-			strcat(tp, ".");
-			strcat(tp, type);
+			l = strlen(path) + strlen(type) + 2;
+			tp = malloc(l);
+			n_strcpy(tp, path, l);
+			n_strcat(tp, ".", l);
+			n_strcat(tp, type, l);
 			free(path);
 			path = tp;
 		}
@@ -1962,10 +1968,12 @@ static char *
 getfontpath(char *file, char *type)
 {
 	char	*path, *troffonts, *tp, *tq, c;
+	size_t	l;
 
 	if ((troffonts = getenv("TROFFONTS")) != NULL) {
-		tp = malloc(strlen(troffonts) + 1);
-		strcpy(tp, troffonts);
+		l = strlen(troffonts) + 1;
+		tp = malloc(l);
+		n_strcpy(tp, troffonts, l);
 		troffonts = tp;
 		do {
 			for (tq = tp; *tq && *tq != ':'; tq++);
@@ -1981,8 +1989,9 @@ getfontpath(char *file, char *type)
 		} while (c);
 		free(troffonts);
 	}
-	tp = malloc(strlen(fontfile) + strlen(devname) + 10);
-	sprintf(tp, "%s/dev%s", fontfile, devname);
+	l = strlen(fontfile) + strlen(devname) + 10;
+	tp = malloc(l);
+	snprintf(tp, l, "%s/dev%s", fontfile, devname);
 	path = onefont(tp, file, type);
 	free(tp);
 	return path;
@@ -2022,6 +2031,7 @@ loadafm(int nf, int rq, char *file, char *supply, int required, enum spec spec)
 	struct afmtab	*a;
 	int	i, have = 0;
 	struct namecache	*np;
+	size_t	l;
 
 	zapwcache(0);
 	if (nf < 0)
@@ -2043,13 +2053,14 @@ loadafm(int nf, int rq, char *file, char *supply, int required, enum spec spec)
 			break;
 		}
 	a->path = path;
-	a->file = malloc(strlen(file) + 1);
-	strcpy(a->file, file);
+	l = strlen(file) + 1;
+	a->file = malloc(l);
+	n_strcpy(a->file, file, l);
 	a->spec = spec;
 	a->rq = rq;
 	a->Font.namefont[0] = rq&0377;
 	a->Font.namefont[1] = (rq>>8)&0377;
-	sprintf(a->Font.intname, "%d", nf);
+	snprintf(a->Font.intname, sizeof(a->Font.intname), "%d", nf);
 	if (have)
 		goto done;
 	if ((fd = open(path, O_RDONLY)) < 0) {
@@ -2796,7 +2807,7 @@ un2tr(int c, int *fp)
 			return 0;
 		} else if (defcf && (c & ~0xffff) == 0) {
 			char	buf[20];
-			sprintf(buf, "[uni%04X]", c);
+			snprintf(buf, sizeof(buf), "[uni%04X]", c);
 			cpushback(buf);
 			unadd(c, NULL);
 			return WORDSP;

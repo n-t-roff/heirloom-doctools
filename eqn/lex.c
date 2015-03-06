@@ -281,11 +281,13 @@ char *
 strsave(char *s)
 {
 	register char *q;
+	size_t l;
 
-	q = malloc(strlen(s)+1);
+	l = strlen(s)+1;
+	q = malloc(l);
 	if (q == NULL)
 		error(FATAL, "out of space in strsave on %s", s);
-	strcpy(q, s);
+	n_strcpy(q, s, l);
 	return(q);
 }
 

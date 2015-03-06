@@ -132,6 +132,8 @@ main(int argc, char **argv)
 	register char	*p;
 	register int j;
 	char	**oargv;
+	char *s;
+	size_t l;
 
 	setlocale(LC_CTYPE, "");
 	mb_cur_max = MB_CUR_MAX;
@@ -156,14 +158,16 @@ main(int argc, char **argv)
 	signal(SIGPIPE, catch);
 	signal(SIGTERM, kcatch);
 	oargv = argv;
-	cfname[0] = malloc(17);
-	strcpy(cfname[0], "<standard input>");
+	s = "<standard input>";
+	l = strlen(s) + 1;
+	cfname[0] = malloc(l);
+	n_strcpy(cfname[0], s, l);
 	init0();
 #ifdef EUC
 	localize();
 #endif /* EUC */
 	if ((p = getenv("TYPESETTER")) != 0)
-		strcpy(devname, p);
+		n_strcpy(devname, p, sizeof(devname));
 	while (--argc > 0 && (++argv)[0][0] == '-')
 		switch (argv[0][1]) {
 
@@ -213,7 +217,8 @@ main(int argc, char **argv)
 			if (&argv[0][2] != '\0' && strlen(&argv[0][2]) >= 2 && &argv[0][3] != '\0') {
 			if ((p = strchr(&argv[0][3], '=')) != NULL) {
 				*p = 0;
-				eibuf = roff_sprintf(ibuf+strlen(ibuf),
+				l = strlen(ibuf);
+				eibuf = roff_sprintf(ibuf + l, sizeof(ibuf) - l,
 						".do %s %s %s%s\n",
 					argv[0][1] == 'd' ? "ds" : "nr",
 					&argv[0][2],
@@ -221,7 +226,8 @@ main(int argc, char **argv)
 					&p[1]);
 				*p = '=';
 			} else {
-				eibuf = roff_sprintf(ibuf+strlen(ibuf),
+				l = strlen(ibuf);
+				eibuf = roff_sprintf(ibuf + l, sizeof(ibuf) - l,
 						".%s %c %s%s\n",
 					argv[0][1] == 'd' ? "ds" : "nr",
 					argv[0][2],
@@ -259,7 +265,7 @@ main(int argc, char **argv)
 			getpn(&argv[0][2]);
 			continue;
 		case 'T':
-			strcpy(devname, &argv[0][2]);
+			n_strcpy(devname, &argv[0][2], sizeof(devname));
 			dotT++;
 			continue;
 		case 'x':
@@ -404,9 +410,10 @@ Lt:
 int
 tryfile(register char *pat, register char *fn, int idx)
 {
-	mfiles[idx] = malloc(strlen(pat) + strlen(fn) + 1);
-	strcpy(mfiles[idx], pat);
-	strcat(mfiles[idx], fn);
+	size_t l = strlen(pat) + strlen(fn) + 1;
+	mfiles[idx] = malloc(l);
+	n_strcpy(mfiles[idx], pat, l);
+	n_strcat(mfiles[idx], fn, l);
 	if (access(mfiles[idx], 4) == -1)
 		return(0);
 	else return(1);
@@ -450,6 +457,7 @@ void
 init2(void)
 {
 	register int i, j;
+	size_t l;
 
 	ttyod = 2;
 	if ((ttyp=ttyname(j=0)) != 0 || (ttyp=ttyname(j=1)) != 0 || (ttyp=ttyname(j=2)) != 0)
@@ -475,7 +483,9 @@ init2(void)
 	nfo = 0;
 	ifile = 0;
 	copyf = raw = 0;
-	eibuf = roff_sprintf(ibuf+strlen(ibuf), ".ds .T %s\n", devname);
+	l = strlen(ibuf);
+	eibuf = roff_sprintf(ibuf + l, sizeof(ibuf) - l, ".ds .T %s\n",
+	    devname);
 	numtab[CD].val = -1;	/* compensation */
 	cpushback(ibuf);
 	ibufp = ibuf;
@@ -640,7 +650,7 @@ loop:
 		char	tmp[40];
 		char	fmt[] = "%%";
 		fmt[1] = c;
-		sprintf(s = tmp, fmt, va_arg(ap, double));
+		snprintf(s = tmp, sizeof(tmp), fmt, va_arg(ap, double));
 		while ((c = *s++))
 			putchar(c);
 	} else if (c == 'p') {
@@ -755,12 +765,13 @@ static void printn(register long n, register long b)
 /* returns pointer to \0 that ends the string */
 
 /* VARARGS2 */
-char *roff_sprintf(char *str, char *fmt, ...)
+char *roff_sprintf(char *str, size_t size, char *fmt, ...)
 {
 	register int c;
 	char	*s;
 	long i;
 	va_list ap;
+	char *buf = str;
 
 	va_start(ap, fmt);
 loop:
@@ -793,7 +804,8 @@ loop:
 			c == 'g' || c == 'G') {
 		char	fmt[] = "%%";
 		fmt[1] = c;
-		str += sprintf(str, fmt, va_arg(ap, double));
+		str += snprintf(str, size - (str - buf), fmt, va_arg(ap,
+		    double));
 	} else if (c == 'p') {
 		i = (intptr_t)va_arg(ap, void *);
 		*str++ = '0';
@@ -1617,6 +1629,8 @@ int
 nextfile(void)
 {
 	register char	*p;
+	char *s;
+	size_t l;
 
 n0:
 	if (ifile)
@@ -1637,8 +1651,10 @@ n0:
 		nfo++;
 		numtab[CD].val = ifile = stdi = mflg = 0;
 		free(cfname[ifi]);
-		cfname[ifi] = malloc(17);
-		strcpy(cfname[ifi], "<standard input>");
+		s = "<standard input>";
+		l = strlen(s) + 1;
+		cfname[ifi] = malloc(l);
+		n_strcpy(cfname[ifi], s, l);
 		ioff = 0;
 		return(0);
 	}
@@ -1648,16 +1664,19 @@ n1:
 	if (p[0] == '-' && p[1] == 0) {
 		ifile = 0;
 		free(cfname[ifi]);
-		cfname[ifi] = malloc(17);
-		strcpy(cfname[ifi], "<standard input>");
+		s = "<standard input>";
+		l = strlen(s) + 1;
+		cfname[ifi] = malloc(l);
+		n_strcpy(cfname[ifi], s, l);
 	} else if ((ifile = open(p, O_RDONLY)) < 0) {
 		errprint("cannot open file %s", p);
 		nfo -= mflg;
 		done(02);
 	} else {
 		free(cfname[ifi]);
-		cfname[ifi] = malloc(strlen(p) + 1);
-		strcpy(cfname[ifi],p);
+		l = strlen(p) + 1;
+		cfname[ifi] = malloc(l);
+		n_strcpy(cfname[ifi], p, l);
 	}
 	nfo++;
 	ioff = 0;
@@ -1760,7 +1779,7 @@ casenx(void)
 		mfiles = calloc(1, sizeof *mfiles);
 	free(mfiles[nmfi]);
 	mfiles[nmfi] = malloc(NS);
-	strcpy(mfiles[nmfi], nextf);
+	n_strcpy(mfiles[nmfi], nextf, NS);
 	nextfile();
 	nlflg++;
 	tailflg = 0;
@@ -1866,7 +1885,7 @@ sopso(int i, pid_t pid)
 
 	free(cfname[ifi+1]);
 	cfname[ifi+1] = malloc(NS);
-	strcpy(cfname[ifi+1], nextf);
+	n_strcpy(cfname[ifi+1], nextf, NS);
 	cfline[ifi] = numtab[CD].val;		/*hold line counter*/
 	numtab[CD].val = 0;
 	flushi();
@@ -1963,7 +1982,7 @@ caself(void)	/* set line number and file */
 	if (getname()) {
 		free(cfname[ifi]);
 		cfname[ifi] = malloc(NS);
-		strcpy(cfname[ifi], nextf);
+		n_strcpy(cfname[ifi], nextf, NS);
 	}
 }
 

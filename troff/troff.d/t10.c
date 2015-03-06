@@ -189,6 +189,7 @@ ptinit(void)
 {
 	int	i, nw;
 	char	*filebase, *p, *ap, *descp;
+	size_t	l;
 
 	growfonts(NFONT+1);
 	memcpy(bdtab, initbdtab,
@@ -198,11 +199,13 @@ ptinit(void)
 	 * read in resolution, size info, font info, etc.
 	 * and set params
 	 */
-	p = malloc(strlen(termtab) + strlen(devname) + 10);
-	termtab = strcpy(p, termtab);
-	strcat(termtab, "/dev");
-	strcat(termtab, devname);
-	strcat(termtab, "/DESC");	/* makes "..../devXXX/DESC" */
+	l = strlen(termtab) + strlen(devname) + 10;
+	p = malloc(l);
+	n_strcpy(p, termtab, l);
+	termtab = p;
+	n_strcat(termtab, "/dev", l);
+	n_strcat(termtab, devname, l);
+	n_strcat(termtab, "/DESC", l);	/* makes "..../devXXX/DESC" */
 	if ((descp = readdesc(termtab)) == NULL)
 		done3(1);
 	memcpy(&dev, descp, sizeof dev);
@@ -881,9 +884,11 @@ ptlocale(const char *cp)
 	static char	*lp;
 
 	if (cp != NULL) {
+		size_t l;
 		free(lp);
-		lp = malloc(strlen(cp) + 1);
-		strcpy(lp, cp);
+		l = strlen(cp) + 1;
+		lp = malloc(l);
+		n_strcpy(lp, cp, l);
 	}
 	if (ascii || realpage == 0 || lp == NULL || dev.lc_ctype == 0)
 		return;

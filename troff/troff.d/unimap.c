@@ -902,8 +902,9 @@ unadd(int c, const char *cp)
 		unimap[x] = calloc(256, sizeof *unimap);
 	u = calloc(1, sizeof *u);
 	if (cp == NULL) {
-		cp = malloc(12);
-		sprintf((char *)cp, "uni%04X", c);
+		size_t l = 12;
+		cp = malloc(l);
+		snprintf((char *)cp, l, "uni%04X", c);
 	}
 	u->u.psc = cp;
 	if (unimap[x][y] != NULL) {

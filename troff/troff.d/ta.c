@@ -786,7 +786,7 @@ put1s(char *s)	/* s is a funny char name */
 		previ = -1;
 		for (i = 0; spectab[i] != 0; i += 2)
 			if (strcmp(spectab[i], s) == 0) {
-				strcpy(prev, s);
+				n_strcpy(prev, s, sizeof(prev));
 				previ = i;
 				break;
 			}

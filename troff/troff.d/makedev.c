@@ -166,6 +166,7 @@ readdesc(const char *name)
 	size_t sz, fsz;
 	char *dir, *dp, *dq;
 	struct mfile *mp;
+	size_t l;
 
 	memset(&dev, 0, sizeof dev);
 	if ((mp = mopen(name)) == NULL) {
@@ -218,7 +219,7 @@ readdesc(const char *name)
 			p = chname;
 			dev.nchtab = 0;
 			while ((q = sget(mp)) != NULL) {
-				strcpy(p, q);
+				n_strcpy(p, q, sizeof(chname) - (p - chname));
 				chtab[dev.nchtab++] = p - chname;
 				while (*p++)	/* skip to end of name */
 					;
@@ -240,14 +241,15 @@ readdesc(const char *name)
 	v += sizeof *chtab * dev.nchtab;
 	memcpy(&cpout[v], chname, sizeof *chname * dev.lchname);
 	v += sizeof *chname * dev.lchname;
-	dp = dir = malloc(strlen(name) + sizeof fname[0] + 2);
-	strcpy(dir, name);
+	l = strlen(name) + sizeof fname[0] + 2;
+	dp = dir = malloc(l);
+	n_strcpy(dir, name, l);
 	for (dq = dir; *dq; dq++)
 		if (*dq == '/')
 			dp = &dq[1];
 	totfont = 0;
 	for (i = 0; i < dev.nfonts; i++) {
-		strcpy(dp, fname[i]);
+		n_strcpy(dp, fname[i], l - (dp - dir));
 		if ((fpout = _readfont(dir, &fsz, 1)) == NULL) {
 			mclose(mp);
 			return NULL;

@@ -109,6 +109,7 @@ dump(const char *name)
 	struct stat	st;
 	FILE	*fp;
 	char	*cp;
+	size_t	l;
 
 	if ((fp = fopen(filename = name, "r")) == NULL) {
 		errprint("%s: cannot open", filename);
@@ -117,8 +118,9 @@ dump(const char *name)
 	memset(&A, 0, sizeof A);
 	a = &A;
 	a->file = a->path = (char *)filename;
-	a->base = malloc(strlen(filename) + 1);
-	strcpy(a->base, filename);
+	l = strlen(filename) + 1;
+	a->base = malloc(l);
+	n_strcpy(a->base, filename, l);
 	a->base = basename(a->base);
 	if ((cp = strrchr(a->base, '.')) != NULL)
 		*cp = '\0';

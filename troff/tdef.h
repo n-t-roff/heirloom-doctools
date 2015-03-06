@@ -334,6 +334,14 @@ extern	int	NCHARS;	/* maximum size of troff character set */
                        (x)>='A' && (x)<='F' ? (x)-'A'+10 : \
                                               (x)-'a'+10 )
 
+#if defined(SYS_OpenBSD)
+# define n_strcpy(dst,src,siz) strlcpy(dst,src,siz)
+# define n_strcat(dst,src,siz) strlcat(dst,src,siz)
+#else
+# define n_strcpy(dst,src,siz) strcpy(dst,src)
+# define n_strcat(dst,src,siz) strcat(dst,src)
+#endif
+
 /*
  * "temp file" parameters.  macros and strings
  * are stored in an array of linked blocks,

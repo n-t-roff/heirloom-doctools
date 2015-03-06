@@ -123,6 +123,7 @@ ptinit(void)
 	int i, j;
 	char *p, *cp, c, *p2;
 	char *tt;
+	size_t ttl;
 	int nread, fd;
 	struct stat stbuf;
 	char *check;
@@ -136,9 +137,10 @@ ptinit(void)
 	check = malloc(1024);
 	bdtab = initbdtab;
 	fontlab = initfontlab;
-	tt = malloc(strlen(termtab) + strlen(devname) + 1);
-	strcpy(tt, termtab);
-	if (strcmp(devname, "locale")) strcat(tt, devname);
+	ttl = strlen(termtab) + strlen(devname) + 1;
+	tt = malloc(ttl);
+	n_strcpy(tt, termtab, ttl);
+	if (strcmp(devname, "locale")) n_strcat(tt, devname, ttl);
 	else {
 #ifdef	EUC
 		wchar_t	wc;
@@ -147,10 +149,10 @@ ptinit(void)
 		    wc == 0x20AC) {
 			csi_width[0] = 0;
 			utf8 = 1;
-			strcat(tt, "utf8"); /* shorter than "locale" */
+			n_strcat(tt, "utf8", ttl); /* shorter than "locale" */
 		} else
 #endif
-			strcat(tt, "lp"); /* shorter than "locale" */
+			n_strcat(tt, "lp", ttl); /* shorter than "locale" */
 	}
 	if ((fd = open(tt, O_RDONLY)) < 0) {
 		errprint("cannot open %s", tt);

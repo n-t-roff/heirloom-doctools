@@ -526,6 +526,7 @@ casehylang(void)
 {
 	int	c, i = 0, sz = 0;
 	char	*path = NULL;
+	size_t	l;
 
 	dicthnj = NULL;
 	free(hylang);
@@ -544,11 +545,13 @@ casehylang(void)
 		return;
 	}
 	if (strchr(hylang, '/') == NULL) {
-		path = malloc(strlen(hylang) + strlen(HYPDIR) + 12);
-		sprintf(path, "%s/hyph_%s.dic", HYPDIR, hylang);
+		l = strlen(hylang) + strlen(HYPDIR) + 12;
+		path = malloc(l);
+		snprintf(path, l, "%s/hyph_%s.dic", HYPDIR, hylang);
 	} else {
-		path = malloc(strlen(hylang) + 1);
-		strcpy(path, hylang);
+		l = strlen(hylang) + 1;
+		path = malloc(l);
+		n_strcpy(path, hylang, l);
 	}
 	if ((dicthnj = hnj_hyphen_load(path)) == NULL) {
 		errprint("Can't load %s", path);

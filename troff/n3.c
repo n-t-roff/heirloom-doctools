@@ -698,13 +698,15 @@ copyb(void)
 	filep savoff = 0, tailoff = 0;
 	tchar	tailc = 0;
 	char	*contp, *mn;
+	size_t l;
 
 	if (skip(0) || !(j = getrq(1)))
 		j = '.';
 	req = j;
 	contp = macname(req);
-	mn = malloc(strlen(contp) + 1);
-	strcpy(mn, contp);
+	l = strlen(contp) + 1;
+	mn = malloc(l);
+	n_strcpy(mn, contp, l);
 	copyf++;
 	flushi();
 	nlflg = 0;
@@ -2193,6 +2195,7 @@ maybemore(int sofar, int flags)
 {
 	char	c, buf[NC+1], pb[] = { '\n', 0 };
 	int	i = 2, n, _raw = raw, _init = init, _app = app;
+	size_t	l;
 
 	if (xflag < 2)
 		return sofar;
@@ -2216,7 +2219,7 @@ maybemore(int sofar, int flags)
 		goto retn;
 	if ((n = mapget(buf)) >= hadn) {
 		if ((flags & 1) == 0) {
-			strcpy(laststr, buf);
+			n_strcpy(laststr, buf, sizeof(laststr));
 		retn:	buf[i-1] = c;
 			if (xflag < 3)
 				cpushback(&buf[2]);
@@ -2240,8 +2243,9 @@ maybemore(int sofar, int flags)
 		}
 		if (n >= alcd)
 			had = realloc(had, (alcd += 20) * sizeof *had);
-		had[n] = malloc(strlen(buf) + 1);
-		strcpy(had[n], buf);
+		l = strlen(buf) + 1;
+		had[n] = malloc(l);
+		n_strcpy(had[n], buf, l);
 		hadn = n+1;
 		mapadd(buf, n);
 	}
@@ -2259,6 +2263,7 @@ getls(int termc, int *strp, int create)
 {
 	char	c, buf[NC+1];
 	int	i = 0, j = -1, n = -1;
+	size_t	l;
 
 	do {
 		c = xflag < 3 ? getach() : mgetach();
@@ -2285,13 +2290,14 @@ getls(int termc, int *strp, int create)
 				if (hadn++ >= alcd)
 					had = realloc(had, (alcd += 20) *
 							sizeof *had);
-				had[n] = malloc(strlen(buf) + 1);
-				strcpy(had[n], buf);
+				l = strlen(buf) + 1;
+				had[n] = malloc(l);
+				n_strcpy(had[n], buf, l);
 				hadn = n + 1;
 				mapadd(buf, n);
 			} else {
 				n = -1;
-				strcpy(laststr, buf);
+				n_strcpy(laststr, buf, sizeof(laststr));
 			}
 		}
 	}
@@ -2304,9 +2310,10 @@ makerq(const char *name)
 	static int	t;
 	char	_name[20];
 	int	n;
+	size_t	l;
 
 	if (name == NULL) {
-		roff_sprintf(_name, "\13%d", ++t);
+		roff_sprintf(_name, sizeof(_name), "\13%d", ++t);
 		name = _name;
 	}
 	if (name[0] == 0 || name[1] == 0 || name[2] == 0)
@@ -2315,8 +2322,9 @@ makerq(const char *name)
 		return MAXRQ2 + n;
 	if (hadn++ >= alcd)
 		had = realloc(had, (alcd += 20) * sizeof *had);
-	had[n] = malloc(strlen(name) + 1);
-	strcpy(had[n], name);
+	l = strlen(name) + 1;
+	had[n] = malloc(l);
+	n_strcpy(had[n], name, l);
 	hadn = n + 1;
 	mapadd(name, n);
 	return MAXRQ2 + n;

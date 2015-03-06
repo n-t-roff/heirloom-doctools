@@ -95,13 +95,13 @@ tsize(float s)
 	t = (t + 1) % 5;
 	if ((i = s) == s) {
 		if (i < 40)
-			sprintf(b[t], "%d", i);
+			snprintf(b[t], sizeof(b[t]), "%d", i);
 		else if (i < 100)
-			sprintf(b[t], "(%d", i);
+			snprintf(b[t], sizeof(b[t]), "(%d", i);
 		else
-			sprintf(b[t], "[%d]", i);
+			snprintf(b[t], sizeof(b[t]), "[%d]", i);
 	} else {
-		sprintf(b[t], "[%g]", s);
+		snprintf(b[t], sizeof(b[t]), "[%g]", s);
 	}
 	return b[t];
 }

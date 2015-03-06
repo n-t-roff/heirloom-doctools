@@ -879,13 +879,15 @@ afmget(struct afmtab *a, char *contents, size_t size)
 	char	*cp, *th, *tp;
 	int	n = 0;
 	enum spec	s;
+	size_t	l;
 
 	if ((cp = strrchr(a->file, '/')) == NULL)
 		cp = a->file;
 	else
 		cp++;
-	a->base = malloc(strlen(cp) + 1);
-	strcpy(a->base, cp);
+	l = strlen(cp) + 1;
+	a->base = malloc(l);
+	n_strcpy(a->base, cp, l);
 	if ((cp = strrchr(a->base, '.')) != NULL)
 		*cp = '\0';
 	if (dev.allpunct)

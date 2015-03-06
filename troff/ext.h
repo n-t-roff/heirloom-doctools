@@ -60,7 +60,7 @@ extern	char	*obufp;
 extern	char	*xbufp;
 extern	char	*xeibuf;
 extern	char	*cfname[NSO+1];
-extern	char	devname[];
+extern	char	devname[20];
 extern	char	ibuf[IBUFSZ];
 extern	char	**mfiles;
 extern	char	*nextf;
@@ -271,7 +271,7 @@ extern	void	mesg(int);
 extern	void	errprint(const char *, ...);
 #define	fdprintf	xxfdprintf
 extern	void	fdprintf(int, char *, ...);
-extern	char	*roff_sprintf(char *, char *, ...);
+extern	char	*roff_sprintf(char *, size_t, char *, ...);
 extern	int	control(register int, register int);
 extern	int	getrq2(void);
 extern	int	getrq(int);
