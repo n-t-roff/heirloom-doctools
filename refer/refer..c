@@ -155,7 +155,7 @@ void flout(void);
 char *trimnl(char *);
 /* refer5.c */
 void putsig(int, char **, int, char *, char *, int);
-char *fpar(int, char **, char *, int, int, int);
+char *fpar(int, char **, char *, size_t, int, int, int);
 void putkey(int, char **, int, char *);
 void tokeytab(const char *, int);
 int keylet(char *, int);
@@ -178,7 +178,7 @@ void recopy1(char *);
 void condense(int *, int, char *);
 int wswap(const void *, const void *);
 /* refer8.c */
-char *input(char *);
+char *input(char *, size_t);
 char *lookat(void);
 void addch(char *, int);
 /* shell.c */

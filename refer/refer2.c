@@ -46,7 +46,7 @@ doref(char *line1)
 	buff[0] = dbuff[0] = 0;
 	if (biblio && Iline == 1 && line1[0] == '%')
 		n_strcat(dbuff, line1, sizeof(dbuff));
-	while (input(line)) {		/* get query */
+	while (input(line, sizeof(line))) {		/* get query */
 		Iline++;
 		if (prefix(".]", line))
 			break;

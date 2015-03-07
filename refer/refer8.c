@@ -29,13 +29,13 @@ static int peeked = 0;
 static char *noteof = (char *) 1;
 
 char *
-input(char *s)
+input(char *s, size_t l)
 {
 	if (peeked) {
 		peeked = 0;
 		if (noteof == 0)
 			return(0);
-		strcpy(s, ahead);
+		if (s != ahead) n_strcpy(s, ahead, l);
 		return(s);
 	}
 	return(fgets(s, 1000, in));
@@ -46,7 +46,7 @@ lookat(void)
 {
 	if (peeked)
 		return(ahead);
-	noteof = input(ahead);
+	noteof = input(ahead, sizeof(ahead));
 	peeked = 1;
 	return(noteof);
 }

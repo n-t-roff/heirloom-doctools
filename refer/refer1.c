@@ -140,7 +140,7 @@ main(int argc,char **argv)		/* process command-line arguments */
 				continue;
 			}
 		}
-		while (input(line)) {
+		while (input(line, sizeof(line))) {
 			Iline++;
 			if (biblio && *line == '\n')
 				doref(line);

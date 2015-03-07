@@ -52,10 +52,12 @@ putsig (int nf, char **flds, int nref, char *nstline,
 		else {
 			*t = 0;
 			if (keywant)
-				fpar(nf, flds, t, keywant, 1, 0);
+				fpar(nf, flds, t, sizeof(t), keywant, 1, 0);
 			if (science && t[0] == 0) {
-				if (fpar(nf, flds, t, 'A', 1, 0) != 0) {
-					if (fpar(nf, flds, t2, 'D', 1, 0) != 0) {
+				if (fpar(nf, flds, t, sizeof(t), 'A', 1, 0)
+				    != 0) {
+					if (fpar(nf, flds, t2, sizeof(t2),
+					    'D', 1, 0) != 0) {
 						n_strcat(t, ", ", sizeof(t));
 						n_strcat(t, t2, sizeof(t));
 					}
@@ -66,7 +68,7 @@ putsig (int nf, char **flds, int nref, char *nstline,
 					nmlen);
 				/* format is %s%s for default labels */
 				/* or %.3s%s eg if wanted */
-				if (fpar(nf, flds, t2, 'D', 1, 0)) {
+				if (fpar(nf, flds, t2, sizeof(t2), 'D', 1, 0)) {
 					sd = t2;
 					if (dtlen > 0) {
 						int n = strlen(sd) - dtlen;
@@ -77,7 +79,7 @@ putsig (int nf, char **flds, int nref, char *nstline,
 					sd = "";
 				}
 				t1[0] = 0;
-				fpar(nf, flds, t1, 'A', 1, 0);
+				fpar(nf, flds, t1, sizeof(t1), 'A', 1, 0);
 				snprintf(t, sizeof(t), format, t1, sd);
 			}
 			if (keywant) {
@@ -190,7 +192,8 @@ putsig (int nf, char **flds, int nref, char *nstline,
 }
 
 char *
-fpar (int nf, char **flds, char *out, int c, int seq, int prepend)
+fpar (int nf, char **flds, char *out, size_t outsiz, int c, int seq,
+    int prepend)
 {
 	char *p, *s;
 	int i, fnd = 0;
@@ -224,7 +227,7 @@ fpar (int nf, char **flds, char *out, int c, int seq, int prepend)
 				mycpy(out, p+1);
 			}
 			else
-				strcpy(out, p+1);
+				n_strcpy(out, p+1, outsiz);
 			if (c == 'A' && prepend)
 				initadd(out, flds[i]+2, p);
 			return(out);
@@ -249,7 +252,7 @@ putkey(int nf, char **flds, int nref, char *keystr)
 			if (count <= 0)
 				count = 1;
 			for(i = 1; i <= count; i++) {
-				sf = fpar(nf, flds, t1, ctype, i, 1);
+				sf = fpar(nf, flds, t1, sizeof(t1), ctype, i, 1);
 				if (sf == 0)
 					break;
 				sf = artskp(sf);
