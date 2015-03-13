@@ -1720,8 +1720,10 @@ i1:
 			frame->loopf |= LOOP_NEXT;
 		}
 i2:
+		bol = 1;
 		while ((cbits(i = getch())) == ' ')
 			;
+		bol = 0;
 		if (cbits(i) == LEFT)
 			goto i2;
 		ch = i;

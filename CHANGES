@@ -1,3 +1,8 @@
+2015-03-13
+    Bugfix:  Using basic control character (normally ".") or no-
+    break control charatcer (normally "'") as first argument to
+    .char made roff unuseable.
+
 2015-03-02
     tbl:  Option -Tlp configures output of table lines with ASCII
     characters -, =, |, and + (similar to GNU nroff -Tascii).

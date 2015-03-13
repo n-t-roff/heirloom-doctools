@@ -125,6 +125,7 @@ int	debug = 0;	/*debug flag*/
 #endif	/* DEBUG */
 
 static int	_xflag;
+int	bol;
 
 int
 main(int argc, char **argv)
@@ -351,9 +352,10 @@ loop:
 		trap = 0;
 		eject((struct s *)0);
 #ifdef	DEBUG
-	if (debug & DB_LOOP)
-		fprintf(stderr, "loop: NL=%d, ejf=%d, lss=%d, eileenct=%d\n",
-			numtab[NL].val, ejf, lss, eileenct);
+		if (debug & DB_LOOP)
+			fprintf(stderr, "loop: NL=%d, ejf=%d, lss=%d, "
+			    "eileenct=%d\n", numtab[NL].val, ejf, lss,
+			    eileenct);
 #endif	/* DEBUG */
 		if (eileenct > 20) {
 			errprint("job looping; check abuse of macros");
@@ -364,7 +366,9 @@ loop:
 		goto loop;
 	}
 	eileenct = 0;		/*reset count for "Eileen's loop"*/
+	bol = 1;
 	i = getch();
+	bol = 0;
 	if (!i) /* CK: Bugfix: .bp followed by .. */
 		goto loop;
 	if (pendt)
@@ -1078,8 +1082,8 @@ g0:
 			}
 chartest:
 			if (!lgf && !charf && chartab[trtab[k]] != NULL &&
-			    !afterif && (!cmpstrdelim || cbits(i) !=
-			    cmpstrdelim))
+			    !afterif && (!cmpstrdelim || k != cmpstrdelim) &&
+			    !(bol && (k == cc || k == c2)))
 				i = setchar(i);
 			return(i);
 		}

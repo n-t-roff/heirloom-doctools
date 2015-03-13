@@ -256,6 +256,7 @@ extern	int	spreadlimit;
 extern	int	lastrq;
 extern	int	afterif;
 extern	int	cmpstrdelim;
+extern	int	bol;
 
 /* n1.c */
 extern	void	mainloop(void);
