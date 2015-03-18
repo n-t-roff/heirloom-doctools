@@ -2,6 +2,8 @@
     Bugfix:  roff:  Prevent NULL pointer access when using .tr
     with characters redefined by .char.
 
+    Bugfix:  tbl:  Prevent uninitialized pointer access.
+
 2015-03-13
     Bugfix:  Using basic control character (normally ".") or no-
     break control charatcer (normally "'") as first argument to

@@ -55,6 +55,7 @@ gettbl(void)
 			leftover=cstore;
 			break;
 		}
+		table[nlin] = NULL;
 		fullbot[nlin]=0;
 		if (cstore[0] == '.' && !isdigit((unsigned char)cstore[1]))
 		{
