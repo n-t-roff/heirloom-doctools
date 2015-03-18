@@ -1,3 +1,7 @@
+2015-03-18
+    Bugfix:  roff:  Prevent NULL pointer access when using .tr
+    with characters redefined by .char.
+
 2015-03-13
     Bugfix:  Using basic control character (normally ".") or no-
     break control charatcer (normally "'") as first argument to

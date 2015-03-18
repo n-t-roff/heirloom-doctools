@@ -2356,7 +2356,7 @@ tchar
 setchar(tchar c)
 {
 	struct fmtchar	f;
-	int	k = cbits(c);
+	int	k = trtab[cbits(c)];
 	tchar	*csp;
 	int	charcount;
 	int	savxflag;
