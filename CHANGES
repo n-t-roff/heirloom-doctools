@@ -4,6 +4,10 @@
     (Traditionally AT&T roff did reduce \\ to \ in fields and
     tables so \\\\ had been need to be input for printing one \.)
 
+    Bugfix:  roff:  Don't recognize . (dot) as a number.  Now a
+    path string like "./." is recognized as "not a number" in-
+    stead of "division by zero".
+
 2015-03-18
     Bugfix:  roff:  Prevent NULL pointer access when using .tr
     with characters redefined by .char.

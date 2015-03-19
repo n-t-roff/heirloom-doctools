@@ -1163,6 +1163,7 @@ static struct acc
 atoi1(register tchar ii, int flt)
 {
 	register int i, j, digits;
+	int	digit = 0;
 	struct acc	acc;
 	int	neg, abs, field;
 	int	_noscale = 0, scale;
@@ -1202,6 +1203,7 @@ a1:
 	while (i >= '0' && i <= '9') {
 		field++;
 		digits++;
+		digit = 1;
 		if (!flt)
 			acc.n = 10 * acc.n + i - '0';
 		else if (field == digits)
@@ -1403,7 +1405,7 @@ aa:
 		if (flt) acc.f -= j;
 	}
 a2:
-	nonumb = !field;
+	nonumb = !field || !digit;
 	if (empty)
 		empty = !field;
 	return(acc);
