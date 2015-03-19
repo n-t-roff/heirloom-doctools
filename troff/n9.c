@@ -459,6 +459,7 @@ setfield(int x)
 	int savepos;
 	int oev;
 
+	prdblesc = 1;
 	if (x == tabch) 
 		rchar = tabc | chbits;
 	else if (x ==  ldrch) 
@@ -647,6 +648,7 @@ rtn:
 	numtab[HP].val = savepos;
 	if (pbp < pbsize-3 || growpbbuf())
 		pbbuf[pbp++] = mkxfunc(FLDMARK, x);
+	prdblesc = 0;
 	return(jj | ADJBIT);
 }
 

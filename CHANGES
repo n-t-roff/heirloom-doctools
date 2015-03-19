@@ -1,3 +1,9 @@
+2015-03-19
+    \\ can now be used in fields and tables to output a \ but it
+    is anyway recommended to use \(rs or at least \e instead.
+    (Traditionally AT&T roff did reduce \\ to \ in fields and
+    tables so \\\\ had been need to be input for printing one \.)
+
 2015-03-18
     Bugfix:  roff:  Prevent NULL pointer access when using .tr
     with characters redefined by .char.

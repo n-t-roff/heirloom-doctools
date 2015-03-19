@@ -257,6 +257,7 @@ extern	int	lastrq;
 extern	int	afterif;
 extern	int	cmpstrdelim;
 extern	int	bol;
+extern	int	prdblesc;
 
 /* n1.c */
 extern	void	mainloop(void);

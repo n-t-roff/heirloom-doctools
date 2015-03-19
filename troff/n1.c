@@ -126,6 +126,7 @@ int	debug = 0;	/*debug flag*/
 
 static int	_xflag;
 int	bol;
+int	prdblesc;
 
 int
 main(int argc, char **argv)
@@ -1185,7 +1186,10 @@ ge:
 		seta();
 		goto g0;
 	case ESC:	/* double backslash */
-		i = eschar;
+		if (prdblesc)
+			i = PRESC;
+		else
+			i = eschar;
 		goto gx;
 	case 'g':	/* return format of a number register */
 		setaf();
