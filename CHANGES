@@ -4,6 +4,14 @@
     translation takes place in the input stage but it has to be
     in the output stage.
 
+    man macros (nroff mode):
+    - Allow nine instead of six arguments
+    - Document formated as one large page
+    - mandoc(1) output layout (indent, left adjust, line length
+      etc.) adapted
+    - Workaround for pod2man(1) bug (causes empty first page) ad-
+      ded
+
 2015-03-19
     \\ can now be used in fields and tables to output a \ but it
     is anyway recommended to use \(rs or at least \e instead.

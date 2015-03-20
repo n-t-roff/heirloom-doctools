@@ -38,364 +38,400 @@
 .\" WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
 .\" OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
 .\" EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-'	# reset the basic page layout
+.do xflag 3
+.ie n \{\
+.	nr cR 1
+.	char ' \N'39'
+.	char - \N'45'
+.	char ` \N'96'
+.	breakchar
+.	sentchar .?!
+.	ns
+.	nh
+.	rm hy
+.	ad l
+.	rm ad
+.\}
+.el \{\
+.	hy 14
+.\}
+'	\" reset the basic page layout
 .de }E
-.}f
-.ad b
-.in \\n()Ru+\\n(INu
-.ll \\n(LLu
+.	}f
+.	ad b
+.	in \\n()Ru+\\n(INu
+.	ll \\n(LLu
 ..
-'	# default tabs
+'	\" default tabs
 .de DT
-'ta .5i 1i 1.5i 2i 2.5i 3i 3.5i 4i 4.5i 5i 5.5i 6i 6.5i
+'	ta .5i 1i 1.5i 2i 2.5i 3i 3.5i 4i 4.5i 5i 5.5i 6i 6.5i
 ..
-'	# set type font and size
+'	\" set type font and size
 .de }f
-.ps \\nS
-.ft 1
+.	ps \\nS
+.	ft 1
 ..
-'	# handle the head of the page
+'	\" handle the head of the page
 .de }H
-.ev 1
-.}C
-'sp .5i
-.ft 1
-.ps \\nS
-.tl \\*(]H\\*(]D\\*(]H
-'sp .5i
-.ev
-.ns
-.if \n(cR .wh 0 
+.	ev 1
+.	}C
+'	sp .5i
+.	ft 1
+.	ps \\nS
+.	lt \\n(LLu
+.	tl \\*(]H\\*(]D\\*(]H
+'	sp .5i
+.	ev
+.	ns
 ..
-'	# handle the foot of the page
+'	\" handle the foot of the page
 .de }F
-.ev 1
-.ft 1
-.ps \\nS
-'sp .5i
-.ie !\n(cR .tl \\*(]W\\*(]L%
-.el .tl \\*(]W\\*(]L\\*(]H
-'bp
-.ev
-..
-.ig
-'	# the cut mark
-.if n .ig
-.de }C
-.po .1i
-.tl '-'
-.po
-..
-'	# the final cut mark
-.de }M
-.}N
-.wh -1p }C
-.ll \\n(LLu
-..
-'	# no runout unless there was a .TH
-.de }K
-.}N
-.pl 1
-.ll \\n(LLu
-..
-..
-.em }K
-'	# set title and heading
-.de TH
-.PD
-.if !(\\nS>0) .nr S 10
-.ie (\\nS>10) .vs \\nSp+3p
-.el .vs \\nSp+2p
-.if n .nr IN .5i
-.if t .nr IN .5i
-.nr LL \\n(.l
-.ds ]H \\$1\|(\|\\$2\|)
-.ds ]L \\$3
-.ds ]W \\$4
-.ds ]D \\$5
-.wh 0 }H
-.ie t .wh -1i }F
-.el .if !\n(cR .wh -1.167i }F
-.ie !\n(cR .em }M
-.el .em }F
-.if \\n(nl .bp 1
-.}E
-.DT
-.nr )I .5i
-.nr )R 0
-.if n .na
-..
-'	# section heading
-.de SH
-.}X 0
-.nr )E 2
-\&\\$1 \|\\$2 \|\\$3 \|\\$4 \|\\$5 \|\\$6
-'	# HP-UX compatibility macros
-.if '\\$1'NAME' \{\
-.if !'\\*()H'' \{\
-.	ie \\n(.g==1 \{\
-.		ds }c C
+.	ie \n(cR \{\
+.		pl +5
+.		fl
+.		sp 3
+.		lt \\n(LLu
+.		tl \\*(]W\\*(]L\\*(]H
+.		pl \\n(nlu
 .	\}
 .	el \{\
-.		ds }c 1
+.		ev 1
+.		ft 1
+.		ps \\nS
+'		sp .5i
+.		lt \\n(LLu
+.		tl \\*(]W\\*(]L%
+'		bp
+.		ev
 .	\}
-'	# constant width
-.	de C
-.		ft C
-.		it 1 }N
-.		if !\\\\$* \&\\\\$1 \\\\$2 \\\\$3 \\\\$4 \\\\$5 \\\\$6
+..
+.ig
+'	\" the cut mark
+.	if n .ig
+.	de }C
+.	po .1i
+.	tl '-'
+.	po
+..
+'	\" the final cut mark
+.de }M
+.	}N
+.	wh -1p }C
+.	ll \\n(LLu
+..
+'	\" no runout unless there was a .TH
+.de }K
+.	}N
+.	pl 1
+.	ll \\n(LLu
+..
+.em }K
+'	\" set title and heading
+.de TH
+.	PD
+.	if !(\\nS>0) .nr S 10
+.	ie (\\nS>10) .vs \\nSp+3p
+.	el .vs \\nSp+2p
+.	ie n .nr IN 7n
+.	el   .nr IN .5i
+.	ie n .nr LL 78n
+.	el   .nr LL \\n(.l
+.	ds ]H \\$1\|(\|\\$2\|)
+.	ds ]L \\$3
+.	ds ]W \\$4
+.	ds ]D \\$5
+.	ie \n(cR .}H
+.	el .wh 0 }H
+.	ie t .wh -1i }F
+.	el .if !\n(cR .wh -1.167i }F
+.	ie !\n(cR .em }M
+.	el \{\
+.		pl 2000000000u \" pl is signed int
+.		em }F
+.	\}
+.	\" Work around for \{ bug in Pod::Man
+.	if !\n(cR .if \\n(nl .bp 1
+.	}E
+.	DT
+.	nr )I .5i
+.	nr )R 0
+.	if n .na
+..
+'	\" section heading
+.de SH
+.	}X 0
+.	nr )E 2
+\&\\$1 \|\\$2 \|\\$3 \|\\$4 \|\\$5 \|\\$6 \|\\$7 \|\\$8 \|\\$9
+'	\" HP-UX compatibility macros
+.	if \\$1NAME \{\
+.		if !\\*()H \{\
+.			ie \\n(.g==1 \{\
+.				ds }c C
+.			\}
+.			el \{\
+.				ds }c 1
+.			\}
+'			\" constant width
+.			de C
+.				ft C
+.				it 1 }N
+.				if !\\\\$* \&\\\\$1 \\\\$2 \\\\$3 \\\\$4 \\\\$5 \\\\$6 \\\\$7 \\\\$8 \\\\$9
 \\..
-'	# combinations with constant width
-.	de CR
-.		}S \\*(}c 1 \& "\\\\$1" "\\\\$2" "\\\\$3" "\\\\$4" "\\\\$5" "\\\\$6"
+'			\" combinations with constant width
+.			de CR
+.				}S \\*(}c 1 \& "\\\\$1" "\\\\$2" "\\\\$3" "\\\\$4" "\\\\$5" "\\\\$6" "\\\\$7" "\\\\$8" "\\\\$9"
 \\..
-.	de RC
-.		}S 1 \\*(}c \& "\\\\$1" "\\\\$2" "\\\\$3" "\\\\$4" "\\\\$5" "\\\\$6"
+.			de RC
+.				}S 1 \\*(}c \& "\\\\$1" "\\\\$2" "\\\\$3" "\\\\$4" "\\\\$5" "\\\\$6" "\\\\$7" "\\\\$8" "\\\\$9"
 \\..
-.	de CI
-.		}S \\*(}c 2 \& "\\\\$1" "\\\\$2" "\\\\$3" "\\\\$4" "\\\\$5" "\\\\$6"
+.			de CI
+.				}S \\*(}c 2 \& "\\\\$1" "\\\\$2" "\\\\$3" "\\\\$4" "\\\\$5" "\\\\$6" "\\\\$7" "\\\\$8" "\\\\$9"
 \\..
-.	de IC
-.		}S 2 \\*(}c \& "\\\\$1" "\\\\$2" "\\\\$3" "\\\\$4" "\\\\$5" "\\\\$6"
+.			de IC
+.				}S 2 \\*(}c \& "\\\\$1" "\\\\$2" "\\\\$3" "\\\\$4" "\\\\$5" "\\\\$6" "\\\\$7" "\\\\$8" "\\\\$9"
 \\..
-.	de CB
-.		}S \\*(}c 3 \& "\\\\$1" "\\\\$2" "\\\\$3" "\\\\$4" "\\\\$5" "\\\\$6"
+.			de CB
+.				}S \\*(}c 3 \& "\\\\$1" "\\\\$2" "\\\\$3" "\\\\$4" "\\\\$5" "\\\\$6" "\\\\$7" "\\\\$8" "\\\\$9"
 \\..
-.	de BC
-.		}S 3 \\*(}c \& "\\\\$1" "\\\\$2" "\\\\$3" "\\\\$4" "\\\\$5" "\\\\$6"
+.			de BC
+.				}S 3 \\*(}c \& "\\\\$1" "\\\\$2" "\\\\$3" "\\\\$4" "\\\\$5" "\\\\$6" "\\\\$7" "\\\\$8" "\\\\$9"
 \\..
-'	# various stuff
-.	de CD
-.		CR "\\\\$1" "\\\\$2"
+'			\" various stuff
+.			de CD
+.				CR "\\\\$1" "\\\\$2"
 \\..
-.	de CT
-.		IR "\\\\$1" "\\\\$2"
+.			de CT
+.				IR "\\\\$1" "\\\\$2"
 \\..
-.	de EM
-.		IR "\\\\$1" "\\\\$2"
+.			de EM
+.				IR "\\\\$1" "\\\\$2"
 \\..
-.	de ER
+.			de ER
 [\\\\$1]\\\\$2
 \\..
-.	de EV
-.		CR "\\\\$1" "\\\\$2"
+.			de EV
+.				CR "\\\\$1" "\\\\$2"
 \\..
-.	de GT
-.		BR "\\\\$1" "\\\\$2"
+.			de GT
+.				BR "\\\\$1" "\\\\$2"
 \\..
-.	de KC
-.		BR "\\\\$1" "\\\\$2"
+.			de KC
+.				BR "\\\\$1" "\\\\$2"
 \\..
-.	de RV
-.		CR "\\\\$1" "\\\\$2"
+.			de RV
+.				CR "\\\\$1" "\\\\$2"
 \\..
-.	de SC
-.		CR "\\\\$1" "\\\\$2"
+.			de SC
+.				CR "\\\\$1" "\\\\$2"
 \\..
-.	de S3
-.	sp \\n()Pu
-.	ne 2
-\&\\\\$1 \|\\\\$2 \|\\\\$3 \|\\\\$4 \|\\\\$5 \|\\\\$6
-.		br
+.			de S3
+.				sp \\n()Pu
+.				ne 2
+\&\\\\$1 \|\\\\$2 \|\\\\$3 \|\\\\$4 \|\\\\$5 \|\\\\$6 \|\\\\$7 \|\\\\$8 \|\\\\$9
+.				br
 \\..
-.	de P
-.		PP
+.			de P
+.				PP
 \\..
-.\}
-.\}
+.		\}
+.	\}
 ..
-'	# sub section heading
+'	\" sub section heading
 .\}
 .de SS
-.}X .25i
-.nr )E 2
-\&\\$1 \|\\$2 \|\\$3 \|\\$4 \|\\$5 \|\\$6
-.br
+.	ie n .}X 3n
+.	el   .}X .25i
+.	nr )E 2
+\&\\$1 \|\\$2 \|\\$3 \|\\$4 \|\\$5 \|\\$6 \|\\$7 \|\\$8 \|\\$9
+.	br
 ..
-'	# subroutine for section heading
+'	\" subroutine for section heading
 .de }X
-.}E
-.ti \\$1
-.sp \\n()Pu
-.ne 2
-.nr )R 0
-.fi
-.it 1 }N
-.SM
-.B
+.	}E
+.	ti \\$1
+.	sp \\n()Pu
+.	ne 2
+.	nr )R 0
+.	fi
+.	it 1 }N
+.	SM
+.	B
 ..
-'	# end of SH (cf }X above and }N below)
+'	\" end of SH (cf }X above and }N below)
 .de }2
-.nr )E 0
-.}E
-.nr )I .5i
-.ns
+.	nr )E 0
+.	}E
+.	nr )I .5i
+.	ns
 ..
-'	# italic
+'	\" italic
 .de I
-.ft 2
-.it 1 }N
-.if !\\$* \&\\$*
+.	ft 2
+.	it 1 }N
+.	if !\\$* \&\\$*
 ..
-'	# bold
+'	\" bold
 .de B
-.ft 3
-.it 1 }N
-.if !\\$* \&\\$*
+.	ft 3
+.	it 1 }N
+.	if !\\$* \&\\$*
 ..
-'	# small
+'	\" small
 .de SM
-.ps \\nS-1
-.it 1 }N
-.if !\\$* \&\\$*
+.	ps \\nS-1
+.	it 1 }N
+.	if !\\$* \&\\$*
 ..
-'	# small and bold
+'	\" small and bold
 .de SB
-.ps \\nS-1
-.it 1 }N
-.ft B
-.if !\\$* \&\\$*
+.	ps \\nS-1
+.	it 1 }N
+.	ft B
+.	if !\\$* \&\\$*
 ..
-'	# combinations of Roman, italic, bold
+'	\" combinations of Roman, italic, bold
 .de RI
-.}S 1 2 \& \\$@
+.	}S 1 2 \& \\$@
 ..
 .de RB
-.}S 1 3 \& \\$@
+.	}S 1 3 \& \\$@
 ..
 .de IR
-.}S 2 1 \& \\$@
+.	}S 2 1 \& \\$@
 ..
 .de IB
-.}S 2 3 \& \\$@
+.	}S 2 3 \& \\$@
 ..
 .de BR
-.}S 3 1 \& \\$@
+.	}S 3 1 \& \\$@
 ..
 .de BI
-.}S 3 2 \& \\$@
+.	}S 3 2 \& \\$@
 ..
-'	# make special case of shift out of italic
+'	\" make special case of shift out of italic
 .de }S
-.ds ]F
-.if "\\$1"2" .if !"\\$5"" .ds ]F \^
-.ie !"\\$4"" \{\
-.do ds }$1 "\\$1
-.do ds }$2 "\\$2
-.do ds }$3 "\\$3
-.do ds }$4 "\\$4
-.do shift 4
-.if \\n(.X<2 \{\
-.nr )X \\n(.X
-.do xflag 3
-.\}
-.}S \\*[}$2] \\*[}$1] "\\*[}$3]\f\\*[}$1]\\*[}$4]\\*(]F" \\$@
-.if \\n()X .do xflag \\n()X
-.\}
-.el \\$3
-.}f
+.	ds ]F
+.	if \\$12 .if !\\$5 .ds ]F \^
+.	ie !\\$4 \{\
+.		do ds }$1 "\\$1
+.		do ds }$2 "\\$2
+.		do ds }$3 "\\$3
+.		do ds }$4 "\\$4
+.		do shift 4
+.		if \\n(.X<2 \{\
+.			nr )X \\n(.X
+.			do xflag 3
+.		\}
+.		}S \\*[}$2] \\*[}$1] "\\*[}$3]\f\\*[}$1]\\*[}$4]\\*(]F" \\$@
+.		if \\n()X .do xflag \\n()X
+.	\}
+.	el \\$3
+.	}f
 ..
-'	# paragraph
+'	\" paragraph
 .de LP
-.PP
+.	PP
 ..
 .de PP
-.sp \\n()Pu
-.ne 2
-.}E
-.nr )I .5i
-.ns
+.	sp \\n()Pu
+.	ne 2
+.	}E
+.	nr )I .5i
+.	ns
 ..
 .de P
-.PP
+.	PP
 ..
-'	# paragraph distance
+'	\" paragraph distance
 .de PD
-.if t .nr )P .4v
-.if n .nr )P 1v
-.if !"\\$1"" .nr )P \\$1v
+.	if t .nr )P .4v
+.	if n .nr )P 1v
+.	if !\\$1 .nr )P \\$1v
 ..
-'	# hanging indent
+'	\" hanging indent
 .de HP
-.sp \\n()Pu
-.ne 2
-.if !"\\$1"" .nr )I \\$1n
-.ll \\n(LLu
-.in \\n()Ru+\\n(INu+\\n()Iu
-.ti \\n()Ru+\\n(INu
-.}f
+.	sp \\n()Pu
+.	ne 2
+.	if !\\$1 .nr )I \\$1n
+.	ll \\n(LLu
+.	in \\n()Ru+\\n(INu+\\n()Iu
+.	ti \\n()Ru+\\n(INu
+.	}f
 ..
-'	# indented paragraph
+'	\" indented paragraph
 .de IP
-.TP \\$2
+.	TP \\$2
 \&\\$1
 ..
-'	# hanging label
+'	\" hanging label
 .de TP
-.if !"\\$1"" .nr )I \\$1n
-.sp \\n()Pu
-.in \\n()Ru
-.nr )E 1
-.ns
-.it 1 }N
-.nf
-.di ]B
+.	if !\\$1 .nr )I \\$1n
+.	sp \\n()Pu
+.	in \\n()Ru
+.	nr )E 1
+.	ns
+.	it 1 }N
+.	nf
+.	di ]B
 ..
-'	# end of TP (cf }N below)
+'	\" end of TP (cf }N below)
 .de }0
-.fi
-.}1
+.	fi
+.	}1
 ..
 .de }1
-.ds ]X \&\\*(]B\\
-.nr )E 0
-.if !"\\$1"" .nr )I \\$1n
-.}f
-.ll \\n(LLu
-.in \\n()Ru+\\n(INu+\\n()Iu
-.ti \\n(INu
-.ie !\\n()Iu+\\n()Ru-\w\\*(]Xu-3p \{\\*(]X
-.br\}
-.el \{\
+.	ds ]X \&\\*(]B\\
+.	nr )E 0
+.	if !\\$1 .nr )I \\$1n
+.	}f
+.	ll \\n(LLu
+.	in \\n()Ru+\\n(INu+\\n()Iu
+.	ti \\n(INu
+.	ie !\\n()Iu+\\n()Ru-\w\\*(]Xu-3p \{\\*(]X
+.		br
+.	\}
+.	el \{\
 \\*(]X\h|\\n()Iu+\\n()Ru\c
-.if \\n(.X \{\
-.do nop \k[}pos]
-.do vpt 0
-.sp -1
-.do vpt 1
-.do nop \h'\\n[}pos]u'\c
-.\}
-.\}
-.}f
+.		if \\n(.X \{\
+.			do nop \k[}pos]
+.			do vpt 0
+.			sp -1
+.			do vpt 1
+.			do nop \h'\\n[}pos]u'\c
+.		\}
+.	\}
+.	}f
 ..
-'	# handle end of 1-line features
+'	\" handle end of 1-line features
 .de }N
-.if \\n()E .br
-.di
-.if "\\n()E"0" .}f
-.if "\\n()E"1" .}0
-.if "\\n()E"2" .}2
-.nr )E 0
+.	if \\n()E .br
+.	di
+.	if \\n()E0 .}f
+.	if \\n()E1 .}0
+.	if \\n()E2 .}2
+.	nr )E 0
 ..
-'	# increase relative indent
+'	\" increase relative indent
 .de RS
-.nr ]\\n+()p \\n()I
-.nr )\\n()p \\n()R
-.ie !"\\$1"" .nr )R +\\$1n
-.el .nr )R +\\n()I
-.nr )I .5i
-.}E
+.	nr ]\\n+()p \\n()I
+.	nr )\\n()p \\n()R
+.	ie !\\$1 .nr )R +\\$1n
+.	el .nr )R +\\n()I
+.	nr )I .5i
+.	}E
 ..
-'	# decrease relative indent
+'	\" decrease relative indent
 .de RE
-.if !"\\$1"" \{.ie "\\$1"0" .nr )p 1 1
-.		el .nr )p \\$1 1\}
-.ds ]i \\*(]I\\n()p
-.ds ]r \\*(]R\\n()p
-.nr )I \\*(]i
-.nr )R \\*(]r
-.if \\n()p .nr )p -1
-.}E
+.	if !\\$1 \{\
+.		ie \\$10 .nr )p 1 1
+.		el .nr )p \\$1 1
+.	\}
+.	ds ]i \\*(]I\\n()p
+.	ds ]r \\*(]R\\n()p
+.	nr )I \\*(]i
+.	nr )R \\*(]r
+.	if \\n()p .nr )p -1
+.	}E
 ..
 .nr )p 0 1
 .ds ]I \\\\n(]
@@ -404,14 +440,14 @@
 .if t .ds R \(rg
 .if n .ds R (Reg.)
 .ds S \s10
-.hy 14
-'	# For Tru64 UNIX manpages. Use of this is discouraged.
+'	\" For Tru64 UNIX manpages. Use of this is discouraged.
 .de LI
-.	ie !'\\$1'' \{\
-.	TP
+.	ie !\\$1 \{\
+.		TP
 \\$1
-.\}
+.	\}
 .	el \{
-.	PP
-.\}
+.		PP
+.	\}
 ..
+.\" vim:set filetype=nroff:
