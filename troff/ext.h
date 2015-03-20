@@ -254,7 +254,7 @@ extern	int	***lgrevtab;
 extern	int	spreadwarn;
 extern	int	spreadlimit;
 extern	int	lastrq;
-extern	int	afterif;
+extern	int	noschr;
 extern	int	cmpstrdelim;
 extern	int	bol;
 extern	int	prdblesc;

@@ -126,6 +126,7 @@ int	debug = 0;	/*debug flag*/
 
 static int	_xflag;
 int	bol;
+int	noschr;
 int	prdblesc;
 
 int
@@ -399,7 +400,9 @@ loop:
 			skip(1);
 			j = getrq(4);
 		}
+		noschr = 1;
 		control(j, 1);
+		noschr = 0;
 		flushi();
 		goto loop;
 	}
@@ -1083,7 +1086,7 @@ g0:
 			}
 chartest:
 			if (!lgf && !charf && chartab[trtab[k]] != NULL &&
-			    !afterif && (!cmpstrdelim || k != cmpstrdelim) &&
+			    !noschr && (!cmpstrdelim || k != cmpstrdelim) &&
 			    !(bol && (k == cc || k == c2)))
 				i = setchar(i);
 			return(i);

@@ -164,12 +164,14 @@ _setn(int tm)	/* tm: test for presence of readonly register */
 		i = tm;
 		goto sl;
 	}
+	noschr++;
 	if ((i = cbits(ii = getach())) == '+')
 		f = 1;
 	else if (i == '-')
 		f = -1;
 	else 
 		ch = ii;
+	if (noschr) noschr--;
 	if (falsef)
 		f = 0;
 	if ((i = getsn(1)) == 0)
@@ -960,6 +962,7 @@ _atoi0(int flt)
 	register tchar ii;
 	struct acc	i, acc;
 
+	noschr++;
 	i.f = i.n = 0; 
 	acc.f = acc.n = 0;
 	nonumb = 0;
@@ -1139,6 +1142,7 @@ a0:
 		acc = _atoi0(flt);
 		goto a0;
 	}
+	if (noschr) noschr--;
 	return(acc);
 }
 
@@ -1848,12 +1852,14 @@ _inumb(int *n, float *fp, int flt, int *relative)
 		nv = *n;
 		if (fp)
 			fv = *fp;
+		noschr++;
 		if ((j = cbits(ii = getch())) == '+')
 			f = 1;
 		else if (j == '-')
 			f = -1;
 		else 
 			ch = ii;
+		if (noschr) noschr--;
 	}
 	i = _atoi(flt);
 	lgf--;

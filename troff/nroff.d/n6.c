@@ -246,7 +246,9 @@ setps(void)
 	tchar	c;
 	register int i, j, k;
 
+	noschr++;
 	i = cbits(c = getch());
+	if (noschr) noschr--;
 	if (ismot(c) && xflag)
 		return;
 	if (ischar(i) && isdigit(i)) {		/* \sd or \sdd */

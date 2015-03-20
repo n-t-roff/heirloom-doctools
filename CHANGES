@@ -1,3 +1,9 @@
+2015-03-20
+    Workaround to handle some .char problems added.  The .char
+    implementation needs to be changed eventually.  Currently the
+    translation takes place in the input stage but it has to be
+    in the output stage.
+
 2015-03-19
     \\ can now be used in fields and tables to output a \ but it
     is anyway recommended to use \(rs or at least \e instead.

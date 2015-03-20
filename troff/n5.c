@@ -76,7 +76,6 @@
  * misc processing requests
  */
 
-int	afterif		= 0;
 int	cmpstrdelim	= 0;
 static int	*iflist;
 static int	ifx;
@@ -1628,9 +1627,7 @@ caseif(int x)
 		goto i1;
 	}
 	true = 0;
-	afterif = 1;
 	skip(1);
-	afterif = 0;
 	if ((cbits(i = getch())) == '!') {
 		notflag = 1;
 		if (xflag == 0)
