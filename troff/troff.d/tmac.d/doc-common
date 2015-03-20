@@ -311,13 +311,14 @@
 .tm Not a \-mdoc command: .pp
 ..
 .de Nd
-\&\-\& \\$*
+\&\(em\& \\$*
 ..
 .de Ss
 .	if !\\n(aC \{\
 .		sp
 .		if !\\n(cR .ne 2
-.		ti -.25i
+.		ie n .ti -2
+.		el   .ti -.25i
 .		ds b1 \&\\*(sH
 .		ds mN Ss
 .		aV \\$@

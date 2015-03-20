@@ -12,6 +12,9 @@
     - Workaround for pod2man(1) bug (causes empty first page) ad-
       ded
 
+    Minor mdoc macro changes (indent and some special charac-
+    ters).
+
 2015-03-19
     \\ can now be used in fields and tables to output a \ but it
     is anyway recommended to use \(rs or at least \e instead.

@@ -34,10 +34,13 @@
 .\" tmac.mdoc-nroff
 .\"     %beginstrip%
 .\"
-.hy 0
-.de hy
-.	nh
-..
+.nh
+.rm hy
+.char ' \N'39'
+.char - \N'45'
+.char ` \N'96'
+.ad l
+.rm ad
 .breakchar
 .sentchar .?!
 .ds aD \fI
@@ -120,10 +123,10 @@
 .ds Tm \(tm
 .ds va \(va
 .\" Math stuff
-.ds Pi pi
+.ds Pi \(*p
 .ds Ne !=
-.ds Le <=
-.ds Ge >=
+.ds Le \(<=
+.ds Ge \(>=
 .ds Lt <
 .ds Gt >
 .ds Pm +-
