@@ -109,12 +109,12 @@ sl 1 /
 *W 1 %\316%\251
 ts 1 %\317%\202
 sr 1 %\342%\210%\232
-rn 1 %\342%\216%\272
+rn 1 %\xe2%\x80%\xbe # U+203E OVERLINE
 >= 1 %\342%\211%\245
 <= 1 %\342%\211%\244
 == 1 %\342%\211%\241
-~= 1 %\xe2%\x89%\x85 # U+2245 APPROXIMATELY EQUAL TO 
-~~ 1 %\342%\211%\210
+~= 1 %\xe2%\x89%\x88 # U+2248 ALMOST EQUAL TO
+~~ 1 %\xe2%\x89%\x88 # U+2248 ALMOST EQUAL TO
 ap 1 %\342%\210%\274
 != 1 %\xe2%\x89%\xa0 # U+2260 NOT EQUAL TO
 -> 1 %\342%\206%\222
@@ -200,24 +200,24 @@ la 1 %\xe2%\x9f%\xa8 # U+27E8 MATHEMATICAL LEFT ANGLE BRACKET
 ra 1 %\xe2%\x9f%\xa9 # U+27E9 MATHEMATICAL RIGHT ANGLE BRACKET
 braceex 1 %\xe2%\x8e%\xaa # U+23AA CURLY BRACKET EXTENSION
 bracketlefttp 1 %\xe2%\x8e%\xa1 # U+23A1 LEFT SQUARE BRACKET UPPER CORNER
-bracketleftbp 1 %\xe2%\x8e%\xa3 # U+23A3 LEFT SQUARE BRACKET LOWER CORNER (sic?)
+bracketleftbt 1 %\xe2%\x8e%\xa3 # U+23A3 LEFT SQUARE BRACKET LOWER CORNER
 bracketleftex 1 %\xe2%\x8e%\xa2 # U+23A2 LEFT SQUARE BRACKET EXTENSION
 bracketrighttp 1 %\xe2%\x8e%\xa4 # U+23A4 RIGHT SQUARE BRACKET UPPER CORNER
-bracketrightbp 1 %\xe2%\x8e%\xa6 # U+23A6 RIGHT SQUARE BRACKET LOWER CORNER (sic?)
+bracketrightbt 1 %\xe2%\x8e%\xa6 # U+23A6 RIGHT SQUARE BRACKET LOWER CORNER
 bracketrightex 1 %\xe2%\x8e%\xa5 # U+23A5 RIGHT SQUARE BRACKET EXTENSION
 bracelefttp 1 %\xe2%\x8e%\xa7 # U+23A7 LEFT CURLY BRACKET UPPER HOOK
 braceleftmid 1 %\xe2%\x8e%\xa8 # U+23A8 LEFT CURLY BRACKET MIDDLE PIECE
-braceleftbp 1 %\xe2%\x8e%\xa9 # U+23A9 LEFT CURLY BRACKET LOWER HOOK (sic?)
+braceleftbt 1 %\xe2%\x8e%\xa9 # U+23A9 LEFT CURLY BRACKET LOWER HOOK
 braceleftex 1 %\xe2%\x8e%\xaa # U+23AA CURLY BRACKET EXTENSION
 bracerighttp 1 %\xe2%\x8e%\xab # U+23AB RIGHT CURLY BRACKET UPPER HOOK
 bracerightmid 1 %\xe2%\x8e%\xac # U+23AC RIGHT CURLY BRACKET MIDDLE PIECE
-bracerightbp 1 %\xe2%\x8e%\xad # U+23AD RIGHT CURLY BRACKET LOWER HOOK (sic?)
+bracerightbt 1 %\xe2%\x8e%\xad # U+23AD RIGHT CURLY BRACKET LOWER HOOK
 bracerightex 1 %\xe2%\x8e%\xaa # U+23AA CURLY BRACKET EXTENSION
 parenlefttp 1 %\xe2%\x8e%\x9b # U+239B LEFT PARENTHESIS UPPER HOOK
-parenleftbp 1 %\xe2%\x8e%\x9d # U+239D LEFT PARENTHESIS LOWER HOOK (sic?)
+parenleftbt 1 %\xe2%\x8e%\x9d # U+239D LEFT PARENTHESIS LOWER HOOK
 parenleftex 1 %\xe2%\x8e%\x9c # U+239C LEFT PARENTHESIS EXTENSION
 parenrighttp 1 %\xe2%\x8e%\x9e # U+239E RIGHT PARENTHESIS UPPER HOOK
-parenrightbp 1 %\xe2%\x8e%\xa0 # U+23A0 RIGHT PARENTHESIS LOWER HOOK (sic?)
+parenrightbt 1 %\xe2%\x8e%\xa0 # U+23A0 RIGHT PARENTHESIS LOWER HOOK
 parenrightex 1 %\xe2%\x8e%\x9f # U+239F RIGHT PARENTHESIS EXTENSION
 <> 1 %\xe2%\x86%\x94 # U+2194 LEFT RIGHT ARROW
 va 1 %\xe2%\x86%\x95 # U+2195 UP DOWN ARROW
@@ -244,7 +244,7 @@ c+ 1 %\xe2%\x8a%\x95 # U+2295 CIRCLED PLUS
 tdi 1 %\xc3%\xb7 # U+00F7 DIVISION SIGN
 ne 1 %\xe2%\x89%\xa2 # U+2262 NOT IDENTICAL TO
 =~ 1 %\xe2%\x89%\x85 # U+2245 APPROXIMATELY EQUAL TO
--~ 1 %\xe2%\x89%\x83 # U+2243 ASYMPTOTICALLY EQUAL TO
+|= 1 %\xe2%\x89%\x83 # U+2243 ASYMPTOTICALLY EQUAL TO
 nm 1 %\xe2%\x88%\x89 # U+2209 NOT AN ELEMENT OF
 nb 1 %\xe2%\x8a%\x84 # U+2284 NOT A SUBSET OF
 nc 1 %\xe2%\x8a%\x85 # U+2285 NOT A SUPERSET OF
@@ -267,17 +267,28 @@ ss 1 %\xc3%\x9f # U+00DF LATIN SMALL LETTER SHARP S
 germandbls 1 %\xc3%\x9f # U+00DF LATIN SMALL LETTER SHARP S
 IJ 1 %\xc4%\xb2 # U+0132 LATIN CAPITAL LIGATURE IJ
 ij 1 %\xc4%\xb3 # U+0133 LATIN SMALL LIGATURE IJ
-a" 1 %\xcc%\x8b # U+030B COMBINING DOUBLE ACUTE ACCENT
-a- 1 %\xcc%\x84 # U+0304 COMBINING MACRON
-a. 1 %\xcc%\x87 # U+0307 COMBINING DOT ABOVE
-a^ 1 %\xcc%\x82 # U+0302 COMBINING CIRCUMFLEX ACCENT
-ab 1 %\xcc%\x86 # U+0306 COMBINING BREVE
-ac 1 %\xcc%\xa7 # U+0327 COMBINING CEDILLA
-ad 1 %\xcc%\x88 # U+0308 COMBINING DIAERESIS
-ah 1 %\xcc%\x8c # U+030C COMBINING CARON
-ao 1 %\xcc%\x8a # U+030A COMBINING RING ABOVE
-a~ 1 %\xcc%\x83 # U+0303 COMBINING TILDE
-ho 1 %\xcc%\xa8 # U+0328 COMBINING OGONEK
+#a" 1 %\xcc%\x8b # U+030B COMBINING DOUBLE ACUTE ACCENT
+a" 1 %\xcb%\x9d # U+02DD DOUBLE ACUTE ACCENT
+#a- 1 %\xcc%\x84 # U+0304 COMBINING MACRON
+a- 1 %\xc2%\xaf # U+00AF MACRON
+#a. 1 %\xcc%\x87 # U+0307 COMBINING DOT ABOVE
+a. 1 %\xcb%\x99 # U+02D9 DOT ABOVE
+#a^ 1 %\xcc%\x82 # U+0302 COMBINING CIRCUMFLEX ACCENT
+a^ 1 %\x5e # U+005E CIRCUMFLEX ACCENT
+#ab 1 %\xcc%\x86 # U+0306 COMBINING BREVE
+ab 1 %\xcb%\x98 # U+02D8 BREVE
+#ac 1 %\xcc%\xa7 # U+0327 COMBINING CEDILLA
+ac 1 %\xc2%\xb8 # U+00B8 CEDILLA
+#ad 1 %\xcc%\x88 # U+0308 COMBINING DIAERESIS
+ad 1 %\xc2%\xa8 # U+00A8 DIAERESIS
+#ah 1 %\xcc%\x8c # U+030C COMBINING CARON
+ah 1 %\xcb%\x87 # U+02C7 CARON
+#ao 1 %\xcc%\x8a # U+030A COMBINING RING ABOVE
+ao 1 %\xcb%\x9a # U+02DA RING ABOVE
+#a~ 1 %\xcc%\x83 # U+0303 COMBINING TILDE
+a~ 1 %\xcb%\x9c # U+02DC SMALL TILDE
+#ho 1 %\xcc%\xa8 # U+0328 COMBINING OGONEK
+ho 1 %\xcb%\x9b # U+02DB OGONEK
 ha 1 %\x5e
 ti 1 %\x7e
 'A 1 %\xc3%\x81 # U+00C1 LATIN CAPITAL LETTER A WITH ACUTE

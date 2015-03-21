@@ -106,13 +106,13 @@
 .ad l
 .na
 ..
-.ds <= \&<\&=
-.ds >= \&>\&=
+.ds <= \(<=
+.ds >= \(>=
 .ds Rq \(rq
 .ds rq \(rq
 .ds Lq \(lq
 .ds lq \(lq
-.ds ua ^
+.ds ua \(ua
 .ds aa \(aa
 .ds ga \(ga
 .ds sL \(oq
@@ -124,13 +124,13 @@
 .ds va \(va
 .\" Math stuff
 .ds Pi \(*p
-.ds Ne !=
+.ds Ne \(!=
 .ds Le \(<=
 .ds Ge \(>=
 .ds Lt <
 .ds Gt >
-.ds Pm +-
-.ds If infinity
+.ds Pm \(+-
+.ds If \(if
 .ds Na \fINaN\fP
 .ds Ba \fR\&|\fP
 .\"
