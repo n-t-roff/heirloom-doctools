@@ -38,10 +38,6 @@
 .\"
 .\" .mdoc-parse - attempt to parse troff request arguments
 .\"     %beginstrip%
-.if \n(.g \{\
-.cp 0
-.ftr C CR
-.\}
 .do xflag 3
 .if t \{\
 .       so @MACDIR@/doc-ditroff
@@ -798,11 +794,8 @@
 .					rs
 .					in -\\n(iSu
 .					ie \\n(nS>1 .br
-.					el \{\
-.						if \\n(iS==0 \{\
-.							sW \\*[_$1_]
-.							nr iS ((\\n(sWu+1)*\\n(fW)u
-.						\}
+.					el .if \\n(iS==0 \{\
+.						nr iS \w\\*[_$1_]+\w0
 .					\}
 .					in +\\n(iSu
 .					ti -\\n(iSu
@@ -1389,28 +1382,29 @@
 .\" NS aT register argument type
 .\" NS b0 string local temporary
 .de aT
-.nr aT 0
-.ie \\n(sW>2 \{\
-.	nr aT 2
-.\}
-.el \{\
-.	if \\n(sW==1 \{\
-.		ie \\n(z\\$1>2 \{\
-.			nr aT \\n(z\\$1
-.		\}
-.		el .nr aT 2
+.	lnr _l_ 0
+.	length _l_ "\\$1
+.	nr aT 0
+.	ie \\n[_l_]>2 \{\
+.		nr aT 2
 .	\}
-.	if \\n(sW==2 \{\
-.		ie \\n(\\$1 \{\
-.			nr aT 1
+.	el \{\
+.		if \\n[_l_]==1 \{\
+.			ie \\n(z\\$1>2 \{\
+.				nr aT \\n(z\\$1
+.			\}
+.			el .nr aT 2
 .		\}
-.		el .nr aT 2
+.		if \\n[_l_]==2 \{\
+.			ie \\n(\\$1 \{\
+.				nr aT 1
+.			\}
+.			el .nr aT 2
+.		\}
 .	\}
-.\}
 ..
 .de aU
 .	nr aT 0
-.	aW \\$1
 .	ds b0 "\\*[A\\$1]
 .	length jM "\\*(b0
 .	ie \\n(jM>2 \{\
@@ -1419,8 +1413,9 @@
 .	\}
 .	el .ie \\*(b0 .nr aT 2
 .	el .ie \\n(jM=1 \{\
+.		lnr _z_ \\n(z\\*(b0
 .		ie \\*(b0  .nr aT 2
-.		el .ie \\n(z\\*(b0>2 .nr aT \\n(z\\*(b0
+.		el .ie \\n[_z_]>2 .nr aT \\n[_z_]
 .		el .nr aT 2
 .	\}
 .	el .if \\n(jM=2 \{\
@@ -1657,11 +1652,10 @@
 .	\}
 .	if \\n(iD==1 \{\
 .		nr iD \\n(iD+1
-.		sW "\\*(bY
 .		lnr _sw_ 0
 .		length _sw_ "\\*(bY
 .		ie \\n[_sw_]>2 \{\
-.			nr O\\n(dP (\\n(sW)*\\n(fWu
+.			nr O\\n(dP \w\\*(bY
 .			lnr _B_ \B\\*(bY
 .			if \\n[_B_] \{\
 .				if (\\*(bY>9n)&(\\*(bY<100n) \{\
@@ -1815,13 +1809,6 @@
 .\}
 .ns
 ..
-.if \n(.g \{\
-.	nr i 10
-.	while \ni<100 \{\
-.	     nr num!\nin 1
-.	     nr i +1
-.	\}
-.\}
 .\" NS lV macro - resolve remaining .Bl arguments
 .de lV
 .nr aP \\n(aP+1
@@ -1837,20 +1824,14 @@
 .		nr tW 1
 .		ds t\\n(lC TagwidtH
 .		ds tS \\*[A\\n(aP]
-.		aW \\n(aP
-.		ie \\n(sW>2 \{\
-.			nr w\\n(lC (\\n(sW)*\\n(fWu
+.		lnr _l_ 0
+.		length _l_ "\\*(tS
+.		ie \\n[_l_]>2 \{\
+.			nr w\\n(lC \w\\*(tS
 .			lnr _B_ \B\\*(tS
-.			if \\n[_B_]&(\\n(sW==3) \{\
-.				ie \\n(.g \{\
-.					if \A'\\*(tS' .if r num!\\*(tS \{\
-.						nr w\\n(lC \\*(tS
-.					\}
-.				\}
-.				el \{\
-.					if (\\*(tS>9n)&(\\*(tS<99n) \{\
-.						nr w\\n(lC \\*(tSu
-.					\}
+.			if \\n[_B_]&(\\n[_l_]==3) \{\
+.				if (\\*(tS>9n)&(\\*(tS<99n) \{\
+.					nr w\\n(lC \\*(tSu
 .				\}
 .			\}
 .		\}
@@ -1872,16 +1853,12 @@
 .		\}
 .		el \{\
 .			ds tS \\*[A\\n(aP]
-.			aW \\n(aP
-.			ie \\n(sW>2 \{\
-.				nr o\\n(lC (\\n(sW)*\\n(fWu
+.			lnr _l_ 0
+.			length _l_ "\\*(tS
+.			ie \\n[_l_]>2 \{\
+.				nr o\\n(lC \w\\*(tS
 .				lnr _B_ \B\\*(tS
-.				ie \\n(.g \{\
-.					if \A'\\*(tS' .if r num!\\*(tS \{\
-.						nr o\\n(lC \\*(tS
-.					\}
-.				\}
-.				el .if \\n[_B_] \{\
+.				if \\n[_B_] \{\
 .					if (\\*(tS>9n)&(\\*(tS<100n) \{\
 .						nr o\\n(lC \\*(tS
 .					\}
@@ -2700,7 +2677,7 @@
 .	ie \\n(nS>1 .br
 .	el \{\
 .		if \\n(iS==0 \{\
-.			nr iS ((8)*\\n(fW)u
+.			nr iS 8n \" ((8)*\\n(fW)u
 .		\}
 .	\}
 .	in +\\n(iSu
@@ -2824,7 +2801,7 @@
 .	ie \\n(nS>1 .br
 .	el \{\
 .		if \\n(iS==0 \{\
-.			nr iS ((8)*\\n(fW)u
+.			nr iS 8n \" ((8)*\\n(fW)u
 .		\}
 .	\}
 .	in +\\n(iSu

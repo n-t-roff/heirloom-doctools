@@ -121,101 +121,72 @@
 .\"
 .nr gX 0
 .de hK
-.ds hT \\*(dT
-.if !"\\*(cH"Null" \{\
-.       ie !"\\*(gP"Null" .as hT \|(\|\\*(cH\\*(gP\|)
-.       el .as hT \\|(\\|\\*(cH\\|)
-.\}
-.if "\\*(cH"Null" \{\
-.	if !"\\*(gP"Null" .as hT \&\|(\|\\*(gP\|)
-.\}
-.wh 0 hM
-.wh -1.25i fM
-.\" .tm Here is gX == \\n(gX
-.ie \\n(gX==1 \{\
-.	rm n1
-.	if \\n(.g .br
-.	if !\\n(.g .bp
-.\}
-.el \{\
-.	if \\n(.g .br
-.	if !\\n(.g 'bp
-.\}
-.nr % 1
-.nr gX 0
-.em lM
-..
-.\"
-.nr fW \w\f(CW0
-.de sW
-.nr sW \w\f(CW\\$1
-.ie \\n(sW>=\\n(fW \{\
-.       ie \\n(sW%\\n(fW .nr sW (\\n(sW/\\n(fW)+1
-.       el .nr sW \\n(sW/\\n(fW
-.\}
-.el \{\
-.	ie \\n(sW>0 .nr sW 1
-.	el .nr sW 0
-.\}
-..
-.\"
-.de aW
-.nr sW \w\f(CW\\*(A\\$1
-.ie \\n(sW>=\\n(fW \{\
-.       ie \\n(sW%\\n(fW .nr sW (\\n(sW/\\n(fW)+1
-.       el .nr sW \\n(sW/\\n(fW
-.\}
-.el \{\
-.	ie \\n(sW>0 .nr sW 1
-.	el .nr sW 0
-.\}
+.	ds hT \\*(dT
+.	ie \\*(cHNull \{\
+.		if !\\*(gPNull .as hT \&\|(\|\\*(gP\|)
+.	\}
+.	el \{\
+.		ie !\\*(gPNull .as hT \|(\|\\*(cH\\*(gP\|)
+.		el .as hT \\|(\\|\\*(cH\\|)
+.	\}
+.	wh 0 hM
+.	wh -1.25i fM
+.	\" .tm Here is gX == \\n(gX
+.	ie \\n(gX==1 \{\
+.		rm n1
+.		bp
+.	\}
+.	el \{\
+'		bp
+.	\}
+.	nr % 1
+.	nr gX 0
+.	em lM
 ..
 .\" NS Ql macro - Quoted literal define
 .de Ql
-.if \\n(aC==0  \{\
-.	ds mN Ql
-.       ds A1 \\$1
-.       ds A2 \\$2
-.       ds A3 \\$3
-.       ds A4 \\$4
-.       ds A5 \\$5
-.       ds A6 \\$6
-.       ds A7 \\$7
-.       ds A8 \\$8
-. 	nr fV \\n(.$
-. 	fV
-.\}
-.nr aP \\n(aP+1
-.aW \\n(aP
-.nr aP \\n(aP-1
-.if \\n(sW>2 .Li
-.if \\n(sW<=2 \{\
-.\" Db on
-.	if (\\n(aP>0) \{\
-.		ds A\\n(aP Li
-.		nr aP \\n(aP -1
+.	if \\n(aC==0  \{\
+.		ds mN Ql
+.	 	nr fV \\n(.$
+.		lnr _i_ 0 1
+.		while \\n(.$ \{\
+.			ds A\\n+[_i_] \\$1
+.			shift
+.		\}
+.	 	fV
 .	\}
-.	if (\\n(aP==0) \{\
-.		rm C0 C1 C2 C3 C4 C5 C6 C7 C8 C9
-.		rm S1 S2 S3 S4 S5 S6 S7 S8 S9
-.		rn A8 A9
-.		rn A7 A8
-.		rn A6 A7
-.		rn A5 A6
-.		rn A4 A5
-.		rn A3 A4
-.		rn A2 A3
-.		rn A1 A2
-.		ds A1 Li
-.	 	nr fV \\n(aC+1
-.		nr aC 0
-.		fV
+.	nr aP \\n(aP+1
+.	lnr _l_ 0
+.	length _l_ "\\*[A\\n(aP]
+.	nr aP \\n(aP-1
+.	ie \\n[_l_]>2 .Li
+.	el \{\
+.		\" Db on
+.		if (\\n(aP>0) \{\
+.			ds A\\n(aP Li
+.			nr aP \\n(aP -1
+.		\}
+.		if (\\n(aP==0) \{\
+.			rm C0 C1 C2 C3 C4 C5 C6 C7 C8 C9
+.			rm S1 S2 S3 S4 S5 S6 S7 S8 S9
+.			rn A8 A9
+.			rn A7 A8
+.			rn A6 A7
+.			rn A5 A6
+.			rn A4 A5
+.			rn A3 A4
+.			rn A2 A3
+.			rn A1 A2
+.			ds A1 Li
+.		 	nr fV \\n(aC+1
+.			nr aC 0
+.			fV
+.		\}
+.		ds qL \&\\*(sL
+.		ds qR \&\\*(sR
+.		En
+.		\" Db off
 .	\}
-.	ds qL \&\\*(sL
-.	ds qR \&\\*(sR
-.	En
-.\" Db off
-.\}
 ..
 .\" NS Sh macro - Section Headers
 .\" NS nS register - Section Header SYNOPSIS flag
@@ -223,51 +194,57 @@
 .\" NS nA register - Section Header SEE ALSO flag
 .\" NS nT register - Section Header STANDARDS flag
 .de Sh
-.nr nS 0
-.nr sE 0
-.nr iS 0
-'ad
-.ie "\\$1"NAME" \{\
-.       hK
-'       in 0
-.\}
-.el \{\
-.       nr nS 0
-.       nr nA 0
-.       nr nF 0
-.       nr nT 0
-.       nr nY 0
-.       nr oT 0
-.       if "\\$1"SYNOPSIS" \{\
-.		na
-.		nr nS 1
+.	nr nS 0
+.	nr sE 0
+.	nr iS 0
+'	ad
+.	ie \\$1NAME \{\
+.		hK
+'		in 0
 .	\}
-.       if "\\$1"DESCRIPTION" \{\
-.		nr fY 0
-.		nr fZ 0
-.		nr fB 0
-.		nr Fb 0
-.		ds Fb
+.	el \{\
+.		nr nS 0
+.		nr nA 0
+.		nr nF 0
+.		nr nT 0
+.		nr nY 0
+.		nr oT 0
+.		ie \\$1SYNOPSIS \{\
+.			na
+.			nr nS 1
+.		\}
+.		el .ie \\$1DESCRIPTION \{\
+.			nr fY 0
+.			nr fZ 0
+.			nr fB 0
+.			nr Fb 0
+.			ds Fb
+.		\}
+.		el .ie \\$1SEE \{\
+.			nr nA 1
+.			na
+.		\}
+.		el .ie \\$1FILES .nr nF 1
+.		el .ie \\$1STANDARDS .nr nT 1
+.		el .ie \\$1AUTHORS .nr nY 1
+.		el .if \\$1SEE .nr sE 1
+.		in 0
+.		nr aN 0
 .	\}
-.       if "\\$1"SEE" \{\
-.               nr nA 1
-.               na
-.       \}
-.       if "\\$1"FILES" .nr nF 1
-.       if "\\$1"STANDARDS" .nr nT 1
-.       if "\\$1"AUTHORS" .nr nY 1
-.	if "\\$1"SEE" .nr sE 1
-.       in 0
-.       nr aN 0
-.\}
-.pL
-'sp
-.ns
-.ta .5i 1i 1.5i 2i 2.5i 3i 3.5i 4i 4.5i 5i 5.5i 6i 6.5i
-.if !\\n(cR .ne 3
-'fi
-\&\\*(sH\\$1 \|\\$2 \|\\$3 \|\\$4 \|\\$5 \|\\$6 \|\\$7 \|\\$8 \|\\$9
-\&\fP\s0\&
-.in \\n(.iu+\\n(Tiu
-.ns
+.	pL
+'	sp
+.	ns
+.	ta .5i 1i 1.5i 2i 2.5i 3i 3.5i 4i 4.5i 5i 5.5i 6i 6.5i
+.	if !\\n(cR .ne 3
+'	fi
+.	if 1 \&\\*(sH\\$1
+.	shift
+.	while \\n(.$ \{\
+.		if 1 \|\\$1
+.		shift
+.	\}
+.	if 1 \&\fR\s10\&
+.	in \\n(.iu+\\n(Tiu
+.	ns
 ..
+.\" vim:set syntax=nroff:
