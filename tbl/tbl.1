@@ -111,6 +111,13 @@ option causes
 .I tbl
 not to produce fractional line motions.
 .RE
+.SH "EXTENSIONS TO THE AT&T TBL KEY LETTERS
+.TP
+.BR x , X
+Expand column to make table as wide as the current line length.
+If there is more then one column with a x specifier these
+columns are expanded by the same amount.
+This feature had been a GNU tbl extension.
 .SH EXAMPLE
 As an example, letting \\t represent a tab (which should
 be typed as a genuine tab)

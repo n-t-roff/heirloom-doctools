@@ -17,6 +17,7 @@
 
 /*
  * Portions Copyright (c) 2005 Gunnar Ritter, Freiburg i. Br., Germany
+ * Portions Copyright (c) 2015 Carsten Kunze
  *
  * Sccsid @(#)t6.c	1.6 (gritter) 2/8/06
  */
@@ -151,7 +152,7 @@ maktab(void)
 		{
 			if (evenup[icol]==0) continue;
 			fprintf(tabout, ".if \\n(%d>\\n(%d .nr %d \\n(%d\n",
-			icol+CRIGHT, TMP, TMP, icol+CRIGHT);
+			    icol+CRIGHT, TMP, TMP, icol+CRIGHT);
 		}
 		for(icol=0; icol<ncol; icol++)
 		{
@@ -176,13 +177,28 @@ maktab(void)
 		for(icol=0; icol<ncol; icol++)
 			fprintf(tabout, "+\\n(%d", icol+CRIGHT);
 		fprintf(tabout, "\n");
-		fprintf(tabout, ".nr %d \\n(.l-\\n(.i-\\n(%d\n", TMP, TMP);
+		fprintf(tabout, ".nr %d \\n(.l-\\n(.i-\\n(%d%s\n", TMP, TMP,
+		    (utf8 || tlp) && (boxflg || dboxflg || allflg) ? "-1n" : "");
 		if (boxflg || dboxflg || allflg)
 			tsep += 1;
 		else
 			tsep -= sep[ncol-1];
 		fprintf(tabout, ".nr %d \\n(%d/%d\n", TMP, TMP,  tsep);
 		fprintf(tabout, ".if \\n(%d<1n .nr %d 1n\n", TMP, TMP);
+	}
+	else if (xcolflg) {
+		fprintf(tabout, ".nr %d 0", TMP);
+		for(icol=0; icol<ncol; icol++)
+			fprintf(tabout, "+\\n(%d", icol+CRIGHT);
+		fprintf(tabout, "\n");
+		fprintf(tabout, ".nr %d \\n(.l-\\n(.i-\\n(%d-%dn/%d\n", TMP,
+		    TMP, tsep + ((boxflg || dboxflg || allflg) ? 
+		    (utf8 || tlp) ? 2 : 1 : -1), xcolflg);
+		for(icol=0; icol<ncol; icol++) {
+			if (!xcol[icol]) continue;
+			fprintf(tabout, ".nr %d +\\n(%d\n", icol+CRIGHT, TMP);
+		}
+		fprintf(tabout, ".nr %d 1n\n", TMP);
 	}
 	else
 		fprintf(tabout, ".nr %d 1n\n", TMP);

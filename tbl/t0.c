@@ -27,6 +27,7 @@ int MAXLIN;
 int MAXCOL;
 int MAXHEAD;
 int expflg = 0;
+int xcolflg;
 int ctrflg = 0;
 int boxflg = 0;
 int dboxflg = 0;
@@ -55,6 +56,7 @@ char ***csize;	/* csize[MAXHEAD][MAXCOL][20] */
 char ***vsize;	/* vsize[MAXHEAD][MAXCOL][20] */
 int **lefline;	/* lefline[MAXHEAD][MAXCOL] */
 char **cll;	/* cll[MAXCOL][CLLEN] */
+int *xcol;
 /*char *rpt[MAXHEAD][MAXCOL];*/
 /*char rpttx[MAXRPT];*/
 int *stynum;	/* stynum[MAXLIN+1] */

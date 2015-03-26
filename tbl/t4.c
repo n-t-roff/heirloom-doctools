@@ -17,6 +17,7 @@
 
 /*
  * Portions Copyright (c) 2005 Gunnar Ritter, Freiburg i. Br., Germany
+ * Portions Copyright (c) 2015 Carsten Kunze
  *
  * Sccsid @(#)t4.c	1.7 (gritter) 9/8/06
  */
@@ -266,6 +267,12 @@ readspec(void)
 			if (!stopc)
 				un1getc(c);
 			continue;
+		case 'x': case 'X':
+			if (!sawchar || icol < 1) break;
+			xcol[icol-1] = 1;
+			xcolflg++;
+			expflg = 0;
+			break;
 		case 'e': case 'E':
 			if (sawchar == 0)
 				continue;
@@ -333,6 +340,9 @@ morecols(int n)
 	for (j=MAXCOL; j<maxcol; j++)
 		if ((cll[j] = calloc(CLLEN, sizeof **cll)) == NULL)
 			return(0);
+	if ((vp = realloc(xcol, maxcol * sizeof(*xcol))) == NULL)
+		return 0;
+	xcol = vp;
 	if ((vp = realloc(evenup, maxcol * sizeof *evenup)) == NULL)
 		return(0);
 	evenup = vp;
@@ -430,14 +440,16 @@ moreheads(int n)
 static void
 initspec(int scol)
 {
-int icol;
-for(icol=scol; icol<MAXCOL; icol++)
+	int icol;
+	for(icol=scol; icol<MAXCOL; icol++)
 	{
-	sep[icol]= -1;
-	evenup[icol]=0;
-	cll[icol][0]=0;
-	inithead(0, icol);
+		sep[icol]= -1;
+		evenup[icol]=0;
+		cll[icol][0]=0;
+		xcol[icol] = 0;
+		inithead(0, icol);
 	}
+	xcolflg = 0;
 }
 static void
 inithead(int shead, int icol)
