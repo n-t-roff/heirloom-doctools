@@ -45,6 +45,34 @@
 .if n \{\
 .       so @MACDIR@/doc-nroff
 .\}
+.ds <= \(<=
+.ds >= \(>=
+.ds Lq \(lq
+.ds lq \(lq
+.ds Rq \(rq
+.ds rq \(rq
+.ds ua \(ua
+.ds aa \(aa
+.ds ga \(ga
+.ds sL \(oq
+.ds sR \(cq
+.ds q  \(dq
+.ds Am &
+.ds R  \(rg
+.ds Tm \(tm
+.ds va \(va
+.\" Math stuff
+.ds Pi \(*p
+.ds Ne \(!=
+.ds Le \(<=
+.ds Ge \(>=
+.ds Lt <
+.ds Gt >
+.ds Pm \(+-
+.ds If \(if
+.ds Na \fINaN\fP
+.ds Ba \fR\&|\fP
+.\"
 .so @MACDIR@/doc-common
 .so @MACDIR@/doc-syms
 .\" NS Db macro - start/stop DEBUG MODE

@@ -38,6 +38,7 @@
 .\" tmac.mdoc-ditroff
 .\"     %beginstrip%
 .\"
+.so @MACDIR@/tmac.gchar
 .ds aD \fI\s10
 .ds aR \f(CI\s10
 .ds cM \f(CB\s10
@@ -97,28 +98,6 @@
 .po 1.i
 .nr dV .5v
 ..
-.ds <= \(<=
-.ds >= \(>=
-.ds Lq \&``
-.ds Rq \&''
-.ds ua \(ua
-.ds aa \(aa
-.ds ga \(ga
-.ds sR \&'
-.ds sL \&`
-.ds q \&"
-.\" Math stuff
-.ds Pi \(*p
-.ds Ne \(!=
-.ds Le \(<=
-.ds Ge \(>=
-.ds Lt <
-.ds Gt >
-.ds Pm \(+-
-.ds If \(if
-.ds Na \fINaN\fP
-.ds Ba \fR\&|\fP
-.\"
 .nr gX 0
 .de hK
 .	ds hT \\*(dT

@@ -53,6 +53,7 @@
 .	rm ad
 .\}
 .el \{\
+.	so @MACDIR@/tmac.gchar
 .	hy 14
 .\}
 '	\" reset the basic page layout
