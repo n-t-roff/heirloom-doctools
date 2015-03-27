@@ -76,12 +76,12 @@
 .de }H
 .	ev 1
 .	}C
-'	sp .5i
+.	sp .5i
 .	ft 1
 .	ps \\nS
 .	lt \\n(LLu
 .	tl \\*(]H\\*(]D\\*(]H
-'	sp .5i
+.	sp .5i
 .	ev
 .	ns
 ..
@@ -151,7 +151,7 @@
 .		em }F
 .	\}
 .	\" Work around for \{ bug in Pod::Man
-.	if !\n(cR .if \\n(nl .bp 1
+.	if \n(cR=0&\\n(nl .}H
 .	}E
 .	DT
 .	nr )I .5i

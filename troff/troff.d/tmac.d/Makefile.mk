@@ -31,5 +31,5 @@ clean:
 
 mrproper: clean
 
-$(OMACS): tmac.gchar
+$(OMACS): $(IMACS) tmac.gchar
 	sed 's:@MACDIR@:$(MACDIR):; s:@LIBDIR@:$(LIBDIR):' $(@:%.out=%) >$@
