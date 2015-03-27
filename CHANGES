@@ -1,6 +1,8 @@
 2015-03-27
     man, mdoc:  Special characters for troff updated.
 
+    Bugfix:  pic:  C precedence error found by clang.
+
 2015-03-26
     tbl:  Key letter 'x' added (a GNU tbl extension).
 
