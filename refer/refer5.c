@@ -63,9 +63,13 @@ putsig (int nf, char **flds, int nref, char *nstline,
 					}
 				}
 			} else if (t[0] == 0) {
-				snprintf(format, sizeof(format),
-					nmlen>0 ? "%%.%ds%%s" : "%%s%%s",
-					nmlen);
+				if (nmlen > 0) {
+					snprintf(format, sizeof(format),
+						"%%.%ds%%s", nmlen);
+				} else {
+					snprintf(format, sizeof(format),
+						"%%s%%s");
+				}
 				/* format is %s%s for default labels */
 				/* or %.3s%s eg if wanted */
 				if (fpar(nf, flds, t2, sizeof(t2), 'D', 1, 0)) {
@@ -245,7 +249,7 @@ putkey(int nf, char **flds, int nref, char *keystr)
 	if (nf <= 0)
 		fprintf(fo, "%s%c%c", labtab[nref], labc[nref], sep);
 	else {
-		while (ctype = *keystr++) {
+		while ((ctype = *keystr++)) {
 			count = atoi(keystr);
 			if (*keystr=='+')
 				count=999;

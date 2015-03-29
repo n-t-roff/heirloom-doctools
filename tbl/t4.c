@@ -53,7 +53,7 @@ readspec(void)
 	int icol, c, sawchar, stopc, i;
 	char sn[10], *snp, *temp;
 	sawchar=icol=0;
-	while (c=get1char())
+	while ((c=get1char()))
 	{
 		switch(c)
 		{
@@ -175,7 +175,7 @@ readspec(void)
 				continue;
 			if (icol<=0) continue;
 			temp = snp = csize[nclin][icol-1];
-			while (c = get1char())
+			while ((c = get1char()))
 			{
 				if (c== ' ' || c== tab || c=='\n') break;
 				if (c=='-' || c == '+')
@@ -200,7 +200,7 @@ readspec(void)
 				continue;
 			if (icol<=0) continue;
 			temp = snp = vsize[nclin][icol-1];
-			while (c = get1char())
+			while ((c = get1char()))
 			{
 				if (c== ' ' || c== tab || c=='\n') break;
 				if (c=='-' || c == '+')
@@ -246,7 +246,7 @@ readspec(void)
 				}
 			* end commented out code ... */
 			stopc=0;
-			while (c = get1char())
+			while ((c = get1char()))
 			{
 				if (snp==cll[icol-1] && c==' ')
 					continue;

@@ -93,7 +93,7 @@ void slug::slugout(int col)
 			typname(), serialno(), seen, headstr());
 	if (type == TM) {
 		char *p;
-		if (p = strindex(bufptr(dp), "x X TM "))
+		if ((p = strindex(bufptr(dp), "x X TM ")))
 			p += strlen("x X TM ");		// skip junk
 		else
 			FATAL("strange TM [%s]\n", headstr());

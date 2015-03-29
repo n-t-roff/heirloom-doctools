@@ -385,7 +385,7 @@ main(int argc,char **argv)
 
 	if (infile!=0 && (inptr = fopen(infile,"r")) == NULL)
 		diag("Cannot open data: ",infile);
-	while(pend=getline())
+	while((pend=getline()))
 		cmpline(pend);
 	fclose(sortptr);
 
@@ -484,7 +484,7 @@ cmpline(const wchar_t *pend)
 			if(isabreak(*pchar)) {
 				hp = &hasht[hash(pstrt,pchar)];
 				pchar--;
-				while(cp = *hp++){
+				while((cp = *hp++)){
 					if(hp == &hasht[MAXT])
 						hp = hasht;
 	/* possible match */

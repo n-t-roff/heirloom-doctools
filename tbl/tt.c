@@ -111,7 +111,7 @@ thish(int i, int c)
 	if (s==0 || (point((intptr_t)s) && *s==0))
 		return(1);
 	if (vspen(s)) return(1);
-	if (t=barent( s))
+	if ((t=barent( s)))
 		return(t);
 	return(0);
 }

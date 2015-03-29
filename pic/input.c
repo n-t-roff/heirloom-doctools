@@ -593,7 +593,7 @@ void shell_init(void)	/* set up to interpret a shell command */
 
 void shell_text(char *s)	/* add string to command being collected */
 {
-	while (*shellp++ = *s++) {
+	while ((*shellp++ = *s++)) {
 		if (shellp >= &shellbuf[sizeof shellbuf])
 			FATAL("shell command too long");
 	}

@@ -119,7 +119,7 @@ maktab(void)
 			fprintf(tabout, ".if \\n(%d<\\n(%d .nr %d \\n(%d\n",icol+CRIGHT, TMP, icol+CRIGHT, TMP);
 		}
 		for(ilin=0; ilin<nlin; ilin++)
-			if (k=lspan(ilin, icol))
+			if ((k=lspan(ilin, icol)))
 			{
 				s=table[ilin][icol-k].col;
 				if (!real(s) || barent(s) || vspen(s) ) continue;

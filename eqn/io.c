@@ -114,7 +114,7 @@ getline(char **sp, size_t *np) {
 			esc++;
 		else {
 			if (c=='\n' || c==EOF ||
-					c==lefteq && !esc && !par && !brack)
+					(c==lefteq && !esc && !par && !brack))
 				break;
 			if (par)
 				par--;

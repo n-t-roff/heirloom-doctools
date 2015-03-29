@@ -257,22 +257,24 @@ putline (
 			fprintf(tabout, "%c", F1);
 		}
 		if (ip>=0)
-		if (vspen(table[ip][c].col))
 		{
-			exvspen = (c+1 < ncol) && vspen(table[ip][c+1].col) &&
-				(topat[c] == topat[c+1]) &&
-				(cmidx == (ctop [stynum[nl]][c+1]==0)) && (left(i,c+1,&lwid)<0);
-			if (exvspen==0)
+			if (vspen(table[ip][c].col))
 			{
-				fprintf(tabout, "\\v'(\\n(\\*(#du-\\n(^%cu", c+'a');
-				if (cmidx)
-					fprintf(tabout, "-((\\n(#-u-\\n(^%cu)/2u)", c+'a');
-				vct++;
-				fprintf(tabout, ")'");
+				exvspen = (c+1 < ncol) && vspen(table[ip][c+1].col) &&
+					(topat[c] == topat[c+1]) &&
+					(cmidx == (ctop [stynum[nl]][c+1]==0)) && (left(i,c+1,&lwid)<0);
+				if (exvspen==0)
+				{
+					fprintf(tabout, "\\v'(\\n(\\*(#du-\\n(^%cu", c+'a');
+					if (cmidx)
+						fprintf(tabout, "-((\\n(#-u-\\n(^%cu)/2u)", c+'a');
+					vct++;
+					fprintf(tabout, ")'");
+				}
 			}
+			else
+				exvspen=0;
 		}
-		else
-			exvspen=0;
 		/* if lines need to be split for gcos here is the place for a backslash */
 		if (vct > 7 && c < ncol)
 		{

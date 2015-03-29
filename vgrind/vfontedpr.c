@@ -862,7 +862,7 @@ iskw(register char *s)
 	while (++cp, isidchr(*cp))
 		i++;
 
-	while (cp = *ss++) {
+	while ((cp = *ss++)) {
 		if (!STRNCMP(s,cp,i) && !isidchr(cp[i]))
 			return (i);
 	}

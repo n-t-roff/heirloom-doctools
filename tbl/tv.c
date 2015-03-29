@@ -162,7 +162,7 @@ midbcol(int i, int c)
 		c--;
 	if (ct=='-' || ct == '=')
 		return(ct);
-	if (ct=barent(table[i][c].col))
+	if ((ct=barent(table[i][c].col)))
 		return(ct);
 	return(0);
 }

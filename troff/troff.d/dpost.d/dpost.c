@@ -1478,8 +1478,8 @@ conv(
 	    case 'D':			/* drawing functions */
 		    endtext();
 		    getdraw();
-		    if ( size != lastsize || size == FRACTSIZE &&
-			    fractsize != lastfractsize ||
+		    if ( size != lastsize || (size == FRACTSIZE &&
+			    fractsize != lastfractsize) ||
 			    horscale != lasthorscale) {
 			subfont = 0;
 			t_sf(0);
@@ -1675,7 +1675,7 @@ devcntrl(
 		 * it does not work when DESC is a text file because
 		 * the fonts are in a different directory.
 		 */
-		if (dev.afmfonts || devname[0] == 'p' && devname[1] == 's')
+		if (dev.afmfonts || (devname[0] == 'p' && devname[1] == 's'))
 		    realdev = devname;
 		else
 		    n_strcpy(devname, realdev, sizeof(devname));
@@ -1959,8 +1959,8 @@ loadfont (
 	    p = s;
 	else
 	    p++;
-	if (p[0] == 'S' && (p[1] == '\0' || digitchar(p[1]&0377) &&
-		p[2] == '\0' || p[2] == '.'))
+	if (p[0] == 'S' && (p[1] == '\0' || (digitchar(p[1]&0377) &&
+		p[2] == '\0') || p[2] == '.'))
 	    forcespecial = 1;
 	for (i = 0; i < afmcount; i++)
 	    if (afmfonts[i] && strcmp(afmfonts[i]->path, path) == 0 &&
@@ -3696,7 +3696,7 @@ oprep(int stext)
 	endtext();
 
     if ( font != lastfont || size != lastsize || subfont != lastsubfont ||
-	    size == FRACTSIZE && fractsize != lastfractsize ||
+	    (size == FRACTSIZE && fractsize != lastfractsize) ||
 	    horscale != lasthorscale) {
 	t_sf(0);
     }
@@ -4631,8 +4631,8 @@ pref(const char *lp, FILE *fp)
     int	c;
 
     while ((c = *lp++ & 0377) != 0 && c != '\n') {
-	if (c >= '0' && c <= '9' || c >= 'a' && c <= 'z' ||
-		c >= 'A' && c <= 'Z')
+	if ((c >= '0' && c <= '9') || (c >= 'a' && c <= 'z') ||
+		(c >= 'A' && c <= 'Z'))
 	    putc(c, fp);
 	else
 	    fprintf(fp, "$%2x", c);

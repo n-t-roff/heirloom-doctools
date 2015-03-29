@@ -45,7 +45,7 @@ dofile(FILE *f, char *name)
 
 	lp=0;
 	if (wholefile==0)
-		while (lim = grec(line,f))
+		while ((lim = grec(line,f)))
 		{
 # if D1
 			fprintf(stderr, "line: /%s",line);

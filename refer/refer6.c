@@ -180,7 +180,7 @@ caps(char *a, char *b)
 
 	p = b;
 	alph = 0;
-	while (c = *a++) {
+	while ((c = *a++)) {
 		this = isalpha(c);
 		if (this && alph == 1) {
 			*b++ = '\\';

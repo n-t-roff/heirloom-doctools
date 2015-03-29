@@ -695,7 +695,9 @@ ptout1(void)
 		}
 		if (!w)
 			for (j = phyw / t.Char; j > 0; j--)
+			{
 				oput('\b');
+			}
 	}
 }
 

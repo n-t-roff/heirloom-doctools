@@ -85,5 +85,5 @@ return( a>b ? a : b);
 void 
 tcopy(char *s, char *t)
 {
-	while (*s++ = *t++);
+	while ((*s++ = *t++));
 }

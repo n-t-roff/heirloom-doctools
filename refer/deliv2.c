@@ -32,7 +32,7 @@ int
 hash (const char *s)
 {
 	int c, n;
-	for(n=0; c= *s; s++)
+	for(n=0; (c= *s); s++)
 		n += (c*n+ c << (n%4));
 	return(n>0 ? n : -n);
 }

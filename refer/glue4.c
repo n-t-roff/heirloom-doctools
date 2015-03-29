@@ -50,7 +50,7 @@ grepcall (char *in, char *out, char *arg)
 # if D1
 	fprintf(stderr, "in grepcall, gfile %s in %o out %o\n", gfile,in,out);
 # endif
-	for(cv[nv++] = "fgrep"; c = *inp; inp++)
+	for(cv[nv++] = "fgrep"; (c = *inp); inp++)
 	{
 		if (c== ' ')
 			c = *inp = 0;

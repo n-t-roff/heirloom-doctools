@@ -66,7 +66,7 @@ gettbl(void)
 		else instead[nlin] = 0;
 		if (nodata(nlin))
 		{
-			if (ch = oneh(nlin))
+			if ((ch = oneh(nlin)))
 				fullbot[nlin]= ch;
 			nlin++;
 			nslin++;

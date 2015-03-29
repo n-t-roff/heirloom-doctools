@@ -30,7 +30,7 @@ maknew(char *str)
 	int c;
 	char *dpoint, *p, *q, *ba;
 	p = str;
-	for (ba= 0; c = *str; str++)
+	for (ba= 0; (c = *str); str++)
 		if (c == '\\' && *(str+1)== '&')
 			ba=str;
 	str=p;
@@ -39,7 +39,7 @@ maknew(char *str)
 		for (dpoint=0; *str; str++)
 			{
 			if ((*str&0377)==decimalpoint && !ineqn(str,p) &&
-				(str>p && digit(*(str-1)) ||
+				((str>p && digit(*(str-1))) ||
 				digit(*(str+1))))
 					dpoint=str;
 			}
@@ -66,7 +66,7 @@ maknew(char *str)
 	do {
 		if (exstore > ba)
 			error("numeric field too big");
-	} while (*exstore++ = *str++);
+	} while ((*exstore++ = *str++));
 	*p = 0;
 	return(q);
 	}
@@ -75,7 +75,7 @@ ineqn(char *s, char *p)
 {
 /* true if s is in a eqn within p */
 int ineq = 0, c;
-while (c = *p)
+while ((c = *p))
 	{
 	if (s == p)
 		return(ineq);

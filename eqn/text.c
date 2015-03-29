@@ -168,7 +168,7 @@ trans(int c,char *p1) {
 		if (c=='*' && cs[csp-1] == '(') {
 			cs[csp++] = p1[psp++];
 			cs[csp++] = p1[psp++];
-		} else if (c == '[' || c == '*' && cs[csp-1] == '[') {
+		} else if (c == '[' || (c == '*' && cs[csp-1] == '[')) {
 			do
 				cs[csp++] = p1[psp++];
 			while (p1[psp-1] != ' ' && p1[psp-1] != '\t' &&

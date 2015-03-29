@@ -165,11 +165,13 @@ dumprequest(
 	while ( fgets(buf, sizeof(buf), fp_in) != NULL )
 	    if ( buf[0] == '@' && strncmp(want, &buf[1], strlen(want)) == 0 )
 		while ( fgets(buf, sizeof(buf), fp_in) != NULL )
+		{
 		    if ( buf[0] == '#' || buf[0] == '%' )
 			continue;
 		    else if ( buf[0] != '@' )
 			fprintf(fp_out, "%s", buf);
 		    else break;
+		}
 	fclose(fp_in);
     }	/* End if */
 

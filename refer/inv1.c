@@ -118,7 +118,7 @@ main(int argc, char **argv)
 	fb = 0;
 	if (appflg )
 	{
-		if (fb = fopen(nmb, "r"))
+		if ((fb = fopen(nmb, "r")))
 		{
 			snprintf(tmpb, sizeof tmpb, "junk%dj", (int)getpid());
 			ftb = fopen(tmpb, "w");

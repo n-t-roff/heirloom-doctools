@@ -177,7 +177,7 @@ range *generator::next()
 {
 	range *r;
 	if (child) {
-		if (r = child->next())
+		if ((r = child->next()))
 			return r;
 		delete child;
 		child = 0;
@@ -404,6 +404,7 @@ static void fixslugs()		// adjust bases and dv's, set parameters, etc.
 		if (p->type == PAGE)
 			prevV = 0;
 		if (p->dv != 0)
+		{
 			if (prevV) {
 				prevV->base = max(prevV->base, p->dv);
 				p->dv = 0;
@@ -411,6 +412,7 @@ static void fixslugs()		// adjust bases and dv's, set parameters, etc.
 				WARNING("s slug (type %d) has dv = %d, line %d\n",
 					p->typname(), p->type, p->dv, p->lineno());
 			}
+		}
 	}
 	prevV = 0;
 	int firstNP = 0, firstFO = 0, firstPL = 0;

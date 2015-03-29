@@ -195,10 +195,12 @@ huntmain(int argc,char **argv)
 			fprintf(stderr,"Read pointer files\n");
 # endif
 			if (master.a == NULL)
+			{
 				if (iflong)
 					master.b = zalloc(lmaster, sizeof(long));
 				else
 					master.a = zalloc(lmaster, sizeof(int));
+			}
 			if (master.a == NULL)
 				err("no space for answer list", 0);
 		}

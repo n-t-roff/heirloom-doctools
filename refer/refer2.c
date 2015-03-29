@@ -131,7 +131,7 @@ doref(char *line1)
 			*++p = 0;
 		case 1:
 			if (endpush)
-				if (nr = chkdup(answer)) {
+				if ((nr = chkdup(answer))) {
 					if (bare < 2) {
 						nf = tabs(flds, one);
 						nf += tabs(flds+nf, dbuff);
@@ -168,7 +168,7 @@ newline(const char *s)
 {
 	int k = 0, c;
 
-	while (c = *s++)
+	while ((c = *s++))
 		if (c == '\n')
 		k++;
 	return(k);

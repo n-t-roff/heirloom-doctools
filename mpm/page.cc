@@ -83,7 +83,7 @@ static void movefloats(stream *scratch, double scale)
 static range *filter(generator *g)
 {
 	range *r;
-	while (r = g->next())
+	while ((r = g->next()))
 		if (r->isvbox() || r->issp())
 			break;
 	return r;
@@ -98,12 +98,14 @@ static void trimspace(stream *scratch)
 		r->setheight(0);		// zap leading SP
 	for ( ; (r = filter(&g)) != 0; prevr = r)
 		if (r->issp())
+		{
 			if (prevr && prevr->issp()) {
 						// coalesce adjacent SPs
 				r->setheight(max(r->rawht(), prevr->height()));
 				prevr->setheight(0);
 			} else			// a VBOX intervened
 				r->setheight(r->rawht());
+		}
 	if (prevr && prevr->issp())		// zap *all* trailing space
 		prevr->setheight(0);		// (since it all coalesced
 						// into the last one)
@@ -120,7 +122,7 @@ static void justify(stream *scratch, int wantht)
 	int adjht = scratch->height();
 					// Find all the spaces.
 	generator g;
-	for (g = scratch; r = g.next(); )
+	for (g = scratch; (r = g.next()); )
 		if (r->issp() && r->height() > 0) {
 			nsp++;
 			hsp += r->height();
@@ -135,7 +137,7 @@ static void justify(stream *scratch, int wantht)
 	if (excess <= 0 || nsp == 0)
 		return;
 					// Redistribute the excess space.
-	for (g = scratch; r = g.next(); )
+	for (g = scratch; (r = g.next()); )
 		if (r->issp() && r->height() > 0) {
 			int delta = (int) ((float)(r->height()*excess)/hsp + 0.5);
 			if (dbg & 16)
@@ -369,9 +371,10 @@ void page::tryout()
 			compose(FINAL);
 		if (wouldfit(stage, &definite, pagesize - twocol->height()))
 			commit();
-		else if (stage->current()->breakable() || blank()
+		else if (stage->current()->breakable() || (blank()
 			&& peeloff(stage,
-				pagesize - (definite.height() + twocol->height()))) {
+				pagesize - (definite.height() +
+				twocol->height())))) {
 			// first add the peeled-off part that fits
 			adddef(stage->dequeue());
 			// then send the rest back for later

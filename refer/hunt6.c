@@ -88,7 +88,7 @@ baddrop(unsigned *mptr, int nf, FILE *fc, int nitem, char **qitem,
 			fprintf(stderr, "not auxil try rprog %c\n",
 				rprog? 'y': 'n');
 # endif
-			for(s=res; c= *s; s++)
+			for(s=res; (c= *s); s++)
 				if (c == ';' || c == '\n')
 				{
 					*s=0; 
@@ -141,10 +141,12 @@ baddrop(unsigned *mptr, int nf, FILE *fc, int nitem, char **qitem,
 			else
 				master.a[g++] = master.a[i];
 			if (full >= g)
+			{
 				if (soutput==0)
 					fputs(output, stdout);
 				else
 					strcpy (soutput, output);
+			}
 		}
 # ifdef D1
 		fprintf(stderr, "after fgrep\n");
@@ -160,7 +162,7 @@ auxil(char * res, char *output)
 	long lp, c; 
 	int len;
 	if (fd==0)return(0);
-	while (c = *res++) 
+	while ((c = *res++))
 	{
 		if (c == ';')
 		{
