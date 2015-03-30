@@ -23,11 +23,8 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <unistd.h>
-#if defined(SYS_OpenBSD)
-# define n_strcpy(dst, src, size) strlcpy(dst, src, size)
-#else
-# define n_strcpy(dst, src, size) strcpy(dst, src)
-#endif
+#include "global.h"
+
 /*
  * grindcap - routines for dealing with the language definitions data base
  *	(code stolen almost totally from termcap)

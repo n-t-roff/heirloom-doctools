@@ -25,11 +25,6 @@
 #else
 #define	USED
 #endif
-#if defined(SYS_OpenBSD)
-# define n_strcpy(dst, src, size) strlcpy(dst, src, size)
-#else
-# define n_strcpy(dst, src, size) strcpy(dst, src)
-#endif
 static const char sccsid[] USED = "@(#)/usr/ucb/checknr.sl	1.3 (gritter) 11/6/05";
 
 /*
@@ -44,6 +39,7 @@ static const char sccsid[] USED = "@(#)/usr/ucb/checknr.sl	1.3 (gritter) 11/6/05
 #include <unistd.h>
 #include <string.h>
 #include <ctype.h>
+#include "global.h"
 
 static	int	maxstk;	/* Stack size */
 #define	MAXBR	100	/* Max number of bracket pairs known */

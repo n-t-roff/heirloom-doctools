@@ -1,3 +1,4 @@
+.do xflag 3
 .char \(<>         \[arrowboth]
 .char \(-+         \[uni2213]
 .char \(<<         \[uni226A]

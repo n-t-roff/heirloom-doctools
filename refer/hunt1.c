@@ -141,7 +141,7 @@ main(int argc,char **argv)
 		n_strcpy (oldname,nma, sizeof(oldname));
 		n_strcpy (nmb, nma, sizeof(nmb)); 
 		n_strcpy (nmc, nmb, sizeof(nmc)); 
-		n_strcpy(nmd,nma, sizeof(nma));
+		n_strcpy(nmd,nma, sizeof(nmd));
 		n_strcat (nma, ".ia", sizeof(nma));
 		n_strcat (nmb, ".ib", sizeof(nmb));
 		n_strcat (nmc, ".ic", sizeof(nmc));

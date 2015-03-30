@@ -11,6 +11,8 @@
 
 /*	Sccsid @(#)pic.h	1.6 (gritter) 12/5/05	*/
 
+#include "global.h"
+
 #ifndef PI
 #define PI 3.1415926535897932384626433832795028841971693993751
 #endif
@@ -19,14 +21,6 @@
 #define	MAXHT	11	/* change to taste without peril */
 
 #define	dprintf	if(dbg)printf
-
-#if defined(SYS_OpenBSD)
-# define n_strcpy(dst,src,siz) strlcpy(dst,src,siz)
-# define n_strcat(dst,src,siz) strlcat(dst,src,siz)
-#else
-# define n_strcpy(dst,src,siz) strcpy(dst,src)
-# define n_strcat(dst,src,siz) strcat(dst,src)
-#endif
 
 extern	void	yyerror(char *);
 extern	void	FATAL(const char *, ...);

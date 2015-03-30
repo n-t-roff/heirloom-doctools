@@ -27,17 +27,10 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include "global.h"
 
 #define	BUF BUFSIZ
 #define	MXFILES 16
-
-#if defined(SYS_OpenBSD)
-# define n_strcpy(dst, src, siz) strlcpy(dst, src, siz)
-# define n_strcat(dst, src, siz) strlcat(dst, src, siz)
-#else
-# define n_strcpy(dst, src, siz) strcpy(dst, src)
-# define n_strcat(dst, src, siz) strcat(dst, src)
-#endif
 
 char tempfile[32];		/* temporary file for sorting keys */
 int tmpfd = -1;

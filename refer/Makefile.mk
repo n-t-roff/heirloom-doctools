@@ -11,7 +11,8 @@ HOBJ = hunt1.o hunt2.o hunt3.o hunt5.o hunt6.o hunt7.o glue5.o refer3.o \
 	hunt9.o shell.o deliv2.o hunt8.o glue4.o tick.o version.o
 
 
-FLAGS = -DMACDIR='"$(MACDIR)"' -DREFDIR='"$(REFDIR)"' $(EUC) -D$(SYSTEM)
+FLAGS =	-DMACDIR='"$(MACDIR)"' -DREFDIR='"$(REFDIR)"' $(EUC) -D$(SYSTEM) \
+	-I../include
 
 .c.o:
 	$(CC) $(CFLAGS) $(WARN) $(FLAGS) $(CPPFLAGS) -c $<

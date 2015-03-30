@@ -6,7 +6,7 @@ OBJ = n10.o n6.o hytab.o n1.o n2.o n3.o n4.o n5.o \
 	n7.o n8.o n9.o ni.o nii.o suftab.o \
 	version.o
 
-FLAGS = -DNROFF -DUSG $(EUC) -I. -I.. -DMACDIR='"$(MACDIR)"' \
+FLAGS = -DNROFF -DUSG $(EUC) -I. -I.. -I../../include -DMACDIR='"$(MACDIR)"' \
 	-DFNTDIR='"$(FNTDIR)"' -DTABDIR='"$(TABDIR)"' -DHYPDIR='"$(HYPDIR)"' \
 	-DSHELL='"$(SHELL)"' -DRELEASE='"$(RELEASE)"' -D$(SYSTEM)
 

@@ -27,18 +27,11 @@
 
 #include <stdio.h>
 #include <inttypes.h>
+#include "global.h"
 
 #if defined (__GLIBC__) && defined (_IO_getc_unlocked)
 #undef	getc
 #define	getc(f)	_IO_getc_unlocked(f)
-#endif
-
-#if defined(SYS_OpenBSD)
-# define n_strcpy(dst,src,siz) strlcpy(dst,src,siz)
-# define n_strcat(dst,src,siz) strlcat(dst,src,siz)
-#else
-# define n_strcpy(dst,src,siz) strcpy(dst,src)
-# define n_strcat(dst,src,siz) strcat(dst,src)
 #endif
 
 #define	FATAL	1

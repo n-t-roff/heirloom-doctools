@@ -2,7 +2,7 @@ BIN = col
 
 OBJ = col.o
 
-FLAGS = -D$(SYSTEM)
+FLAGS = -D$(SYSTEM) -I../include
 
 all: $(BIN)
 

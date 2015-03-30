@@ -42,6 +42,7 @@
 #include <wctype.h>
 #include <unistd.h>
 #include <wchar.h>
+#include "global.h"
 
 #define	PL 256
 #define	ESC '\033'
@@ -53,11 +54,6 @@
 #define gettext(x) x
 #ifndef iswascii
 # define iswascii(c) isascii(c)
-#endif
-#if defined(SYS_OpenBSD)
-# define col_wcscpy(dst, src, size) wcslcpy(dst, src, size)
-#else
-# define col_wcscpy(dst, src, size) wcscpy(dst, src)
 #endif
 
 wchar_t	*page[PL];
@@ -381,7 +377,7 @@ outc(wchar_t c)
 				}
 				*line = c;
 				if (p1 < lbuffend) {
-					col_wcscpy(line+1, p1, lbuffend -
+					n_wcscpy(line+1, p1, lbuffend -
 					    line - 1);
 				} else {
 					(void) fprintf(stderr,
@@ -481,7 +477,7 @@ store(int lno)
 		/* fprintf(stderr, "%s: no storage\n", pgmname); */
 		exit(2);
 	}
-	col_wcscpy(page[lno], lbuff, bufsiz);
+	n_wcscpy(page[lno], lbuff, bufsiz);
 }
 
 static void
@@ -496,7 +492,7 @@ fetch(int lno)
 	line = lbuff;
 	lp = 0;
 	if (page[lno])
-		col_wcscpy(line, page[lno], LINELN);
+		n_wcscpy(line, page[lno], LINELN);
 }
 
 static void

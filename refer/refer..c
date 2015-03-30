@@ -24,21 +24,13 @@
 #include <stdio.h>
 #include <ctype.h>
 #include <assert.h>
-
+#include "global.h"
 #ifndef	EUC
 #undef	getw
 #define	getw(f)		getc(f)
 #undef	putw
 #define	putw(c, f)	putc(c, f)
 #endif	/* !EUC */
-
-#if defined(SYS_OpenBSD)
-# define n_strcpy(dst, src, siz) strlcpy(dst, src, siz)
-# define n_strcat(dst, src, siz) strlcat(dst, src, siz)
-#else
-# define n_strcpy(dst, src, siz) strcpy(dst, src)
-# define n_strcat(dst, src, siz) strcat(dst, src)
-#endif
 
 #define FLAG 003
 #define AFLAG 007
