@@ -18,7 +18,7 @@ do (
 	case $i in
 	*.otf|*.ttf)
 		supply=$i
-		name=`otfdump -n "$i"` || continue
+		name=`otf_info -n "$i"` || continue
 		;;
 	*)
 		base=`expr "$i" : '\(.*\)\.afm'`
@@ -72,7 +72,7 @@ do (
 			print "\\*(FN"
 			print ".sp |\\nSu"
 		}'
-		otfdump -c "$i" | nawk '{
+		otf_info -c "$i" | nawk '{
 			printf("\t\\s(11\\fX\\[%s]\t\\s8\\fH%s\n", $2, $2)
 			print ".br"
 		}'

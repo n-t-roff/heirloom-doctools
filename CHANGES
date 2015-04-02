@@ -1,3 +1,7 @@
+2015-04-02
+    Renamed otfdump(1) into otf_info(1) to avoid conflicts with
+    other tools with the same name.
+
 2015-03-27
     man, mdoc:  Special characters for troff updated.
 

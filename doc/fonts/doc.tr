@@ -495,7 +495,7 @@ Regular text which ends with\efUsuperscript\efR.
 .LE
 .P
 To retrieve a list of features in an individual font that are available
-with \*[TR,] use ``otfdump \[minus]s font.otf''. Typical useful features are:
+with \*[TR,] use ``otf_info \[minus]s font.otf''. Typical useful features are:
 .sp
 .TS
 center;
@@ -542,7 +542,7 @@ Using alternate character in the word ``hello.''
 Feature mappings result in changes to the same internal data structures as
 the ``.f\;tr'' request. It is thus possible to make adjustments to mappings by
 using ``.f\;tr'' after ``.feature'', or to create personalized variants by using
-``.f\;tr'' based on the data obtained from ``otfdump \[minus]s''.
+``.f\;tr'' based on the data obtained from ``otf_info \[minus]s''.
 .P
 The ``.feature'' request must still be active for a font
 when a character is printed;
@@ -1003,14 +1003,14 @@ a \[asciicircum]=\[asciicircum] pi {r sup 2}
 .LE
 .S "Helper utilities"
 .P
-The \fIotfdump\fR utility shows the contents of an OpenType or TrueType
+The \fIotf_info\fR utility shows the contents of an OpenType or TrueType
 font file just as \*(TR interprets it. It emits an \fCASCII\fR format that
 is readable by humans and can also be used for further processing with
 shell scripts. It is useful to retrieve lists of characters and features
 supported with the font.
 .P
 The shell script ``stuff\&/\&showfont.sh'' in the source code distribution
-uses \*(TR and possibly \fIotfdump\fR to print a map of all characters in an
+uses \*(TR and possibly \fIotf_info\fR to print a map of all characters in an
 \fCAFM\fR, OpenType, or TrueType font along with their \*(PS names.
 .S "Limitations"
 .P
