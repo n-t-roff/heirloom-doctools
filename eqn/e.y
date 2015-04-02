@@ -39,9 +39,7 @@
 #include "e.h"
 #include <stdlib.h>
 #include <inttypes.h>
-#include "y.tab.h"
 
-extern YYSTYPE yyval;
 int	fromflg;
 
 #define	__YYSCLASS	/* to get external access to yyval with HP-UX yacc */

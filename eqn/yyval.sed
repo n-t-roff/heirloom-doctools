@@ -7,7 +7,7 @@
 1,2 {
 	/Bison/ {
 	:look
-		/YYSTYPE/ {
+		/second part of user declarations/ {
 			i\
 			YYSTYPE yyval;
 		:repl
