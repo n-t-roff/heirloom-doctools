@@ -1,3 +1,6 @@
+Release 150406
+==============
+
 2015-04-02
     Renamed otfdump(1) into otf_info(1) to avoid conflicts with
     other tools with the same name.

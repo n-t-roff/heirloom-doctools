@@ -35,8 +35,8 @@ dence.
 The source code has been compiled successfully on:
 
 OpenBSD         5.7
-NetBSD          6.1.5
-FreeBSD         10.1
+NetBSD          6.1.5, 7-CURRENT
+FreeBSD         8.4, 9.3, 10.1, 11-CURRENT
 Linux           Slackware 14.1, OpenSuse 13.2
 
 To build and install manually:
@@ -104,15 +104,21 @@ the following:
   macro package with his own version.
 
 - Thus a complete pipeline to format manual pages for viewing is:
-  tbl -Tlocale input.1|neqn|nroff -Tlocale -mg -msafe -mpadj -mandoc|col -x
+
+    tbl -Tlocale input.1 | neqn | nroff -Tlocale -mg -msafe \
+        -mpadj -mandoc | col -x
 
 - If you like italic text to appear underlined and boldfaced text
   to appear bold on a CRT or X Window System terminal, also add a
   call to the "ul" filter:
-  tbl -Tlocale input.1|neqn|nroff -Tlocale -mg -msafe -mpadj -mandoc|col -x|ul
+
+    tbl -Tlocale input.1 | neqn | nroff -Tlocale -mg -msafe \
+        -mpadj -mandoc | col -x | ul
 
 - To print manual pages with troff, use
-  tbl -g input.1 | eqn | troff -mg -msafe -mpadj -mandoc | dpost | lp
+
+    tbl -g input.1 | eqn | troff -mg -msafe -mpadj -mandoc | \
+        dpost | lp
 
 - You should of course configure your  "man"  command  such  that
   it  executes  these  pipelines  automatically for you.  For the
@@ -127,6 +133,3 @@ the following:
         TCAT=/usr/local/ucb/dpost
         COL=/usr/local/ucb/col -x | ul
         MACSET=-mandoc
-
-
-
