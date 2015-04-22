@@ -70,8 +70,9 @@ install: all
 		$(STRIP) $(ROOT)$(REFDIR)/$$i || exit; \
 	done
 	test -d $(ROOT)$(REFDIR)/papers || mkdir -p $(ROOT)$(REFDIR)/papers
-	$(INSTALL) -c papers/Rbstjissue $(ROOT)$(REFDIR)/papers/Rbstjissue
-	$(INSTALL) -c papers/Rv7man $(ROOT)$(REFDIR)/papers/Rv7man
+	$(INSTALL) -c -m 644 \
+	    papers/Rbstjissue $(ROOT)$(REFDIR)/papers/Rbstjissue
+	$(INSTALL) -c -m 644 papers/Rv7man $(ROOT)$(REFDIR)/papers/Rv7man
 	$(INSTALL) -c papers/runinv $(ROOT)$(REFDIR)/papers/runinv
 	cd $(ROOT)$(REFDIR)/papers && PATH=$(ROOT)$(REFDIR):$$PATH ./runinv
 	for i in addbib.1 lookbib.1 refer.1 roffbib.1 sortbib.1; \
