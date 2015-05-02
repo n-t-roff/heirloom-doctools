@@ -1276,7 +1276,7 @@
 .		\}
 .		el \{\
 .			pB
-.			\\*(L\\n(lC
+.			\\*[L\\n(lC]
 .\".			nr Xt 0
 .			ds xB
 .		\}
@@ -1733,7 +1733,8 @@
 .\" NS L[0-9] registers - stack of list types
 .de Bl
 .ie \\n(.$==0 \{\
-.tm Usage: .Bl [[-hang | -tag] [-width]] [ -item | -enum | -bullet | -diag] (#\\n(.c)
+.tm Usage: .Bl [[-hang | -ohang | -tag] [-width]] [ -item | -enum | -bullet |
+.tm            -diag] (#\\n(.c)
 .\}
 .el \{\
 .	ds mN Bl
@@ -1748,62 +1749,62 @@
 .		ds A\\n+[_i_] \\$1
 .		shift
 .	\}
-.	if \\*[_$1_]-hang \{\
+.	ie \\*[_$1_]-hang \{\
 .		nr aP \\n(aP+1
 .		ds L\\n(lC hL
 .		nr w\\n(lC 6n
 .		nr tC  1
 .	\}
-.	if \\*[_$1_]-tag \{\
+.	el .ie \\*[_$1_]-tag \{\
 .		nr aP \\n(aP+1
 .		ds L\\n(lC tL
 .		nr tC  1
 .	\}
-.	if \\*[_$1_]-item \{\
+.	el .ie \\*[_$1_]-item \{\
 .		nr aP \\n(aP+1
 .		ds L\\n(lC iT
 .		nr tC  1
 .	\}
-.	if \\*[_$1_]-enum \{\
+.	el .ie \\*[_$1_]-enum \{\
 .		nr aP \\n(aP+1
 .		ds L\\n(lC nU
 .		nr w\\n(lC 3n
 .		nr tC  1
 .	\}
-.	if \\*[_$1_]-bullet \{\
+.	el .ie \\*[_$1_]-bullet \{\
 .		nr aP \\n(aP+1
 .		ds L\\n(lC bU
 .		nr w\\n(lC 2n
 .		nr tC  1
 .	\}
-.	if \\*[_$1_]-dash \{\
+.	el .ie \\*[_$1_]-dash \{\
 .		nr aP \\n(aP+1
 .		ds L\\n(lC hU
 .		nr w\\n(lC 2n
 .		nr tC  1
 .	\}
-.	if \\*[_$1_]-hyphen \{\
+.	el .ie \\*[_$1_]-hyphen \{\
 .		nr aP \\n(aP+1
 .		ds L\\n(lC hU
 .		nr w\\n(lC 2n
 .		nr tC  1
 .	\}
-.	if \\*[_$1_]-inset \{\
+.	el .ie \\*[_$1_]-inset \{\
 .		nr aP \\n(aP+1
 .		ds L\\n(lC lL
 .		nr tC  1
 .	\}
-.	if \\*[_$1_]-diag \{\
+.	el .ie \\*[_$1_]-diag \{\
 .		nr aP \\n(aP+1
 .		ds L\\n(lC mL
 .		nr mL 1
 .	\}
-.	if \\*[_$1_]-ohang \{\
+.	el .ie \\*[_$1_]-ohang \{\
 .		nr aP \\n(aP+1
 .		ds L\\n(lC oL
 .		nr tC 1
 .	\}
-.	if \\*[_$1_]-column \{\
+.	el .if \\*[_$1_]-column \{\
 .		nr aP \\n(aP+1
 .		ds L\\n(lC cL
 .	\}
@@ -1815,11 +1816,11 @@
 .		if (\\n(aP==1)&(\\n(aP<\\n[_.$_]) \{\
 .			nr aP 0
 .			lV
-.			if \\*(L\\n(lCcL \{\
+.			if \\*[L\\n(lC]cL \{\
 .				W\\n(wV
 .				nr w\\n(lC 0
 '				in -\\n(eWu
-.				ie \\n(v\\n(lC==1 \{\
+.				ie \\n[v\\n(lC]==1 \{\
 .				       nr aa 0
 .				\}
 .				el \{\
@@ -1833,7 +1834,7 @@
 .	nr aP 0
 .\" .	ds b1
 .	aY
-.\" .tm Here is L[\\n(lC]==\\*(L\\n(lC
+.\" .tm Here is L[\\n(lC]==\\*[L\\n(lC]
 .\}
 .ns
 ..
@@ -1899,7 +1900,7 @@
 .		\}
 .	\}
 .	if \\n(iD==0 \{\
-.		if \\*(L\\n(lCcL \{\
+.		if \\*[L\\n(lC]cL \{\
 .			nr wV \\n(wV+1
 .			ds A\\n(wV \\*[A\\n(aP]
 .		\}
@@ -1916,36 +1917,36 @@
 .el \{\
 .	ds mN El
 .	nr iD 0
-.	if \\*(L\\n(lCcL \{\
+.	ie \\*[L\\n(lC]cL \{\
 .		nr iD 1
 .		cC
 .	\}
-.	if \\*(L\\n(lCnU \{\
+.	el .ie \\*[L\\n(lC]nU \{\
 .		nr nU 0
 .	\}
-.	if \\n(mL>0 \{\
+.	el .ie \\n(mL>0 \{\
 .		nr iD 1
 .		nr mL 0
 .		tZ
 .		nr lC \\n(lC-1
 .		tY
 .	\}
-.	if \\*(L\\n(lCiT \{\
-'		in \\n(.iu-\\n(o\\n(lCu
+.	el .ie \\*[L\\n(lC]iT \{\
+'		in \\n(.iu-\\n[o\\n(lC]u
 .		tZ
 .		nr lC \\n(lC-1
 .		tY
 .		nr iD 1
 .	\}
-.	if \\*(L\\n(lCoL \{\
-'		in \\n(.iu-\\n(o\\n(lCu
+.	el .ie \\*[L\\n(lC]oL \{\
+'		in \\n(.iu-\\n[o\\n(lC]u
 .		tZ
 .		nr lC \\n(lC-1
 .		tY
 .		nr iD 1
 .	\}
-.	if \\*(L\\n(lClL \{\
-'		in \\n(.iu-\\n(o\\n(lCu
+.	el .if \\*[L\\n(lC]lL \{\
+'		in \\n(.iu-\\n[o\\n(lC]u
 .		tZ
 .		nr lC \\n(lC-1
 .		tY
@@ -1962,11 +1963,11 @@
 .\" NS iD local register
 .\" NS aA save pA font string for section FILES (no underline if nroff)
 .de It
-.if \\*(L\\n(lC \{\
+.if \\*[L\\n(lC] \{\
 .	tm Usage .Bl -list-type [-width [string] | -compact | -offset [string]] (#\\n(.c)
 .	tm .It \\$*
 .\}
-.\" .tm Here is L[\\n(lC]==\\*(L\\n(lC
+.\" .tm Here is L[\\n(lC]==\\*[L\\n(lC]
 .if !\\n(cR .ne 3v
 .ie \\n(.$>0 \{\
 .	ds mN It
@@ -1978,22 +1979,22 @@
 .		ds A\\n+[_i_] "\\$1
 .		shift
 .	\}
-.	if \\*(L\\n(lCmL \{\
+.	if \\*[L\\n(lC]mL \{\
 .		nr iD 1
 .		nr aP 0
 .		aX
-.		\\*(L\\n(lC
+.		\\*[L\\n(lC]
 .	\}
-.	if \\*(L\\n(lCcL \{\
+.	if \\*[L\\n(lC]cL \{\
 .		ds b1
 .		nr aP 0
 .		nr iD 1
-.		\\*(L\\n(lC
+.		\\*[L\\n(lC]
 .	\}
-.	if \\*(L\\n(lCiT \{\
+.	if \\*[L\\n(lC]iT \{\
 .		nr aP 0
 .		nr iD 1
-.		\\*(L\\n(lC
+.		\\*[L\\n(lC]
 .	\}
 .	if \\n(iD==0 \{\
 .		fV
@@ -2013,15 +2014,15 @@
 .			nr aP \\n(aP-1
 .			No
 .		\}
-.		ie \\n(Xt==1 .ds xB \&\\*(L\\n(lC
+.		ie \\n(Xt==1 .ds xB \&\\*[L\\n(lC]
 .		el \{\
-.			\\*(L\\n(lC
+.			\\*[L\\n(lC]
 .		\}
 .	\}
 .	nr iD 0
 .\}
 .el \{\
-.	\\*(L\\n(lC
+.	\\*[L\\n(lC]
 .\}
 ..
 .\" NS lL macro - .It item of list-type inset
@@ -2038,9 +2039,9 @@
 .\" NS hL macro - .It item of list-type hanging label (as opposed to tagged)
 .de hL
 .lX
-.nr bb \\n(w\\n(lCu+\\n(lSu
+.nr bb \\n[w\\n(lC]u+\\n(lSu
 .ti -\\n(bbu
-.ie \w\\*(b1u>=(\\n(w\\n(lCu) \&\\*(b1
+.ie \w\\*(b1u>=(\\n[w\\n(lC]u) \&\\*(b1
 .el \&\\*(b1\h'|\\n(bbu'\c
 .nr oM \\n(oM-1
 .ds b1
@@ -2092,9 +2093,9 @@
 .\" NS uL macro - .It item of list-type enum/bullet/hyphen
 .de uL
 .lX
-.nr bb \\n(w\\n(lCu+\\n(lSu
+.nr bb \\n[w\\n(lC]u+\\n(lSu
 .ti -\\n(bbu
-.ie \w\\*(b1u>=(\\n(w\\n(lCu) \&\\*(b1
+.ie \w\\*(b1u>=(\\n[w\\n(lC]u) \&\\*(b1
 .el \&\\*(b1\h'|\\n(bbu'\c
 .nr oM \\n(oM-1
 .ds b1
@@ -2130,9 +2131,9 @@
 .	\}
 .if \\n(tW==0 .lW
 .lX
-.nr bb \\n(w\\n(lCu+\\n(lSu
+.nr bb \\n[w\\n(lC]u+\\n(lSu
 .ti -\\n(bbu
-.ie (\w\\*(b1u)>(\\n(w\\n(lCu) \{\&\\*(b1
+.ie (\w\\*(b1u)>(\\n[w\\n(lC]u) \{\&\\*(b1
 .       br
 .\}
 .el \&\\*(b1\h'|\\n(bbu'\c
@@ -2147,7 +2148,7 @@
 ..
 .\" NS lW macro - resolve unknown label/tag width (if .Bl [inset | tag] only)
 .de lW
-.if !TagwidtH\\*(t\\n(lC \{\
+.if !TagwidtH\\*[t\\n(lC] \{\
 .       ie \\n(tX==1 \{\
 .               ds t\\n(lN \\*(tX
 .               nr w\\n(lN \\n(\\*(tX
@@ -2156,7 +2157,7 @@
 .               ds t\\n(lN No
 .               nr w\\n(lN \\n(No
 .       \}
-.       if !\\*(t\\n(lC\\*(t\\n(lN .nr tC 1
+.       if !\\*[t\\n(lC]\\*(t\\n(lN .nr tC 1
 .\}
 ..
 .\" NS lX macro - set up vertical spacing (if compact) and offset+indent (all)
@@ -2164,11 +2165,11 @@
 .ie \\n(tC \{\
 .       nr tC 0
 .       nr tW 0
-.       if \\n(v\\n(lC==0 .sp \\n(dVu
-.       in \\n(.iu+\\n(w\\n(lCu+\\n(o\\n(lCu+\\n(lSu
+.       if \\n[v\\n(lC]==0 .sp \\n(dVu
+.       in \\n(.iu+\\n[w\\n(lC]u+\\n[o\\n(lC]u+\\n(lSu
 .\}
 .el \{\
-.	ie \\n(v\\n(lC==1 \{\
+.	ie \\n[v\\n(lC]==1 \{\
 .	       nr aa 0
 .	\}
 .	el \{\
@@ -2182,11 +2183,11 @@
 .ie \\n(tC \{\
 .       nr tC 0
 .       nr tW 0
-.       if \\n(v\\n(lC==0 .sp \\n(dVu
-.       in \\n(.iu+\\n(o\\n(lCu
+.       if \\n[v\\n(lC]==0 .sp \\n(dVu
+.       in \\n(.iu+\\n[o\\n(lC]u
 .\}
 .el \{\
-.	ie \\n(v\\n(lC==1 \{\
+.	ie \\n[v\\n(lC]==1 \{\
 .	       nr aa 0
 .	\}
 .	el \{\
@@ -2221,11 +2222,11 @@
 .ds t\n(lC
 .de lE
 .\" IN lC o[\\n(lC]==\\n(o\\n(lC, w[\\n(lC]==\\n(w\\n(lC,
-.ie \\n(o\\n(lC>0 \{\
-'	in \\n(.iu-(\\n(w\\n(lCu)-(\\n(o\\n(lCu)-\\n(lSu
+.ie \\n[o\\n(lC]>0 \{\
+'	in \\n(.iu-(\\n[w\\n(lC]u)-(\\n[o\\n(lC]u)-\\n(lSu
 .	rr o\\n(lC
 .\}
-.el 'in \\n(.iu-\\n(w\\n(lCu-\\n(lSu
+.el 'in \\n(.iu-\\n[w\\n(lC]u-\\n(lSu
 .if \\n(lC<=0 .tm Extraneous .El call (#\\n(.c)
 .tZ
 .nr lC \\n(lC-1
@@ -2239,7 +2240,7 @@
 .nr w\\n(tY 0
 .nr h\\n(tY 0
 .nr o\\n(tY 0
-.ds t\\n(tY \\*(t\\n(lC
+.ds t\\n(tY \\*[t\\n(lC]
 .ds L\\n(tY
 .nr v\\n(tY 0
 ..
@@ -2312,7 +2313,7 @@
 .\" NS cI register - column indent width
 .\" NS W[1-5] macro - establish tabs for list-type column
 .de cC
-'in \\n(.iu-\\n(o\\n(lCu-\\n(w\\n(lCu
+'in \\n(.iu-\\n[o\\n(lC]u-\\n[w\\n(lC]u
 .ta .5i 1i 1.5i 2i 2.5i 3i 3.5i 4i 4.5i 5i 5.5i 6i 6.5i
 .fi
 .tZ
@@ -2322,37 +2323,37 @@
 .de W1
 .ta \w\\*(A1    u
 .nr eW \w\\*(A1    u
-'in \\n(.iu+\\n(eWu+\\n(o\\n(lCu
+'in \\n(.iu+\\n(eWu+\\n[o\\n(lC]u
 ..
 .de W2
 .ta \w\\*(A1    u +\w\\*(A2    u
 .nr eW \w\\*(A1    u+\w\\*(A2    u
-'in \\n(.iu+\\n(eWu+\\n(o\\n(lCu
+'in \\n(.iu+\\n(eWu+\\n[o\\n(lC]u
 ..
 .de W3
 .ta \w\\*(A1    u +\w\\*(A2    u +\w\\*(A3    u
 .nr eW \w\\*(A1    u+\w\\*(A2    u+\w\\*(A3    u
-'in \\n(.iu+\\n(eWu+\\n(o\\n(lCu
+'in \\n(.iu+\\n(eWu+\\n[o\\n(lC]u
 ..
 .de W4
 .ta \w\\*(A1    u +\w\\*(A2    u +\w\\*(A3    u +\w\\*(A4    u
 .nr eW \w\\*(A1    u+\w\\*(A2    u+\w\\*(A3    u+\w\\*(A4    u
-'in \\n(.iu+\\n(eWu+\\n(o\\n(lCu
+'in \\n(.iu+\\n(eWu+\\n[o\\n(lC]u
 ..
 .de W5
 .ta \w\\*(A1   u +\w\\*(A2   u +\w\\*(A3   u +\w\\*(A4   u +\w\\*(A5   u
 .nr eW \w\\*(A1   u+\w\\*(A2   u+\w\\*(A3   u+\w\\*(A4   u+\w\\*(A5   u
-'	in \\n(.iu+\\n(eWu+\\n(o\\n(lCu
+'	in \\n(.iu+\\n(eWu+\\n[o\\n(lC]u
 ..
 .\" This is packed abnormally close, intercol width should be an option
 .de W6
 .ta \w\\*(A1 u +\w\\*(A2 u +\w\\*(A3 u +\w\\*(A4 u +\w\\*(A5 u +\w\\*(A6
 .nr eW \w\\*(A1 u+\w\\*(A2 u+\w\\*(A3 u+\w\\*(A4 u+\w\\*(A5 u+\w\\*(A6
-'	in \\n(.iu+\\n(eWu+\\n(o\\n(lCu
+'	in \\n(.iu+\\n(eWu+\\n[o\\n(lC]u
 ..
 .\" NS cL macro - column items
 .de cL
-.if \\n(w\\n(lC==0 .nr w\\n(lC \\n(eWu
+.if \\n[w\\n(lC]==0 .nr w\\n(lC \\n(eWu
 .if \\n(.u==0 \{\
 .	fi
 '	in \\n(.iu+\\n(eWu
