@@ -131,7 +131,8 @@ check(FILE *f)
 static char *
 fgetline(char **lp, size_t *zp, FILE *fp)
 {
-	int	c, n = 0;
+	size_t	n = 0;
+	int	c;
 
 	while ((c = getc(fp)) != EOF) {
 		if (n >= *zp)
