@@ -250,7 +250,7 @@ drawline(int i, int cl, int cr, int lintype, int noheight, int shortl)
 	if (!nodata)
 		fprintf(tabout, "\\v'+.5m'");
 	if (!shortl && (utf8 || tlp)) {
-		int corred, tl, bl, c, ccr, licr;
+		int corred, c, ccr, licr;
 		char *s;
 		ccr = cr;
 		if (ccr == cl) ccr++;
