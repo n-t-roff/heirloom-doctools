@@ -313,7 +313,7 @@ process(FILE *f)
 			 * find and isolate the macro/command name.
 			 */
 			strncpy(mac, line+1, sizeof mac-1)[sizeof mac-1] = 0;
-			if (isspace(mac[0])&0377) {
+			if (isspace(mac[0]&0377)) {
 				pe(lineno);
 				printf("Empty command\n");
 			} else {
