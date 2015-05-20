@@ -243,10 +243,12 @@
 ..
 .\" NS pB macro - test for end of vector (eol) (print b1 buffer or divert)
 .de pB
+.lnr _sM_ 0
+.if \\n(sM .if !\\*[A\\n(aC]Ns .nr _sM_ 1
 .ie \\n(dZ==1 \{\
 .	if \\n(oM==1 \{\
 .		if !\\*(b1 \{\
-.			ie \\n(sM \&\\*(b1
+.			ie \\n[_sM_] \&\\*(b1
 .			el \&\\*(b1\c
 .		\}
 .		rm S0
@@ -260,7 +262,7 @@
 .el \{\
 .	ie \\n(oM==0 \{\
 .		if !\\*(b1 \{\
-.			ie \\n(sM \&\\*(b1
+.			ie \\n[_sM_] \&\\*(b1
 .			el \&\\*(b1\c
 .		\}
 .		rm S0
@@ -944,7 +946,7 @@
 .		aV \\$*
 .	\}
 .\}
-.if \\n(aC>\\n(aP \{\
+.ie \\n(aC>\\n(aP \{\
 .	nr aP \\n(aP+1
 .       ie \\n[C\\n(aP]==1 \{\
 .		if \\n(sM \{\
@@ -960,6 +962,7 @@
 .		nR
 .       \}
 .\}
+.el .aZ
 ..
 .\"------------------------------------------------------------------------
 .\" NS Op macro - Option Expression
@@ -1478,12 +1481,12 @@
 .tm MDOC-ERROR: bogus type 0 (can't set space '\\*(A\\n(aC') (#\\n(.c)
 ..
 .de s1
-.if \\n(\\*[A\\n(aC]==3 \{\
+.ie \\n[\\*[A\\n(aC]]==3 \{\
 .	nr xX \\n(aC-1
 .	rm S\\n(xX
 .	ds S\\n(aC \\*(sV
 .\}
-.if \\n(\\*[A\\n(aC]==2 \{\
+.el .if \\n[\\*[A\\n(aC]]==2 \{\
 .	nr xX \\n(aC-1
 .\" this kludge can probably go away, but need to double check first
 .	ie \\*[A\\n(aC]Nb .ds S\\n(xX \\*(hV
