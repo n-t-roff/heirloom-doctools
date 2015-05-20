@@ -1208,7 +1208,7 @@ getev(int *nxevp, char **namep)
 {
 	char	*name = NULL;
 	int nxev = 0;
-	char	c;
+	int	c;
 	int	i = 0, sz = 0, valid = 1;
 
 	*namep = NULL;

@@ -288,9 +288,9 @@ int nextchar(void)
 				FATAL("argfp underflow");
 			popsrc();
 			goto loop;
-		} else if (c == '$' && isdigit(*srcp->sp)) {	/* $3 */
+		} else if (c == '$' && isdigit((int)*srcp->sp)) {	/* $3 */
 			int n = 0;
-			while (isdigit(*srcp->sp))
+			while (isdigit((int)*srcp->sp))
 				n = 10 * n + *srcp->sp++ - '0';
 			if (n > 0 && n <= MAXARGS)
 				pushsrc(String, argfp->argstk[n-1]);
@@ -466,11 +466,11 @@ void eprint(void)	/* try to print context around error */
 	for (q=ep-1; q>=p && *q!=' ' && *q!='\t' && *q!='\n'; q--)
 		;
 	for (; p < q; p++)
-		if (isprint(*p))
+		if (isprint((int)*p))
 			putc(*p, stderr);
 	fprintf(stderr, " >>> ");
 	for (; p < q; p++)
-		if (isprint(*p))
+		if (isprint((int)*p))
 			putc(*p, stderr);
 	fprintf(stderr, " <<< ");
 	while (pb >= pbuf)

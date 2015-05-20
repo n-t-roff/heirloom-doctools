@@ -72,15 +72,15 @@ doref(char *line1)
 	}
 	answer[0] = 0;
 	for (p = buff; *p; p++) {
-		if (isupper(*p))
+		if (isupper((int)*p))
 			*p |= 040;
 	}
 	alph = digs = 0;
 	for (p = buff; *p; p++) {
-		if (isalpha(*p))
+		if (isalpha((int)*p))
 			alph++;
 		else
-			if (isdigit(*p))
+			if (isdigit((int)*p))
 				digs++;
 			else {
 				*p = 0;

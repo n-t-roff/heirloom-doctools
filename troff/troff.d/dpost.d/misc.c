@@ -256,6 +256,7 @@ str_convert (
 
 
     int		i;			/* just a loop index */
+    int		c;
 
 
 /*
@@ -266,11 +267,11 @@ str_convert (
  */
 
 
-    if ( ! isdigit(**str) )		/* something's wrong */
+    if ( ! isdigit(c = **str) )		/* something's wrong */
 	return(err);
 
-    for ( i = 0; isdigit(**str); *str += 1 )
-	i = 10 * i + **str - '0';
+    for ( i = 0; isdigit(c = **str); *str += 1 )
+	i = 10 * i + c - '0';
 
     return(i);
 

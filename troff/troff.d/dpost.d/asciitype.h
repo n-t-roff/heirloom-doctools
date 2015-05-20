@@ -53,8 +53,8 @@ extern const unsigned char	class_char[];
 #define	octalchar(c) (asciichar(c)&&(class_char[c]&(C_OCTAL)))
 #define	graphchar(c) (asciichar(c)&&(class_char[c]&\
 			(C_UPPER|C_LOWER|C_DIGIT|C_OCTAL|C_PUNCT)))
-#define	printchar(c) ((c)==' ' || asciichar(c)&&(class_char[c]&\
-			(C_UPPER|C_LOWER|C_DIGIT|C_OCTAL|C_PUNCT)))
+#define	printchar(c) ((c)==' ' || (asciichar(c)&&(class_char[c]&\
+			(C_UPPER|C_LOWER|C_DIGIT|C_OCTAL|C_PUNCT))))
 
 #define	upperconv(c) (lowerchar(c) ? (c)-'a'+'A' : (c))
 #define	lowerconv(c) (upperchar(c) ? (c)-'A'+'a' : (c))

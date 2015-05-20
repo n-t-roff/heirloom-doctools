@@ -501,7 +501,7 @@ emit(wchar_t *s, int lineno)
 	static int	cline = 0;
 	int	ncp;
 	wchar_t	*p, *begin = s;
-	char	cshifted;
+	int	cshifted;
 	char	chr[MB_LEN_MAX + 1];
 
 	int	c;

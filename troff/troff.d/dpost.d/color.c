@@ -198,8 +198,8 @@ newcolor (
     for ( p = name; *p && (*p == ' ' || *p == ':'); p++ ) ;
 
     for ( i = 0; i < sizeof(color) - 1 && *p != '\n' && *p; i++, p++ )
-	if ( isupper(*p) )
-	    color[i] = tolower(*p);
+	if ( isupper((int)*p) )
+	    color[i] = tolower((int)*p);
 	else color[i] = *p;
 
     if ( i == 0 )
@@ -246,7 +246,7 @@ setcolor(void)
 	lastend = -1;
 	newencoding = realencoding;
 
-	if ( islower(color[0]) == 0 )		/* explicit rgb, hsb, or cmyk request */
+	if ( islower((int)color[0]) == 0 )		/* explicit rgb, hsb, or cmyk request */
 	    fprintf(tf, "%s\n", color);
 	else {
 	    putc('/', tf);

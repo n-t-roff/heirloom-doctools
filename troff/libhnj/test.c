@@ -15,7 +15,7 @@ main(int argc, char **argv)
 		buf[--j] = '\0';
 		hnj_hyphen_hyphenate(hd, buf, j, hbuf);
 		for (i = 0; i < j; i++)
-			if (hbuf[i] - '0' & 1)
+			if ((hbuf[i] - '0') & 1)
 				printf("%c %.*s-%s\n", hbuf[i],
 						i+1, buf, &buf[i+1]);
 	}

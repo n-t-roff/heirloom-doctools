@@ -80,7 +80,7 @@ outkey(char *ky, int lead, int trail)
 		if (trail == '.') return(0);
 		if (mindex(".%,!#$%&'();+:*", lead)!=0) return(0);
 	}
-	if (isdigit(ky[0]))
+	if (isdigit((int)ky[0]))
 		/* Allow years 1000 - 2099 */
 		if (!(ky[0] == '1' || (ky[0] == '2' && ky[1] == '0')) || n != 4)
 			return(0);

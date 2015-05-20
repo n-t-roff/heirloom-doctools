@@ -281,7 +281,7 @@ FWS	([ \t]|\\\n)
 				pbstr(p->s_val.p);
 				dprintf("pushing back `%s'\n", p->s_val.p);
 			}
-		} else if (islower(yytext[0])) {
+		} else if (islower((int)yytext[0])) {
 			yylval.p = tostring(yytext);
 			return(VARNAME);
 		} else {

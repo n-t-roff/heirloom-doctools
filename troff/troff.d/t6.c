@@ -2341,7 +2341,7 @@ setpapersize(int setmedia)
 		{ "c8",		 162,	 230 },
 		{ NULL,		   0,	   0 }
 	};
-	char	c;
+	int	c;
 	int	x = 0, y = 0, n;
 	char	buf[NC];
 

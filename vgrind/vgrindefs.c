@@ -233,7 +233,7 @@ tgetnum(char *id)
 		if (*bp == '0')
 			base = 8;
 		i = 0;
-		while (isdigit(*bp))
+		while (isdigit((int)*bp))
 			i *= base, i += *bp++ - '0';
 		return (i);
 	}

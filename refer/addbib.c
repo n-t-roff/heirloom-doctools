@@ -223,7 +223,7 @@ trim(char *line)		/* trim line of trailing white space */
 	n = strlen(line);
 	while (--n >= 0)
 	{
-		if (!isspace(line[n]))
+		if (!isspace((int)line[n]))
 			break;
 	}
 	line[++n] = '\n';
@@ -236,7 +236,7 @@ bibedit(FILE *fp, char *cmd, char *arg)	/* edit database with edit, ex, or vi */
 	int i = 0, status, pid;
 
 	fclose(fp);
-	while (!isspace(cmd[i]))
+	while (!isspace((int)cmd[i]))
 		i++;
 	cmd[i] = 0;
 	if ((pid = fork()) == 0)

@@ -24,7 +24,7 @@ YYSTYPE getvar(char *s)	/* return value of variable s (usually pointer) */
 
 	p = lookup(s);
 	if (p == NULL) {
-		if (islower(s[0]))
+		if (islower((int)s[0]))
 			WARNING("no such variable as %s", s);
 		else
 			WARNING("no such place as %s", s);

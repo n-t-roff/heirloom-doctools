@@ -83,8 +83,8 @@ static void
 map_lower(char *s)		/* map string s to lower case */
 {
 	for ( ; *s; ++s)
-		if (isupper(*s))
-			*s = tolower(*s);
+		if (isupper((int)*s))
+			*s = tolower((int)*s);
 }
 
 static void
