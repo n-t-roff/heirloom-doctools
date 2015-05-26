@@ -107,7 +107,7 @@
 .fallback BI BIE
 .flig BI 31
 ..
-.ds Sccsdate 02/19/15
+.ds Sccsdate 05/26/15
 .ds Str \*[Sccsdate]
 .substring Str 0 0
 .if '\*[Str]'%' \{\
@@ -255,7 +255,7 @@
 ..
 .nr savedline 0
 .de fo
-.ie (\\n[nosave]=0)&(\\n(2C=0) \{\
+.ie 0&(\\n[nosave]=0)&(\\n(2C=0) \{\. \" FIXME
 .nr savedline 1
 .di savedline
 .dt 1v barefo
@@ -1320,7 +1320,7 @@ of the space character in font \fIF\fR to \fIN\fR.\T
 .mht s_page
 Page Control
 .bt
-\T'pl'\fB&pl\fI\|\(+-N\fR	11\|i	11\|i	\fBv\fR	Page length.\T
+\T'pl'\fB&pl\fI\|\(+-N\fR	11i	11i	\fBv\fR	Page length.\T
 .b1
 \T'papersize'\fB&papersize\fI|media\fR	ignored	T,\fBu\fR	Set the paper size.\T
 .b1
@@ -1337,9 +1337,9 @@ Eject current page; next page number \fIN\fR.\T
 .b1
 \T'pn'\fB&pn\fI|\(+-N	N\(eq\fR1	ignored	\(en	Next page number \fIN\fR.\T
 .b1
-\T'po'\fB&po\fI|\(+-N\fR	0;1\|i	previous	\fBv\fR	Page offset.\T
+\T'po'\fB&po\fI|\(+-N\fR	0;1i	previous	\fBm\fR	Page offset.\T
 .b1
-\T'ne'\fB&ne\fI|N\fR	\(en	\fIN\(eq\fR1\|v	D,\fBv\fR	Need \fIN\fR vertical space (\fIV\fR = vertical spacing).\T
+\T'ne'\fB&ne\fI|N\fR	\(en	\fIN\(eq\fR1v	D,\fBv\fR	Need \fIN\fR vertical space (\fIV\fR = vertical spacing).\T
 .b1 0
 \T'mk'\fB&mk|\fIR\fR	none	internal	D	Mark current vertical place in register \fIR\fR.\T
 .b1 0
@@ -3173,7 +3173,7 @@ The number of the next page is in the \A'n_.pn'\fB&pn\fR register;
 this is either the value set by \fBpn\fR
 or the current page number plus 1.
 .bta po
-\fB&po\fI|\(+-N\fR	0;|1\|in	previous	\fBv\fR	Page offset.
+\fB&po\fI|\(+-N\fR	0;1i	previous	\fBm\fR	Page offset.
 The current \fIleft margin\fR is set to \fI\(+-N\fR.
 The \*(TR initial value provides about 1|inch of paper margin
 on a typical device.
@@ -3250,7 +3250,12 @@ in the \A'n_.n'\fB.n\fR register,
 and text base-line position on the page for this line is
 in the \A'n_nl'\fBnl\fR register.
 The text base-line high-water mark (lowest place) on the current page is in
-the \A'n_.h'\fB.h\fR register.
+the \A'n_.h'\fB.h\fR register.*
+.br
+.fn
+.sp .3
+\(**\|Local motions have no effect on register \fB&h\fR.
+.ef
 The current horizontal output position
 is in the \A'n_.k'\fB.k\fR register.
 The \A'n_.x'\fB.x\fR register indicates
@@ -5082,7 +5087,12 @@ To avoid unexpected vertical dislocations, it is necessary that
 the \fInet\fR vertical local motion within a word in filled text
 and otherwise within a line balance to zero.
 The above and certain other escape sequences providing local motion are
-summarized in the following table.
+summarized in the following table.*
+.br
+.fn
+.sp .3
+\(**\|The line drawing escapes \el and \eL also cause local motions.
+.ef
 .tr ||
 .ds X \0\0\0
 .br
@@ -5300,6 +5310,8 @@ a negative \fIN\fR specifies a line drawn upward.
 After the line is drawn \fIno\fR compensating
 motions are made;
 the instantaneous baseline is at the \fIend\fR of the line.
+Motions of line drawing functions are local which means that the
+effect of these motions vanishes when a new output line is started.
 .pg
 .nr nosave 1
 .de eb
