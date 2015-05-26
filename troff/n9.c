@@ -46,6 +46,7 @@
  * contributors.
  */
 
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <sys/types.h>
@@ -346,6 +347,9 @@ setdraw (void)	/* generate internal cookies for a drawing function */
 	int	hpos, vpos;
 	int j, k;
 	tchar drawbuf[NC];
+#else
+	extern int tlp, utf8;
+	char drawbuf[NC];
 #endif	/* NROFF */
 
 	/* input is \D'f dx dy dx dy ... c' (or at least it had better be) */
@@ -423,6 +427,24 @@ setdraw (void)	/* generate internal cookies for a drawing function */
 	drawbuf[j++] = DRAWFCN | chbits | ZBIT;	/* marks end for ptout */
 	drawbuf[j] = 0;
 	pushback(drawbuf);
+#else
+	switch (type) {
+	case 'l':
+		if (dx[0] && !dy[0]) {
+			if (dx[0] < 0) {
+				snprintf(drawbuf, sizeof(drawbuf), "\\h'%du'",
+				    dx[0]);
+				cpushback(drawbuf);
+			}
+			snprintf(drawbuf, sizeof(drawbuf), "\\l'%du%s'",
+			    dx[0], tlp ? "\\&-" : utf8 ? "\\U'2500'" : "");
+			cpushback(drawbuf);
+		} else if (dy[0] && !dx[0]) {
+			snprintf(drawbuf, sizeof(drawbuf), "\\L'%du%s'",
+			    dy[0], tlp ? "|" : utf8 ? "\\U'2502'" : "");
+			cpushback(drawbuf);
+		}
+	}
 #endif
 }
 

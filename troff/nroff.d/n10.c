@@ -116,6 +116,7 @@ int	c_dagger;
 int	c_isalnum;
 
 int	utf8;
+int	tlp;
 
 void
 ptinit(void)
@@ -140,7 +141,11 @@ ptinit(void)
 	ttl = strlen(termtab) + strlen(devname) + 1;
 	tt = malloc(ttl);
 	n_strcpy(tt, termtab, ttl);
-	if (strcmp(devname, "locale")) n_strcat(tt, devname, ttl);
+	if (strcmp(devname, "locale")) {
+		n_strcat(tt, devname, ttl);
+		if (!strcmp(devname, "lp"))
+			tlp = 1;
+	}
 	else {
 #ifdef	EUC
 		wchar_t	wc;
@@ -151,8 +156,13 @@ ptinit(void)
 			utf8 = 1;
 			n_strcat(tt, "utf8", ttl); /* shorter than "locale" */
 		} else
+		{
 #endif
+			tlp = 1;
 			n_strcat(tt, "lp", ttl); /* shorter than "locale" */
+#ifdef	EUC
+		}
+#endif
 	}
 	if ((fd = open(tt, O_RDONLY)) < 0) {
 		errprint("cannot open %s", tt);

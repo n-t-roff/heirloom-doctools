@@ -647,6 +647,14 @@ newline(int a)
 	register int i, j, nlss = 0, nl;
 	int	opn;
 
+#ifdef NROFF
+	if (lvmot) {
+		tchar c;
+		c = MOT | VMOT | (lvmot < 0 ? -lvmot : lvmot | NMOT);
+		pchar1(c);
+		lvmot = 0;
+	}
+#endif
 	if (a)
 		goto nl1;
 	if (dip != d) {

@@ -1,2 +1,2 @@
-RELEASE = Git snapshot 150520
+RELEASE = Git snapshot 150526
 #RELEASE = release 150406

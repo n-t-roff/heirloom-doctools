@@ -71,6 +71,8 @@ int	cs;
 int	ccs;
 int	bd;
 char	*fchartab;
+#else
+long	lvmot;
 #endif
 
 int	stdi;

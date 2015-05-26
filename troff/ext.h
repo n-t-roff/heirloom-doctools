@@ -74,6 +74,7 @@ extern	filep	offset;
 extern	filep	roff;
 extern	filep	woff;
 #ifdef NROFF
+extern	long	lvmot;
 extern	size_t	*chtab;
 #else
 extern	short	*chtab;
