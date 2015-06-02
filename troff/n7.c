@@ -53,6 +53,7 @@
 #include "tdef.h"
 #ifdef NROFF
 #include "tw.h"
+#include "draw.h"
 #endif
 #include "pt.h"
 #ifdef NROFF
@@ -550,6 +551,18 @@ ckul(void)
 int
 storeline(register tchar c, int w)
 {
+#ifdef NROFF
+	if (ismot(c)) {
+		if (isvmot(c)) {
+			if (isnmot(c))
+				lvmot -= c & BMBITS;
+			else
+				lvmot += c & BMBITS;
+		}
+	} else if (ndraw && !(cbits(c) & ~0xffff)) {
+		storechar(c, numtab[NL].val+lvmot, po + in + ne);
+	}
+#endif
 	if (linep == NULL || linep >= line + lnsize - 4) {
 		tchar	*k;
 		if (over)
@@ -852,6 +865,9 @@ eject(struct s *a)
 {
 	register int savlss;
 
+#ifdef NROFF
+	if (ndraw) npic(0);
+#endif
 	if (dip != d)
 		return;
 	if (vpt == 0) {

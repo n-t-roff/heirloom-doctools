@@ -85,6 +85,7 @@ char *xxxvers = "@(#)roff:n1.c	2.13";
 
 #ifdef NROFF
 #include "tw.h"
+#include "draw.h"
 #endif
 #include "pt.h"
 
@@ -341,11 +342,20 @@ mainloop(void)
 	register int j;
 	register tchar i;
 	int eileenct;		/*count to test for "Eileen's loop"*/
+#ifdef NROFF
+	int ndo = 0;
+#endif
 
 	_xflag = xflag;
 	setjmp(sjbuf);
 	eileenct = 0;		/*reset count for "Eileen's loop"*/
 loop:
+#ifdef NROFF
+	if (ndo) {
+		ndo = 0;
+		npic(0);
+	}
+#endif
 	xflag = _xflag;
 	defcf = charf = clonef = copyf = lgf = nb = nflush = nlflg = 0;
 	if (ip && rbf0(ip) == 0 && dip == d && ejf &&
@@ -395,6 +405,11 @@ loop:
 		ch = i;
 		copyf--;
 		j = getrq(4);
+#ifdef NROFF
+		if (j == PAIR('P', 'S')) npic(1);
+		else if (ndraw && j == PAIR('d', 'o')) ndo = 1;
+		else
+#endif
 		if (xflag != 0 && j == PAIR('d', 'o')) {
 			xflag = 3;
 			skip(1);

@@ -116,6 +116,7 @@ double ysc(double y)	/* convert y from external to internal form, scaling only *
 
 void closepl(char *PEline)	/* clean up after finished */
 {
+	printf(".if n .do\n");
 	movehv(0.0, 0.0);	/* get back to where we started */
 	if (strchr(PEline, 'F') == NULL) {
 		printf(".sp 1+%.3fi\n", yconv(ymin));

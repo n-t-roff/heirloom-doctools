@@ -14,6 +14,7 @@ SUBDIRS = eqn/eqn.d \
 	troff/troff.d/dpost.d \
 	troff/troff.d/tmac.d \
 	troff/troff.d/postscript \
+	stuff/bst \
 	troff/troff.d \
 	troff/nroff.d \
 	troff/nroff.d/terms.d \

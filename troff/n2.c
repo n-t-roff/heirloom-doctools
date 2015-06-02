@@ -209,14 +209,6 @@ pchar1(register tchar i)
 		olt[nolt++] = fetchrq(_olp);
 		_olt = 0;
 	}
-#ifdef NROFF
-	if (ismot(i) && isvmot(i)) {
-		if (isnmot(i))
-			lvmot -= i & BMBITS;
-		else
-			lvmot += i & BMBITS;
-	}
-#endif
 #ifndef NROFF
 	if (ascii)
 		outascii(i);
