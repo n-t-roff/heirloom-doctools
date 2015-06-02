@@ -49,6 +49,7 @@ extern int tlp, utf8;
 #define BAR              UTF_TLP(0x2502, '|')
 #define DOWN_RIGHT       "\\U'250C'"
 #define DOWN_LEFT        "\\U'2510'"
+#define DOWN_HOR         "\\U'252C'"
 #define UP_RIGHT         "\\U'2514'"
 #define UP_LEFT          "\\U'2518'"
 #define UP_HOR           "\\U'2534'"
@@ -66,6 +67,8 @@ struct bst coords = {
 
 void
 storechar(tchar c, int row, int col) {
+	long s = cbits(c);
+	if (s != DASH && s != BAR) return;
 	if (bst_srch(&coords, XY2KEY(row, col), NULL))
 		if (bst_add(&coords, XY2KEY(row, col), BST_VAL(c)))
 			fprintf(stderr,
@@ -131,6 +134,7 @@ chkcoord(uint64_t xy) {
 	switch (e) {
 	case 0x00002010: drawat(x, y, DOWN_RIGHT); break;
 	case 0x00020010: drawat(x, y, DOWN_LEFT ); break;
+	case 0x00022010: drawat(x, y, DOWN_HOR  ); break;
 	case 0x01002000: drawat(x, y, UP_RIGHT  ); break;
 	case 0x01020000: drawat(x, y, UP_LEFT   ); break;
 	case 0x01022000: drawat(x, y, UP_HOR    ); break;
