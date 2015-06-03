@@ -253,7 +253,7 @@ void arrow(double x0, double y0, double x1, double y1, double w, double h,
 	if (nhead < 2)
 		nhead = 2;
 	dprintf("rot=%g, hyp=%g, alpha=%g\n", rot, hyp, alpha);
-	printf(".if t \\{\n");
+	printf(".if t \\{\\\n");
 	for (i = nhead-1; i >= 0; i--) {
 		drot = 2 * rot / (double) (nhead-1) * (double) i;
 		dx = hyp * cos(alpha + PI - rot + drot);
