@@ -1,12 +1,13 @@
 LIBHNJ = ../libhnj
+BST = ../../stuff/bst
 VPATH=..
 OBJ = t10.o t6.o hytab.o n1.o n2.o n3.o n4.o n5.o \
 	n7.o n8.o n9.o ni.o nii.o suftab.o makedev.o afm.o otf.o unimap.o \
-	version.o
+	version.o fontmap.o $(BST)/bst.o
 
 FLAGS = -DUSG $(EUC) -I. -I.. -I../../include -DMACDIR='"$(MACDIR)"' \
 	-DFNTDIR='"$(FNTDIR)"' -DTABDIR='"$(TABDIR)"' -DHYPDIR='"$(HYPDIR)"' \
-	-DSHELL='"$(SHELL)"' -DRELEASE='"$(RELEASE)"' -D$(SYSTEM)
+	-DSHELL='"$(SHELL)"' -DRELEASE='"$(RELEASE)"' -D$(SYSTEM) -I$(BST)
 
 .c.o:
 	$(CC) $(CFLAGS) $(WARN) $(CPPFLAGS) $(FLAGS) -c $<
@@ -62,3 +63,4 @@ otfdump_vs.o: ../version.c
 afm.o: dev.h afm.h
 otf.o: dev.h afm.h unimap.h
 otfdump.o: afm.h afm.c otf.c otfdump.c dpost.d/getopt.c dev.h
+fontmap.o: fontmap.h

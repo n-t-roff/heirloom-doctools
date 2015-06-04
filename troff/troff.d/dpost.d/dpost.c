@@ -279,6 +279,7 @@
 #include	"dpost.h"		/* a few definitions just used here */
 #include	"asciitype.h"
 #include	"afm.h"
+#include	"fontmap.h"
 
 
 #if defined (__GLIBC__) && defined (_IO_getc_unlocked)
@@ -291,6 +292,7 @@
 #endif
 
 
+char		*progname;
 char		*prologue = DPOST;	/* the basic PostScript prologue */
 char		*colorfile = COLOR;	/* things needed for color support */
 char		*drawfile = DRAW;	/* and drawing */
@@ -748,6 +750,7 @@ main(int agc, char *agv[])
     argc = agc;				/* global so everyone can use them */
     argv = agv;
 
+    progname =
     prog_name = argv[0];		/* just for error messages */
 
     init_signals();			/* sets up interrupt handling */
@@ -1860,6 +1863,8 @@ fontinit(void)
  */
 
 
+    snprintf(temp, sizeof temp, "%s/dev%s/FONTMAP", fontdir, devname);
+    rdftmap(temp);
     snprintf(temp, sizeof temp, "%s/dev%s/DESC", fontdir, devname);
     if ( (descp = readdesc(temp)) == 0 )
 	error(FATAL, "can't open tables for %s", temp);
@@ -2173,6 +2178,7 @@ mapfont (
  */
 
 
+    name = mapft(name);
     for ( i = 0; fontmap[i].name != NULL; i++ )
 	if ( strcmp(name, fontmap[i].name) == 0 )
 	    return(fontmap[i].use);

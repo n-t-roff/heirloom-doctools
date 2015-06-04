@@ -65,6 +65,7 @@
 #include "pt.h"
 #include "troff.h"
 #include "unimap.h"
+#include "fontmap.h"
 /*
  * troff10.c
  * 
@@ -189,7 +190,9 @@ ptinit(void)
 {
 	int	i, nw;
 	char	*filebase, *p, *ap, *descp;
+	char	*p2;
 	size_t	l;
+	size_t	l2;
 
 	growfonts(NFONT+1);
 	memcpy(bdtab, initbdtab,
@@ -200,11 +203,17 @@ ptinit(void)
 	 * and set params
 	 */
 	l = strlen(termtab) + strlen(devname) + 10;
+	l2 = l + 3;
 	p = malloc(l);
+	p2 = malloc(l2);
 	n_strcpy(p, termtab, l);
 	termtab = p;
 	n_strcat(termtab, "/dev", l);
 	n_strcat(termtab, devname, l);
+	n_strcpy(p2, termtab, l2);
+	n_strcat(p2, "/FONTMAP", l2);
+	rdftmap(p2);
+	free(p2);
 	n_strcat(termtab, "/DESC", l);	/* makes "..../devXXX/DESC" */
 	if ((descp = readdesc(termtab)) == NULL)
 		done3(1);
@@ -298,6 +307,7 @@ ptinit(void)
 #ifdef	EUC
 	ptlocale(setlocale(LC_CTYPE, NULL));
 #endif	/* EUC */
+	free(termtab);
 }
 
 void

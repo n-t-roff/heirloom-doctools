@@ -1,9 +1,11 @@
+BST = ../../../stuff/bst
+
 OBJ = dpost.o draw.o color.o pictures.o ps_include.o afm.o \
 	makedev.o glob.o misc.o request.o version.o getopt.o \
-	asciitype.o otf.o
+	asciitype.o otf.o ../fontmap.o $(BST)/bst.o
 
 FLAGS = -I. -I.. -DFNTDIR='"$(FNTDIR)"' -DPSTDIR='"$(PSTDIR)"' $(EUC) \
-	-D$(SYSTEM) -I../../../include
+	-D$(SYSTEM) -I../../../include -I.. -I$(BST)
 
 .c.o:
 	$(CC) $(CFLAGS) $(WARN) $(CPPFLAGS) $(FLAGS) -c $<

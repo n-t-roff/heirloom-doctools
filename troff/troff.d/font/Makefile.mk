@@ -14,8 +14,8 @@ install: all
 	test -d $(ROOT)$(FNTDIR) || mkdir -p $(ROOT)$(FNTDIR)
 	test -d $(ROOT)$(FNTDIR)/devpost/charlib || \
 		mkdir -p $(ROOT)$(FNTDIR)/devpost/charlib
-	cd devpost && for i in ? ?? ?.name ??.name DESC*; \
-	do \
+	cd devpost && for i in ? ?? H?? H??? ?.name ??.name H??.name \
+	    H???.name DESC* FONTMAP; do \
 		$(INSTALL) -c -m 644 $$i $(ROOT)$(FNTDIR)/devpost/ || exit; \
 	done
 	cd $(ROOT)$(FNTDIR)/devpost && \

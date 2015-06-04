@@ -1,4 +1,6 @@
-SUBDIRS = eqn/eqn.d \
+SUBDIRS = \
+	stuff/bst \
+	eqn/eqn.d \
 	eqn/neqn.d \
 	eqn/checkeq.d \
 	eqn/eqnchar.d \
@@ -11,11 +13,10 @@ SUBDIRS = eqn/eqn.d \
 	troff/libhnj \
 	troff/libhnj/hyphen.d \
 	troff/troff.d/font \
-	troff/troff.d/dpost.d \
 	troff/troff.d/tmac.d \
 	troff/troff.d/postscript \
-	stuff/bst \
 	troff/troff.d \
+	troff/troff.d/dpost.d \
 	troff/nroff.d \
 	troff/nroff.d/terms.d \
 	picpack \

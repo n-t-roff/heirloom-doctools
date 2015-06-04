@@ -71,6 +71,7 @@
 #include "afm.h"
 #include "pt.h"
 #include "troff.h"
+#include "fontmap.h"
 
 /* fitab[f][c] is 0 if c is not on font f */
 	/* if it's non-zero, c is in fontab[f] at position
@@ -1635,6 +1636,7 @@ setfp(int pos, int f, char *truename)	/* mount font f at position pos[0...nfonts
 		shortname = truename;
 	else
 		shortname = macname(f);
+	shortname = mapft(shortname);
 	snprintf(longname, sizeof longname, "%s/dev%s/%s",
 			fontfile, devname, shortname);
 	if ((fpout = readfont(longname, &dev, warn & WARN_FONT)) == NULL)
