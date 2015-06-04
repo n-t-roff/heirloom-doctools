@@ -261,7 +261,7 @@ void arrow(double x0, double y0, double x1, double y1, double w, double h,
 		dprintf("dx,dy = %g,%g\n", dx, dy);
 		line(x1+dx, y1+dy, x1, y1);
 	}
-	printf("\\}\n");
+	printf(".\\}\n");
 }
 
 double lastgray = 0;
