@@ -135,11 +135,33 @@ chkcoord(uint64_t xy) {
 	case 0x00002010: drawat(x, y, DOWN_RIGHT); break;
 	case 0x00020010: drawat(x, y, DOWN_LEFT ); break;
 	case 0x00022010: drawat(x, y, DOWN_HOR  ); break;
+	case 0x11012220:
+	case 0x22202000:
+	case 0x01002200:
+	case 0x01002220:
 	case 0x01002000: drawat(x, y, UP_RIGHT  ); break;
+	case 0x01121222:
 	case 0x01020000: drawat(x, y, UP_LEFT   ); break;
+	case 0x11022000:
+	case 0x01122000:
 	case 0x01022000: drawat(x, y, UP_HOR    ); break;
 	case 0x00020001: /* empty upper right */
+	case 0x02220001:
+	case 0x00120001:
+	case 0x01220001:
+	case 0x11220001:
+	case 0x10020001:
+	case 0x10010001:
 		if (c == 2) drawat(x + HOR, y, DOWN_LEFT);
+		break;
+	case 0x01020001:
+		drawat(x      , y, UP_HOR   );
+		drawat(x + HOR, y, DOWN_LEFT);
+		break;
+	case 0x00002100: /* empty upper left */
+	case 0x00102100:
+	case 0x00101100:
+		if (c == 2) drawat(x - HOR, y, DOWN_RIGHT);
 		break;
 	}
 }

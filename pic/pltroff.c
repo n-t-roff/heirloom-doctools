@@ -298,13 +298,20 @@ void cont(double x, double y)	/* continue line from here to x,y */
 {
 	double h1, v1;
 	double dh, dv;
+	int rh = 0;
 
 	h1 = xconv(x);
 	v1 = yconv(y);
 	dh = h1 - hpos;
 	dv = v1 - vpos;
+	if (dh > 0 && !dv) {
+		rh = 1;
+		move(x, y);
+		dh = -dh;
+	}
 	hvflush();
 	printf("\\D'l%.3fi %.3fi'\n", dh, dv);
+	if (rh) move(x, y);
 	flyback();	/* expensive */
 	hpos = h1;
 	vpos = v1;

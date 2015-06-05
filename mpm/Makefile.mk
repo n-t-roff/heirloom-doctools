@@ -6,12 +6,12 @@ FLAGS = $(EUC) -D$(SYSTEM)
 	$(CC) $(CFLAGS) $(WARN) $(FLAGS) $(CPPFLAGS) -c $<
 
 .cc.o:
-	$(CCC) $(CFLAGS) $(WARN) $(FLAGS) $(CPPFLAGS) -c $<
+	$(CXX) $(CFLAGS) $(WARN) $(FLAGS) $(CPPFLAGS) -c $<
 
 all: pm
 
 pm: $(OBJ)
-	$(CCC) $(LDFLAGS) $(OBJ) $(LIBS) -lm -o pm
+	$(CXX) $(LDFLAGS) $(OBJ) $(LIBS) -lm -o pm
 
 install: all
 	test -d $(ROOT)$(LIBDIR) || mkdir -p $(ROOT)$(LIBDIR)
