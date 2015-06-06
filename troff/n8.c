@@ -46,6 +46,7 @@
  * contributors.
  */
 
+#include	<stddef.h>
 #include	<stdio.h>
 #ifdef	EUC
 #include	<wctype.h>
