@@ -123,6 +123,20 @@
 .de Ud
 \&currently under development.
 ..
+.ds At.32v \&Version 32V \\*(tNAT&T UNIX
+.ds At.v1  \&Version 1 \\*(tNAT&T UNIX
+.ds At.v2  \&Version 2 \\*(tNAT&T UNIX
+.ds At.v3  \&Version 3 \\*(tNAT&T UNIX
+.ds At.v4  \&Version 4 \\*(tNAT&T UNIX
+.ds At.v5  \&Version 5 \\*(tNAT&T UNIX
+.ds At.v6  \&Version 6 \\*(tNAT&T UNIX
+.ds At.v7  \&Version 7 \\*(tNAT&T UNIX
+.ds At.III \&\\*(tNAT&T\\*[__aa] System III \\*(tNUNIX
+.ds At.V   \&\\*(tNAT&T\\*[__aa] System V \\*(tNUNIX
+.ds At.V.1 \&\\*(tNAT&T\\*[__aa] System V Release 1 \\*(tNUNIX
+.ds At.V.2 \&\\*(tNAT&T\\*[__aa] System V Release 2 \\*(tNUNIX
+.ds At.V.3 \&\\*(tNAT&T\\*[__aa] System V Release 3 \\*(tNUNIX
+.ds At.V.4 \&\\*(tNAT&T\\*[__aa] System V Release 4 \\*(tNUNIX
 .\" Ns At macro - AT&T UNIX
 .de At
 .	nr cF \\n(.f
@@ -135,20 +149,7 @@
 .		if \\n(.$ .as b1 \\$1
 .	\}
 .	el \{\
-.		ie \\$132v     .ds b1 \&Version 32V \\*(tNAT&T UNIX
-.		el .ie \\$1v1  .ds b1 \&Version 1 \\*(tNAT&T UNIX
-.		el .ie \\$1v2  .ds b1 \&Version 2 \\*(tNAT&T UNIX
-.		el .ie \\$1v3  .ds b1 \&Version 3 \\*(tNAT&T UNIX
-.		el .ie \\$1v4  .ds b1 \&Version 4 \\*(tNAT&T UNIX
-.		el .ie \\$1v5  .ds b1 \&Version 5 \\*(tNAT&T UNIX
-.		el .ie \\$1v6  .ds b1 \&Version 6 \\*(tNAT&T UNIX
-.		el .ie \\$1v7  .ds b1 \&Version 7 \\*(tNAT&T UNIX
-.		el .ie \\$1III .ds b1 \&\\*(tNAT&T\\*[__aa] System III \\*(tNUNIX
-.		el .ie \\$1V   .ds b1 \&\\*(tNAT&T\\*[__aa] System V \\*(tNUNIX
-.		el .ie \\$1V.1 .ds b1 \&\\*(tNAT&T\\*[__aa] System V Release 1 \\*(tNUNIX
-.		el .ie \\$1V.2 .ds b1 \&\\*(tNAT&T\\*[__aa] System V Release 2 \\*(tNUNIX
-.		el .ie \\$1V.3 .ds b1 \&\\*(tNAT&T\\*[__aa] System V Release 3 \\*(tNUNIX
-.		el .ie \\$1V.4 .ds b1 \&\\*(tNAT&T\\*[__aa] System V Release 4 \\*(tNUNIX
+.		ie d At.\\$1 .ds b1 \\*[At.\\$1]
 .		el .tm .At: Unknown AT&T UNIX version "\\$1" (#\\n(.c)
 .		as b1 \\*[__aa]
 .		ie \\n(.$=2 .as b1 \\$2
@@ -202,75 +203,106 @@
 .\" NS St macro - standards (posix, ansi - formal standard names)
 .ds Px \\*(tNPOSIX
 .ds Ai \\*(tNANSI
-.ds St-p1003.1 \&\\*(tNIEEE Std\\*[__aa] 1003.1\\*\
-(sV(\\*(Lq\\*(tN\\*(Px.1\\*[__aa]\\*(Rq)
-.ds St-p1003.1b \&\\*(tNIEEE Std\\*[__aa] 1003.1b\\*(sV\
-(\\*(Lq\\*(tN\\*(Px.1b\\*[__aa]\\*(Rq)
-.ds St-p1003.1-88 \&\\*(tNIEEE Std\\*[__aa] 1003.1-1988\\*(sV\
-(\\*(Lq\\*(tN\\*(Px.1\\*[__aa]\\*(Rq)
-.ds St-p1003.1-90 \&\\*(tNIEEE Std\\*[__aa] 1003.1-1990\\*(sV\
-(\\*(Lq\\*(tN\\*(Px.1\\*[__aa]\\*(Rq)
-.ds St-p1003.1b-93 \&\\*(tNIEEE Std\\*[__aa] 1003.1b-1993\\*(sV\
-(\\*(Lq\\*(tN\\*(Px.1b\\*[__aa]\\*(Rq)
-.ds St-p1003.1-96 \&\\*(tNISO/IEC\\*[__aa] 9945-1:1996\\*(sV\
-(\\*(Lq\\*(tN\\*(Px.1\\*[__aa]\\*(Rq)
-.ds St-p1003.1d-99 \&\\*(tNIEEE Std\\*[__aa] 1003.1d-1999\\*(sV\
-(\\*(Lq\\*(tN\\*(Px.1d\\*[__aa]\\*(Rq)
-.ds St-p1003.1g-2000 \&\\*(tNIEEE Std\\*[__aa] 1003.1g-2000\\*(sV\
-(\\*(Lq\\*(tN\\*(Px.1g\\*[__aa]\\*(Rq)
-.ds St-p1003.1-2001 \&\\*(tNIEEE Std\\*[__aa] 1003.1-2001\\*(sV\
-(\\*(Lq\\*(tN\\*(Px.1\\*[__aa]\\*(Rq)
-.ds St-p1003.1-2004 \&\\*(tNIEEE Std\\*[__aa] 1003.1-2004\\*(sV\
-(\\*(Lq\\*(tN\\*(Px.1\\*[__aa]\\*(Rq)
-.ds St-p1003.1-2008 \&\\*(tNIEEE Std\\*[__aa] 1003.1-2008\\*(sV\
-(\\*(Lq\\*(tN\\*(Px.1\\*[__aa]\\*(Rq)
-.ds St-p1003.2 \&\\*(tNIEEE Std\\*[__aa] 1003.2\\*(sV\
-(\\*(Lq\\*(tN\\*(Px.2\\*[__aa]\\*(Rq)
-.ds St-p1003.2-92 \&\\*(tNIEEE Std\\*[__aa] 1003.2-1992\\*(sV\
-(\\*(Lq\\*(tN\\*(Px.2\\*[__aa]\\*(Rq)
-.ds St-ansiC \&\\*(tNANSI\\*[__aa] X3.159-1989\\*(sV\
-(\\*(Lq\\*(tNANSI C89\\*[__aa]\\*(Rq)
-.ds St-ansiC-89 \&\\*(tNANSI\\*[__aa] X3.159-1989\\*(sV\
-(\\*(Lq\\*(tNANSI C89\\*[__aa]\\*(Rq)
-.ds St-ansiC-99 \&\\*(tNANSI/ISO/IEC\\*[__aa] 9899-1999\\*(sV\
-(\\*(Lq\\*(tNANSI C99\\*[__aa]\\*(Rq)
-.ds St-isoC \&\\*(tNISO/IEC\\*[__aa] 9899:1990\\*(sV\
-(\\*(Lq\\*(tNISO\~C\^90\\*[__aa]\\*(Rq)
+.ds St-p1003.1 \&\\*(tNIEEE Std\\*[__aa] 1003.1\\*(sV
+.as St-p1003.1 (\\*(Lq\\*(tN\\*(Px\\*[__aa].1\\*(Rq)
+.ds St-p1003.1b \&\\*(tNIEEE Std\\*[__aa] 1003.1b\\*(sV
+.as St-p1003.1b (\\*(Lq\\*(tN\\*(Px\\*[__aa].1b\\*(Rq)
+.ds St-p1003.1-88 \&\\*(tNIEEE Std\\*[__aa] 1003.1-1988\\*(sV
+.as St-p1003.1-88 (\\*(Lq\\*(tN\\*(Px\\*[__aa].1\\*(Rq)
+.ds St-p1003.1-90 \&\\*(tNIEEE Std\\*[__aa] 1003.1-1990\\*(sV
+.as St-p1003.1-90 (\\*(Lq\\*(tN\\*(Px\\*[__aa].1\\*(Rq)
+.als St-iso9945-1-90 St-p1003.1-90
+.ds St-p1003.1b-93 \&\\*(tNIEEE Std\\*[__aa] 1003.1b-1993\\*(sV
+.as St-p1003.1b-93 (\\*(Lq\\*(tN\\*(Px\\*[__aa].1b\\*(Rq)
+.ds St-p1003.1c-95 \&\\*(tNIEEE Std\\*[__aa] 1003.1c-1995\\*(sV
+.as St-p1003.1c-95 (\\*(Lq\\*(tN\\*(Px\\*[__aa].1c\\*(Rq)
+.ds St-p1003.1i-95 \&\\*(tNIEEE Std\\*[__aa] 1003.1i-1995\\*(sV
+.as St-p1003.1i-95 (\\*(Lq\\*(tN\\*(Px\\*[__aa].1i\\*(Rq)
+.ds St-p1003.1-96 \&\\*(tNISO/IEC\\*[__aa] 9945-1:1996\\*(sV
+.as St-p1003.1-96 (\\*(Lq\\*(tN\\*(Px\\*[__aa].1\\*(Rq)
+.als St-iso9945-1-96 St-p1003.1-96
+.ds St-p1003.1d-99 \&\\*(tNIEEE Std\\*[__aa] 1003.1d-1999\\*(sV
+.as St-p1003.1d-99 (\\*(Lq\\*(tN\\*(Px\\*[__aa].1d\\*(Rq)
+.ds St-p1003.1g-2000 \&\\*(tNIEEE Std\\*[__aa] 1003.1g-2000\\*(sV
+.as St-p1003.1g-2000 (\\*(Lq\\*(tN\\*(Px\\*[__aa].1g\\*(Rq)
+.ds St-p1003.1-2001 \&\\*(tNIEEE Std\\*[__aa] 1003.1-2001\\*(sV
+.as St-p1003.1-2001 (\\*(Lq\\*(tN\\*(Px\\*[__aa].1\\*(Rq)
+.ds St-p1003.1-2004 \&\\*(tNIEEE Std\\*[__aa] 1003.1-2004\\*(sV
+.as St-p1003.1-2004 (\\*(Lq\\*(tN\\*(Px\\*[__aa].1\\*(Rq)
+.ds St-p1003.1-2008 \&\\*(tNIEEE Std\\*[__aa] 1003.1-2008\\*(sV
+.as St-p1003.1-2008 (\\*(Lq\\*(tN\\*(Px\\*[__aa].1\\*(Rq)
+.ds St-p1003.1-2013 \&\\*(tNIEEE Std\\*[__aa] 1003.1-2008/Cor 1-2013\\*(sV
+.as St-p1003.1-2013 (\\*(Lq\\*(tN\\*(Px\\*[__aa].1\\*(Rq)
+.ds St-p1003.2 \&\\*(tNIEEE Std\\*[__aa] 1003.2\\*(sV
+.as St-p1003.2 (\\*(Lq\\*(tN\\*(Px.2\\*[__aa]\\*(Rq)
+.ds St-p1003.2-92 \&\\*(tNIEEE Std\\*[__aa] 1003.2-1992\\*(sV
+.as St-p1003.2-92 (\\*(Lq\\*(tN\\*(Px.2\\*[__aa]\\*(Rq)
+.ds St-p1003.2a-92 \&\\*(tNIEEE Std\\*[__aa] 1003.2a-1992\\*(sV
+.as St-p1003.2a-92 (\\*(Lq\\*(tN\\*(Px.2\\*[__aa]\\*(Rq)
+.ds St-iso9945-2-93 \&\\*(tNISO/IEC\\*[__aa] 9945-2:1993\\*(sV
+.as St-iso9945-2-93 (\\*(Lq\\*(tN\\*(Px.2\\*[__aa]\\*(Rq)
+.ds St-ansiC \&\\*(tNANSI\\*[__aa] X3.159-1989\\*(sV
+.as St-ansiC (\\*(Lq\\*(tNANSI C89\\*[__aa]\\*(Rq)
+.ds St-ansiC-89 \&\\*(tNANSI\\*[__aa] X3.159-1989\\*(sV
+.as St-ansiC-89 (\\*(Lq\\*(tNANSI C89\\*[__aa]\\*(Rq)
+.ds St-ansiC-99 \&\\*(tNANSI/ISO/IEC\\*[__aa] 9899-1999\\*(sV
+.as St-ansiC-99 (\\*(Lq\\*(tNANSI C99\\*[__aa]\\*(Rq)
+.ds St-isoC \&\\*(tNISO/IEC\\*[__aa] 9899:1990\\*(sV
+.as St-isoC (\\*(Lq\\*(tNISO\~C\^90\\*[__aa]\\*(Rq)
 .als St-isoC-90 St-isoC
-.ds St-isoC-2011 \&\\*(tNISO/IEC\\*[__aa] 9899:2011\\*(sV\
-(\\*(Lq\\*(tNISO\~C\^11\\*[__aa]\\*(Rq)
-.ds St-isoC-99 \&\\*(tNISO/IEC\\*[__aa] 9899:1999\\*(sV\
-(\\*(Lq\\*(tNISO C99\\*[__aa]\\*(Rq)
-.ds St-isoC-amd1 \&\\*(tNISO/IEC\\*[__aa] 9899/AMD1:1995\\*(sV\
-(\\*(Lq\\*(tNISO C90, Amendment 1\\*[__aa]\\*(Rq)
-.ds St-isoC-tcor1 \&\\*(tNISO/IEC\\*[__aa] 9899/TCOR1:1994\\*(sV\
-(\\*(Lq\\*(tNISO\~C\^90\\*[__aa], Technical Corrigendum 1\\*(Rq)
-.ds St-isoC-tcor2 \&\\*(tNISO/IEC\\*[__aa] 9899/TCOR2:1995\\*(sV\
-(\\*(Lq\\*(tNISO\~C\^90\\*[__aa], Technical Corrigendum 2\\*(Rq)
+.ds St-isoC-2011 \&\\*(tNISO/IEC\\*[__aa] 9899:2011\\*(sV
+.as St-isoC-2011 (\\*(Lq\\*(tNISO\~C\^11\\*[__aa]\\*(Rq)
+.ds St-isoC-99 \&\\*(tNISO/IEC\\*[__aa] 9899:1999\\*(sV
+.as St-isoC-99 (\\*(Lq\\*(tNISO C99\\*[__aa]\\*(Rq)
+.ds St-isoC-amd1 \&\\*(tNISO/IEC\\*[__aa] 9899/AMD1:1995\\*(sV
+.as St-isoC-amd1 (\\*(Lq\\*(tNISO C90, Amendment 1\\*[__aa]\\*(Rq)
+.ds St-isoC-tcor1 \&\\*(tNISO/IEC\\*[__aa] 9899/TCOR1:1994\\*(sV
+.as St-isoC-tcor1 (\\*(Lq\\*(tNISO\~C\^90\\*[__aa], Technical Corrigendum 1
+.as St-isoC-tcor1 \\*(Rq)
+.ds St-isoC-tcor2 \&\\*(tNISO/IEC\\*[__aa] 9899/TCOR2:1995\\*(sV
+.as St-isoC-tcor2 (\\*(Lq\\*(tNISO\~C\^90\\*[__aa], Technical Corrigendum 2
+.as St-isoC-tcor2 \\*(Rq)
 .ds St-iso8601 \&\\*(tNISO\\*[__aa] 8601\\*(sV
 .ds St-iso8802-3 \&\\*(tNISO\\*[__aa] 8802-3: 1989\\*(sV
 .ds St-ieee754 \&\\*(tNIEEE Std\\*[__aa] 754-1985\\*(sV
-.ds St-xcu5 \&\\*(tNX/Open Commands and Utilities Issue 5\\*[__aa]\\*(sV\
-(\\*(Lq\\*(tNXCU5\\*[__aa]\\*(Rq)
-.ds St-xcurses4.2 \&\\*(tNX/Open Curses Issue\~4, Version\~2\
-(\\*(Lq\\*(tNXCURSES\\*[__aa] 4.2\\*(Rq)
-.ds St-xpg3 \&\\*(tNX/Open Portability Guide Issue 3\\*[__aa]\\*(sV\
-(\\*(Lq\\*(tNXPG3\\*[__aa]\\*(Rq)
-.ds St-xpg4 \&\\*(tNX/Open Portability Guide Issue 4\\*[__aa]\\*(sV\
-(\\*(Lq\\*(tNXPG4\\*[__aa]\\*(Rq)
-.ds St-xpg4.2 \&\\*(tNX/Open Portability Guide Issue 4, Version\
- 2\\*[__aa]\\*(sV\
-(\\*(Lq\\*(tNXPG4.2\\*[__aa]\\*(Rq)
-.ds St-xpg4.3 \&\\*(tNX/Open Portability Guide Issue 4, Version\
- 3\\*[__aa]\\*(sV\
-(\\*(Lq\\*(tNXPG4.3\\*[__aa]\\*(Rq)
-.ds St-xsh5 \&\\*(tNX/Open System Interfaces and Headers Issue\~5\
-(\\*(Lq\\*(tNXSH\\*[__aa] 5\\*(Rq)
-.ds St-susv2 \&\\*(tNVersion 2 of the Single UNIX Specification\\*[__aa]\\*(sV\
-(\\*(Lq\\*(tNSUSv2\\*[__aa]\\*(Rq)
-.ds St-svid4 \&\\*(tNSystem V Interface Definition, Fourth\
- Edition\\*[__aa]\\*(sV\
-(\\*(Lq\\*(tNSVID4\\*[__aa]\\*(Rq)
+.ds St-xcu5 \&\\*(tNX/Open Commands and Utilities Issue 5\\*[__aa]\\*(sV
+.as St-xcu5 (\\*(Lq\\*(tNXCU5\\*[__aa]\\*(Rq)
+.ds St-xsh4.2 \&\\*(tNX/Open System Interfaces and Headers Issue\\~4, Version
+.as St-xsh4.2 \\~2\\*[__aa]\\*(sV
+.as St-xsh4.2 (\\*(Lq\\*(tNXSH4.2\\*[__aa]\\*(Rq)
+.ds St-xcurses4.2 \&\\*(tNX/Open Curses Issue\~4, Version\~2
+.as St-xcurses4.2 (\\*(Lq\\*(tNXCURSES\\*[__aa] 4.2\\*(Rq)
+.ds St-xns5 \&\\*(tNX/Open\\*[__aa] Networking Services Issue\~5\\*(sV
+.as St-xns5 (\*(Lq\\*(tNXNS\\*[__aa]\^5\*(Rq)
+.ds St-xns5.2 \&\\*(tNX/Open\\*[__aa] Networking Services Issue\~5.2\\*(sV
+.as St-xns5.2 (\*(Lq\\*(tNXNS\\*[__aa]\^5.2\*(Rq)
+.ds St-xpg3 \&\\*(tNX/Open Portability Guide Issue 3\\*[__aa]\\*(sV
+.as St-xpg3 (\\*(Lq\\*(tNXPG3\\*[__aa]\\*(Rq)
+.ds St-xpg4 \&\\*(tNX/Open Portability Guide Issue 4\\*[__aa]\\*(sV
+.as St-xpg4 (\\*(Lq\\*(tNXPG4\\*[__aa]\\*(Rq)
+.ds St-xpg4.2 \&\\*(tNX/Open Portability Guide Issue 4, Version 2\\*[__aa]
+.as St-xpg4.2 \\*(sV
+.as St-xpg4.2 (\\*(Lq\\*(tNXPG4.2\\*[__aa]\\*(Rq)
+.ds St-xpg4.3 \&\\*(tNX/Open Portability Guide Issue 4, Version 3\\*[__aa]
+.as St-xpg4.3 \\*(sV
+.as St-xpg4.3 (\\*(Lq\\*(tNXPG4.3\\*[__aa]\\*(Rq)
+.ds St-xsh5 \&\\*(tNX/Open System Interfaces and Headers Issue\~5
+.as St-xsh5 (\\*(Lq\\*(tNXSH\\*[__aa] 5\\*(Rq)
+.ds St-susv1 \&\\*(tNVersion 1 of the Single UNIX Specification\\*[__aa]\\*(sV
+.as St-susv1 (\\*(Lq\\*(tNSUSv1\\*[__aa]\\*(Rq)
+.ds St-susv2 \&\\*(tNVersion 2 of the Single UNIX Specification\\*[__aa]\\*(sV
+.as St-susv2 (\\*(Lq\\*(tNSUSv2\\*[__aa]\\*(Rq)
+.ds St-susv3 \&\\*(tNVersion 3 of the Single UNIX Specification\\*[__aa]\\*(sV
+.as St-susv3 (\\*(Lq\\*(tNSUSv3\\*[__aa]\\*(Rq)
+.ds St-susv4 \&\\*(tNVersion 4 of the Single UNIX Specification\\*[__aa]\\*(sV
+.as St-susv4 (\\*(Lq\\*(tNSUSv4\\*[__aa]\\*(Rq)
+.ds St-svid4 \&\\*(tNSystem V Interface Definition, Fourth Edition\\*[__aa]
+.as St-svid4 \\*(sV
+.as St-svid4 (\\*(Lq\\*(tNSVID4\\*[__aa]\\*(Rq)
+.ds St-xbd5 \&\\*(tNX/Open\\*[__aa] Base Definitions Issue\~5\\*(sV
+.as St-xbd5 (\\*(Lq\\*(tNXBD\\*[__aa]\^5\\*(Rq)
+.ds St-ieee1275-94 \&\\*(tN\%IEEE\\*[__aa] Std 1275-1994\\*(sV
+.as St-ieee1275-94 (\\*(Lq\\*(tNOpen Firmware\\*[__aa]\\*(Rq)
 .de St
 .if \\n(aC==0 \{\
 .	ie \\n(.$==0 \{\

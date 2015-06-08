@@ -129,18 +129,23 @@
 .\" NS Ql macro - Quoted literal define
 .de Ql
 .	if \\n(aC==0  \{\
-.		ds mN Ql
-.		nr fV \\n(.$
-.		lnr _i_ 0 1
-.		while \\n(.$ \{\
-.			ds A\\n+[_i_] \\$1
-.			shift
+.		ie !\\n(.$ .tm Ql without argument in \\n(.F line \\n(.c
+.		el \{\
+.			ds mN Ql
+.			nr fV \\n(.$
+.			lnr _i_ 0 1
+.			while \\n(.$ \{\
+.				ds A\\n+[_i_] \\$1
+.				shift
+.			\}
+.			fV
 .		\}
-.	 	fV
 .	\}
-.	ds qL \&\\*(sL
-.	ds qR \&\\*(sR
-.	En \\$*
+.	if \\n(aC \{\
+.		ds qL \&\\*(sL
+.		ds qR \&\\*(sR
+.		En \\$*
+.	\}
 ..
 .\" NS Sh macro - Section Headers
 .\" NS nS register - Section Header SYNOPSIS flag
