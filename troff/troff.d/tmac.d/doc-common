@@ -80,6 +80,7 @@
 .nr I3 18n
 .nr Ic 10n
 .nr In 12n
+.nr Lb 11n
 .nr Li 16n
 .nr Lk 32n
 .nr Ms 6n

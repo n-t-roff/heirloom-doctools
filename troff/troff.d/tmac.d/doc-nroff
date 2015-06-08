@@ -175,6 +175,7 @@
 .			nr fZ 0
 .		\}
 .		el .if \\$1AUTHORS .nr nY 1
+.		ds Sh.title \\$1
 .		in 0
 .	\}
 .	pL
