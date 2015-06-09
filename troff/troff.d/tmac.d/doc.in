@@ -322,7 +322,13 @@
 .	\}
 .	el \{\
 .		ds mN Fl
-.		aV \\$*
+.		lds _$_
+.		while \\n(.$ \{\
+.			ie \\$1 .as _$_ " \&
+.			el .as _$_ " \\$1
+.			shift
+.		\}
+.		aV \\*[_$_]
 .	\}
 .\}
 .if \\n(aC>0 \{\
@@ -2362,17 +2368,19 @@
 '	in \\n(.iu+\\n(eWu
 .\}
 .ti -\\n(eWu
-.fV
-.nr aP \\n(aP+1
-.ie \\n(aC>=\\n(aP  \{\
-.	if \\*[A\\n(aP]Ta \{\
-.		nr jJ \\n(aP-1
-.		rm S\\n(jJ
-.		rr jJ
+.if \\n(fV \{\
+.	fV
+.	nr aP \\n(aP+1
+.	ie \\n(aC>=\\n(aP  \{\
+.		if \\*[A\\n(aP]Ta \{\
+.			nr jJ \\n(aP-1
+.			rm S\\n(jJ
+.			rr jJ
+.		\}
+.		c\\n[C\\n(aP]
 .	\}
-.	c\\n[C\\n(aP]
+.	el .tm Usage: .It column_string [Ta [column_string ...] ] (#\\n(.c)
 .\}
-.el .tm Usage: .It column_string [Ta [column_string ...] ] (#\\n(.c)
 ..
 .\" NS Ta macro - append tab (\t)
 .de Ta

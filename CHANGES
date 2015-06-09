@@ -1,6 +1,22 @@
+2015-06-08
+    mdoc: Macro Lb with library definitions for FreeBSD and
+    NetBSD added.
+
+2015-06-05
+    nroff -T37 (default), -Tlp and -Tlocale: Display of pic(7)
+    drawings implemented.
+
+2015-06-04
+    troff -Tpost: All font description files now uppercase (for
+    use on case-insensitive file systems) and use of groff font
+    names instead of traditional names now possible with .ft and
+    \f.
+
 2015-05-26
     Bugfix: nroff: Local motions had not been local (did stay in
     effect across line boundary).
+
+    nroff: Request \D'l ...' added.
 
 2015-05-02
     mdoc(7): .El: List type stack bug fixed.
