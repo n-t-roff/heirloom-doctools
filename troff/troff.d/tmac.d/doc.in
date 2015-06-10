@@ -32,7 +32,7 @@
 .\"     from 4.4BSD doc	8.1 (Berkeley) 6/8/93
 .\"
 .\" Portions Copyright (c) 2005 Gunnar Ritter, Freiburg i. Br., Germany
-.\" Portions Copyright (c) 2014 Carsten Kunze <carsten.kunze@arcor.de>
+.\" Portions Copyright (c) 2014, 2015 Carsten Kunze <carsten.kunze@arcor.de>
 .\"
 .\" Sccsid @(#)doc.in	1.2 (gritter) 8/13/05
 .\"
@@ -161,6 +161,18 @@
 ..
 .de fV
 .nr aC \\n(aC+1
+.lds _$1_ "\\*[A\\n(aC]
+.lnr _l_ 0
+.length _l_ "\\*[_$1_]
+.if \\n[_l_]=2 \{\
+.	lnr _i_ -2
+.	index _i_ _$1_ \@
+.	ie \\n[_i_]=0 .ds A\\n(aC @
+.	el \{\
+.		index _i_ _$1_ \;
+.		if \\n[_i_]=0 .ds A\\n(aC \&;\&
+.	\}
+.\}
 .if \\*[A\\n(aC]| \{\
 .	if \\*(mNOp .ds A\\n(aC \fR\\*[A\\n(aC]\fP
 .	if \\*(mNAr .ds A\\n(aC \fR\\*[A\\n(aC]\fP
@@ -1005,10 +1017,18 @@
 ..
 .\" NS Dq macro - Enclose string in double quotes
 .de Dq
-.if \\n(aC==0 .ds mN Dq
+.if !\\n(aC \{\
+.	ds mN Dq
+.	nr fV \\n(.$
+.	lnr _i_ 0 1
+.	while \\n(.$ \{\
+.		ds A\\n+[_i_] \\$1
+.		shift
+.	\}
+.\}
 .ds qL \&\\*(Lq
 .ds qR \&\\*(Rq
-.En \\$*
+.En
 ..
 .\" NS Eq macro - Enclose string in double quotes
 .de Eq
@@ -1068,12 +1088,14 @@
 .\" NS aJ register (for vR)
 .de En
 .ie \\n(aC==0 \{\
-.	ie \\n(.$==0 \{\
+.	ie \\n(.$=0&(\\n(fV=0) \{\
 .		as b1 \&\\*(qL\\*(qR
 .		pB
 .	\}
 .	el \{\
-.		aV \\$*
+.		ie \\n(.$ .aV \\$*
+.		el .ie \\n(fV .fV
+.		el .tm ".En: Zero .$ and fV (\\n(.F \\n(.c)
 .		as b1 \&\\*(qL
 .	\}
 .\}
@@ -1468,6 +1490,7 @@
 .		el .ie \\*(b0v1 .lnr _mac_ 0
 .		el .ie \\*(b0dV .lnr _mac_ 0
 .		el .ie \\*(b0mo .lnr _mac_ 0
+.		el .ie \\*(b0lt .lnr _mac_ 0
 .		el .ie \\n(jN>=0:(\\n(jO>=0):(\\n(jP>=0):(\\n[_us_]>=0) .lnr _mac_ 0
 .		el .lnr _mac_ \\n(\\*(b0
 .		ie \\n[_mac_] .nr aT 1
