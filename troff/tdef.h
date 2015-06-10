@@ -198,7 +198,6 @@
 #define	EXTRAFONT 500	/* extra space for swapping a font */
 extern	int	NN;	/* number registers */
 #define	NNAMES	15	 /* predefined reg names */
-extern	int	NIF;	/* if-else nesting */
 extern	int	NS;	/* name buffer */
 #define	NTM	4096	/* tm buffer */
 #define	NEV	3	/* environments */

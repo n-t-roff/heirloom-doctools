@@ -161,7 +161,6 @@ int	lastkern;
 int	lasttrack;
 int	defaultpl;
 int	NCHARS;
-int	NIF;
 int	NDI;
 int	spreadwarn;
 int	spreadlimit;

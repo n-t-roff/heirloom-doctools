@@ -37,7 +37,7 @@
  */
 
 /*
- * Changes Copyright (c) 2014 Carsten Kunze <carsten.kunze at arcor.de>
+ * Changes Copyright (c) 2014, 2015 Carsten Kunze <carsten.kunze at arcor.de>
  */
 
 /*
@@ -77,22 +77,6 @@
  */
 
 int	cmpstrdelim	= 0;
-static int	*iflist;
-static int	ifx;
-
-static void
-growiflist(void)
-{
-	int	nnif = NIF + 15;
-
-	if ((iflist = realloc(iflist, nnif * sizeof *iflist)) == NULL) {
-		errprint("if-else overflow.");
-		ifx = 0;
-		edone(040);
-	}
-	memset(&iflist[NIF], 0, (nnif-NIF) * sizeof *iflist);
-	NIF = nnif;
-}
 
 void
 casead(void)
@@ -1587,25 +1571,13 @@ relsev(struct env *ep)
 void
 caseel(void)
 {
-	if (--ifx < 0) {
-		ifx = 0;
-		if (NIF == 0)
-			growiflist();
-		iflist[0] = 0;
-		if (warn & WARN_EL)
-			errprint(".el without matching .ie");
-	}
 	caseif(2);
 }
-
 
 void
 caseie(void)
 {
-	if (ifx >= NIF)
-		growiflist();
 	caseif(1);
-	ifx++;
 }
 
 int	tryglf;
@@ -1618,12 +1590,14 @@ caseif(int x)
 	tchar i, j;
 	enum warn w = warn;
 	int	flt = 0;
+	static int el;
 
 	if (x == 3)
 		goto i2;
 	if (x == 2) {
 		notflag = 0;
-		true = iflist ? iflist[ifx] : 0;
+		true = el;
+		el = 0;
 		goto i1;
 	}
 	true = 0;
@@ -1705,9 +1679,7 @@ caseif(int x)
 i1:
 	true ^= notflag;
 	if (x == 1) {
-		if (ifx >= NIF)
-			growiflist();
-		iflist[ifx] = !true;
+		el = !true;
 	}
 	if (true) {
 		if (frame->loopf & LOOP_EVAL) {
