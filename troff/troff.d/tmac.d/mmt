@@ -2102,6 +2102,7 @@ PRIVATE\h'-\w'PRIVATE'u'\l'\w'PRIVATE'u'
 .br
 .)R
 .nr ;C 1
+.nr W \\n(.l
 .if !\\n(.$ .nr ;l \\n(.lu*8u/17u 
 .if !\\n(.$ .nr ;o \\n(.lu*9u/17u 
 .if \\n(.$ .nr ;l \\$1u*1.3n
@@ -2435,7 +2436,10 @@ PRIVATE\h'-\w'PRIVATE'u'\l'\w'PRIVATE'u'
 .DE \}
 .nr :y 1
 .if (\\n(;C>0)&(\\n(;a=1) .>W
+.nr :y \\n(.l
 .ev 1
+.ll \\n(:yu
+.nr :y 1
 .)R
 'di >0
 .nr :D 1
@@ -2465,7 +2469,10 @@ PRIVATE\h'-\w'PRIVATE'u'\l'\w'PRIVATE'u'
 .nr ;w \\n(:x+1%26+1
 .if !((\\n(;C=2)&(\\n(!\\n(;w=1)) \{\
 .nr ;d 1
+.nr ;d \\n(.l
 .ev 1
+.ll \\n(;du
+.nr ;d 1
 .SP .5
 .)R
 'nf
@@ -2607,7 +2614,10 @@ PRIVATE\h'-\w'PRIVATE'u'\l'\w'PRIVATE'u'
 .nr ;R 2 
 .nr Rf +1 
 .if \\n(.$ .ds \\$1 \v'-.4m'\s-3[\\n(:R]\s0\v'.4m'
+.nr ;R \\n(.l
 .ev 2
+.ll \\n(;Ru
+.nr ;R 2
 .)R
 'in \w\0\0.\ u
 'ti -\w\\*(]r.\ u
