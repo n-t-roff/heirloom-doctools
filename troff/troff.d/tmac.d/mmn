@@ -2801,3 +2801,32 @@ PRIVATE
 .ds }2
 'br \}
 'em )q
+.do de PGFORM
+.	if \\n(.$ \{\
+.		if !\\$1 \{\
+.			nr W \\$1
+.			ev 0
+.			ll \\nWu
+.			lt \\nWu
+.			ev
+.			ev 1
+.			ll \\nWu
+.			lt \\nWu
+.			ev
+.			ev 2
+.			ll \\nWu
+.			lt \\nWu
+.			ev
+.		\}
+.		if !\\$2 \{\
+.			nr L \\$2
+.			pl \\nLu
+.		\}
+.		if !\\$3 \{\
+.			nr O \\$3
+.			po \\nOu
+.		\}
+.		if \\$4 .br
+.	\}
+..
+.\" vim:set filetype=groff:

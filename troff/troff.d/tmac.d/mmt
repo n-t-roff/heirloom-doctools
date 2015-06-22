@@ -2796,3 +2796,45 @@ PRIVATE\h'-\w'PRIVATE'u'\l'\w'PRIVATE'u'
 'em )q
 .\" From Plan9 mmt to remove cut marks:
 .if !\*(.Taps .rm )k
+.ig
+PGFORM [linelength [pagelength [pageoffset [1]]]]
+              Set  line  length,  page length, and/or page offset.  This macro
+              can be used for special formatting, like letter heads and other.
+              It  is  normally  the  first command in a file, though it is not
+              necessary.  PGFORM can be used without arguments to reset every‐
+              thing after a MOVE call.  A line break is done unless the fourth
+              argument is given.  This can be used to avoid the page number on
+              the first page while setting new width and length.  (It seems as
+              if this macro sometimes doesn't work too well.  Use the  command
+              line arguments to change line length, page length, and page off‐
+              set instead.)
+..
+.do de PGFORM
+.	if \\n(.$ \{\
+.		if !\\$1 \{\
+.			nr W \\$1
+.			ev 0
+.			ll \\nWu
+.			lt \\nWu
+.			ev
+.			ev 1
+.			ll \\nWu
+.			lt \\nWu
+.			ev
+.			ev 2
+.			ll \\nWu
+.			lt \\nWu
+.			ev
+.		\}
+.		if !\\$2 \{\
+.			nr L \\$2
+.			pl \\nLu
+.		\}
+.		if !\\$3 \{\
+.			nr O \\$3
+.			po \\nOu
+.		\}
+.		if \\$4 .br
+.	\}
+..
+.\" vim:set filetype=groff:
