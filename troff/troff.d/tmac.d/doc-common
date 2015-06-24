@@ -46,14 +46,18 @@
 .nr %V 1
 .nr Ad 12n
 .nr Ac 3
-.nr Ao 12n
 .nr An 12n
+.nr Ao 12n
+.nr Ap 2
 .nr Aq 12n
 .nr Ar 12n
+.nr At 4
 .nr Bc 3
 .nr Bl 1
 .nr Bo 12n
 .nr Bq 12n
+.nr Brc 3
+.nr Bro 12n
 .nr Brq 12n
 .nr Cd 12n
 .nr Cm 10n
@@ -68,13 +72,14 @@
 .nr Eo 12n
 .nr Eq 12n
 .nr Em 10n
-.nr Er 12n
+.nr Er 17n
 .nr Ev 15n
 .nr Fa 12n
 .nr Fl 10n
 .nr Fc 3
 .nr Fo 16n
 .nr Fn 16n
+.nr Fx 4
 .nr I1 6n
 .nr I2 12n
 .nr I3 18n
@@ -88,10 +93,11 @@
 .nr Nm 10n
 .nr No 12n
 .nr Ns 2
+.nr Nx 4
 .nr Oo 10n
 .nr Oc 3
 .nr Op 14n
-.nr Ox 10n
+.nr Ox 4
 .nr Pa 32n
 .nr Pf 12n
 .nr Pc 3
@@ -102,6 +108,7 @@
 .nr Qo 12n
 .nr Qq 12n
 .nr Sc 3
+.nr Sm 8n
 .nr So 12n
 .nr Sq 12n
 .nr Sy 6n
@@ -116,37 +123,118 @@
 .nr Xc 3
 .nr Xo 1
 .nr Xr 10n
+.ds mdoc.cm.%A
+.ds mdoc.cm.%J
+.ds mdoc.cm.%N
+.ds mdoc.cm.%O
+.ds mdoc.cm.%R
+.ds mdoc.cm.%T
+.ds mdoc.cm.%V
+.ds mdoc.cm.Ad
+.ds mdoc.cm.Ac
+.ds mdoc.cm.An
+.ds mdoc.cm.Ao
+.ds mdoc.cm.Ap
+.ds mdoc.cm.Aq
+.ds mdoc.cm.Ar
+.ds mdoc.cm.At
+.ds mdoc.cm.Bc
+.ds mdoc.cm.Bl
+.ds mdoc.cm.Bo
+.ds mdoc.cm.Bq
+.ds mdoc.cm.Brc
+.ds mdoc.cm.Bro
+.ds mdoc.cm.Brq
+.ds mdoc.cm.Cd
+.ds mdoc.cm.Cm
+.ds mdoc.cm.Dc
+.ds mdoc.cm.Do
+.ds mdoc.cm.Dq
+.ds mdoc.cm.Ds
+.ds mdoc.cm.Dq
+.ds mdoc.cm.Dv
+.ds mdoc.cm.Ec
+.ds mdoc.cm.El
+.ds mdoc.cm.Eo
+.ds mdoc.cm.Eq
+.ds mdoc.cm.Em
+.ds mdoc.cm.Er
+.ds mdoc.cm.Ev
+.ds mdoc.cm.Fa
+.ds mdoc.cm.Fl
+.ds mdoc.cm.Fc
+.ds mdoc.cm.Fo
+.ds mdoc.cm.Fn
+.ds mdoc.cm.Fx
+.ds mdoc.cm.I1
+.ds mdoc.cm.I2
+.ds mdoc.cm.I3
+.ds mdoc.cm.Ic
+.ds mdoc.cm.In
+.ds mdoc.cm.Lb
+.ds mdoc.cm.Li
+.ds mdoc.cm.Lk
+.ds mdoc.cm.Ms
+.ds mdoc.cm.Mt
+.ds mdoc.cm.Nm
+.ds mdoc.cm.No
+.ds mdoc.cm.Ns
+.ds mdoc.cm.Nx
+.ds mdoc.cm.Oo
+.ds mdoc.cm.Oc
+.ds mdoc.cm.Op
+.ds mdoc.cm.Ox
+.ds mdoc.cm.Pa
+.ds mdoc.cm.Pf
+.ds mdoc.cm.Pc
+.ds mdoc.cm.Po
+.ds mdoc.cm.Pq
+.ds mdoc.cm.Qc
+.ds mdoc.cm.Ql
+.ds mdoc.cm.Qo
+.ds mdoc.cm.Qq
+.ds mdoc.cm.Sc
+.ds mdoc.cm.Sm
+.ds mdoc.cm.So
+.ds mdoc.cm.Sq
+.ds mdoc.cm.Sy
+.ds mdoc.cm.Sx
+.ds mdoc.cm.Rv
+.ds mdoc.cm.Tn
+.ds mdoc.cm.Ta
+.ds mdoc.cm.Tv
+.ds mdoc.cm.Tx
+.ds mdoc.cm.Va
+.ds mdoc.cm.Vt
+.ds mdoc.cm.Xc
+.ds mdoc.cm.Xo
+.ds mdoc.cm.Xr
+.ds mdoc.ncm.It
 .ds sV \& \&
 .ds hV \&\ \&
 .ds iV \& \&
 .ds tV \&\\t\&
 .\" Punctuation values (3 = closing punctuation, 4 = opening)
-.nr z. 3
-.nr z! 3
-.nr z? 3
-.nr z, 3
-.nr z: 3
-.nr z; 3
-.nr z( 4
-.nr z) 3
-.nr z[ 4
-.nr z] 3
-.\" Matching pairs
-.ds z( z)
-.ds z[ z]
-.ds z< z>
-.\" This is disgusting, troff not parse ``if'' stmt properly
-.nr z0 0
-.nr z1 0
-.nr z2 0
-.nr z3 0
-.nr z4 0
-.nr z5 0
-.nr z6 0
-.nr z7 0
-.nr z8 0
-.nr z9 0
-.nr z# 0
+.ds z. 3
+.ds z! 3
+.ds z? 3
+.ds z, 3
+.ds z: 3
+.ds z; 3
+.ds z( 4
+.ds z) 3
+.ds z[ 4
+.ds z] 3
+.ds mdoc.d.0
+.ds mdoc.d.1
+.ds mdoc.d.2
+.ds mdoc.d.3
+.ds mdoc.d.4
+.ds mdoc.d.5
+.ds mdoc.d.6
+.ds mdoc.d.7
+.ds mdoc.d.8
+.ds mdoc.d.9
 .\" Header assembly macros
 .de Dt
 .ds dT UNTITLED
@@ -343,7 +431,6 @@
 ..
 .de Rd
 .tm MDOC REGISTER DUMP
-.tm Db==\\n(Db register DEBUG MODE
 .tm L[0-9] registers - stack of list types
 .tm L0==\\n(L0
 .tm L1==\\n(L1

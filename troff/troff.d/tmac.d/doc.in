@@ -75,31 +75,59 @@
 .\"
 .so @MACDIR@/doc-common
 .so @MACDIR@/doc-syms
-.\" NS Db macro - start/stop DEBUG MODE
-.\" NS Db register DEBUG MODE
-.\" NS iN register DEBUG MODE (inline if 1, to stderr if 0 (default))
-.nr Db 0
-.de Db
-.ie \\n(.$==0 \{\
-.	ie \\n(Db==0 \{\
-.tm DEBUGGING ON
-.		nr Db 1
+.\" NS Sh macro - Section Headers
+.\" NS nS register - Section Header SYNOPSIS flag
+.\" NS nF register - Section Header FILES flag
+.\" NS nA register - Section Header SEE ALSO flag
+.\" NS nT register - Section Header STANDARDS flag
+.de Sh
+.	nr nS 0
+.	nr sE 0
+.	nr iS 0
+.	nr nA 0
+.	nr nF 0
+.	nr nT 0
+.	nr nY 0
+.	nr aN 0
+.	nr oT 0
+.	ds Sh.title \\$1
+.	ad
+.	ie \\$1NAME .hK
+.	el .ie \\$1SYNOPSIS \{\
+.		nr nS 1
+.		na
 .	\}
-.	el \{\
-.tm DEBUGGING OFF
-.		nr Db 0
+.	el .ie \\$1DESCRIPTION \{\
+.		rr fB
+.		rr Fb
+.		ds Fb
+.		nr fY 0
+.		nr fZ 0
 .	\}
-.\}
-.el \{\
-.	if \\$1on \{\
-.tm DEBUGGING ON
-.		nr Db 1
+.	el .ie \\$1FILES .nr nF 1
+.	el .ie \\$1SEE \{\
+.		nr sE 1
+.		nr nA 1
+.		na
 .	\}
-.	if \\$1off \{\
-.tm DEBUGGING OFF
-.		nr Db 0
+.	el .ie \\$1STANDARDS .nr nT 1
+.	el .if \\$1AUTHORS .nr nY 1
+.	in 0
+.	pL
+.	sp
+.	ns
+.	ta .5i 1i 1.5i 2i 2.5i 3i 3.5i 4i 4.5i 5i 5.5i 6i 6.5i
+.	if !\\n(cR .ne 3
+.	fi
+.	if 1 \&\\*(sH\\$1
+.	shift
+.	while \\n(.$ \{\
+.		if 1 \|\\$1
+.		shift
 .	\}
-.\}
+.	if 1 \&\fR\s10\&
+.	in \\n(.iu+\\n(Tiu
+.	ns
 ..
 .\" NS aV macro - parse argument vector (recursive) (.aV arg ... )
 .\" NS fV macro - parse argument vector (recursive) (.fV)
@@ -139,7 +167,7 @@
 .\}
 .ie \\n(jM .ds A\\n(aC \fR\\$1\fP
 .el .ds A\\n(aC \\*[_$1_]
-.aU \\n(aC
+.aT \\*[A\\n(aC]
 .nr C\\n(aC \\n(aT
 .s\\n(aT
 .ie \\n(.$==1 \{\
@@ -180,7 +208,7 @@
 .	if \\*(mNCm .ds A\\n(aC \fR\\*[A\\n(aC]\fP
 .	if \\*(mNIt .ds A\\n(aC \fR\\*[A\\n(aC]\fP
 .\}
-.aU \\n(aC
+.aT "\\*[A\\n(aC]
 .nr C\\n(aC \\n(aT
 .s\\n(aT
 .ie \\n(fV==1 \{\
@@ -265,7 +293,6 @@
 .		\}
 .		rm S0
 .		ds b1
-.		nr __di_nz 1
 .	\}
 .	if \\n(oM==0 \{\
 .		x2
@@ -293,34 +320,35 @@
 .\" NS b2 string save of buffer
 .\" NS lK register count of lines read from input file
 .de x1
-.nr dZ \\n(dZ+1
-.ds b2 \\*(b1
-.ds b1
-.nr lK \\n(.c
-.ev 2
-.if n .nh
-.fi
-.di eB
+.	nr dZ +1
+.	ds b2 \\*(b1
+.	ds b1
+.	box eB\\n(dZ
+.	ev 2
+.	evc 0
+.	in 0
+.	nf
 ..
-.\"
+.de x2.1
+.	br
+.	ev
+.	box
+..
+.de x2.2
+.	ie \\n(dl:\\n(dn \{\
+.		chop eB\\n(dZ
+.		unformat eB\\n(dZ
+.		if 1 \\*(b2\\*[eB\\n(dZ]\\*(b1
+.	\}
+.	el \\*(b2\\*(b1
+.	rm b2 eB\\n(dZ b1
+.	nr dZ -1
+..
 .\" NS x2 macro - end diversion and print
 .\" NS b0 string local temporary
 .de x2
-.br
-.di
-.ev
-.ie \\n(dl:\\n(dn \{\
-.	unformat eB
-.	ds b0 \&\\*(eB\c
-.	ds b1 \\*(b2\\*[__last_S]\\*(b0\\*(b1
-.\}
-.el .ds b1 \\*(b2\\*[__last_S]\\*(b1
-.if \\$1 \{\&\\*(b1
-.	rm b1
-.\}
-.rm eB b2 b0
-.nr dZ \\n(dZ-1
-.nr __di_nz 0
+.	x2.1
+.	x2.2
 ..
 .\" NS Fl macro - flags (appends - and prints flags)
 .\" NS cF register save current font
@@ -398,7 +426,7 @@
 .	\}
 .	el \{\
 .		nr aP \\n(aP+1
-.		ie ((\\n[C\\n(aP]==3)&(\\n(C\\n(jN==4)) .as b1 \&\|\-
+.		ie ((\\n[C\\n(aP]==3)&(\\n[C\\n(jN]==4)) .as b1 \&\|\-
 .		el .as b1 \&\\*[S\\n(jN]
 .		shift
 .		fR \\$*
@@ -413,7 +441,6 @@
 .\" NS xX local register
 .de nR
 .hy 0
-.if !\\n(dZ .ds __last_S \\*[S\\n(aP]
 .nr jM \\n[C\\n(aP]
 .ie \\n(jM==1 \{\
 .	as b1 \&\f\\n(cF\s\\n(cZ
@@ -458,7 +485,7 @@
 .de Ar
 .as b1 \\*(aR
 .if \\n(aC==0 \{\
-.       ie \\n(.$==0 \{\
+.	ie \\n(.$==0 \{\
 .		as b1 \&file\ ...\fP\s0
 .		pB
 .	\}
@@ -477,16 +504,16 @@
 .		ie \\n[C\\n(aP]==1 \{\
 .			as b1 \&file\ ...\fP\s0
 .			\\*[A\\n(aP]
-.               \}
-.               el \{\
-.                       nr cF \\n(.f
+.		\}
+.		el \{\
+.			nr cF \\n(.f
 .			nr cZ \\n(.s
 .			if \\n[C\\n(aP]==3 \{\
 .				as b1 \&file\ ...
 .			\}
-.                       nR
+.			nR
 .		\}
-.       \}
+.	\}
 .	if \\n(aC=\\n(aP .aY
 .\}
 ..
@@ -726,7 +753,7 @@
 .\" NS Ic macro - Interactive command
 .de Ic
 .if \\n(aC==0 \{\
-.       ie \\n(.$==0 .tm Usage: .Ic Interactive command ... \\*(Pu (#\\n(.c)
+.	ie \\n(.$==0 .tm Usage: .Ic Interactive command ... \\*(Pu (#\\n(.c)
 .	el \{\
 .		ds mN Ic
 .		aV \\$*
@@ -735,9 +762,9 @@
 .if \\n(aC>\\n(aP \{\
 .	as b1 \\*(iC
 .	nr aP \\n(aP+1
-.       nr cF \\n(.f
+.	nr cF \\n(.f
 .	nr cZ \\n(.s
-.       nR
+.	nR
 .\}
 ..
 .\" NS Li macro - literals
@@ -802,22 +829,31 @@
 .\" NS iS register - indent second command line in a synopsis
 .de Nm
 .if \\n(aC==0 \{\
-.	if \\n(nS .br
+.	if \\n(nS .in -\\n(iSu
 .	ie \\n(.$==0 \{\
 .		ie \\*(n1 .tm Usage: .Nm Name(s) ... \\*(Pu (#\\n(.c)
-.		el \&\\*(nM\\*(n1\fP\s0
+.		el \{\
+.			ds b1 \&\\*(nM\\*(n1\fP\s0
+.			if \\n[Xo.depth] .as b1 \\*(sV
+.			pB
+.		\}
 .	\}
 .	el \{\
 .		ds mN Nm
-.               nr fV \\n(.$
-.		lds _$1_ \\$1
+.		nr fV \\n(.$
 .		lnr _i_ 0 1
 .		while \\n(.$ \{\
 .			ds A\\n+[_i_] \\$1
 .			shift
 .		\}
-.               fV
-.       \}
+.		fV
+.	\}
+.	if \\n(nS \{\
+.		ie \\*(A1 .nr iS \w\\*(n10
+.		el .nr iS \w\\*(A10
+'		in +\\n(iSu
+.		if \\n(aC .ti -\\n(iSu
+.	\}
 .\}
 .if \\n(aC>0 \{\
 .	ie \\n(aC==\\n(aP \{\
@@ -834,22 +870,10 @@
 .		\}
 .		el \{\
 .			length xX \\*(A1
-.			if \\n(xX=1 .if \\n(z\\*(A1 .as b1 \&\\*(n1\fP\s0
+.			if \\n(xX=1 .if d z\\*(A1 \
+.				as b1 \&\\*(n1\fP\s0
 .			nr cF \\n(.f
 .			nr cZ \\n(.s
-.			if \\n(nS \{\
-.				if \\*(mNNm \{\
-.					rs
-.					in -\\n(iSu
-.					ie \\n(nS>1 .br
-.					el .if \\n(iS==0 \{\
-.						nr iS \w\\*[_$1_]+\w0
-.					\}
-.					in +\\n(iSu
-.					ti -\\n(iSu
-.					nr nS \\n(nS+1
-.				\}
-.			\}
 .			if \\*(n1 .ds n1 \\*[A\\n(aP]
 .			nR
 .		\}
@@ -1015,15 +1039,70 @@
 .ds qR \&}
 .En \\$*
 ..
+.de Bro
+.	if !\\n(aC \{\
+.		ie !\\n(.$ \{\
+.			as b1 {
+.			pB
+.		\}
+.		el \{\
+.			ds mN Bro
+.			nr fV \\n(.$
+.			lnr _i_ 0 1
+.			while \\n(.$ \{\
+.				ds A\\n+[_i_] \\$1
+.				shift
+.			\}
+.			fV
+.		\}
+.	\}
+.	if \\n(aC \{\
+.		as b1 {
+.		ie \\n(aP=\\n(aC .aZ
+.		el \{\
+.			nr aP +1
+.			nR
+.		\}
+.	\}
+..
+.de Brc
+.	if !\\n(aC \{\
+.		ie !\\n(.$ \{\
+.			as b1 }
+.			pB
+.		\}
+.		el \{\
+.			ds mN Bro
+.			nr fV \\n(.$
+.			lnr _i_ 0 1
+.			while \\n(.$ \{\
+.				ds A\\n+[_i_] \\$1
+.				shift
+.			\}
+.			fV
+.		\}
+.	\}
+.	if \\n(aC \{\
+.		as b1 }
+.		ie \\n(aP=\\n(aC .aZ
+.		el \{\
+.			nr aP +1
+.			nR
+.		\}
+.	\}
+..
 .\" NS Dq macro - Enclose string in double quotes
 .de Dq
 .if !\\n(aC \{\
 .	ds mN Dq
-.	nr fV \\n(.$
-.	lnr _i_ 0 1
-.	while \\n(.$ \{\
-.		ds A\\n+[_i_] \\$1
-.		shift
+.	if \\n(.$ \{\
+.		nr fV \\n(.$
+.		lnr _i_ 0 1
+.		while \\n(.$ \{\
+.			ds A\\n+[_i_] \\$1
+.			shift
+.		\}
+.		fV
 .	\}
 .\}
 .ds qL \&\\*(Lq
@@ -1087,19 +1166,25 @@
 .\" NS qR string variable set by calling macro
 .\" NS aJ register (for vR)
 .de En
-.ie \\n(aC==0 \{\
-.	ie \\n(.$=0&(\\n(fV=0) \{\
+.if \\n(aC==0 \{\
+.	ie \\n(.$==0 \{\
 .		as b1 \&\\*(qL\\*(qR
 .		pB
 .	\}
 .	el \{\
-.		ie \\n(.$ .aV \\$*
-.		el .ie \\n(fV .fV
-.		el .tm ".En: Zero .$ and fV (\\n(.F \\n(.c)
-.		as b1 \&\\*(qL
+.		aV \\$*
 .	\}
 .\}
-.el \{\
+.if \\n(aC \{\
+.	nr aP +1
+.	while \\n[C\\n(aP]=4 \{\
+.		as b1 \\*[A\\n(aP]
+.		if \\n(aP=\\n(aC .aZ
+.		nr aP +1
+.	\}
+.	nr aP -1
+.\}
+.if \\n(aC \{\
 .	as b1 \&\\*(qL
 .\}
 .if \\n(aC>0 \{\
@@ -1237,14 +1322,14 @@
 ..
 .\" NS Xo macro - Extend open (continue)
 .de Xo
+.nr Xo.depth +1
 .if \\n(aC==0 .ds mN Xo
-.\" .nr mN 1
 .ds qL
 .eO \\$*
 ..
 .\" NS Xe macro - Extend close (end)
 .de Xc
-.\" .nr mN 0
+.nr Xo.depth -1
 .if \\n(aC==0 .ds mN Xc
 .ds qR
 .eC \\$*
@@ -1252,16 +1337,15 @@
 .\" NS eO macro - enclose string open
 .\" NS oM register (extension possible)
 .de eO
-.nr Xt \\n(Xt+1
+.nr Xt +1
 .nr oM \\n(oM+1
 .ie \\n(aC==0 \{\
-.       ie \\n(.$>0 \{\
-.               aV \\$*
+.	ie \\n(.$>0 \{\
+.		aV \\$*
 .		as b1 \\*(qL
-.       \}
+.	\}
 .	el \{\
 .		as b1 \\*(qL
-.		rm __last_S
 .		if (\\n(dZ==0)&(\\n(sM==1) .x1
 .	\}
 .\}
@@ -1280,9 +1364,6 @@
 .		\}
 .	\}
 .	if \\n(aC==\\n(aP \{\
-.		if \\n(tP==1 \{\
-.\".			nr Xt \\n(Xt+1
-.		\}
 .		aY
 .	\}
 .\}
@@ -1294,23 +1375,20 @@
 .\" NS eC macro - enclose string close
 .\" NS aa local register
 .de eC
-.if !\\n[__di_nz] .if \\*(b1 .rm __last_S
 .nr oM \\n(oM-1
+.nr Xt -1
 .as b1 \\*(qR
 .if \\n(aC==0 \{\
-.       ie \\n(.$>0 \{\
-.               aV \\$*
-.       \}
-.	el \{\
-.		ie \\*(xB \{\
-.			pB
-.		\}
-.		el \{\
-.			pB
-.			\\*[L\\n(lC]
-.\".			nr Xt 0
-.			ds xB
-.		\}
+.	ie \\n(.$>0 \{\
+.		aV \\$*
+.	\}
+.	el .ie \\*(xB \{\
+.		pB
+.	\}
+.	el .if !\\n(Xt \{\
+.		pB
+.		\\*[L\\n(lC]
+.		ds xB
 .	\}
 .\}
 .if \\n(aC>0 \{\
@@ -1324,18 +1402,19 @@
 .	\}
 .	el \{\
 .		nr aa \\n(aP+1
-.		if \\n[C\\n(aa]==2 .as b1 \\*[S\\n(aC]
+.		ie \\n[C\\n(aa]==2 .as b1 \\*[S\\n(aC]
+.		el .if \\n[C\\n(aa]=1 .if \\*[A\\n(aa]Ar \
+.			as b1 \\*[S\\n(aC]
 .		rr aa
-.		if \\n(tP>0 \{\
-.			if \\n(Xt>0 \{\
-.\".				nr Xt \\n(Xt-1
-.			\}
-.		\}
 .		No
 .	\}
+.	if !\\n(Xt .if !\\*(xB \{\
+.		pB
+.		\\*[L\\n(lC]
+.		ds xB
+.	\}
 .\}
-.\".if \\n(tP .nr Xt \\n(Xt-1
-.nr Xt \\n(Xt-1
+.\".nr Xt -1
 ..
 .\"------------------------------------------------------------------------
 .\" NS Pf macro - Prefix (calls .pF)
@@ -1402,20 +1481,8 @@
 .de Tv
 .ds sV \\*(tV
 ..
-.\" NS Sm macro - Space mode
-.\" NS sM register - default is one (space mode on)
-.nr sM 1
-.de Sm
-.if \\n(aC==0 \{\
-.	ie \\n(.$==0 .tm "Usage: .Sm [off | on]" (#\\n(.c)
-.	el \{\
-.		ds mN Sm
-.		aV \\$*
-.	\}
-.\}
-.if \\n(aC>0 \{\
-.	nr aP \\n(aP+1
-.	if \\*[A\\n(aP]on \{\
+.de setSpaceMode
+.	ie \\$1 \{\
 .		ds sV \\*(iV
 .		if !\\n(sM \{\
 .			ie \\*(b1 \& \"
@@ -1423,11 +1490,30 @@
 .		\}
 .		nr sM 1
 .	\}
-.	if \\*[A\\n(aP]off \{\
+.	el \{\
 .		ds sV
 .		rm S0 S1 S2 S3 S4 S5 S6 S7 S8 S9
 .		nr sM 0
 .	\}
+..
+.\" NS Sm macro - Space mode
+.\" NS sM register - default is one (space mode on)
+.nr sM 1
+.de Sm
+.if \\n(aC==0 \{\
+.	ie !\\n(.$ \{\
+.		setSpaceMode \\n(sM<1
+.	\}
+.	el \{\
+.		ds mN Sm
+.		aV \\$*
+.	\}
+.\}
+.if \\n(aC>0 \{\
+.	nr aP \\n(aP+1
+.	ie \\*[A\\n(aP]on .setSpaceMode 1
+.	el .ie \\*[A\\n(aP]off .setSpaceMode 0
+.	el .setSpaceMode \\n(sM<1
 .	ie \\n(aC>\\n(aP \{\
 .		No
 .	\}
@@ -1441,63 +1527,17 @@
 .\" NS aT register argument type
 .\" NS b0 string local temporary
 .de aT
+.	nr aT 2
 .	lnr _l_ 0
 .	length _l_ "\\$1
-.	nr aT 0
-.	ie \\n[_l_]>2 \{\
-.		nr aT 2
-.	\}
-.	el \{\
-.		if \\n[_l_]==1 \{\
-.			ie \\n(z\\$1>2 \{\
-.				nr aT \\n(z\\$1
-.			\}
-.			el .nr aT 2
-.		\}
-.		if \\n[_l_]==2 \{\
-.			ie \\n(\\$1 \{\
-.				nr aT 1
-.			\}
-.			el .nr aT 2
-.		\}
-.	\}
-..
-.de aU
-.	nr aT 0
-.	ds b0 "\\*[A\\$1]
-.	length jM "\\*(b0
-.	ie \\n(jM>2 \{\
-.		ie \\*(b0Brq .nr aT 1
+.	ie \\n[_l_]>1&(\\n[_l_]<4) \{\
+.		ie d mdoc.cm.\\$1 .nr aT 1
 .		el .nr aT 2
 .	\}
-.	el .ie \\*(b0 .nr aT 2
-.	el .ie \\n(jM=1 \{\
-.		lnr _z_ \\n(z\\*(b0
-.		ie \\*(b0  .nr aT 2
-.		el .ie \\n[_z_]>2 .nr aT \\n[_z_]
+.	el .ie \\n[_l_]=1 \{\
+.		ie d z\\$1 .nr aT \\*(z\\$1
 .		el .nr aT 2
 .	\}
-.	el .if \\n(jM=2 \{\
-.		lnr _us_ 0
-.		index jN b0 \&
-.		index jO b0 \\\\
-.		index jP b0 .
-.		index _us_ b0 \ 
-.		rr xX
-.		ie     \\*(b0st .lnr _mac_ 0
-.		el .ie \\*(b0nl .lnr _mac_ 0
-.		el .ie \\*(b0ll .lnr _mac_ 0
-.		el .ie \\*(b0v1 .lnr _mac_ 0
-.		el .ie \\*(b0dV .lnr _mac_ 0
-.		el .ie \\*(b0mo .lnr _mac_ 0
-.		el .ie \\*(b0lt .lnr _mac_ 0
-.		el .ie \\n(jN>=0:(\\n(jO>=0):(\\n(jP>=0):(\\n[_us_]>=0) .lnr _mac_ 0
-.		el .lnr _mac_ \\n(\\*(b0
-.		ie \\n[_mac_] .nr aT 1
-.		el .nr aT 2
-.	\}
-.	rm b0
-.	rr jM jN jO
 ..
 .\" NS s1 macro - set spacing for class type 1
 .\" NS s2 macro - set spacing for class type 2
@@ -1515,12 +1555,11 @@
 .	rm S\\n(xX
 .	ds S\\n(aC \\*(sV
 .\}
-.el .if \\n[\\*[A\\n(aC]]==2 \{\
+.el .ie \\n[\\*[A\\n(aC]]==2 \{\
 .	nr xX \\n(aC-1
-.\" this kludge can probably go away, but need to double check first
-.	ie \\*[A\\n(aC]Nb .ds S\\n(xX \\*(hV
-.	el .rm S\\n(xX
+.	rm S\\n(xX
 .\}
+.el .if \\n[\\*[A\\n(aC]]=4 .s2
 ..
 .de s2
 .ds S\\n(aC \\*(sV
@@ -1572,12 +1611,14 @@
 .de y3
 .as b1 \\*[A\\n(aP]
 .nr aP \\n(aP+1
-.n\\C\\n(aP
+.\".n\\C\\n(aP
+.c\\n[C\\n(aP]
 ..
 .de y4
 .as b1 \\*[A\\n(aP]
 .nr aP \\n(aP+1
-.n\\C\\n(aP
+.\".n\\C\\n(aP
+.c\\n[C\\n(aP]
 ..
 .\"--------------------------------------------------------------------------
 .\" Ns Bf macro - Begin Font Mode (will be begin-mode/end-mode in groff & TeX)
@@ -1671,10 +1712,10 @@
 .       if ((\\n(iD>=1)&(\\n(.$>\\n(iD)) \{\
 .		bV \\$2 \\$3 \\$4
 .	\}
-.	if \\n(O\\n(dP>0 'in \\n(.iu+\\n(O\\n(dPu
+.	if \\n[O\\n(dP]>0 'in \\n(.iu+\\n[O\\n(dP]u
 .	if (\\n(bV==0) \{\
 .		if (\\n(nS==0) \{\
-.			ie \\*(d\\n(dPdR .sp \\n(dVu
+.			ie \\*[d\\n(dP]dR .sp \\n(dVu
 .			el 'sp \\n(dVu
 .		\}
 .	\}
@@ -1749,11 +1790,11 @@
 .ds mN Ed
 .br
 .if \\n(dP==0 .tm mdoc: Extraneous .Ed
-.if \\*(d\\n(dPdL \{\
+.if \\*[d\\n(dP]dL \{\
 .	ft \\n(cF
 .	fz \\n(cZ
 .\}
-.in \\n(.iu-\\n(O\\n(dPu
+.in \\n(.iu-\\n[O\\n(dP]u
 .rr O\\n(dP
 .rm d\\n(dP
 .nr dP \\n(dP-1
@@ -1870,43 +1911,74 @@
 .\}
 .ns
 ..
+.\" $1  Global ref String
+.\" $2  Global ref Valid
+.\" $3  Global ref Width
+.de __NopDl
+.	lnr _x_ 0
+.	index _x_ \\$1 " \"
+.	if \\n[_x_]>2 \{\
+.		lds _tS_ \\*(\\$1
+.		substring _tS_ 0 0
+.		if \\*[_tS_]. \{\
+.			lds _tS_ \\*(\\$1
+.			substring _tS_ 1 \\n[_x_]-1
+.			lnr _m_ 0
+.			if d mdoc.cm.\\*[_tS_]  .nr _m_ 1
+.			if d mdoc.ncm.\\*[_tS_] .nr _m_ 1
+.			if \\n[_m_] \{\
+.				ds _tS_ \\*(\\$1
+.				box lV.box
+.				ev  lV.ev
+.				evc 0
+.				in 0
+.				saveState
+.				nop \\*[_tS_]
+.				restoreState
+.				br
+.				ev
+.				box
+.				nr \\$2 1
+.				nr \\$3 \\n(dl
+.			\}
+.		\}
+.	\}
+..
 .\" NS lV macro - resolve remaining .Bl arguments
 .de lV
 .nr aP \\n(aP+1
 .if \\n(fV>=\\n(aP \{\
 .	nr iD 0
-.	if \\*[A\\n(aP]-compact \{\
+.	ie \\*[A\\n(aP]-compact \{\
 .		nr iD 1
 .		nr v\\n(lC 1
 .	\}
-.	if \\*[A\\n(aP]-width \{\
+.	el .ie \\*[A\\n(aP]-width \{\
 .		nr iD 1
 .		nr aP \\n(aP+1
-.		nr tW 1
+.		nr tW 0
 .		ds t\\n(lC TagwidtH
 .		ds tS \\*[A\\n(aP]
-.		lnr _l_ 0
-.		length _l_ "\\*(tS
-.		ie \\n[_l_]>2 \{\
-.			nr w\\n(lC \w\\*(tS
-.			lnr _B_ \B\\*(tS
-.			if \\n[_B_]&(\\n[_l_]==3) \{\
-.				if (\\*(tS>9n)&(\\*(tS<99n) \{\
-.					nr w\\n(lC \\*(tSu
+.		__NopDl tS tW w\\n(lC
+.		if !\\n(tW \{\
+.			lnr _x_ \B\\*(tS
+.			if \\n[_x_] \{\
+.				lds _tS_ \\*(tS
+.				substring _tS_ -1 -1
+.				if !d mdoc.d.\\*[_tS_] \
+.				    if !\\*[_tS_]u \{\
+.					nr w\\n(lC \\*(tS
+.					nr tW 1
 .				\}
 .			\}
 .		\}
-.		el \{\
-.			aT \\*(tS
-.			ie \\n(aT==1 \{\
-.				nr w\\n(lC \\n(\\*(tS
-.			\}
-.			el \{\
-.				nr w\\n(lC \\*(tSu
-.			\}
+.		if !\\n(tW \{\
+.			ie d mdoc.cm.\\*(tS .nr w\\n(lC \\n[\\*(tS]
+.			el .nr w\\n(lC \w\\*(tS
+.			nr tW 1
 .		\}
 .	\}
-.	if \\*[A\\n(aP]-offset \{\
+.	el .if \\*[A\\n(aP]-offset \{\
 .		nr iD 1
 .		nr aP \\n(aP+1
 .		ie \\*[A\\n(aP]indent \{\
@@ -1934,7 +2006,11 @@
 .	if \\n(iD==0 \{\
 .		if \\*[L\\n(lC]cL \{\
 .			nr wV \\n(wV+1
-.			ds A\\n(wV \\*[A\\n(aP]
+.			ds tS \\*[A\\n(aP]
+.			__NopDl tS iD iD
+.			if \\n(iD .ds tS \h'\\n(iDu'
+.			nr iD 0
+.			ds A\\n(wV \\*(tS
 .		\}
 .	\}
 .	if \\n(fV>\\n(aP .lV
@@ -1999,11 +2075,11 @@
 .	tm Usage .Bl -list-type [-width [string] | -compact | -offset [string]] (#\\n(.c)
 .	tm .It \\$*
 .\}
-.\" .tm Here is L[\\n(lC]==\\*[L\\n(lC]
 .if !\\n(cR .ne 3v
 .ie \\n(.$>0 \{\
 .	ds mN It
 .	ds b1
+.	aY
 .	nr iD 0
 .	nr fV \\n(.$
 .	lnr _i_ 0 1
@@ -2011,20 +2087,16 @@
 .		ds A\\n+[_i_] "\\$1
 .		shift
 .	\}
-.	if \\*[L\\n(lC]mL \{\
+.	ie \\*[L\\n(lC]mL \{\
 .		nr iD 1
-.		nr aP 0
 .		aX
 .		\\*[L\\n(lC]
 .	\}
-.	if \\*[L\\n(lC]cL \{\
-.		ds b1
-.		nr aP 0
+.	el .ie \\*[L\\n(lC]cL \{\
 .		nr iD 1
 .		\\*[L\\n(lC]
 .	\}
-.	if \\*[L\\n(lC]iT \{\
-.		nr aP 0
+.	el .if \\*[L\\n(lC]iT \{\
 .		nr iD 1
 .		\\*[L\\n(lC]
 .	\}
@@ -2046,10 +2118,9 @@
 .			nr aP \\n(aP-1
 .			No
 .		\}
-.		ie \\n(Xt==1 .ds xB \&\\*[L\\n(lC]
-.		el \{\
-.			\\*[L\\n(lC]
-.		\}
+.\".		ie \\n(Xt==1 .ds xB \\*[L\\n(lC]
+.		ie \\n(Xt .ds xB \\*[L\\n(lC]
+.		el .\\*[L\\n(lC]
 .	\}
 .	nr iD 0
 .\}
@@ -2157,26 +2228,36 @@
 ..
 .\" NS tL macro - .It item of list-type "tag"
 .de tL
-.\" tm in tL here is b1==\\*(b1
-.	if \\n(dZ \{\
-.		x2 1
+.	if \\n(dZ .x2.1
+.	box tL.di
+.	ev 2
+.	evc 0
+.	in 0
+.	fi
+.	ie \\n(dZ .x2.2
+.	el \&\\*(b1
+.	br
+.	ev
+.	box
+.	chop tL.di
+.	unformat tL.di
+.	if \\n(tW==0 .lW
+.	lX
+.	nr bb \\n[w\\n(lC]+\\n(lS
+.	ti -\\n(bbu
+.	ie \\n(dl>\\n[w\\n(lC] \{\
+.		if 1 \&\\*[tL.di]
+.		br
 .	\}
-.if \\n(tW==0 .lW
-.lX
-.nr bb \\n[w\\n(lC]u+\\n(lSu
-.ti -\\n(bbu
-.ie (\w\\*(b1u)>(\\n[w\\n(lC]u) \{\&\\*(b1
-.       br
-.\}
-.el \&\\*(b1\h'|\\n(bbu'\c
-.if \\n(nF==1 \{\
-.	if n .ds pA \\*(aA
-.\}
-.nr oM \\n(oM-1
-.nr tP 0
-.ds b1
-.aY
-'fi
+.	el \&\\*[tL.di]\h'|\\n(bbu'\c
+.	if \\n(nF==1 \{\
+.		if n .ds pA \\*(aA
+.	\}
+.	nr oM \\n(oM-1
+.	nr tP 0
+.	ds b1
+.	aY
+'	fi
 ..
 .\" NS lW macro - resolve unknown label/tag width (if .Bl [inset | tag] only)
 .de lW
@@ -2189,7 +2270,7 @@
 .               ds t\\n(lN No
 .               nr w\\n(lN \\n(No
 .       \}
-.       if !\\*[t\\n(lC]\\*(t\\n(lN .nr tC 1
+.       if !\\*[t\\n(lC]\\*[t\\n(lN] .nr tC 1
 .\}
 ..
 .\" NS lX macro - set up vertical spacing (if compact) and offset+indent (all)
@@ -2305,7 +2386,10 @@
 .	nr aP \\n(aP+1
 .	ie \\n[C\\n(aP]==1 .tm Usage: .Xr manpage_name [section#] \\*(Pu (#\\n(.c)
 .	el \{\
-.		ie \\n[C\\n(aP]>2 .y\\n[C\\n(aP]
+.		ie \\n[C\\n(aP]>2 \{\
+.			as b1 \\*[A\\n(aP]
+.			Xr
+.		\}
 .		el \{\
 .			as b1 \&\\*(xR\\*[A\\n(aP]\fP\s0
 .			if \\n(aC>\\n(aP \{\
@@ -2740,7 +2824,7 @@
 .	ie \\n(nS>1 .br
 .	el \{\
 .		if \\n(iS==0 \{\
-.			nr iS 8n \" ((8)*\\n(fW)u
+.			nr iS 4n
 .		\}
 .	\}
 .	in +\\n(iSu
@@ -2864,7 +2948,7 @@
 .	ie \\n(nS>1 .br
 .	el \{\
 .		if \\n(iS==0 \{\
-.			nr iS 8n \" ((8)*\\n(fW)u
+.			nr iS 4n
 .		\}
 .	\}
 .	in +\\n(iSu
@@ -3059,9 +3143,9 @@
 .\" NS aK macro - print out reference authors
 .de aK
 .nr aK \\n(aK+1
-.ie (\\n(uK-\\n(aK)==0 \{\&and \\*(U\\n(aK,
+.ie (\\n(uK-\\n(aK)==0 \{\&and \\*[U\\n(aK],
 .\}
-.el \{\&\\*(U\\n(aK,
+.el \{\&\\*[U\\n(aK],
 .	aK
 .\}
 ..
@@ -3542,8 +3626,9 @@ File:
 .	if \\n(aC>\\n(aP \{\
 .		nr aP \\n(aP+1
 .		ie \\n[C\\n(aP]>2 .nR
+.		el .ie \\n[C\\n(aP]=1 .\\*[A\\n(aP]
 .		el .ie !\\n[C\\n(aP]=2 \{\
-.			tm .Lk: Unexpected type for argument \\n(aP (#\\n(.c)
+.			tm .Lk: \\*[A\\n(aP]: Unexpected argument type \\n[C\\n(aP] (#\\n(.c)
 .		\}
 .		el \{\
 .			as b1 \fB\\*[A\\n(aP]\fP
@@ -3552,4 +3637,169 @@ File:
 .	\}
 .	aZ
 ..
-.\" vim:set syntax=nroff:
+.de saveState
+.	ie     \\n(fV .lnr _i_ \\n(fV
+.	el .ie \\n(aC .lnr _i_ \\n(aC
+.	el .tm saveState: aC and fV are zero in \\n(.F line \\n(.c
+.	nr _i_ +1
+.	while \\n[_i_] \{\
+.		nr _i_ -1
+.		ds A\\n[_i_].saved "\\*[A\\n[_i_]]
+.		ds A\\n[_i_]
+.		ds C\\n[_i_].saved "\\*[C\\n[_i_]]
+.		ds C\\n[_i_]
+.		ds S\\n[_i_].saved "\\*[S\\n[_i_]]
+.		ds S\\n[_i_]
+.	\}
+.	lnr _i_ 10
+.	while \\n[_i_] \{\
+.		nr _i_ -1
+.		nr o\\n[_i_].saved  \\n[o\\n[_i_]]
+.		nr o\\n[_i_] 0
+.		nr v\\n[_i_].saved  \\n[v\\n[_i_]]
+.		nr v\\n[_i_] 0
+.		nr w\\n[_i_].saved  \\n[w\\n[_i_]]
+.		nr w\\n[_i_] 0
+.		ds L\\n[_i_].saved "\\*[L\\n[_i_]]
+.		ds t\\n[_i_].saved "\\*[t\\n[_i_]]
+.		ds t\\n[_i_]
+.	\}
+.	nr Xt.saved  \\n[Xt]
+.	nr Xt 0
+.	nr aC.saved  \\n[aC]
+.	nr aC 0
+.	nr aJ.saved  \\n[aJ]
+.	nr aJ 0
+.	nr aP.saved  \\n[aP]
+.	nr aP 0
+.	nr bF.saved  \\n[bF]
+.	nr bF 0
+.	nr bV.saved  \\n[bV]
+.	nr bV 0
+.	nr bZ.saved  \\n[bZ]
+.	nr bZ 0
+.	nr cF.saved  \\n[cF]
+.	nr cF 0
+.	nr cZ.saved  \\n[cZ]
+.	nr cZ 0
+.	nr dV.saved  \\n[dV]
+.	nr dV 0
+.	nr dZ.saved  \\n[dZ]
+.	nr fC.saved  \\n[fC]
+.	nr fC 0
+.	nr fD.saved  \\n[fD]
+.	nr fD 0
+.	nr fV.saved  \\n[fV]
+.	nr fV 0
+.	nr fX.saved  \\n[fX]
+.	nr fX 0
+.	nr fZ.saved  \\n[fZ]
+.	nr fZ 0
+.	nr iD.saved  \\n[iD]
+.	nr iD 0
+.	nr iS.saved  \\n[iS]
+.	nr iS 0
+.	nr lC.saved  \\n[lC]
+.	nr lS.saved  \\n[lS]
+.	nr lS 0
+.	nr nS.saved  \\n[nS]
+.	nr nS 0
+.	nr oM.saved  \\n[oM]
+.	nr oM 0
+.	nr sM.saved  \\n[sM]
+.	nr tC.saved  \\n[tC]
+.	nr tC 0
+.	nr tP.saved  \\n[tP]
+.	nr tP 0
+.	nr tW.saved  \\n[tW]
+.	nr tW 0
+.	nr tX.saved  \\n[tX]
+.	nr tX 0
+.	ds aA.saved "\\*[aA]
+.	ds aA
+.	ds b1.saved "\\*[b1]
+.	ds b1
+.	ds b2.saved "\\*[b2]
+.	ds b2
+.	ds iV.saved "\\*[iV]
+.	ds iV
+.	ds kS.saved "\\*[kS]
+.	ds kS
+.	ds mN.saved "\\*[mN]
+.	ds mN
+.	ds n1.saved "\\*[n1]
+.	ds n1
+.	ds pA.saved "\\*[pA]
+.	ds pA
+.	ds qL.saved "\\*[qL]
+.	ds qL
+.	ds qR.saved "\\*[qR]
+.	ds qR
+.	ds sV.saved "\\*[sV]
+.	ds tX.saved "\\*[tX]
+.	ds tX
+.	ds xB.saved "\\*[xB]
+.	ds xB
+..
+.de restoreState
+.	nr Xt  \\n[Xt.saved]
+.	nr aC  \\n[aC.saved]
+.	nr aJ  \\n[aJ.saved]
+.	nr aP  \\n[aP.saved]
+.	nr bF  \\n[bF.saved]
+.	nr bV  \\n[bV.saved]
+.	nr bZ  \\n[bZ.saved]
+.	nr cF  \\n[cF.saved]
+.	nr cZ  \\n[cZ.saved]
+.	nr dV  \\n[dV.saved]
+.	nr dZ  \\n[dZ.saved]
+.	nr fC  \\n[fC.saved]
+.	nr fD  \\n[fD.saved]
+.	nr fV  \\n[fV.saved]
+.	nr fX  \\n[fX.saved]
+.	nr fZ  \\n[fZ.saved]
+.	nr iD  \\n[iD.saved]
+.	nr iS  \\n[iS.saved]
+.	nr lC  \\n[lC.saved]
+.	nr lS  \\n[lS.saved]
+.	nr nS  \\n[nS.saved]
+.	nr oM  \\n[oM.saved]
+.	nr sM  \\n[sM.saved]
+.	nr tC  \\n[tC.saved]
+.	nr tP  \\n[tP.saved]
+.	nr tW  \\n[tW.saved]
+.	nr tX  \\n[tX.saved]
+.	ds aA "\\*[aA.saved]
+.	ds b1 "\\*[b1.saved]
+.	ds b2 "\\*[b2.saved]
+.	ds iV "\\*[iV.saved]
+.	ds kS "\\*[kS.saved]
+.	ds mN "\\*[mN.saved]
+.	ds n1 "\\*[n1.saved]
+.	ds pA "\\*[pA.saved]
+.	ds qL "\\*[qL.saved]
+.	ds qR "\\*[qR.saved]
+.	ds sV "\\*[sV.saved]
+.	ds tX "\\*[tX.saved]
+.	ds xB "\\*[xB.saved]
+.	ie     \\n(fV .lnr _i_ \\n(fV
+.	el .ie \\n(aC .lnr _i_ \\n(aC
+.	el .tm restoreState: aC and fV are zero in \\n(.F line \\n(.c
+.	nr _i_ +1
+.	while \\n[_i_] \{\
+.		nr _i_ -1
+.		ds A\\n[_i_] "\\*[A\\n[_i_].saved]
+.		ds C\\n[_i_] "\\*[C\\n[_i_].saved]
+.		ds S\\n[_i_] "\\*[S\\n[_i_].saved]
+.	\}
+.	lnr _i_ 10
+.	while \\n[_i_] \{\
+.		nr _i_ -1
+.		nr o\\n[_i_]  \\n[o\\n[_i_].saved]
+.		nr v\\n[_i_]  \\n[v\\n[_i_].saved]
+.		nr w\\n[_i_]  \\n[w\\n[_i_].saved]
+.		ds L\\n[_i_] "\\*[L\\n[_i_].saved]
+.		ds t\\n[_i_] "\\*[t\\n[_i_].saved]
+.	\}
+..
+.\" vim:set syntax=groff:

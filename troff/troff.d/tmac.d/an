@@ -51,10 +51,12 @@
 .	rm hy
 .	ad l
 .	rm ad
+.	nr )I.def 7n
 .\}
 .el \{\
 .	so @MACDIR@/tmac.gchar
 .	hy 14
+.	nr )I.def .5i
 .\}
 '	\" reset the basic page layout
 .de }E
@@ -154,7 +156,7 @@
 .	if \n(cR=0&\\n(nl .}H
 .	}E
 .	DT
-.	nr )I .5i
+.	nr )I \\n[)I.def]
 .	nr )R 0
 .	if n .na
 ..
@@ -262,7 +264,7 @@
 .de }2
 .	nr )E 0
 .	}E
-.	nr )I .5i
+.	nr )I \\n[)I.def]
 .	ns
 ..
 '	\" italic
@@ -337,7 +339,7 @@
 .	sp \\n()Pu
 .	ne 2
 .	}E
-.	nr )I .5i
+.	nr )I \\n[)I.def]
 .	ns
 ..
 .de P
@@ -418,7 +420,7 @@
 .	nr )\\n()p \\n()R
 .	ie !\\$1 .nr )R +\\$1n
 .	el .nr )R +\\n()I
-.	nr )I .5i
+.	nr )I \\n[)I.def]
 .	}E
 ..
 '	\" decrease relative indent

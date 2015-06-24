@@ -137,63 +137,112 @@
 .ds At.V.2 \&\\*(tNAT&T\\*[__aa] System V Release 2 \\*(tNUNIX
 .ds At.V.3 \&\\*(tNAT&T\\*[__aa] System V Release 3 \\*(tNUNIX
 .ds At.V.4 \&\\*(tNAT&T\\*[__aa] System V Release 4 \\*(tNUNIX
+.de __OSx
+.	ie \\n(aP=\\n(aC .aZ
+.	el \{\
+.		lnr _aP_ \\n(aP
+.		nr aP +1
+.		if !\\n[C\\n(aP]=3 .as b1 \\*[S\\n[_aP_]]
+.		nr cF \\n(.f
+.		nr cZ \\n(.s
+.		nR
+.	\}
+..
 .\" Ns At macro - AT&T UNIX
 .de At
-.	nr cF \\n(.f
-.	nr cZ \\n(.s
-.	ds __aa \&\f\\n(cF\s\\n(cZ
-.	ds A1 \\$1
-.	aU 1
-.	ie \\n(.$=0:(\\n(aT>2) \{\
-.		ds b1 \&\\*(tNAT&T UNIX\\*[__aa]
-.		if \\n(.$ .as b1 \\$1
-.	\}
-.	el \{\
-.		ie d At.\\$1 .ds b1 \\*[At.\\$1]
-.		el .tm .At: Unknown AT&T UNIX version "\\$1" (#\\n(.c)
-.		as b1 \\*[__aa]
-.		ie \\n(.$=2 .as b1 \\$2
-.		el .if \\n(.$>2 .tm .At: More than 2 arguments (#\\n(.c)
-.	\}
-.	aZ
-..
-.de XBSDx
+.	lds OsName \&\\*(tNAT&T UNIX\&\f\\n(cF\s\\n(cZ
 .	if !\\n(aC \{\
-.		if \\n(.$ \{\
-.			ds mN \\*[XBSDx_mN]
-.			ds A1 \\$1
-.			ds A2 \\$2
-.			nr aC \\n(.$
-.			nr aP 0
+.		ie !\\n(.$ \{\
+.			ds b1 \\*[OsName]
+.			aZ
 .		\}
-.	\}
-.	if \\n(aC>\\n(aP \{\
-.		nr aP \\n(aP+1
-.		aU \\n(aP
-.		ie \\n(aT=1 .\\*[A\\n(aP]
 .		el \{\
-.			ie \\n(aT=2 .as b1 \ 
-.			el .if !\\n(aT=3 .tm .\\*[XBSDx_mN]: \\*[A\\n(aP]: Wrong argument type (#\\n(.c)
-.			as b1 \\*[A\\n(aP]
-.			XBSDx
+.			ds mN Fx
+.			lnr i 0 1
+.			nr fV \\n(.$
+.			while \\n(.$ \{\
+.				ds A\\n+i "\\$1
+.				shift
+.			\}
+.			fV
 .		\}
 .	\}
-.	aZ
-..
-.de Ox
-.	ds XBSDx_mN Ox
-.	if !\\*(mN\\*[XBSDx_mN] .as b1 OpenBSD
-.	XBSDx \\$1 \\$2
-..
-.de Nx
-.	ds XBSDx_mN Nx
-.	if !\\*(mN\\*[XBSDx_mN] .as b1 NetBSD
-.	XBSDx \\$1 \\$2
+.	if \\n(aC \{\
+.		ie \\n(aP=\\n(aC .as b1 \\*[OsName]
+.		el \{\
+.			nr aP +1
+.			ie !\\n[C\\n(aP]=2 \{\
+.				nr aP -1
+.				as b1 \\*[OsName]
+.			\}
+.			el \{\
+.				ie d At.\\*[A\\n(aP] \
+.					ds b1 \\*[At.\\*[A\\n(aP]]
+.				el .tm Unknown AT&T UNIX version "\\*[A\\n(aP]" (#\\n(.c)
+.			\}
+.		\}
+.		__OSx
+.	\}
 ..
 .de Fx
-.	ds XBSDx_mN Fx
-.	if !\\*(mN\\*[XBSDx_mN] .as b1 FreeBSD
-.	XBSDx \\$1 \\$2
+.	lds OsName FreeBSD
+.	if !\\n(aC \{\
+.		ie !\\n(.$ \\*[OsName]
+.		el \{\
+.			ds mN Fx
+.			lnr i 0 1
+.			nr fV \\n(.$
+.			while \\n(.$ \{\
+.				ds A\\n+i "\\$1
+.				shift
+.			\}
+.			fV
+.		\}
+.	\}
+.	if \\n(aC \{\
+.		as b1 \\*[OsName]
+.		__OSx
+.	\}
+..
+.de Nx
+.	lds OsName NetBSD
+.	if !\\n(aC \{\
+.		ie !\\n(.$ \\*[OsName]
+.		el \{\
+.			ds mN Nx
+.			lnr i 0 1
+.			nr fV \\n(.$
+.			while \\n(.$ \{\
+.				ds A\\n+i "\\$1
+.				shift
+.			\}
+.			fV
+.		\}
+.	\}
+.	if \\n(aC \{\
+.		as b1 \\*[OsName]
+.		__OSx
+.	\}
+..
+.de Ox
+.	lds OsName OpenBSD
+.	if !\\n(aC \{\
+.		ie !\\n(.$ \\*[OsName]
+.		el \{\
+.			ds mN Ox
+.			lnr i 0 1
+.			nr fV \\n(.$
+.			while \\n(.$ \{\
+.				ds A\\n+i "\\$1
+.				shift
+.			\}
+.			fV
+.		\}
+.	\}
+.	if \\n(aC \{\
+.		as b1 \\*[OsName]
+.		__OSx
+.	\}
 ..
 .\" The Bt macro should go away now
 .\" Ns Bt macro - prints "is currently in beta test." (HISTORY section)
@@ -425,4 +474,4 @@
 .		nR
 .	\}
 ..
-.\" vim:set syntax=nroff:
+.\" vim:set syntax=groff:
