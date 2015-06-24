@@ -1303,20 +1303,26 @@ caseevc(void)
 void
 evc(struct env *dp, struct env *sp)
 {
-	char	*name;
-
 	if (dp != sp) {
+		char *name;
 		name = dp->_evname;
 		memcpy(dp, sp, sizeof *dp);
-		if (sp->_hcode) {
-			dp->_hcode = malloc(dp->_nhcode * sizeof *dp->_hcode);
-			memcpy(dp->_hcode, sp->_hcode, dp->_nhcode * sizeof *dp->_hcode);
-		}
-		if (sp->_lpfx) {
-			dp->_lpfx = malloc(dp->_nlpfx * sizeof *dp->_lpfx);
-			memcpy(dp->_lpfx, sp->_lpfx, dp->_nlpfx * sizeof *dp->_lpfx);
-			dp->_evname = name;
-		}
+		dp->_evname = name;
+	}
+	if (sp->_hcode) {
+		int *p;
+		p = malloc(dp->_nhcode * sizeof *dp->_hcode);
+		memcpy(p, sp->_hcode, dp->_nhcode * sizeof *dp->_hcode);
+		free(dp->_hcode);
+		dp->_hcode = p;
+	}
+	if (sp->_lpfx) {
+		tchar *p;
+		p = malloc(dp->_nlpfx * sizeof *dp->_lpfx);
+		memcpy(p, sp->_lpfx, dp->_nlpfx *
+		    sizeof *dp->_lpfx);
+		free(dp->_lpfx);
+		dp->_lpfx = p;
 	}
 	dp->_pendnf = 0;
 	dp->_pendw = 0;
@@ -1354,7 +1360,6 @@ evc(struct env *dp, struct env *sp)
 	dp->_pglsphc = NULL;
 	dp->_pgopt = NULL;
 	dp->_pgspacw = NULL;
-	dp->_pgspacp = NULL;
 	dp->_pglgsc = NULL;
 	dp->_pglgec = NULL;
 	dp->_pglgsw = NULL;
@@ -1382,7 +1387,6 @@ evc(struct env *dp, struct env *sp)
 	dp->_it = 0;
 	dp->_itc = 0;
 	dp->_itmac = 0;
-	dp->_pendnf = 0;
 	dp->_nc = 0;
 	dp->_un = 0;
 	dp->_un1 = -1;

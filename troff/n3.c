@@ -1313,8 +1313,7 @@ casedi(int box)
 			prwatchn(&numtab[DL]);
 			if (dip->boxenv) {
 				relsev(&env);
-				evcline(&env, dip->boxenv);
-				relsev(dip->boxenv);
+				env = *dip->boxenv;
 				free(dip->boxenv);
 			}
 			prwatch(dip->soff, dip->curd, 1);
