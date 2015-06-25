@@ -58,25 +58,25 @@
 .nr cF \\n(.f
 .nr cZ \\n(.s
 .ds __aa \&\f\\n(cF\s\\n(cZ
-.if \\n(aC==0 \{\
-.\" .       ie \\n(.$==0 \&\\*(tNBSD\\*[__aa] \\*(tNUNIX\\*[__aa]
-.       ie \\n(.$==0 \&\\*(tNBSD\\*[__aa]
-.       el .aV \\$*
+.if \\n(aC=0&\\n(.$ .aV \\$*
+.\".if \\$1-alpha \{\
+.\".	as b1 \&currently in alpha test.
+.\".	aZ
+.\".\}
+.\".if \\$1-beta \{\
+.\".	as b1 \&currently in beta test.
+.\".	aZ
+.\".\}
+.\".if \\$1-devel \{\
+.\".	as b1 \&currently under development.
+.\".	aZ
+.\".\}
+.ie \\n(aC=\\n(aP \{\
+.	as b1 \&\\*(tNBSD\\*[__aa]
+.	aZ
 .\}
-.if \\$1-alpha \{\
-\&currently in alpha test.
-.	aY
-.\}
-.if \\$1-beta \{\
-\&currently in beta test.
-.	aY
-.\}
-.if \\$1-devel \{\
-\&currently under development.
-.	aY
-.\}
-.if \\n(aC>\\n(aP \{\
-.       nr aP \\n(aP+1
+.el \{\
+.	nr aP \\n(aP+1
 .	ie \\n[C\\n(aP]==2 \{\
 .		as b1 \&\\*[A\\n(aP]\&\\*(tNBSD\\*[__aa]
 .		ie \\n(aC>\\n(aP \{\
@@ -114,8 +114,8 @@
 .		el .aZ
 .	\}
 .	el \{\
-.	       as b1 \&\\*(tNBSD\\*[__aa]
-.	       nR
+.		as b1 \&\\*(tNBSD\\*[__aa]
+.		nR
 .	\}
 .\}
 ..

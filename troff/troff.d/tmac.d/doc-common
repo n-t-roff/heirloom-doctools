@@ -59,6 +59,7 @@
 .nr Brc 3
 .nr Bro 12n
 .nr Brq 12n
+.nr Bx 4
 .nr Cd 12n
 .nr Cm 10n
 .nr Dc 3
@@ -145,6 +146,7 @@
 .ds mdoc.cm.Brc
 .ds mdoc.cm.Bro
 .ds mdoc.cm.Brq
+.ds mdoc.cm.Bx
 .ds mdoc.cm.Cd
 .ds mdoc.cm.Cm
 .ds mdoc.cm.Dc
