@@ -112,8 +112,9 @@
 .nr Sm 8n
 .nr So 12n
 .nr Sq 12n
-.nr Sy 6n
+.nr Ss 3
 .nr Sx 16n
+.nr Sy 6n
 .nr Rv 1
 .nr Tn 10n
 .nr Ta 1
@@ -199,8 +200,9 @@
 .ds mdoc.cm.Sm
 .ds mdoc.cm.So
 .ds mdoc.cm.Sq
-.ds mdoc.cm.Sy
+.ds mdoc.cm.Ss
 .ds mdoc.cm.Sx
+.ds mdoc.cm.Sy
 .ds mdoc.cm.Rv
 .ds mdoc.cm.Tn
 .ds mdoc.cm.Ta
@@ -410,10 +412,10 @@
 .		if !\\n(cR .ne 2
 .		ie n .ti -2
 .		el   .ti -.25i
-.		ds b1 \&\\*(sH
 .		ds mN Ss
 .		aV \\$@
 .	\}
+.	as b1 \&\\*(sH
 .	if \\n(aC>\\n(aP \{\
 .		nr aP \\n(aP+1
 .		if \\n(aP>1 .as b1 " \|
