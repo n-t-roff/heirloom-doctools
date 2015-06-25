@@ -486,7 +486,7 @@
 .as b1 \\*(aR
 .if \\n(aC==0 \{\
 .	ie \\n(.$==0 \{\
-.		as b1 \&file\ ...\fP\s0
+.		as b1 \&file\ ...\fP\s0\&
 .		pB
 .	\}
 .	el \{\
@@ -496,20 +496,20 @@
 .\}
 .if \\n(aC>0 \{\
 .	ie (\\n(aC-\\n(aP)==0 \{\
-.		as b1 \&file\ ...\fP\s0
+.		as b1 \&file\ ...\fP\s0\&
 .		aZ
 .	\}
 .	el \{\
 .		nr aP \\n(aP+1
 .		ie \\n[C\\n(aP]==1 \{\
-.			as b1 \&file\ ...\fP\s0
+.			as b1 \&file\ ...\fP\s0\&
 .			\\*[A\\n(aP]
 .		\}
 .		el \{\
 .			nr cF \\n(.f
 .			nr cZ \\n(.s
 .			if \\n[C\\n(aP]==3 \{\
-.				as b1 \&file\ ...
+.				as b1 \&file\ ...\&
 .			\}
 .			nR
 .		\}
