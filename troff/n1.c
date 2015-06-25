@@ -1204,7 +1204,7 @@ ge:
 		seta();
 		goto g0;
 	case ESC:	/* double backslash */
-		if (prdblesc)
+		if (prdblesc || dilev)
 			i = PRESC;
 		else
 			i = eschar;
