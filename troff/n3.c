@@ -1153,6 +1153,7 @@ _collect(int termc)
 				if (nsp >= asp)
 					savnxf->argsp = realloc(savnxf->argsp,
 						++asp * sizeof *savnxf->argsp);
+				nt++;
 				savnxf->argsp[nsp++] = 0;
 				goto rtn;
 			}
