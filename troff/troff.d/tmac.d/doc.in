@@ -286,7 +286,7 @@
 .lnr _sM_ 0
 .if \\n(sM .if !\\*[A\\n(aC]Ns .nr _sM_ 1
 .ie \\n(dZ==1 \{\
-.	if \\n(oM==1 \{\
+.	ie \\n(oM=1 \{\
 .		if !\\*(b1 \{\
 .			ie \\n[_sM_] \&\\*(b1
 .			el \&\\*(b1\c
@@ -294,7 +294,7 @@
 .		rm S0
 .		ds b1
 .	\}
-.	if \\n(oM==0 \{\
+.	el .if \\n(oM=0 \{\
 .		x2
 .	\}
 .\}
@@ -1351,6 +1351,7 @@
 .\}
 .el \{\
 .	as b1 \\*(qL
+.\".	if \\n(dZ=0&\\n(tP .x1
 .\}
 .ie \\n(aC>0 \{\
 .	if \\n(aC>\\n(aP \{\
@@ -1405,7 +1406,6 @@
 .		ie \\n[C\\n(aa]==2 .as b1 \\*[S\\n(aC]
 .		el .if \\n[C\\n(aa]=1 .if \\*[A\\n(aa]Ar \
 .			as b1 \\*[S\\n(aC]
-.		rr aa
 .		No
 .	\}
 .	if !\\n(Xt .if !\\*(xB \{\
@@ -1572,7 +1572,6 @@
 .ds S\\n(aC \\*(sV
 ..
 .de s4
-.nr aa 0
 ..
 .\" Class switches (on current argument aP)
 .\" NS c0 macro - catch errors (non-existent class type 0)
@@ -1587,38 +1586,14 @@
 .\\*[A\\n(aP]
 ..
 .de c2
-.nr aP \\n(aP-1
+.nr aP -1
 .No
 ..
 .de c3
-.nr aP \\n(aP-1
-.No
+.	c2
 ..
 .de c4
-.nr aP \\n(aP-1
-.No
-..
-.\" NS y1 macro - ignore if class 1
-.\" NS y2 macro - ignore if class 2
-.\" NS y3 macro - append if type 3
-.\" NS y4 macro - append if type 4
-.de y1
-.nr aa 1
-..
-.de y2
-.nr aa 1
-..
-.de y3
-.as b1 \\*[A\\n(aP]
-.nr aP \\n(aP+1
-.\".n\\C\\n(aP
-.c\\n[C\\n(aP]
-..
-.de y4
-.as b1 \\*[A\\n(aP]
-.nr aP \\n(aP+1
-.\".n\\C\\n(aP
-.c\\n[C\\n(aP]
+.	c2
 ..
 .\"--------------------------------------------------------------------------
 .\" Ns Bf macro - Begin Font Mode (will be begin-mode/end-mode in groff & TeX)
@@ -1893,10 +1868,7 @@
 .				W\\n(wV
 .				nr w\\n(lC 0
 '				in -\\n(eWu
-.				ie \\n[v\\n(lC]==1 \{\
-.				       nr aa 0
-.				\}
-.				el \{\
+.				if !\\n[v\\n(lC]=1 \{\
 .					sp \\n(dVu
 .				\}
 .				nf
@@ -1905,9 +1877,7 @@
 .		\}
 .	\}
 .	nr aP 0
-.\" .	ds b1
 .	aY
-.\" .tm Here is L[\\n(lC]==\\*[L\\n(lC]
 .\}
 .ns
 ..
@@ -2118,7 +2088,6 @@
 .			nr aP \\n(aP-1
 .			No
 .		\}
-.\".		ie \\n(Xt==1 .ds xB \\*[L\\n(lC]
 .		ie \\n(Xt .ds xB \\*[L\\n(lC]
 .		el .\\*[L\\n(lC]
 .	\}
@@ -2282,10 +2251,7 @@
 .       in \\n(.iu+\\n[w\\n(lC]u+\\n[o\\n(lC]u+\\n(lSu
 .\}
 .el \{\
-.	ie \\n[v\\n(lC]==1 \{\
-.	       nr aa 0
-.	\}
-.	el \{\
+.	if !\\n[v\\n(lC]=1 \{\
 .		sp \\n(dVu
 .	\}
 .\}
@@ -2300,10 +2266,7 @@
 .       in \\n(.iu+\\n[o\\n(lC]u
 .\}
 .el \{\
-.	ie \\n[v\\n(lC]==1 \{\
-.	       nr aa 0
-.	\}
-.	el \{\
+.	if !\\n[v\\n(lC]=1 \{\
 .		sp \\n(dVu
 .	\}
 .\}
@@ -2753,17 +2716,14 @@
 .de fC
 .ie \\n(aC>\\n(aP \{\
 .	nr aP \\n(aP+1
-.\" .	nr aa \\n(aP
-.\" .	if \\n(nS>0 \{\
-.		ds Fb
-.		nr fB 0
-.		nr Fb 0
-.		fB \\*[A\\n(aP]
-.		if \\n(fB>1 \{\
-.			rm A\\n(aP
-.			rn Fb A\\n(aP
-.		\}
-.\" .	\}
+.	ds Fb
+.	nr fB 0
+.	nr Fb 0
+.	fB \\*[A\\n(aP]
+.	if \\n(fB>1 \{\
+.		rm A\\n(aP
+.		rn Fb A\\n(aP
+.	\}
 .	if \\n(fC>1 \{\
 .		as b1 \&\f\\n(cF\s\\n(cZ\|,\\*(fA\\*[S\\n(aP]\\*[A\\n(aP]\fP\s0
 .	\}
