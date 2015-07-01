@@ -2442,11 +2442,6 @@
 .	fV
 .	nr aP \\n(aP+1
 .	ie \\n(aC>=\\n(aP  \{\
-.		if \\*[A\\n(aP]Ta \{\
-.			nr jJ \\n(aP-1
-.			rm S\\n(jJ
-.			rr jJ
-.		\}
 .		c\\n[C\\n(aP]
 .	\}
 .	el .tm Usage: .It column_string [Ta [column_string ...] ] (#\\n(.c)
@@ -2458,19 +2453,12 @@
 .	__if_aI_aC
 .	nr aP \\n(aP+1
 .	ie \\n(aC>=\\n(aP \{\
-.		if \\*[A\\n(aP]Ta \{\
-.			nr jJ \\n(aP-1
-.			rm S\\n(jJ
-.			rr jJ
-.		\}
 .		as b1 \\t
 .		c\\n[C\\n(aP]
 .	\}
 .	el \{\
 .		as b1 \\t\\c
-.		rm S\\n(aP
 .		aZ
-.\" .		ds b1
 .	\}
 .\}
 .el \{\
