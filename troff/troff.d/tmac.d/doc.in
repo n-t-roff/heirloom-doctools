@@ -3011,11 +3011,9 @@
 ..
 .\" NS rZ macro - reference print
 .de rZ
-.if \\n(uK \{\&\\*(U1,
+.if \\n(uK \{\
 .	nr aK 1
-.	if (\\n(uK>1 \{\
-.		aK
-.	\}
+.	aK
 .	nr Kl -\\n(uK
 .\}
 .if \\n(tK \{\
@@ -3092,10 +3090,15 @@
 ..
 .\" NS aK macro - print out reference authors
 .de aK
-.nr aK \\n(aK+1
-.ie (\\n(uK-\\n(aK)==0 \{\&and \\*[U\\n(aK],
+.lds _n_ \\*[U\\n(aK]
+.ie \\n(aK=\\n(uK \{\
+.	if \\n(uK>1 and
+.	if 1 \\*[_n_],
 .\}
-.el \{\&\\*[U\\n(aK],
+.el \{\
+.	ie \\n(uK>2 \\*[_n_],
+.	el \\*[_n_]
+.	nr aK +1
 .	aK
 .\}
 ..
@@ -3104,7 +3107,7 @@
 .\" NS U[1-9] strings - reference author(s) names
 .de %A
 .if \\n(aC==0 \{\
-.       ie \\n(.$==0 .tm Usage: .%A Author_name (#\\n(.c)
+.	ie \\n(.$==0 .tm Usage: .%A Author_name (#\\n(.c)
 .	el \{\
 .		nr uK \\n(uK+1
 .		nr Kl \\n(Kl+1
@@ -3115,9 +3118,9 @@
 .\}
 .if \\n(aC>\\n(aP \{\
 .	nr aP \\n(aP+1
-.       nr cF \\n(.f
+.	nr cF \\n(.f
 .	nr cZ \\n(.s
-.       rR
+.	rR
 .\}
 ..
 .\" NS %B macro - [reference] Book Name
@@ -3125,8 +3128,8 @@
 .\" NS bK register - Book Name flag
 .de %B
 .if \\n(aC==0 \{\
-.       ie \\n(.$==0 .tm Usage: .%B Book Name (#\\n(.c)
-.       el \{\
+.	ie \\n(.$==0 .tm Usage: .%B Book Name (#\\n(.c)
+.	el \{\
 .		ds mN %B
 .		if \\n(rS>0 \{\
 .			nr bK \\n(bK+1
@@ -3144,7 +3147,7 @@
 .\}
 .if \\n(aC>\\n(aP \{\
 .	nr aP \\n(aP+1
-.       nr cF \\n(.f
+.	nr cF \\n(.f
 .	nr cZ \\n(.s
 .	ie \\n(rS==0 \{\
 .		as b1 \&\\*(eM
@@ -3158,8 +3161,8 @@
 .\" NS dK register - Date flag
 .de %D
 .if \\n(aC==0 \{\
-.       ie \\n(.$==0 .tm Usage: .%D Date (#\\n(.c)
-.       el \{\
+.	ie \\n(.$==0 .tm Usage: .%D Date (#\\n(.c)
+.	el \{\
 .		ds mN %D
 .		nr dK \\n(dK+1
 .		nr Kl \\n(Kl+1
@@ -3175,9 +3178,9 @@
 .\}
 .if \\n(aC>\\n(aP \{\
 .	nr aP \\n(aP+1
-.       nr cF \\n(.f
+.	nr cF \\n(.f
 .	nr cZ \\n(.s
-.       rR
+.	rR
 .\}
 ..
 .\" NS %I macro - [reference] Issuer/Publisher Name
@@ -3185,8 +3188,8 @@
 .\" NS jK string - [reference] Issuer/Publisher Name
 .de %I
 .if \\n(aC==0 \{\
-.       ie \\n(.$==0 .tm Usage: .%I Issuer/Publisher Name (#\\n(.c)
-.       el \{\
+.	ie \\n(.$==0 .tm Usage: .%I Issuer/Publisher Name (#\\n(.c)
+.	el \{\
 .		ds mN %I
 .		nr iK \\n(iK+1
 .		ds rS iK
@@ -3202,9 +3205,9 @@
 .\}
 .if \\n(aC>\\n(aP \{\
 .	nr aP \\n(aP+1
-.       nr cF \\n(.f
+.	nr cF \\n(.f
 .	nr cZ \\n(.s
-.       rR
+.	rR
 .\}
 ..
 .\" NS %J macro - [reference] Journal Name
@@ -3212,8 +3215,8 @@
 .\" NS jK string - [reference] Journal Name
 .de %J
 .if \\n(aC==0 \{\
-.       ie \\n(.$==0 .tm Usage: .%J Journal Name (#\\n(.c)
-.       el \{\
+.	ie \\n(.$==0 .tm Usage: .%J Journal Name (#\\n(.c)
+.	el \{\
 .		ds mN %J
 .		nr jK \\n(jK+1
 .		ds rS jK
@@ -3229,9 +3232,9 @@
 .\}
 .if \\n(aC>\\n(aP \{\
 .	nr aP \\n(aP+1
-.       nr cF \\n(.f
+.	nr cF \\n(.f
 .	nr cZ \\n(.s
-.       rR
+.	rR
 .\}
 ..
 .\" NS %N macro - [reference] issue number
@@ -3239,7 +3242,7 @@
 .\" NS nK string - [reference] issue number
 .de %N
 .if \\n(aC==0 \{\
-.       ie \\n(.$==0 .tm Usage: .%N issue number (#\\n(.c)
+.	ie \\n(.$==0 .tm Usage: .%N issue number (#\\n(.c)
 .	el \{\
 .		nr nK \\n(nK+1
 .		nr Kl \\n(Kl+1
@@ -3250,9 +3253,9 @@
 .\}
 .if \\n(aC>\\n(aP \{\
 .	nr aP \\n(aP+1
-.       nr cF \\n(.f
+.	nr cF \\n(.f
 .	nr cZ \\n(.s
-.       rR
+.	rR
 .\}
 ..
 .\" NS %O macro - [reference] optional information
@@ -3260,8 +3263,8 @@
 .\" NS oK string - [reference] optional information
 .de %O
 .if \\n(aC==0 \{\
-.       ie \\n(.$==0 .tm Usage: .%O optional information ... \\*(Pu (#\\n(.c)
-.       el \{\
+.	ie \\n(.$==0 .tm Usage: .%O optional information ... \\*(Pu (#\\n(.c)
+.	el \{\
 .		ds mN %O
 .		nr oK \\n(oK+1
 .		nr Kl \\n(Kl+1
@@ -3277,9 +3280,9 @@
 .\}
 .if \\n(aC>\\n(aP \{\
 .	nr aP \\n(aP+1
-.       nr cF \\n(.f
+.	nr cF \\n(.f
 .	nr cZ \\n(.s
-.       rR
+.	rR
 .\}
 ..
 .\" NS %P macro - [reference] page numbers
@@ -3287,8 +3290,8 @@
 .\" NS pK string - [reference] page number
 .de %P
 .if \\n(aC==0 \{\
-.       ie \\n(.$==0 .tm Usage: .%P page numbers ... \\*(Pu (#\\n(.c)
-.       el \{\
+.	ie \\n(.$==0 .tm Usage: .%P page numbers ... \\*(Pu (#\\n(.c)
+.	el \{\
 .		ds mN %P
 .		nr pK \\n(pK+1
 .		nr Kl \\n(Kl+1
@@ -3304,9 +3307,9 @@
 .\}
 .if \\n(aC>\\n(aP \{\
 .	nr aP \\n(aP+1
-.       nr cF \\n(.f
+.	nr cF \\n(.f
 .	nr cZ \\n(.s
-.       rR
+.	rR
 .\}
 ..
 .\" NS %Q macro - Corporate or Foreign Author
@@ -3314,8 +3317,8 @@
 .\" NS qK register - Corporate or Foreign Author flag
 .de %Q
 .if \\n(aC==0 \{\
-.       ie \\n(.$==0 .tm Usage: .%Q Corporate or Foreign Author (#\\n(.c)
-.       el \{\
+.	ie \\n(.$==0 .tm Usage: .%Q Corporate or Foreign Author (#\\n(.c)
+.	el \{\
 .		ds mN %Q
 .		nr qK \\n(qK+1
 .		nr Kl \\n(Kl+1
@@ -3331,9 +3334,9 @@
 .\}
 .if \\n(aC>\\n(aP \{\
 .	nr aP \\n(aP+1
-.       nr cF \\n(.f
+.	nr cF \\n(.f
 .	nr cZ \\n(.s
-.       rR
+.	rR
 .\}
 ..
 .\" NS %R macro - [reference] report name
@@ -3341,8 +3344,8 @@
 .\" NS rK register - [reference] report flag
 .de %R
 .if \\n(aC==0 \{\
-.       ie \\n(.$==0 .tm Usage: .%R reference report (#\\n(.c)
-.       el \{\
+.	ie \\n(.$==0 .tm Usage: .%R reference report (#\\n(.c)
+.	el \{\
 .		ds mN %R
 .		nr rK \\n(rK+1
 .		nr Kl \\n(Kl+1
@@ -3358,9 +3361,9 @@
 .\}
 .if \\n(aC>\\n(aP \{\
 .	nr aP \\n(aP+1
-.       nr cF \\n(.f
+.	nr cF \\n(.f
 .	nr cZ \\n(.s
-.       rR
+.	rR
 .\}
 ..
 .\" NS %T macro - reference title
@@ -3368,8 +3371,8 @@
 .\" NS tK register - reference title flag
 .de %T
 .if \\n(aC==0 \{\
-.       ie \\n(.$==0 .tm Usage: .%T (#\\n(.c)
-.       el \{\
+.	ie \\n(.$==0 .tm Usage: .%T (#\\n(.c)
+.	el \{\
 .		ds mN %T
 .		if \\n(rS>0 \{\
 .			nr tK \\n(tK+1
@@ -3420,7 +3423,7 @@
 .\" NS vK register - reference volume flag
 .de %V
 .if \\n(aC==0 \{\
-.       ie \\n(.$==0 .tm Usage: .%V Volume , ... \\*(Pu (#\\n(.c)
+.	ie \\n(.$==0 .tm Usage: .%V Volume , ... \\*(Pu (#\\n(.c)
 .	el \{\
 .		ds mN %V
 .		nr vK \\n(vK+1
@@ -3431,41 +3434,34 @@
 .\}
 .if \\n(aC>\\n(aP \{\
 .	nr aP \\n(aP+1
-.       nr cF \\n(.f
+.	nr cF \\n(.f
 .	nr cZ \\n(.s
-.       rR
+.	rR
 .\}
 ..
 .\" NS rR macro - reference recursion routine
-.\" NS jM local register
-.\" NS jN local register
 .de rR
 .hy 0
-.nr jM \\n[C\\n(aP]
-.ie \\n(jM==1 \{\
+.ie \\n[C\\n(aP]=1 \{\
 .	ie \\*[A\\n(aP]Tn \{\
 .		nN
 .	\}
 .	el \{\
-.		if \\n(aC>8 .tm Usage: \\*(mN - maximum 8 arguments (#\\n(.c)
 .		aI rR 1
 .		\\*[A\\n(aP]
 .	\}
 .\}
 .el \{\
-.	nr jN \\n(aP
-.	ie \\n(jM==2 .as b1 \&\\*[A\\n(aP]
-.	el .as b1 \&\\*[A\\n(aP]
+.	as b1 \&\\*[A\\n(aP]
 .	ie \\n(aC==\\n(aP \{\
 .		rD
 .	\}
 .	el \{\
-.		nr aP \\n(aP+1
-.		as b1 \&\\*[S\\n(jN]
+.		as b1 \&\\*[S\\n(aP]
+.		nr aP +1
 .		rR
 .	\}
 .\}
-.rr jM jN
 ..
 .\" NS rD macro - save b1 buffer in to appropriate name
 .de rD
@@ -3516,7 +3512,7 @@ File:
 .		nr nY 0
 .	\}
 .	el .nr xX 0
-.       ie \\n(.$==0 .tm Usage: .An author_name ... \\*(Pu (#\\n(.c)
+.	ie \\n(.$==0 .tm Usage: .An author_name ... \\*(Pu (#\\n(.c)
 .	el .if !\\n(.$=1&\\n(xX \{\
 .		ds mN An
 .		aV \\$*
@@ -3524,9 +3520,9 @@ File:
 .\}
 .if \\n(aC>\\n(aP \{\
 .	nr aP \\n(aP+1
-.       nr cF \\n(.f
+.	nr cF \\n(.f
 .	nr cZ \\n(.s
-.       nR
+.	nR
 .\}
 ..
 .\" NS Sf macro -defunct
