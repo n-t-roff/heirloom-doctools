@@ -58,6 +58,8 @@
 .	hy 14
 .	nr )I.def .5i
 .\}
+.ds lq \(lq
+.ds rq \(rq
 '	\" reset the basic page layout
 .de }E
 .	}f
