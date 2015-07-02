@@ -2360,6 +2360,7 @@
 .				nr aP \\n(aP+1
 .				if \\n[C\\n(aP]==2 \{\
 .					as b1 \&(\\*[A\\n(aP])
+.					if \\n(aP<\\n(aC .as b1 \\*[S\\n(aP]
 .					nr aP \\n(aP+1
 .				\}
 .				if \\n(aC>=\\n(aP \{\
