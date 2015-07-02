@@ -1403,9 +1403,7 @@
 .	\}
 .	el \{\
 .		nr aa \\n(aP+1
-.		ie \\n[C\\n(aa]==2 .as b1 \\*[S\\n(aP]
-.		el .if \\n[C\\n(aa]=1 .if \\*[A\\n(aa]Ar \
-.			as b1 \\*[S\\n(aP]
+.		if \\n(aP .as b1 \\*[S\\n(aP]
 .		No
 .	\}
 .	if !\\n(Xt .if !\\*(xB \{\
@@ -1943,7 +1941,10 @@
 .			\}
 .		\}
 .		if !\\n(tW \{\
-.			ie d mdoc.cm.\\*(tS .nr w\\n(lC \\n[\\*(tS]
+.			lnr _x_ 0
+.			index _x_ tS " \"
+.			ie \\n[_x_]>=0 .nr w\\n(lC \w\\*(tS
+.			el .ie d mdoc.cm.\\*(tS .nr w\\n(lC \\n[\\*(tS]
 .			el .nr w\\n(lC \w\\*(tS
 .			nr tW 1
 .		\}
