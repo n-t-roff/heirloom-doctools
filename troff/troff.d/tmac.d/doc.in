@@ -1104,7 +1104,7 @@
 .		nr fV \\n(.$
 .		lnr _i_ 0 1
 .		while \\n(.$ \{\
-.			ds A\\n+[_i_] \\$1
+.			ds A\\n+[_i_] "\\$1
 .			shift
 .		\}
 .		fV
@@ -1116,42 +1116,95 @@
 ..
 .\" NS Eq macro - Enclose string in double quotes
 .de Eq
-.if \\n(aC==0 .ds mN Eq
-.ds qL \\$1
+.if !\\n(aC \{\
+.	ds mN Eq
+.	if \\n(.$ \{\
+.		nr fV \\n(.$
+.		lnr _i_ 0 1
+.		while \\n(.$ \{\
+.			ds A\\n+[_i_] "\\$1
+.			shift
+.		\}
+.		fV
+.	\}
+.\}
+.ds qL "\\$1
 .shift
-.ds qR \\$1
+.ds qR "\\$1
 .shift
-.En \\$*
+.En
 ..
 .\" NS Pq macro - Enclose string in parenthesis
 .de Pq
-.if \\n(aC==0 .ds mN Pq
+.if !\\n(aC \{\
+.	ds mN Pq
+.	if \\n(.$ \{\
+.		nr fV \\n(.$
+.		lnr _i_ 0 1
+.		while \\n(.$ \{\
+.			ds A\\n+[_i_] "\\$1
+.			shift
+.		\}
+.		fV
+.	\}
+.\}
 .ds qL \&\\*(lP
 .ds qR \&\\*(rP
-.En \\$*
+.En
 ..
 .\" NS Ql macro - Quoted literal is in file mdoc-[dit|n|g]roff (too large
 .\" an if-else to carry along recursively for `if n ...')
 .\"
 .\" NS Sq macro - Enclose string in single quotes
 .de Qq
-.if \\n(aC==0 .ds mN Qq
+.if !\\n(aC \{\
+.	ds mN Qq
+.	if \\n(.$ \{\
+.		nr fV \\n(.$
+.		lnr _i_ 0 1
+.		while \\n(.$ \{\
+.			ds A\\n+[_i_] "\\$1
+.			shift
+.		\}
+.		fV
+.	\}
+.\}
 .ds qL \&\\*q
 .ds qR \&\\*q
-.En \\$*
+.En
 ..
 .\" NS Sq macro - Enclose string in single quotes
 .de Sq
-.if \\n(aC==0 .ds mN Sq
+.if !\\n(aC \{\
+.	ds mN Sq
+.	if \\n(.$ \{\
+.		nr fV \\n(.$
+.		lnr _i_ 0 1
+.		while \\n(.$ \{\
+.			ds A\\n+[_i_] "\\$1
+.			shift
+.		\}
+.		fV
+.	\}
+.\}
 .ds qL \&\\*(sL
 .ds qR \&\\*(sR
-.En \\$*
+.En
 ..
 .\"
 .\" NS Es macro - Set up strings for .En call
 .de Es
 .if \\n(aC==0 \{\
-.	ie \\n(.$>2 .aV \\$*
+.	ds mN Es
+.	ie \\n(.$>2 \{\
+.		nr fV \\n(.$
+.		lnr _i_ 0 1
+.		while \\n(.$ \{\
+.			ds A\\n+[_i_] "\\$1
+.			shift
+.		\}
+.		fV
+.	\}
 .	el \{\
 .		ds qL \\$1
 .		ds qR \\$2
@@ -1172,12 +1225,19 @@
 .\" NS aJ register (for vR)
 .de En
 .if \\n(aC==0 \{\
+.	ds mN En
 .	ie \\n(.$==0 \{\
 .		as b1 \&\\*(qL\\*(qR
 .		pB
 .	\}
 .	el \{\
-.		aV \\$*
+.		nr fV \\n(.$
+.		lnr _i_ 0 1
+.		while \\n(.$ \{\
+.			ds A\\n+[_i_] "\\$1
+.			shift
+.		\}
+.		fV
 .	\}
 .\}
 .if \\n(aC \{\
@@ -1229,115 +1289,313 @@
 .\"------------------------------------------------------------------------
 .\" NS Ao macro - Angle open
 .de Ao
-.if \\n(aC==0 .ds mN Ao
+.if !\\n(aC \{\
+.	ds mN Ao
+.	if \\n(.$ \{\
+.		nr fV \\n(.$
+.		lnr _i_ 0 1
+.		while \\n(.$ \{\
+.			ds A\\n+[_i_] "\\$1
+.			shift
+.		\}
+.		fV
+.	\}
+.\}
 .ds qL \(la
-.eO \\$*
+.eO
 ..
 .\" NS Ac macro - Angle close
 .de Ac
-.if \\n(aC==0 .ds mN Ac
+.if !\\n(aC \{\
+.	ds mN Ac
+.	if \\n(.$ \{\
+.		nr fV \\n(.$
+.		lnr _i_ 0 1
+.		while \\n(.$ \{\
+.			ds A\\n+[_i_] "\\$1
+.			shift
+.		\}
+.		fV
+.	\}
+.\}
 .ds qR \(ra
-.eC \\$*
+.eC
 ..
 .\" NS Bo macro - Bracket open
 .de Bo
-.if \\n(aC==0 .ds mN Bo
+.if !\\n(aC \{\
+.	ds mN Bo
+.	if \\n(.$ \{\
+.		nr fV \\n(.$
+.		lnr _i_ 0 1
+.		while \\n(.$ \{\
+.			ds A\\n+[_i_] "\\$1
+.			shift
+.		\}
+.		fV
+.	\}
+.\}
 .ds qL \&[
-.eO \\$*
+.eO
 ..
 .\" NS Bc macro - Bracket close
 .de Bc
-.if \\n(aC==0 .ds mN Bc
+.if !\\n(aC \{\
+.	ds mN Bc
+.	if \\n(.$ \{\
+.		nr fV \\n(.$
+.		lnr _i_ 0 1
+.		while \\n(.$ \{\
+.			ds A\\n+[_i_] "\\$1
+.			shift
+.		\}
+.		fV
+.	\}
+.\}
 .ds qR \&]
-.eC \\$*
+.eC
 ..
 .\" NS Do macro - Double Quote open
 .de Do
-.if \\n(aC==0 .ds mN Do
+.if !\\n(aC \{\
+.	ds mN Do
+.	if \\n(.$ \{\
+.		nr fV \\n(.$
+.		lnr _i_ 0 1
+.		while \\n(.$ \{\
+.			ds A\\n+[_i_] "\\$1
+.			shift
+.		\}
+.		fV
+.	\}
+.\}
 .ds qL \&\\*(Lq
-.eO \\$*
+.eO
 ..
 .\" NS Dc macro - Double Quote close
 .de Dc
-.if \\n(aC==0 .ds mN Dc
+.if !\\n(aC \{\
+.	ds mN Dc
+.	if \\n(.$ \{\
+.		nr fV \\n(.$
+.		lnr _i_ 0 1
+.		while \\n(.$ \{\
+.			ds A\\n+[_i_] "\\$1
+.			shift
+.		\}
+.		fV
+.	\}
+.\}
 .ds qR \&\\*(Rq
-.eC \\$*
+.eC
 ..
 .\" NS Eo macro - Enclose open
 .de Eo
-.if \\n(aC==0 .ds mN Eo
+.if !\\n(aC \{\
+.	ds mN Eo
+.	if \\n(.$ \{\
+.		nr fV \\n(.$
+.		lnr _i_ 0 1
+.		while \\n(.$ \{\
+.			ds A\\n+[_i_] "\\$1
+.			shift
+.		\}
+.		fV
+.	\}
+.\}
 .ds qL \\$1
 .shift
-.eO \\$*
+.eO
 ..
 .\" NS Ec macro - Enclose close
 .de Ec
-.if \\n(aC==0 .ds mN Ec
+.if !\\n(aC \{\
+.	ds mN Ec
+.	if \\n(.$ \{\
+.		nr fV \\n(.$
+.		lnr _i_ 0 1
+.		while \\n(.$ \{\
+.			ds A\\n+[_i_] "\\$1
+.			shift
+.		\}
+.		fV
+.	\}
+.\}
 .ds qR \\$1
 .shift
-.eC \\$*
+.eC
 ..
 .\" NS Oo macro - Option open
 .de Oo
-.if \\n(aC==0 .ds mN Oo
+.if !\\n(aC \{\
+.	ds mN Oo
+.	if \\n(.$ \{\
+.		nr fV \\n(.$
+.		lnr _i_ 0 1
+.		while \\n(.$ \{\
+.			ds A\\n+[_i_] "\\$1
+.			shift
+.		\}
+.		fV
+.	\}
+.\}
 .ds qL \&[
-.eO \\$*
+.eO
 ..
 .\" NS Oc macro - Option close
 .de Oc
-.if \\n(aC==0 .ds mN Oc
+.if !\\n(aC \{\
+.	ds mN Oc
+.	if \\n(.$ \{\
+.		nr fV \\n(.$
+.		lnr _i_ 0 1
+.		while \\n(.$ \{\
+.			ds A\\n+[_i_] "\\$1
+.			shift
+.		\}
+.		fV
+.	\}
+.\}
 .ds qR \&]
-.eC \\$*
+.eC
 ..
 .\" NS Po macro - Parenthesis open
 .de Po
-.if \\n(aC==0 .ds mN Po
+.if !\\n(aC \{\
+.	ds mN Po
+.	if \\n(.$ \{\
+.		nr fV \\n(.$
+.		lnr _i_ 0 1
+.		while \\n(.$ \{\
+.			ds A\\n+[_i_] "\\$1
+.			shift
+.		\}
+.		fV
+.	\}
+.\}
 .ds qL \&(
-.eO \\$*
+.eO
 ..
 .\" NS Pc macro - Parenthesis close
 .de Pc
-.if \\n(aC==0 .ds mN Pc
+.if !\\n(aC \{\
+.	ds mN Pc
+.	if \\n(.$ \{\
+.		nr fV \\n(.$
+.		lnr _i_ 0 1
+.		while \\n(.$ \{\
+.			ds A\\n+[_i_] "\\$1
+.			shift
+.		\}
+.		fV
+.	\}
+.\}
 .ds qR \&)
-.eC \\$*
+.eC
 ..
 .\" NS Qo macro - Straight Double Quote open
 .de Qo
-.if \\n(aC==0 .ds mN Qo
+.if !\\n(aC \{\
+.	ds mN Qo
+.	if \\n(.$ \{\
+.		nr fV \\n(.$
+.		lnr _i_ 0 1
+.		while \\n(.$ \{\
+.			ds A\\n+[_i_] "\\$1
+.			shift
+.		\}
+.		fV
+.	\}
+.\}
 .ds qL \&\\*q
-.eO \\$*
+.eO
 ..
 .\" NS Qc macro - Straight Double Quote close
 .de Qc
-.if \\n(aC==0 .ds mN Qc
+.if !\\n(aC \{\
+.	ds mN Qc
+.	if \\n(.$ \{\
+.		nr fV \\n(.$
+.		lnr _i_ 0 1
+.		while \\n(.$ \{\
+.			ds A\\n+[_i_] "\\$1
+.			shift
+.		\}
+.		fV
+.	\}
+.\}
 .ds qR \&\\*q
-.eC \\$*
+.eC
 ..
 .\" NS So macro - Single Quote open
 .de So
-.if \\n(aC==0 .ds mN So
+.if !\\n(aC \{\
+.	ds mN So
+.	if \\n(.$ \{\
+.		nr fV \\n(.$
+.		lnr _i_ 0 1
+.		while \\n(.$ \{\
+.			ds A\\n+[_i_] "\\$1
+.			shift
+.		\}
+.		fV
+.	\}
+.\}
 .ds qL \&\\*(sL
-.eO \\$*
+.eO
 ..
 .\" NS Sc macro - Single Quote close
 .de Sc
-.if \\n(aC==0 .ds mN Sc
+.if !\\n(aC \{\
+.	ds mN Sc
+.	if \\n(.$ \{\
+.		nr fV \\n(.$
+.		lnr _i_ 0 1
+.		while \\n(.$ \{\
+.			ds A\\n+[_i_] "\\$1
+.			shift
+.		\}
+.		fV
+.	\}
+.\}
 .ds qR \&\\*(sR
-.eC \\$*
+.eC
 ..
 .\" NS Xo macro - Extend open (continue)
 .de Xo
 .nr Xo.depth +1
-.if \\n(aC==0 .ds mN Xo
+.if !\\n(aC \{\
+.	ds mN Xo
+.	if \\n(.$ \{\
+.		nr fV \\n(.$
+.		lnr _i_ 0 1
+.		while \\n(.$ \{\
+.			ds A\\n+[_i_] "\\$1
+.			shift
+.		\}
+.		fV
+.	\}
+.\}
 .ds qL
-.eO \\$*
+.eO
 ..
 .\" NS Xe macro - Extend close (end)
 .de Xc
 .nr Xo.depth -1
-.if \\n(aC==0 .ds mN Xc
+.if !\\n(aC \{\
+.	ds mN Xc
+.	if \\n(.$ \{\
+.		nr fV \\n(.$
+.		lnr _i_ 0 1
+.		while \\n(.$ \{\
+.			ds A\\n+[_i_] "\\$1
+.			shift
+.		\}
+.		fV
+.	\}
+.\}
 .ds qR
-.eC \\$*
+.eC
 ..
 .\" NS eO macro - enclose string open
 .\" NS oM register (extension possible)
@@ -1346,7 +1604,13 @@
 .nr oM \\n(oM+1
 .ie \\n(aC==0 \{\
 .	ie \\n(.$>0 \{\
-.		aV \\$*
+.		nr fV \\n(.$
+.		lnr _i_ 0 1
+.		while \\n(.$ \{\
+.			ds A\\n+[_i_] "\\$1
+.			shift
+.		\}
+.		fV
 .		as b1 \\*(qL
 .	\}
 .	el \{\
@@ -1386,7 +1650,13 @@
 .as b1 \\*(qR
 .if \\n(aC==0 \{\
 .	ie \\n(.$>0 \{\
-.		aV \\$*
+.		nr fV \\n(.$
+.		lnr _i_ 0 1
+.		while \\n(.$ \{\
+.			ds A\\n+[_i_] "\\$1
+.			shift
+.		\}
+.		fV
 .	\}
 .	el .ie \\*(xB \{\
 .		pB
