@@ -116,13 +116,13 @@
 .	pL
 .	sp
 .	ns
-.	ta .5i 1i 1.5i 2i 2.5i 3i 3.5i 4i 4.5i 5i 5.5i 6i 6.5i
+.	ta T .5i
 .	if !\\n(cR .ne 3
 .	fi
 .	if 1 \&\\*(sH\\$1
 .	shift
 .	while \\n(.$ \{\
-.		if 1 \|\\$1
+.		if 1 \&\|\\$1
 .		shift
 .	\}
 .	if 1 \&\fR\s10\&
@@ -441,14 +441,12 @@
 .\" NS xX local register
 .de nR
 .hy 0
-.nr jM \\n[C\\n(aP]
-.ie \\n(jM==1 \{\
+.ie \\n[C\\n(aP]=1 \{\
 .	as b1 \&\f\\n(cF\s\\n(cZ
 .	ds __inline_mN \\*[A\\n(aP]
 .	\\*[A\\n(aP]
 .\}
 .el \{\
-.	nr jN \\n(aP
 .	lnr _l_ 0
 .	length _l_ \\*[A\\n(aP]
 .	lds _lc_
@@ -466,19 +464,18 @@
 .	el .ie \\*[_lc_]? .nr _sec_ 1
 .	el .if \\*[_lc_]! .nr _sec_ 1
 .	ie \\n[_sec_] .as b1 \f\\n(cF\s\\n(cZ\\*[A\\n(aP]
-.	el .ie \\n(jM=2 .as b1 \&\\*[A\\n(aP]
+.	el .ie \\n[C\\n(aP]=2 .as b1 \&\\*[A\\n(aP]
 .	el .as b1 \&\f\\n(cF\s\\n(cZ\\*[A\\n(aP]\fP\s0
 .	ie \\n(aC==\\n(aP \{\
 .		if !\\n[_sec_] .as b1 \&\f\\n(cF\s\\n(cZ
 .		aZ
 .	\}
 .	el \{\
+.		as b1 \&\\*[S\\n(aP]
 .		nr aP \\n(aP+1
-.		as b1 \&\\*[S\\n(jN]
 .		nR
 .	\}
 .\}
-.rr jM jN
 ..
 .\" NS Ar macro - command line `argument' macro
 .\"
