@@ -869,13 +869,17 @@
 .			\\*[A\\n(aP]
 .		\}
 .		el \{\
-.			length xX \\*(A1
-.			if \\n(xX=1 .if d z\\*(A1 \
-.				as b1 \&\\*(n1\fP\s0
-.			nr cF \\n(.f
-.			nr cZ \\n(.s
-.			if \\*(n1 .ds n1 \\*[A\\n(aP]
-.			nR
+.			ie \\n[C\\n(aP]=2 .if \\*(n1 .ds n1 \\*[A\\n(aP]
+.			el .if \\n[C\\n(aP]=3 .as b1 \&\\*(n1\fP\s0
+.			ie \\n[C\\n(aP]=4&(\\n(aC=1) \{\
+.				as b1 \\*[A\\n(aP]\\*(n1\fP\s0
+.				aZ
+.			\}
+.			el \{\
+.				nr cF \\n(.f
+.				nr cZ \\n(.s
+.				nR
+.			\}
 .		\}
 .	\}
 .\}
