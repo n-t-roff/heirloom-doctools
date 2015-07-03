@@ -42,14 +42,15 @@
 .as b1 \&\\*(tNUNIX\\*[__aa]
 .rm __aa
 .if \\n(aC==0 \{\
-.       if \\n(.$>0 .aV \\$*
+.	if \\n(.$>0 .aV \\$*
 .\}
 .ie \\n(aC>\\n(aP \{\
-.       nr aP \\n(aP+1
-.       ie \\n[C\\n(aP]==1 \{\
-.               \\*[A\\n(aP]
-.       \}
-.       el .nR
+.	if \\n(aP .as b1 \\*[S\\n(aP]
+.	nr aP \\n(aP+1
+.	ie \\n[C\\n(aP]==1 \{\
+.		\\*[A\\n(aP]
+.	\}
+.	el .nR
 .\}
 .el .aZ
 ..

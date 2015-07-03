@@ -120,6 +120,7 @@
 .nr Ta 2
 .nr Tv 1
 .nr Tx 22n
+.nr Ux 4
 .nr Va 12n
 .nr Vt 12n
 .nr Xc 3
@@ -208,6 +209,7 @@
 .ds mdoc.cm.Ta
 .ds mdoc.cm.Tv
 .ds mdoc.cm.Tx
+.ds mdoc.cm.Ux
 .ds mdoc.cm.Va
 .ds mdoc.cm.Vt
 .ds mdoc.cm.Xc
@@ -428,7 +430,7 @@
 .	el \{\
 .		as b1 \&\fR\s10
 .		aZ
-.		ta .5i 1i 1.5i 2i 2.5i 3i 3.5i 4i 4.5i 5i 5.5i 6i 6.5i
+.		ta T .5i
 .		if !\\n(cR .ne 2
 .		br
 .	\}
