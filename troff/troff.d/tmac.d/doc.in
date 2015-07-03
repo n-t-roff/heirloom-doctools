@@ -1012,18 +1012,22 @@
 .if \\n(aC==0 \{\
 .	ds mN Op
 .\}
-.\" .ds qL \&\\*(lO
-.\" .ds qR \&\\*(rO
 .ds qL \&\\*(lB
 .ds qR \&\\*(rB
 .En \\$*
 ..
 .\" NS Aq macro - Enclose string in angle brackets
 .de Aq
-.if \\n(aC==0 .ds mN Aq
-.ds qL \&<
-.ds qR \&>
-.En \\$*
+.	if \\n(aC==0 .ds mN Aq
+.	ie \\*(mNAn \{\
+.		ds qL <
+.		ds qR >
+.	\}
+.	el \{\
+.		ds qL \(la
+.		ds qR \(ra
+.	\}
+.	En \\$*
 ..
 .\" NS Bq macro - Enclose string in square brackets
 .de Bq
@@ -1225,13 +1229,13 @@
 .\" NS Ao macro - Angle open
 .de Ao
 .if \\n(aC==0 .ds mN Ao
-.ds qL \&<
+.ds qL \(la
 .eO \\$*
 ..
 .\" NS Ac macro - Angle close
 .de Ac
 .if \\n(aC==0 .ds mN Ac
-.ds qR \&>
+.ds qR \(ra
 .eC \\$*
 ..
 .\" NS Bo macro - Bracket open
