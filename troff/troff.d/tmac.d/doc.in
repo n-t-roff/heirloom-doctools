@@ -141,15 +141,6 @@
 .\" NS iI local register (indent for inline debug mode)
 .\" NS mN name of calling request (set in each user requestable macro)
 .\" jM local register
-.de aV
-.		nr fV \\n(.$
-.		lnr _i_ 0 1
-.		while \\n(.$ \{\
-.			ds A\\n+[_i_] \\$1
-.			shift
-.		\}
-.		fV
-..
 .de fV
 .nr aC \\n(aC+1
 .lnr _l_ 0
@@ -454,7 +445,13 @@
 .	\}
 .	el \{\
 .		ds mN Ar
-.		aV \\$*
+.		nr fV \\n(.$
+.		lnr i 0 1
+.		while \\n(.$ \{\
+.			ds A\\n+i "\\$1
+.			shift
+.		\}
+.		fV
 .	\}
 .\}
 .if \\n(aC>0 \{\
@@ -483,18 +480,24 @@
 .\" NS Ad macro - Addresses
 .de Ad
 .if \\n(aC==0 \{\
-.       ie \\n(.$==0 .tm Usage: .Ad address ... \\*(Pu (#\\n(.c)
+.	ie \\n(.$==0 .tm Usage: .Ad address ... \\*(Pu (#\\n(.c)
 .	el \{\
 .		ds mN Ad
-.		aV \\$*
+.		nr fV \\n(.$
+.		lnr i 0 1
+.		while \\n(.$ \{\
+.			ds A\\n+i "\\$1
+.			shift
+.		\}
+.		fV
 .	\}
 .\}
 .if \\n(aC>\\n(aP \{\
 .	as b1 \\*(aD
 .	nr aP \\n(aP+1
-.       nr cF \\n(.f
+.	nr cF \\n(.f
 .	nr cZ \\n(.s
-.       nR
+.	nR
 .\}
 ..
 .\" NS Cd macro - Config declaration (for section 4 SYNOPSIS) (not callable)
@@ -507,7 +510,7 @@
 .		nr fV \\n(.$
 .		lnr _i_ 0 1
 .		while \\n(.$ \{\
-.			ds A\\n+[_i_] \\$1
+.			ds A\\n+[_i_] "\\$1
 .			shift
 .		\}
 .		fV
@@ -545,7 +548,7 @@
 .		nr fV \\n(.$
 .		lnr _i_ 0 1
 .		while \\n(.$ \{\
-.			ds A\\n+[_i_] \\$1
+.			ds A\\n+[_i_] "\\$1
 .			shift
 .		\}
 .		fV
@@ -565,7 +568,13 @@
 .       ie \\n(.$==0 .tm Usage: .Dv define_variable ... \\*(Pu (#\\n(.c)
 .	el \{\
 .		ds mN Dv
-.		aV \\$*
+.		nr fV \\n(.$
+.		lnr i 0 1
+.		while \\n(.$ \{\
+.			ds A\\n+i "\\$1
+.			shift
+.		\}
+.		fV
 .	\}
 .\}
 .if \\n(aC>\\n(aP \{\
@@ -587,7 +596,7 @@
 .		nr fV \\n(.$
 .		lnr _i_ 0 1
 .		while \\n(.$ \{\
-.			ds A\\n+[_i_] \\$1
+.			ds A\\n+[_i_] "\\$1
 .			shift
 .		\}
 .		fV
@@ -607,7 +616,13 @@
 .       ie \\n(.$==0 .tm Usage: .Er ERRNOTYPE ... \\*(Pu (#\\n(.c)
 .	el \{\
 .		ds mN Er
-.		aV \\$*
+.		nr fV \\n(.$
+.		lnr i 0 1
+.		while \\n(.$ \{\
+.			ds A\\n+i "\\$1
+.			shift
+.		\}
+.		fV
 .	\}
 .\}
 .if \\n(aC>\\n(aP \{\
@@ -624,7 +639,13 @@
 .       ie \\n(.$==0 .tm Usage: .Ev ENVIRONMENT_VARIABLE ... \\*(Pu (#\\n(.c)
 .	el \{\
 .		ds mN Ev
-.		aV \\$*
+.		nr fV \\n(.$
+.		lnr i 0 1
+.		while \\n(.$ \{\
+.			ds A\\n+i "\\$1
+.			shift
+.		\}
+.		fV
 .	\}
 .\}
 .if \\n(aC>\\n(aP \{\
@@ -678,7 +699,13 @@
 .		\}
 .		el \{\
 .			ds mN In
-.			aV \\$*
+.			nr fV \\n(.$
+.			lnr i 0 1
+.			while \\n(.$ \{\
+.				ds A\\n+i "\\$1
+.				shift
+.			\}
+.			fV
 .		\}
 .	\}
 .	if \\n(aC>\\n(aP \{\
@@ -702,7 +729,13 @@
 .       ie \\n(.$==0 .tm Usage: .Fr Function_return_value... \\*(Pu (#\\n(.c)
 .	el \{\
 .		ds mN Fr
-.		aV \\$*
+.		nr fV \\n(.$
+.		lnr i 0 1
+.		while \\n(.$ \{\
+.			ds A\\n+i "\\$1
+.			shift
+.		\}
+.		fV
 .	\}
 .\}
 .if \\n(aC>\\n(aP \{\
@@ -719,7 +752,13 @@
 .	ie \\n(.$==0 .tm Usage: .Ic Interactive command ... \\*(Pu (#\\n(.c)
 .	el \{\
 .		ds mN Ic
-.		aV \\$*
+.		nr fV \\n(.$
+.		lnr i 0 1
+.		while \\n(.$ \{\
+.			ds A\\n+i "\\$1
+.			shift
+.		\}
+.		fV
 .	\}
 .\}
 .if \\n(aC>\\n(aP \{\
@@ -733,24 +772,24 @@
 .\" NS Li macro - literals
 .de Li
 .if \\n(aC==0 \{\
-.       ie \\n(.$==0 .tm Usage .Li argument ... \\*(Pu (#\\n(.c)
-.       el \{\
+.	ie \\n(.$==0 .tm Usage .Li argument ... \\*(Pu (#\\n(.c)
+.	el \{\
 .		ds mN Li
-.               nr fV \\n(.$
+.		nr fV \\n(.$
 .		lnr _i_ 0 1
 .		while \\n(.$ \{\
-.			ds A\\n+[_i_] \\$1
+.			ds A\\n+[_i_] "\\$1
 .			shift
 .		\}
-.               fV
-.       \}
+.		fV
+.	\}
 .\}
 .if \\n(aC>\\n(aP \{\
 .	as b1 \\*(lI
 .	nr aP \\n(aP+1
-.       nr cF \\n(.f
+.	nr cF \\n(.f
 .	nr cZ \\n(.s
-.       nR
+.	nR
 .\}
 ..
 .\" NS Or macro - Pipe symbol (OR)
@@ -759,7 +798,13 @@
 .       ie \\n(.$==0 .tm Usage: .Or ... \\*(Pu (#\\n(.c)
 .	el \{\
 .		ds mN Or
-.		aV \\$*
+.		nr fV \\n(.$
+.		lnr _i_ 0 1
+.		while \\n(.$ \{\
+.			ds A\\n+[_i_] "\\$1
+.			shift
+.		\}
+.		fV
 .	\}
 .\}
 .if \\n(aC>\\n(aP \{\
@@ -776,7 +821,13 @@
 .       ie \\n(.$==0 .tm Usage: .Ms Math symbol ... \\*(Pu (#\\n(.c)
 .	el \{\
 .		ds mN Ms
-.		aV \\$*
+.		nr fV \\n(.$
+.		lnr _i_ 0 1
+.		while \\n(.$ \{\
+.			ds A\\n+[_i_] "\\$1
+.			shift
+.		\}
+.		fV
 .	\}
 .\}
 .if \\n(aC>\\n(aP \{\
@@ -806,7 +857,7 @@
 .		nr fV \\n(.$
 .		lnr _i_ 0 1
 .		while \\n(.$ \{\
-.			ds A\\n+[_i_] \\$1
+.			ds A\\n+[_i_] "\\$1
 .			shift
 .		\}
 .		fV
@@ -859,7 +910,13 @@
 .       ie \\n(.$==0 \&\\*(pA~\fP\s0
 .	el \{\
 .		ds mN Pa
-.		aV \\$*
+.		nr fV \\n(.$
+.		lnr i 0 1
+.		while \\n(.$ \{\
+.			ds A\\n+i "\\$1
+.			shift
+.		\}
+.		fV
 .	\}
 .\}
 .if \\n(aC>\\n(aP \{\
@@ -879,7 +936,7 @@
 . 		nr fV \\n(.$
 .		lnr _i_ 0 1
 .		while \\n(.$ \{\
-.			ds A\\n+[_i_] \\$1
+.			ds A\\n+[_i_] "\\$1
 .			shift
 .		\}
 . 		fV
@@ -899,7 +956,13 @@
 .       ie \\n(.$==0 .tm Usage: .Tn Trade_name(s) ... \\*(Pu (#\\n(.c)
 .	el \{\
 .		ds mN Tn
-.		aV \\$*
+.		nr fV \\n(.$
+.		lnr i 0 1
+.		while \\n(.$ \{\
+.			ds A\\n+i "\\$1
+.			shift
+.		\}
+.		fV
 .	\}
 .\}
 .if \\n(aC>\\n(aP \{\
@@ -916,7 +979,13 @@
 .       ie \\n(.$==0 .tm Usage: .Tn Trade_name(s) ... \\*(Pu (#\\n(.c)
 .	el \{\
 .		ds mN Tn
-.		aV \\$*
+.		nr fV \\n(.$
+.		lnr i 0 1
+.		while \\n(.$ \{\
+.			ds A\\n+i "\\$1
+.			shift
+.		\}
+.		fV
 .	\}
 .\}
 .if \\n(aC>\\n(aP \{\
@@ -933,7 +1002,13 @@
 .       ie \\n(.$==0 .tm Usage: .Va variable_name(s) ... \\*(Pu (#\\n(.c)
 .	el \{\
 .		ds mN Va
-.		aV \\$*
+.		nr fV \\n(.$
+.		lnr i 0 1
+.		while \\n(.$ \{\
+.			ds A\\n+i "\\$1
+.			shift
+.		\}
+.		fV
 .	\}
 .\}
 .if \\n(aC>\\n(aP \{\
@@ -952,7 +1027,13 @@
 .	ie \\n(.$==0 .tm Usage: .No must be called with arguments (#\\n(.c)
 .	el \{\
 .		ds mN No
-.		aV \\$*
+.		nr fV \\n(.$
+.		lnr i 0 1
+.		while \\n(.$ \{\
+.			ds A\\n+i "\\$1
+.			shift
+.		\}
+.		fV
 .	\}
 .\}
 .ie \\n(aC>\\n(aP \{\
@@ -1671,7 +1752,15 @@
 .		tm Warning: Missing arguments - prefix .Pf)
 .		pB
 .	\}
-.	el .aV \\$*
+.	el \{\
+.		nr fV \\n(.$
+.		lnr i 0 1
+.		while \\n(.$ \{\
+.			ds A\\n+i "\\$1
+.			shift
+.		\}
+.		fV
+.	\}
 .\}
 .el \{\
 .	ie (\\n(aC-\\n(aP)>1 \{\
@@ -1692,7 +1781,15 @@
 .de Ns
 .if \\n(aC==0 \{\
 .	ds mN Ns
-.	ie \\n(.$>0 .aV \\$*
+.	ie \\n(.$>0 \{\
+.		nr fV \\n(.$
+.		lnr i 0 1
+.		while \\n(.$ \{\
+.			ds A\\n+i "\\$1
+.			shift
+.		\}
+.		fV
+.	\}
 .	el .tm Usage: .Ns must be called with arguments (#\\n(.c)
 .\}
 .No
@@ -1745,7 +1842,13 @@
 .	\}
 .	el \{\
 .		ds mN Sm
-.		aV \\$*
+.		nr fV \\n(.$
+.		lnr i 0 1
+.		while \\n(.$ \{\
+.			ds A\\n+i "\\$1
+.			shift
+.		\}
+.		fV
 .	\}
 .\}
 .if \\n(aC>0 \{\
@@ -2584,7 +2687,13 @@
 .	ie \\n(.$==0 .tm Usage: .Xr manpage_name [section#] \\*(Pu (#\\n(.c)
 .	el \{\
 .		ds mN Xr
-.		aV \\$*
+.		nr fV \\n(.$
+.		lnr i 0 1
+.		while \\n(.$ \{\
+.			ds A\\n+i "\\$1
+.			shift
+.		\}
+.		fV
 .	\}
 .\}
 .if \\n(aC>\\n(aP \{\
@@ -2619,7 +2728,13 @@
 .	ie \\n(.$==0 .tm Sx Usage: .Sx Section Header \\*(Pu (#\\n(.c)
 .	el \{\
 .		ds mN Sx
-.		aV \\$*
+.		nr fV \\n(.$
+.		lnr i 0 1
+.		while \\n(.$ \{\
+.			ds A\\n+i "\\$1
+.			shift
+.		\}
+.		fV
 .	\}
 .\}
 .if \\n(aC>\\n(aP \{\
@@ -2827,7 +2942,13 @@
 .		\}
 .		nr fX 1
 .		ds mN Vt
-.		aV \\$@
+.		nr fV \\n(.$
+.		lnr i 0 1
+.		while \\n(.$ \{\
+.			ds A\\n+i "\\$1
+.			shift
+.		\}
+.		fV
 .	\}
 .	if \\n(aC>\\n(aP \{\
 .		lnr _aP_ \\n(aP
@@ -2868,7 +2989,13 @@
 .			nr fY 1
 .		\}
 .		ds mN Ft
-.		aV \\$@
+.		nr fV \\n(.$
+.		lnr i 0 1
+.		while \\n(.$ \{\
+.			ds A\\n+i "\\$1
+.			shift
+.		\}
+.		fV
 .	\}
 .	if \\n(aC>\\n(aP \{\
 .		lnr _aP_ \\n(aP
@@ -3354,7 +3481,13 @@
 .		nr Kl \\n(Kl+1
 .		ds rS U\\n(uK
 .		ds mN %A
-.		aV \\$@
+.		nr fV \\n(.$
+.		lnr i 0 1
+.		while \\n(.$ \{\
+.			ds A\\n+i "\\$1
+.			shift
+.		\}
+.		fV
 .	\}
 .\}
 .if \\n(aC>\\n(aP \{\
@@ -3489,7 +3622,13 @@
 .		nr Kl \\n(Kl+1
 .		ds rS nK
 .		ds mN %N
-.		aV \\$*
+.		nr fV \\n(.$
+.		lnr i 0 1
+.		while \\n(.$ \{\
+.			ds A\\n+i "\\$1
+.			shift
+.		\}
+.		fV
 .	\}
 .\}
 .if \\n(aC>\\n(aP \{\
@@ -3649,7 +3788,13 @@
 .			nr __uK \\n[__uK]+1
 .			nr Kl \\n(Kl+1
 .			ds rS uK
-.			aV \\$*
+.			nr fV \\n(.$
+.			lnr i 0 1
+.			while \\n(.$ \{\
+.				ds A\\n+i "\\$1
+.				shift
+.			\}
+.			fV
 .		\}
 .	\}
 .	if \\n(aC>\\naP \{\
@@ -3670,7 +3815,13 @@
 .		nr vK \\n(vK+1
 .		nr Kl \\n(Kl+1
 .		ds rS vK
-.		aV \\$*
+.		nr fV \\n(.$
+.		lnr i 0 1
+.		while \\n(.$ \{\
+.			ds A\\n+i "\\$1
+.			shift
+.		\}
+.		fV
 .	\}
 .\}
 .if \\n(aC>\\n(aP \{\
@@ -3756,7 +3907,13 @@ File:
 .	ie \\n(.$==0 .tm Usage: .An author_name ... \\*(Pu (#\\n(.c)
 .	el .if !\\n(.$=1&\\n(xX \{\
 .		ds mN An
-.		aV \\$*
+.		nr fV \\n(.$
+.		lnr i 0 1
+.		while \\n(.$ \{\
+.			ds A\\n+i "\\$1
+.			shift
+.		\}
+.		fV
 .	\}
 .\}
 .if \\n(aC>\\n(aP \{\
@@ -3807,7 +3964,13 @@ File:
 .		ie !\\n(.$ .tm Usage: .Lk <URL> (#\\n(.c)
 .		el \{\
 .			ds mN Lk
-.			aV \\$*
+.			nr fV \\n(.$
+.			lnr i 0 1
+.			while \\n(.$ \{\
+.				ds A\\n+i "\\$1
+.				shift
+.			\}
+.			fV
 .		\}
 .	\}
 .	if \\n(aC>\\n(aP \{\

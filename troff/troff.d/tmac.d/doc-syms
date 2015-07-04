@@ -42,7 +42,15 @@
 .as b1 \&\\*(tNUNIX\\*[__aa]
 .rm __aa
 .if \\n(aC==0 \{\
-.	if \\n(.$>0 .aV \\$*
+.	if \\n(.$>0 \{\
+.		nr fV \\n(.$
+.		lnr i 0 1
+.		while \\n(.$ \{\
+.			ds A\\n+i "\\$1
+.			shift
+.		\}
+.		fV
+.	\}
 .\}
 .ie \\n(aC>\\n(aP \{\
 .	if \\n(aP .as b1 \\*[S\\n(aP]
@@ -59,7 +67,15 @@
 .nr cF \\n(.f
 .nr cZ \\n(.s
 .ds __aa \&\f\\n(cF\s\\n(cZ
-.if \\n(aC=0&\\n(.$ .aV \\$*
+.if \\n(aC=0&\\n(.$ \{\
+.	nr fV \\n(.$
+.	lnr i 0 1
+.	while \\n(.$ \{\
+.		ds A\\n+i "\\$1
+.		shift
+.	\}
+.	fV
+.\}
 .\".if \\$1-alpha \{\
 .\".	as b1 \&currently in alpha test.
 .\".	aZ
@@ -470,7 +486,13 @@
 .	shift
 .	if \\n(.$ \{\
 .		ds mN Lb
-.		aV \\$*
+.		nr fV \\n(.$
+.		lnr i 0 1
+.		while \\n(.$ \{\
+.			ds A\\n+i "\\$1
+.			shift
+.		\}
+.		fV
 .		nr aP 1
 .		nR
 .	\}

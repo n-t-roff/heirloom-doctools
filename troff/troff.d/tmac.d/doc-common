@@ -415,7 +415,13 @@
 .		ie n .ti -2
 .		el   .ti -.25i
 .		ds mN Ss
-.		aV \\$@
+.		nr fV \\n(.$
+.		lnr i 0 1
+.		while \\n(.$ \{\
+.			ds A\\n+i "\\$1
+.			shift
+.		\}
+.		fV
 .	\}
 .	as b1 \&\\*(sH
 .	if \\n(aC>\\n(aP \{\
