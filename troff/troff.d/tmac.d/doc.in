@@ -328,13 +328,13 @@
 .	\}
 .	el \{\
 .		ds mN Fl
-.		lds _$_
+.		nr fV \\n(.$
+.		lnr i 0 1
 .		while \\n(.$ \{\
-.			ie \\$1 .as _$_ " \&
-.			el .as _$_ " \\$1
+.			ds A\\n+i "\\$1
 .			shift
 .		\}
-.		aV \\*[_$_]
+.		fV
 .	\}
 .\}
 .if \\n(aC>0 \{\
