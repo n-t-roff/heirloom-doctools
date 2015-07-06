@@ -3000,12 +3000,11 @@
 .		fV
 .	\}
 .	if \\n(aC>\\n(aP \{\
-.		lnr _aP_ \\n(aP
 .		nr aP \\n(aP+1
 .		ie \\n[C\\n(aP]=1 .\\*[A\\n(aP]
 .		el \{\
-.			if \\n[_aP_] .as b1 \\*[S\\n[_aP_]]
 .			as b1 \&\\*(fT\\*[A\\n(aP]\fR\s10
+.			if \\n(aP<\\n(aC .as b1 \\*[S\\n(aP]
 .			Ft
 .		\}
 .	\}
@@ -3929,7 +3928,8 @@ File:
 .de Sf
 .tm .Sf defunct, use prefix or Ns
 ..
-.ds rV "function returns the value 0 if successful; otherwise the value -1 is returned and the global variable \\*(vAerrno\fP is set to indicate the error.
+.as rV " otherwise the value\~-1 is returned and the global variable
+.as rV " \\*(vAerrno\fP is set to indicate the error.
 .\" Ns Rv macro - return values
 .\" Ns rV string - standard return message
 .de Rv
@@ -3938,24 +3938,10 @@ File:
 .\}
 .el \{\
 .	ds mN Rv
-.\" .	nr aP 0
-.\" .	nr lR \\n(lR+1
-.\" .	ds A1 \\$2
-.\" .	ds A2 \\$3
-.\" .	ds A3 \\$4
-.\" .	ds A4 \\$5
-.\" .	ds A5 \\$6
-.\" .	ds A6 \\$7
-.\" .	ds A7 \\$8
-.\" .	ds A8 \\$9
-.\" .	nr fV \\n(.$-1
 .	if \\$1-std \{\
 .	nr cH \\*(cH
 .	if (\\n(cH<2):(\\n(cH>3) .tm Usage: .Rv -std sections 2 and 3 only
 .		br
-\&The
-.ie \\$2 .Fn \\*(n1
-.el .Fn \\$2
 \&\\*(rV
 .	\}
 .\}
