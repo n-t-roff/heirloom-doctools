@@ -3928,6 +3928,7 @@ File:
 .de Sf
 .tm .Sf defunct, use prefix or Ns
 ..
+.ds rV Upon successful completion, the value\~0 is returned;
 .as rV " otherwise the value\~-1 is returned and the global variable
 .as rV " \\*(vAerrno\fP is set to indicate the error.
 .\" Ns Rv macro - return values
