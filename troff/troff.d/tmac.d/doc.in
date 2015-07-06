@@ -3928,9 +3928,10 @@ File:
 .de Sf
 .tm .Sf defunct, use prefix or Ns
 ..
-.ds rV Upon successful completion, the value\~0 is returned;
-.as rV " otherwise the value\~-1 is returned and the global variable
-.as rV " \\*(vAerrno\fP is set to indicate the error.
+.ds __rV1.1 Upon successful completion, the value\~0 is returned
+.ds __rV1.2 the value 0 if successful
+.ds __rV2 ; otherwise the value\~-1 is returned and the global variable \\*(vA
+.as __rV2 errno\fP is set to indicate the error.
 .\" Ns Rv macro - return values
 .\" Ns rV string - standard return message
 .de Rv
@@ -3940,10 +3941,27 @@ File:
 .el \{\
 .	ds mN Rv
 .	if \\$1-std \{\
-.	nr cH \\*(cH
-.	if (\\n(cH<2):(\\n(cH>3) .tm Usage: .Rv -std sections 2 and 3 only
+.		nr cH \\*(cH
+.		if (\\n(cH<2):(\\n(cH>3) \
+.			tm Usage: .Rv -std sections 2 and 3 only
 .		br
-\&\\*(rV
+.		ie \\$2 \\*[__rV1.1]\\*[__rV2]
+.		el \{\
+.			nop The
+.			ie \\$3 \\$2() function returns
+.			el \{\
+.				lds c
+.				lnr i 2
+.				while \\ni<=\\n(.$ \{\
+.					if \\n(.$>3&(\\ni<\\n(.$) .ds c ,
+.					nop \\$[\\ni]()\\*c
+.					nr i +1
+.					if \\ni=\\n(.$ and
+.				\}
+.				nop functions return
+.			\}
+.			nop \\*[__rV1.2]\\*[__rV2]
+.		\}
 .	\}
 .\}
 ..
