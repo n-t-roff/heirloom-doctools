@@ -442,8 +442,7 @@
 .ds ]I \\\\n(]
 .ds ]R \\\\n()
 .bd S 3 3
-.if t .ds R \(rg
-.if n .ds R (Reg.)
+.ds R \(rg
 .ds S \s10
 '	\" For Tru64 UNIX manpages. Use of this is discouraged.
 .de LI

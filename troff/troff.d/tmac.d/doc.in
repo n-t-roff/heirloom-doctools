@@ -172,6 +172,7 @@
 .	nr aP 0
 .	ie \\n(dZ==1 \{\
 .		if \\n(oM>1 .as b1 \\*(S0
+.\".		if \\n(oM>1:((\\n(sM==1)&(\\n(tP==0)) .as b1 \\*(S0
 .	\}
 .	el \{\
 .		if \\n(oM>0 \{\
@@ -759,6 +760,11 @@
 .			shift
 .		\}
 .		fV
+.		if \\n(dZ&\\n(dP .if \\*[d\\n(dP]dU  \{\
+.			x2
+.			pB
+.			x1
+.		\}
 .	\}
 .\}
 .if \\n(aC>\\n(aP \{\
@@ -847,7 +853,7 @@
 .	ie \\n(.$==0 \{\
 .		ie \\*(n1 .tm Usage: .Nm Name(s) ... \\*(Pu (#\\n(.c)
 .		el \{\
-.			ds b1 \&\\*(nM\\*(n1\fP\s0
+.			as b1 \&\\*(nM\\*(n1\fP\s0
 .			if \\n[Xo.depth] .as b1 \\*(sV
 .			pB
 .		\}
@@ -1014,9 +1020,9 @@
 .if \\n(aC>\\n(aP \{\
 .	as b1 \\*(vA
 .	nr aP \\n(aP+1
-.       nr cF \\n(.f
+.	nr cF \\n(.f
 .	nr cZ \\n(.s
-.       nR
+.	nR
 .\}
 ..
 .\"
@@ -1038,19 +1044,19 @@
 .\}
 .ie \\n(aC>\\n(aP \{\
 .	nr aP \\n(aP+1
-.       ie \\n[C\\n(aP]==1 \{\
+.	ie \\n[C\\n(aP]==1 \{\
 .		if \\n(sM \{\
 .			if \\*[__inline_mN]Oc \{\
 .				if \\*[A\\n(aP]Cm .as b1 \\*(sV
 .			\}
 .		\}
 .		\\*[A\\n(aP]
-.       \}
-.       el \{\
+.	\}
+.	el \{\
 .		nr cF \\n(.f
 .		nr cZ \\n(.s
 .		nR
-.       \}
+.	\}
 .\}
 .el .aZ
 ..
@@ -1724,7 +1730,6 @@
 .		\}
 .	\}
 .	el \{\
-.		nr aa \\n(aP+1
 .		if \\n(aP .as b1 \\*[S\\n(aP]
 .		No
 .	\}
@@ -1995,38 +2000,37 @@
 .el \{\
 .	ds __aa
 .	nr bV 0
-.       nr iD 0
+.	nr iD 0
 .	nr dP \\n(dP+1
-.       if \\$1-literal \{\
+.	ie \\$1-literal \{\
 .		nr iD \\n(iD+1
-.               ds d\\n(dP dL
+.		ds d\\n(dP dL
 .		nr cF \\n(.f
 .		nr cZ \\n(.s
 .		ie t \{\&\\*(lI
-'			ta 9n 18n 27n 36n 45n 54n 63n 72n
+'			ta T 9n
 .		\}
 .		el \{\
-'			ta 8n 16n 24n 32n 40n 48n 56n 64n 72n
+'			ta T 8n
 .		\}
 .		nf
-.       \}
-.       if \\$1-filled \{\
+.	\}
+.	el .ie \\$1-filled \{\
 .		nr iD \\n(iD+1
-.               ds d\\n(dP dF
+.		ds d\\n(dP dF
 .		br
-.       \}
-.       if \\$1-ragged \{\
+.	\}
+.	el .ie \\$1-ragged \{\
 .		nr iD \\n(iD+1
-.               ds d\\n(dP dR
+.		ds d\\n(dP dR
 .		na
-.       \}
-.       if \\$1-unfilled \{\
+.	\}
+.	el .if \\$1-unfilled \{\
 .		nr iD \\n(iD+1
-.               ds d\\n(dP dU
+.		ds d\\n(dP dU
 .		nf
-.       \}
-.\" .tm Here is argc: \\n(.$ and here is iD \\n(iD
-.       if ((\\n(iD>=1)&(\\n(.$>\\n(iD)) \{\
+.	\}
+.	if ((\\n(iD>=1)&(\\n(.$>\\n(iD)) \{\
 .		bV \\$2 \\$3 \\$4
 .	\}
 .	if \\n[O\\n(dP]>0 'in \\n(.iu+\\n[O\\n(dP]u
@@ -2043,7 +2047,6 @@
 ..
 .\" NS bV macro - resolve remaining .Bd arguments
 .de bV
-.\" .tm in bV with args: \\$1 \\$2 \\$3
 .nr iD 1
 .ds bY
 .if \\$1-offset \{\
@@ -2887,7 +2890,7 @@
 .\" n arguments (n > 2): Output "\$1, ..., \$<n-1>, and \$n"
 .de Ex
 .	if !\\n(aC \{\
-.		ds b1 The
+.		as b1 The
 .		ie !\\n(.$ .tm .Ex: "-std" expected as first argument (#\\n(.c)
 .		el \{\
 .			if !\\$1-std \
@@ -2951,15 +2954,14 @@
 .		fV
 .	\}
 .	if \\n(aC>\\n(aP \{\
-.		lnr _aP_ \\n(aP
 .		nr aP \\n(aP+1
 .		ie \\n[C\\n(aP]=1 .\\*[A\\n(aP]
 .		el \{\
 .			ie \\n[C\\n(aP]=2 \{\
-.				if \\n[_aP_] .as b1 \\*[S\\n[_aP_]]
 .				as b1 \&\\*(fT\\*[A\\n(aP]\fR\s10
 .			\}
 .			el .as b1 \\*[A\\n(aP]
+.			if \\n(aP<\\n(aC .as b1 \\*[S\\n(aP]
 .			Vt
 .		\}
 .	\}
