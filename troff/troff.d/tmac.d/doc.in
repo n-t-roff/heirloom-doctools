@@ -126,7 +126,7 @@
 .		shift
 .	\}
 .	if 1 \&\fR\s10\&
-.	in \\n(.iu+\\n(Tiu
+.	in +\\n(Tiu
 .	ns
 ..
 .\" NS aV macro - parse argument vector (recursive) (.aV arg ... )
@@ -2033,7 +2033,7 @@
 .	if ((\\n(iD>=1)&(\\n(.$>\\n(iD)) \{\
 .		bV \\$2 \\$3 \\$4
 .	\}
-.	if \\n[O\\n(dP]>0 'in \\n(.iu+\\n[O\\n(dP]u
+.	if \\n[O\\n(dP]>0 'in +\\n[O\\n(dP]u
 .	if (\\n(bV==0) \{\
 .		if (\\n(nS==0) \{\
 .			ie \\*[d\\n(dP]dR .sp \\n(dVu
@@ -2114,7 +2114,7 @@
 .	ft \\n(cF
 .	fz \\n(cZ
 .\}
-.in \\n(.iu-\\n[O\\n(dP]u
+.in -\\n[O\\n(dP]u
 .rr O\\n(dP
 .rm d\\n(dP
 .nr dP \\n(dP-1
@@ -2213,9 +2213,7 @@
 .				W\\n(wV
 .				nr w\\n(lC 0
 '				in -\\n(eWu
-.				if !\\n[v\\n(lC]=1 \{\
-.					sp \\n(dVu
-.				\}
+.				if !\\n[v\\n(lC] .sp \\n(dVu
 .				nf
 .				nr wV 0
 .			\}
@@ -2358,21 +2356,21 @@
 .		tY
 .	\}
 .	el .ie \\*[L\\n(lC]iT \{\
-'		in \\n(.iu-\\n[o\\n(lC]u
+'		in -\\n[o\\n(lC]u
 .		tZ
 .		nr lC \\n(lC-1
 .		tY
 .		nr iD 1
 .	\}
 .	el .ie \\*[L\\n(lC]oL \{\
-'		in \\n(.iu-\\n[o\\n(lC]u
+'		in -\\n[o\\n(lC]u
 .		tZ
 .		nr lC \\n(lC-1
 .		tY
 .		nr iD 1
 .	\}
 .	el .if \\*[L\\n(lC]lL \{\
-'		in \\n(.iu-\\n[o\\n(lC]u
+'		in -\\n[o\\n(lC]u
 .		tZ
 .		nr lC \\n(lC-1
 .		tY
@@ -2579,40 +2577,31 @@
 .\" NS lW macro - resolve unknown label/tag width (if .Bl [inset | tag] only)
 .de lW
 .if !TagwidtH\\*[t\\n(lC] \{\
-.	nr w\\n(lC 6n
+.	ie \\n(tX=1 .nr w\\n(lC \\n[\\*(tX]
+.	el          .nr w\\n(lC \\n(Ds
 .	nr tC 1
 .	ds t\\n(lC TagwidtH
 .\}
 ..
 .\" NS lX macro - set up vertical spacing (if compact) and offset+indent (all)
 .de lX
-.ie \\n(tC \{\
-.       nr tC 0
-.       nr tW 0
-.       if \\n[v\\n(lC]==0 .sp \\n(dVu
-.       in \\n(.iu+\\n[w\\n(lC]u+\\n[o\\n(lC]u+\\n(lSu
-.\}
-.el \{\
-.	if !\\n[v\\n(lC]=1 \{\
-.		sp \\n(dVu
+.	if !\\n[v\\n(lC] .sp \\n(dVu
+.	if \\n(tC \{\
+.		nr tC 0
+.		nr tW 0
+.		in +\\n[w\\n(lC]u+\\n[o\\n(lC]u+\\n(lSu
 .	\}
-.\}
-.if !\\n(cR .ne 2v
+.	if !\\n(cR .ne 2v
 ..
 .\" NS lY macro - set up vertical spacing (if compact) and offset+indent (all)
 .de lY
-.ie \\n(tC \{\
-.       nr tC 0
-.       nr tW 0
-.       if \\n[v\\n(lC]==0 .sp \\n(dVu
-.       in \\n(.iu+\\n[o\\n(lC]u
-.\}
-.el \{\
-.	if !\\n[v\\n(lC]=1 \{\
-.		sp \\n(dVu
+.	if !\\n[v\\n(lC] .sp \\n(dVu
+.	if \\n(tC \{\
+.		nr tC 0
+.		nr tW 0
+.		in +\\n[o\\n(lC]u
 .	\}
-.\}
-.if !\\n(cR .ne 2v
+.	if !\\n(cR .ne 2v
 ..
 .\" NS tS temporary string
 .\" NS hL macro - hanging list function
@@ -2640,10 +2629,10 @@
 .ds t\n(lC
 .de lE
 .ie \\n[o\\n(lC]>0 \{\
-'	in \\n(.iu-(\\n[w\\n(lC]u)-(\\n[o\\n(lC]u)-\\n(lSu
+'	in -\\n[w\\n(lC]u+\\n[o\\n(lC]u+\\n(lSu
 .	rr o\\n(lC
 .\}
-.el 'in \\n(.iu-\\n[w\\n(lC]u-\\n(lSu
+.el 'in -\\n[w\\n(lC]u+\\n(lSu
 .if \\n(lC<=0 .tm Extraneous .El call (#\\n(.c)
 .tZ
 .nr lC \\n(lC-1
@@ -2746,7 +2735,7 @@
 .\" NS cI register - column indent width
 .\" NS W[1-5] macro - establish tabs for list-type column
 .de cC
-'in \\n(.iu-\\n[o\\n(lC]u-\\n[w\\n(lC]u
+'in -\\n[o\\n(lC]u+\\n[w\\n(lC]u
 .ta .5i 1i 1.5i 2i 2.5i 3i 3.5i 4i 4.5i 5i 5.5i 6i 6.5i
 .fi
 .tZ
@@ -2756,40 +2745,40 @@
 .de W1
 .ta \w\\*(A1    u
 .nr eW \w\\*(A1    u
-'in \\n(.iu+\\n(eWu+\\n[o\\n(lC]u
+'in +\\n(eWu+\\n[o\\n(lC]u
 ..
 .de W2
 .ta \w\\*(A1    u +\w\\*(A2    u
 .nr eW \w\\*(A1    u+\w\\*(A2    u
-'in \\n(.iu+\\n(eWu+\\n[o\\n(lC]u
+'in +\\n(eWu+\\n[o\\n(lC]u
 ..
 .de W3
 .ta \w\\*(A1    u +\w\\*(A2    u +\w\\*(A3    u
 .nr eW \w\\*(A1    u+\w\\*(A2    u+\w\\*(A3    u
-'in \\n(.iu+\\n(eWu+\\n[o\\n(lC]u
+'in +\\n(eWu+\\n[o\\n(lC]u
 ..
 .de W4
 .ta \w\\*(A1    u +\w\\*(A2    u +\w\\*(A3    u +\w\\*(A4    u
 .nr eW \w\\*(A1    u+\w\\*(A2    u+\w\\*(A3    u+\w\\*(A4    u
-'in \\n(.iu+\\n(eWu+\\n[o\\n(lC]u
+'in +\\n(eWu+\\n[o\\n(lC]u
 ..
 .de W5
 .ta \w\\*(A1   u +\w\\*(A2   u +\w\\*(A3   u +\w\\*(A4   u +\w\\*(A5   u
 .nr eW \w\\*(A1   u+\w\\*(A2   u+\w\\*(A3   u+\w\\*(A4   u+\w\\*(A5   u
-'	in \\n(.iu+\\n(eWu+\\n[o\\n(lC]u
+'	in +\\n(eWu+\\n[o\\n(lC]u
 ..
 .\" This is packed abnormally close, intercol width should be an option
 .de W6
 .ta \w\\*(A1 u +\w\\*(A2 u +\w\\*(A3 u +\w\\*(A4 u +\w\\*(A5 u +\w\\*(A6
 .nr eW \w\\*(A1 u+\w\\*(A2 u+\w\\*(A3 u+\w\\*(A4 u+\w\\*(A5 u+\w\\*(A6
-'	in \\n(.iu+\\n(eWu+\\n[o\\n(lC]u
+'	in +\\n(eWu+\\n[o\\n(lC]u
 ..
 .\" NS cL macro - column items
 .de cL
 .if \\n[w\\n(lC]==0 .nr w\\n(lC \\n(eWu
 .if \\n(.u==0 \{\
 .	fi
-'	in \\n(.iu+\\n(eWu
+'	in +\\n(eWu
 .\}
 .ti -\\n(eWu
 .if \\n(fV \{\
@@ -2824,7 +2813,7 @@
 .\" NS Dl macro - display (one line) literal
 .de Dl
 'ta .5i 1i 1.5i 2i 2.5i 3i 3.5i 4i 4.5i 5i 5.5i 6i 6.5i
-.in \\n(.iu+\\n(Dsu
+.in +\\n(Dsu
 .ie \\n(aC==0 \{\
 .	ie \\n(.$==0 \{\
 .		tm Usage: .Dl argument ... (#\\n(.c)
@@ -2844,13 +2833,13 @@
 .el \{\
 .	tm Usage: .Dl not callable by other macros (#\\n(.c)
 .\}
-.in \\n(.iu-\\n(Dsu
+.in -\\n(Dsu
 ..
 .\"
 .\" NS D1 macro - display (one line)
 .de D1
 'ta .5i 1i 1.5i 2i 2.5i 3i 3.5i 4i 4.5i 5i 5.5i 6i 6.5i
-.in \\n(.iu+\\n(Dsu
+.in +\\n(Dsu
 .ie \\n(aC==0 \{\
 .	ie \\n(.$==0 \{\
 .		tm Usage: .D1 argument ... (#\\n(.c)
@@ -2875,7 +2864,7 @@
 .el \{\
 .	tm Usage: .D1 not callable by other macros (#\\n(.c)
 .\}
-.in \\n(.iu-\\n(Dsu
+.in -\\n(Dsu
 ..
 .\" NS Ex macro - exit status
 .\" 0 arguments: \*(n1 is used (error if unset)
@@ -4012,7 +4001,6 @@ File:
 .		nr w\\n[_i_] 0
 .		ds L\\n[_i_].saved "\\*[L\\n[_i_]]
 .		ds t\\n[_i_].saved "\\*[t\\n[_i_]]
-.		ds t\\n[_i_]
 .	\}
 .	nr Xt.saved  \\n[Xt]
 .	nr Xt 0
