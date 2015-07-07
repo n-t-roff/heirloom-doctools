@@ -2579,15 +2579,9 @@
 .\" NS lW macro - resolve unknown label/tag width (if .Bl [inset | tag] only)
 .de lW
 .if !TagwidtH\\*[t\\n(lC] \{\
-.       ie \\n(tX==1 \{\
-.               ds t\\n(lN \\*(tX
-.               nr w\\n(lN \\n(\\*(tX
-.       \}
-.       el \{\
-.               ds t\\n(lN No
-.               nr w\\n(lN \\n(No
-.       \}
-.       if !\\*[t\\n(lC]\\*[t\\n(lN] .nr tC 1
+.	nr w\\n(lC 6n
+.	nr tC 1
+.	ds t\\n(lC TagwidtH
 .\}
 ..
 .\" NS lX macro - set up vertical spacing (if compact) and offset+indent (all)
@@ -2645,7 +2639,6 @@
 .nr h1 0
 .ds t\n(lC
 .de lE
-.\" IN lC o[\\n(lC]==\\n(o\\n(lC, w[\\n(lC]==\\n(w\\n(lC,
 .ie \\n[o\\n(lC]>0 \{\
 '	in \\n(.iu-(\\n[w\\n(lC]u)-(\\n[o\\n(lC]u)-\\n(lSu
 .	rr o\\n(lC
@@ -4057,8 +4050,6 @@ File:
 .	nr iS.saved  \\n[iS]
 .	nr iS 0
 .	nr lC.saved  \\n[lC]
-.	nr lS.saved  \\n[lS]
-.	nr lS 0
 .	nr nS.saved  \\n[nS]
 .	nr nS 0
 .	nr oM.saved  \\n[oM]
@@ -4118,7 +4109,6 @@ File:
 .	nr iD  \\n[iD.saved]
 .	nr iS  \\n[iS.saved]
 .	nr lC  \\n[lC.saved]
-.	nr lS  \\n[lS.saved]
 .	nr nS  \\n[nS.saved]
 .	nr oM  \\n[oM.saved]
 .	nr sM  \\n[sM.saved]
