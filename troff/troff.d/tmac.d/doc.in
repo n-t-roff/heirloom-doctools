@@ -3950,10 +3950,10 @@ File:
 .			nop The
 .			ie \\$3 \\$2() function returns
 .			el \{\
-.				lds c
 .				lnr i 2
 .				while \\ni<=\\n(.$ \{\
-.					if \\n(.$>3&(\\ni<\\n(.$) .ds c ,
+.					ie \\n(.$>3&(\\ni<\\n(.$) .lds c ,
+.					el .lds c
 .					nop \\$[\\ni]()\\*c
 .					nr i +1
 .					if \\ni=\\n(.$ and

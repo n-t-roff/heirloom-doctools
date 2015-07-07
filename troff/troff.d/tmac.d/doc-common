@@ -112,7 +112,8 @@
 .nr Sm 8n
 .nr So 12n
 .nr Sq 12n
-.nr Ss 3
+.nr Ss 3  \" groff: 8n
+.nr St 8n \" groff
 .nr Sx 16n
 .nr Sy 6n
 .nr Rv 1
@@ -202,6 +203,7 @@
 .ds mdoc.cm.So
 .ds mdoc.cm.Sq
 .ds mdoc.cm.Ss
+.ds mdoc.cm.St
 .ds mdoc.cm.Sx
 .ds mdoc.cm.Sy
 .ds mdoc.cm.Rv
