@@ -478,13 +478,14 @@
 .	nr cF \\n(.f
 .	nr cZ \\n(.s
 .	ds __aa \&\f\\n(cF\s\\n(cZ
-.	ie d Lb.\\$1 \{\
-.		ie \\n(.$>1 .as b1 \\*[Lb.\\$1]
-.		el \\*[Lb.\\$1]
+.	ie d Lb.\\$1 .as b1 \\*[Lb.\\$1]
+.	el \{\
+.		tm .Lb: Unknown library \\$1 (#\\n(.c)
+.		as b1 library \\*(Lq\\$1\\*(Rq
 .	\}
-.	el .tm .Lb: Unknown library \\$1 (#\\n(.c)
 .	shift
-.	if \\n(.$ \{\
+.	ie !\\n(.$ .aZ
+.	el \{\
 .		ds mN Lb
 .		nr fV \\n(.$
 .		lnr i 0 1
