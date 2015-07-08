@@ -1572,7 +1572,7 @@ casnr1(int flt, int local)
 	a = _inumb(&numtp->val, flt ? &numtp->fval : NULL, flt, NULL);
 	if (nonumb)
 		goto rtn;
-	numtp = _findr(rq, 0, 1, local, NULL);
+	if (rq == PAIR('.', 'g')) gemu = xflag && a.n == 1 ? 1 : 0;
 	numtp->val = a.n;
 	if (flt) {
 		numtp->fval = a.f;

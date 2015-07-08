@@ -190,3 +190,4 @@ int	dl;
 int	padj;
 int	defcf;
 int	donep;
+int	gemu;

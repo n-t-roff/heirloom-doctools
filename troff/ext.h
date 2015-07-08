@@ -259,6 +259,7 @@ extern	int	noschr;
 extern	int	cmpstrdelim;
 extern	int	bol;
 extern	int	prdblesc;
+extern	int	gemu;
 
 /* n1.c */
 extern	void	mainloop(void);

@@ -39,6 +39,7 @@
 .\" OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
 .\" EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 .do xflag 3
+.nr .g 1
 .ie n \{\
 .	nr cR 1
 .	char ' \N'39'
@@ -69,7 +70,7 @@
 ..
 '	\" default tabs
 .de DT
-'	ta .5i 1i 1.5i 2i 2.5i 3i 3.5i 4i 4.5i 5i 5.5i 6i 6.5i
+'	ta T .5i
 ..
 '	\" set type font and size
 .de }f

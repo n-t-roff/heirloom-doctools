@@ -1673,7 +1673,14 @@ casetl(void)
 	while ((i = *tp++))
 		pchar(i);
 	if (w[1] || w[2])
-		horiz(j = quant((lt - w[1]) / 2 - w[0], HOR));
+	{
+#ifdef NROFF
+		if (gemu)
+			horiz(j = quant((lt + HOR - w[1]) / 2 - w[0], HOR));
+		else
+#endif
+			horiz(j = quant((lt - w[1]) / 2 - w[0], HOR));
+	}
 	while ((i = *tp++))
 		pchar(i);
 	if (w[2]) {

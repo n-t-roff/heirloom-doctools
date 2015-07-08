@@ -2150,6 +2150,7 @@ casexflag(void)
 #endif
 	gflag = 0;
 	setnr(".g", gflag, 0);
+	gemu = 0;
 	skip(1);
 	noscale++;
 	i = atoi();
