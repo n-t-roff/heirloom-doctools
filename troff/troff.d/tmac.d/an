@@ -42,10 +42,6 @@
 .nr .g 1
 .ie n \{\
 .	nr cR 1
-.	char ' \N'39'
-.	char - \N'45'
-.	char ` \N'96'
-.	breakchar
 .	sentchar .?!
 .	ns
 .	nh

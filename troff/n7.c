@@ -35,7 +35,7 @@
  *
  * Sccsid @(#)n7.c	1.181 (gritter) 6/19/11
  *
- * Portions Copyright (c) 2014 Carsten Kunze <carsten.kunze@arcor.de>
+ * Portions Copyright (c) 2014, 2015 Carsten Kunze
  */
 
 /*
@@ -1396,6 +1396,9 @@ g0:
 	} else
 g1:		nexti = GETCH();
 	j = cbits(i = nexti);
+	if (gemu && j == FILLER)
+		inword = 0;
+	else
 	if (!ismot(i) && j != ohc)
 		inword = 1;
 #if defined (EUC) && defined (NROFF) && defined (ZWDELIMS)

@@ -423,7 +423,7 @@
 .	el .ie \\*[_lc_]? .nr _sec_ 1
 .	el .if \\*[_lc_]! .nr _sec_ 1
 .	ie \\n[_sec_] .as b1 \f\\n(cF\s\\n(cZ\\*[A\\n(aP]
-.	el .ie \\n[C\\n(aP]=2 .as b1 \&\\*[A\\n(aP]
+.	el .ie \\n[C\\n(aP]=2 .as b1 \&\%\\*[A\\n(aP]
 .	el .as b1 \&\f\\n(cF\s\\n(cZ\\*[A\\n(aP]\fP\s0
 .	ie \\n(aC==\\n(aP \{\
 .		if !\\n[_sec_] .as b1 \&\f\\n(cF\s\\n(cZ

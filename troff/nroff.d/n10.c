@@ -609,7 +609,7 @@ ptout1(void)
 		else
 			j = 1;	/* number of overstrikes for bold */
 #ifdef	EUC
-		if (k == '-' && utf8) {
+		if (!gemu && k == '-' && utf8) {
 			/*
 			 * With -Tlocale and a UTF-8 locale, "-" is replaced
 			 * by a UTF-8 hyphen, and "\-" remains the ASCII
@@ -621,7 +621,7 @@ ptout1(void)
 			 */
 			savep = "%\342%\200%\220";
 			goto loop;
-		} else if (k == '`' && utf8) {
+		} else if (!gemu && k == '`' && utf8) {
 			/*
 			 * Similar considerations apply to ` ' vs. \` \'.
 			 * The former are typographic single quotes, while
@@ -630,7 +630,7 @@ ptout1(void)
 			 */
 			savep = "%\342%\200%\230";
 			goto loop;
-		} else if (k == '\'' && utf8) {
+		} else if (!gemu && k == '\'' && utf8) {
 			savep = "%\342%\200%\231";
 			goto loop;
 		} else
