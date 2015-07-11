@@ -937,30 +937,30 @@
 .\" NS Sy macro - Symbolics
 .de Sy
 .if \\n(aC==0 \{\
-.       ie \\n(.$==0 .tm Usage: .Sy symbolic_text ... \\*(Pu (#\\n(.c)
-. 	el \{\
+.	ie \\n(.$==0 .tm Usage: .Sy symbolic_text ... \\*(Pu (#\\n(.c)
+.	el \{\
 .		ds mN Sy
-. 		nr fV \\n(.$
+.		nr fV \\n(.$
 .		lnr _i_ 0 1
 .		while \\n(.$ \{\
 .			ds A\\n+[_i_] "\\$1
 .			shift
 .		\}
-. 		fV
+.		fV
 .	\}
 .\}
 .if \\n(aC>\\n(aP \{\
 .	as b1 \\*(sY
 .	nr aP \\n(aP+1
-.       nr cF \\n(.f
+.	nr cF \\n(.f
 .	nr cZ \\n(.s
-.       nR
+.	nR
 .\}
 ..
 .\" NS Tn macro - Trade Name Macro
 .de Tn
 .if \\n(aC==0 \{\
-.       ie \\n(.$==0 .tm Usage: .Tn Trade_name(s) ... \\*(Pu (#\\n(.c)
+.	ie \\n(.$==0 .tm Usage: .Tn Trade_name(s) ... \\*(Pu (#\\n(.c)
 .	el \{\
 .		ds mN Tn
 .		nr fV \\n(.$
@@ -975,9 +975,9 @@
 .if \\n(aC>\\n(aP \{\
 .	as b1 \\*(tN\\*(tF
 .	nr aP \\n(aP+1
-.       nr cF \\n(.f
+.	nr cF \\n(.f
 .	nr cZ \\n(.s
-.       nR
+.	nR
 .\}
 ..
 .\" NS nN macro - Trade Name Macro for inside of reference

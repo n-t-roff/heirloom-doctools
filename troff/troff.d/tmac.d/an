@@ -42,6 +42,9 @@
 .nr .g 1
 .ie n \{\
 .	nr cR 1
+.	utf8conv -
+.	utf8conv '
+.	utf8conv `
 .	sentchar .?!
 .	ns
 .	nh
@@ -451,4 +454,4 @@
 .		PP
 .	\}
 ..
-.\" vim:set filetype=nroff:
+.\" vim:set filetype=groff:

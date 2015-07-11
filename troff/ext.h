@@ -590,3 +590,6 @@ extern	void	nodelim(int);
 extern	void	storerq(int);
 extern	int	fetchrq(tchar *);
 extern	void	morechars(int);
+#ifdef NROFF
+extern	void	caseutf8conv(void);
+#endif

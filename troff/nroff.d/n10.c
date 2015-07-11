@@ -71,6 +71,7 @@ Device interfaces
 #include "ext.h"
 #include "tw.h"
 #include "pt.h"
+#include "bst.h"
 
 struct t t;	/* terminal characteristics */
 
@@ -118,6 +119,15 @@ int	c_isalnum;
 int	utf8;
 int	tlp;
 
+static int utf8occmp(union bst_val, union bst_val);
+static struct bst utf8oc = {
+	NULL,
+	utf8occmp
+};
+
+#define UTF8OC_KEY(c) ((union bst_val)(int)c)
+#define UTF8OC_VAL(s) ((union bst_val)(void *)s)
+
 void
 ptinit(void)
 {
@@ -155,6 +165,12 @@ ptinit(void)
 			csi_width[0] = 0;
 			utf8 = 1;
 			n_strcat(tt, "utf8", ttl); /* shorter than "locale" */
+			bst_add(&utf8oc, UTF8OC_KEY('-'),
+			    UTF8OC_VAL(strdup("\xe2\x80\x90")));
+			bst_add(&utf8oc, UTF8OC_KEY('`'),
+			    UTF8OC_VAL(strdup("\xe2\x80\x98")));
+			bst_add(&utf8oc, UTF8OC_KEY('\''),
+			    UTF8OC_VAL(strdup("\xe2\x80\x99")));
 		} else
 		{
 #endif
@@ -540,6 +556,7 @@ ptout1(void)
 #endif /* EUC */
 	tchar * q, i;
 	static int oxfont = FT;	/* start off in roman */
+	struct bst_node *uconv;
 
 	for (q = oline; q < olinep; q++) {
 		i = *q;
@@ -609,30 +626,9 @@ ptout1(void)
 		else
 			j = 1;	/* number of overstrikes for bold */
 #ifdef	EUC
-		if (!gemu && k == '-' && utf8) {
-			/*
-			 * With -Tlocale and a UTF-8 locale, "-" is replaced
-			 * by a UTF-8 hyphen, and "\-" remains the ASCII
-			 * hyphen-minus character. This is because in manual
-			 * pages, "\-" represents the ASCII option
-			 * introduction character, and converting it to a
-			 * UTF-8 minus character would make it impossible
-			 * to copy-and-paste option descriptions.
-			 */
-			savep = "%\342%\200%\220";
-			goto loop;
-		} else if (!gemu && k == '`' && utf8) {
-			/*
-			 * Similar considerations apply to ` ' vs. \` \'.
-			 * The former are typographic single quotes, while
-			 * the latter are commonly used for the ASCII syntax
-			 * quotes in manual pages.
-			 */
-			savep = "%\342%\200%\230";
-			goto loop;
-		} else if (!gemu && k == '\'' && utf8) {
-			savep = "%\342%\200%\231";
-			goto loop;
+		if (utf8 && !bst_srch(&utf8oc, UTF8OC_KEY(k), &uconv)) {
+			for (savep = uconv->data.p; *savep; savep++)
+				oput(*savep);
 		} else
 #endif
 			if (k < 128) {	/* ordinary ascii */
@@ -857,3 +853,47 @@ newpage(int unused)
 
 void
 pttrailer(void){;}
+
+void
+caseutf8conv(void) {
+#ifdef EUC
+	tchar tc;
+	int i, o;
+	struct bst_node *n;
+	char mb[MB_LEN_MAX+1];
+	if (skip(1)) return;
+	i = cbits(getch());
+	if (skip(0)) {
+		if (!bst_srch(&utf8oc, UTF8OC_KEY(i), &n)) {
+			free(n->data.p);
+			bst_del(&utf8oc, UTF8OC_KEY(i));
+		}
+	} else {
+		char *s;
+		o = cbits(tc = getch());
+		if (o < 256) {
+			s = malloc(2);
+			s[0] = o;
+			s[1] = 0;
+		} else if (multi_locale && (o >= nchtab + _SPECCHAR_ST)) {
+			mb[wctomb(mb, tr2un(o, fbits(tc)))] = 0;
+			s = strdup(mb);
+		} else {
+			s = strdup(t.codetab[o-_SPECCHAR_ST]);
+		}
+		if (bst_srch(&utf8oc, UTF8OC_KEY(i), &n)) {
+			bst_add(&utf8oc, UTF8OC_KEY(i), UTF8OC_VAL(s));
+		} else {
+			free(n->data.p);
+			n->data.p = s;
+		}
+	}
+#endif /* EUC */
+}
+
+static int
+utf8occmp(union bst_val a, union bst_val b) {
+	return a.i < b.i ? -1 :
+	       a.i > b.i ?  1 :
+	                    0 ;
+}

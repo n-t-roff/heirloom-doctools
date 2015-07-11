@@ -190,6 +190,9 @@ static const struct {
 	{ "unformat",		(void(*)(int))caseunformat },
 	{ "unwatch",		(void(*)(int))caseunwatch },
 	{ "unwatchn",		(void(*)(int))caseunwatchn },
+#ifdef NROFF
+	{ "utf8conv",		(void(*)(int))caseutf8conv },
+#endif
 	{ "vpt",		(void(*)(int))casevpt },
 	{ "warn",		(void(*)(int))casewarn },
 	{ "watch",		(void(*)(int))casewatch },

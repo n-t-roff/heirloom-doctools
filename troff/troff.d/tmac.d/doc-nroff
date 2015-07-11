@@ -38,6 +38,9 @@
 .rm hy
 .ad l
 .rm ad
+.utf8conv -
+.utf8conv '
+.utf8conv `
 .sentchar .?!
 .ds aD \fI
 .ds aR \fI
@@ -143,4 +146,4 @@
 .		En
 .	\}
 ..
-.\" vim:set syntax=nroff:
+.\" vim:set syntax=groff:

@@ -96,9 +96,9 @@ rdftmap(char *path) {
 
 char *
 mapft(char *name) {
-	union bst_val v;
-	if (map.root && !bst_srch(&map, (union bst_val)(void *)name, &v))
-		name = v.p;
+	struct bst_node *n;
+	if (map.root && !bst_srch(&map, (union bst_val)(void *)name, &n))
+		name = n->data.p;
 	return name;
 }
 

@@ -107,7 +107,7 @@
 .fallback BI BIE
 .flig BI 31
 ..
-.ds Sccsdate 05/26/15
+.ds Sccsdate 07/11/15
 .ds Str \*[Sccsdate]
 .substring Str 0 0
 .if '\*[Str]'%' \{\
@@ -170,6 +170,7 @@
 .ds PS "\fRPostScript\fR
 .ds PDF "\s-1PDF\s+1
 .ds TEX "\fIT\h'-.13m'\v'.165m'E\v'-.165m'\h'-.01m'X\fR
+.ds UTF \s-1UTF\s+1-8
 .ds H
 .nr PS 10
 .nr PO 1i
@@ -559,8 +560,8 @@ Form	Value\\$2	Argument	Notes\\$1	Explanation
 .	vpt \\n[Bvpt]
 ..
 .\" from file m0
-\X'SetLinkBorder: 0 0 0'
-\X'SetULinkBorder: 0 0 0'
+.\"\X'SetLinkBorder: 0 0 0'
+.\"\X'SetULinkBorder: 0 0 0'
 \X'PDFMark: Author Gunnar Ritter'
 \X,PDFMark: Title Nroff/Troff User's Manual,
 \X'PS: [ {Catalog} << /ViewerPreferences << /DisplayDocTitle true >> >> /PUT pdfmark'
@@ -695,7 +696,7 @@ or by conversion from \s-1POSIX\s+1-style locale-specific characters
 to Unicode positions.
 The last form allows direct input of international language texts
 in almost any character encoding,
-including \s-1UTF\s+1-8.
+including \*[UTF].
 .pg
 Improvements to the line adjusting mechanism
 can be activated to achieve more aesthetically pleasant output:
@@ -755,7 +756,7 @@ where the size of programs is an issue.
 The Solaris version of \*(NR had already been updated
 to support input characters in arbitrary locales.
 The \fIHeirloom\fR version adds the ability to generate
-\s-1UTF\s+1-8 output.
+\*[UTF] output.
 This extends the \*(NR character set
 by many mathematical and typographical characters
 on terminals capable of displaying them.
@@ -1064,7 +1065,7 @@ Currently defined names are \fB37\fR for the (default) Model 37 Teletype\(rg,
 and
 \fB450\fR for the \s-1DASI\s+1-450 (Diablo Hyterm).
 A special name, \fBlocale\fR, is also supported.
-It generates \s-1UTF\s+1-8 output if permitted
+It generates \*[UTF] output if permitted
 by the current \s-1LC_CTYPE\s+1 locale,
 and has the same effect as \fBlp\fR otherwise.
 .sp
@@ -1559,6 +1560,8 @@ on if \fIN\fR>0.
 .b1 0
 \T'rchar'\fB&rchar\fI|c...\fR		ignored	\(en	Remove character definitions for \fIc...\fR.\T
 .b1 0
+\T'utf8conv'\fB&utf8conv\fI|c1|c2\fR	ignored	\(en	\*(NR \*[UTF] locale character translation.\T
+.b1 0
 \T'output'\fB&output\fI|string\fR		ignored	\(en	Write \fIstring\fR directly to intermediate output.\T
 .br
 .nr nosave 1
@@ -1947,6 +1950,7 @@ refer to the detailed description on how to include it.
 \T'unformat'unformat	7\T
 \T'unwatch'unwatch	21\T
 \T'unwatchn'unwatchn	21\T
+\T'utf8conv'utf8conv	10\T
 \T'vs'vs	5\T
 \T'warn'warn	21\T
 \T'watch'watch	21\T
@@ -2696,7 +2700,7 @@ and those that can reasonably be mapped
 into other printable characters.
 The exact behavior is determined by a driving
 table prepared for each device.
-In a \s-1UTF-\s+18 locale,
+In a \*[UTF] locale,
 combining characters are processed.
 The characters
 \fB\'\fR,
@@ -5019,12 +5023,33 @@ inside the \fBchar\fR diversion as usual.
 At the time \fIc\fR would have been output,
 the contents of the diversion are printed instead of it.
 .bta fchar
-\fB&fchar\fI|c|string\fR	ignored	T	Define character \fIc\fR to \fIstring\fR as a fallback only:
+\fB&fchar\fI|c|string\fR	ignored	T	Define character \fIc\fR to
+\fIstring\fR as a fallback only:
 If \fIc\fR is present in the current font, output \fIc\fR,
 otherwise, output \fIstring\fR as with \fBchar\fR.
 .bta rchar
-\fB&rchar\fI|c...\fR		ignored	\(en	Remove character definitions for \fIc...\fR;
+\fB&rchar\fI|c...\fR		ignored	\(en	Remove character definitions
+for \fIc...\fR;
 applies to both \fBchar\fR and \fBfchar\fR.
+.bta utf8conv
+\fB&utf8conv\fI|c1|c2\fR	ignored	\(en	\*(NR only:
+With \f(CW-Tlocale\fR and a \*[UTF] locale, "\fB-\fR" is replaced
+by a \*[UTF] hyphen, and "\fB\e-\fR" remains the ASCII
+hyphen-minus character. This is because in manual
+pages, "\fB\e\N'45'\fR" represents the ASCII option
+introduction character, and converting it to a
+\*[UTF] minus character would make it impossible
+to copy-and-paste option descriptions.
+Similar considerations apply to \` \(aq vs. \e\` \e\(aq.
+The former are typographic single quotes, while
+the latter are commonly used for the ASCII syntax
+quotes in manual pages.
+.xx
+By use of \fButf8conv\fR the three default translations
+can be redefined and additionally translations can be done.
+If \fIc2\fR is missing a translation is removed.
+This is applied for manual pages where the no translation
+is used.
 .sc
 \A'c_transparent'Transparent throughput.
 An input line beginning with a \A'e_!'\fB\e!\fR
@@ -5035,7 +5060,8 @@ This mechanism may be used to pass control information to a post-processor
 or to imbed control lines in a macro created by a \T'c_diversion'diversion\T.
 .h1
 .bta output
-\fB&output\fI|string\fR		ignored	\(en	Write \fIstring\fR directly to intermediate output,
+\fB&output\fI|string\fR		ignored	\(en	Write \fIstring\fR directly to
+intermediate output,
 regardless of whether there is a \T'c_diversion'current diversion\T or not.
 \fIstring\fR is read in copy mode,
 and an initial double-quote is discarded.
@@ -6839,6 +6865,47 @@ or in the \*(GR compatibility mode of Heirloom \*[TR.]
 Since they are read-write,
 any convenient value can then be assigned
 to the \fB&C\fR and \fB&g\fR registers.
+.pg
+Nevertheless it is not recommend to do so
+without reason.
+For instance macro packages read \en(.g to test
+if they are processed with groff.
+Setting \fB&g\fR to 1 with the \fB&nr\fR request
+also has some side effects in Heirloom \*(TR:
+.de ListBegin
+.	sp .25
+.	in +4n
+..
+.de ListItem
+.	sp .25
+.	ti -2n
+.	nop \(bu\h'|2n'\c
+..
+.de ListEnd
+.	in -4n
+.	sp .5
+.	ns
+..
+.ListBegin
+.tr &&
+.ListItem
+The escape \fB\e%\fR marks optional hyphenation points
+inside a word or suppresses hyphenation prefixed to a word
+(\fIeven when this word containes dashes\fR).
+A problem in macro packages is that it cannot be guaranteed
+that no character is before word (e.\^g. quotes or parentheses).
+\*(GR allows to force that \fB\e%\fR acts as a hyphenation
+suppression escape when it follows the zero-width characters
+\fB\e)\fR or \fB\e&\fR.
+This does not work with traditional \*(TR, unfortunately.
+The command \f(CW.nr\|\^.g\|\|1\fR enables the \*(GR behaviour.
+.ListItem
+The algorithm \*(GR uses for the three part title request \fB.tl\fR
+leads to a different placement of the middle title element
+with \*(NR under certain conditions.
+This is emulated by setting \fB.g\fR to 1.
+.ListEnd
+.tr &.
 .pg
 The \T'n_.x'\fB&x\fR\T and \T'n_.y'\fB&y\fR\T registers
 are read-write in \*(GR compatibility mode;

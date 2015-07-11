@@ -148,14 +148,53 @@ bst_add(struct bst *bst, union bst_val key, union bst_val data) {
 	return 0;
 }
 
+/* Unbalanced node delete.  Will be reimplemented AVL conform eventually.
+ *
+ * Returns:
+ *   0           No error
+ *   BST_ENOENT  Key not found
+ */
+int
+bst_del(struct bst *bst, union bst_val key) {
+	struct bst_node *p, **pp, *n, *t;
+	if (srch_node(bst, key, &n) != NODE_FOUND) {
+		return BST_ENOENT;
+	}
+	if (!n->parent) {
+		p = NULL;
+		pp = &bst->root;
+	} else {
+		p = n->parent;
+		if (p->left == n) pp = &p->left;
+		else pp = &p->right;
+	}
+	if (!n->left) {
+		*pp = n->right;
+		if (n->right) n->right->parent = p;
+	} else {
+		*pp = n->left;
+		n->left->parent = p;
+		if (n->right) {
+			n->right->parent = n->left;
+			if (n->left->right) {
+				for (t = n->right; t->left; t = t->left);
+				t->left = n->left->right;
+				n->left->right->parent = t;
+			}
+			n->left->right = n->right;
+		}
+	}
+	free(n);
+	return 0;
+}
+
 int /* 0: found, !0: not found */
-bst_srch(struct bst *bst, union bst_val key,
-    union bst_val *data) /* To store node data if pointer is not NULL */
+bst_srch(struct bst *bst, union bst_val key, struct bst_node **node)
 {
 	struct bst_node *n;
 	int retval;
-	if ((retval = srch_node(bst, key, &n)) == NODE_FOUND && data)
-		*data = n->data;
+	if ((retval = srch_node(bst, key, &n)) == NODE_FOUND && node)
+		*node = n;
 	return retval;
 }
 
@@ -186,7 +225,7 @@ srch_node(struct bst *bst, union bst_val key, struct bst_node **node) {
 		}
 		n = c;
 	}
-	end:
+end:
 	*node = n;
 	return retval;
 }

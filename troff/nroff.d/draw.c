@@ -113,13 +113,13 @@ chkcoord(uint64_t xy) {
 	int x = KEY2X(xy);
 	int y = KEY2Y(xy);
 	for (i = 0; i < 9; i++) {
-		union bst_val v;
+		struct bst_node *n;
 		int xi = x + HOR  * (i % 3 - 1);
 		int yi = y + VERT * (i / 3 - 1);
 		if (i != 4) e <<= 4;
 		if (xi >= 0 && yi >= 0 &&
-		    !bst_srch(&coords, XY2KEY(yi, xi), &v)) {
-			long s = cbits(v.l);
+		    !bst_srch(&coords, XY2KEY(yi, xi), &n)) {
+			long s = cbits(n->data.l);
 			if        (s == BAR ) {
 				if (i == 4) c  = 1;
 				else        e |= 1;

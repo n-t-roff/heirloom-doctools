@@ -30,6 +30,7 @@
 
 #define BST_EEXIST -2
 #define BST_EINTL  -3
+#define BST_ENOENT -4
 
 union bst_val {
 	void *p;
@@ -52,4 +53,5 @@ struct bst {
 };
 
 int bst_add(struct bst *bst, union bst_val key, union bst_val data);
-int bst_srch(struct bst *bst, union bst_val key, union bst_val *data);
+int bst_srch(struct bst *bst, union bst_val key, struct bst_node **node);
+int bst_del(struct bst *bst, union bst_val key);
