@@ -43,8 +43,8 @@
 .ie n \{\
 .	nr cR 1
 .	utf8conv -
-.	utf8conv '
-.	utf8conv `
+.	char ' \N'39'
+.	char ` \N'96'
 .	sentchar .?!
 .	ns
 .	nh
@@ -84,7 +84,10 @@
 .	ft 1
 .	ps \\nS
 .	lt \\n(LLu
-.	tl \\*(]H\\*(]D\\*(]H
+.	lnr longName 0
+.	ie \w\\*(]H+2n*2+\w\\*(]D>\\n[.lt] \
+.	    tl \\*(]H\\*(]D
+.	el .tl \\*(]H\\*(]D\\*(]H
 .	sp .5i
 .	ev
 .	ns
@@ -132,6 +135,16 @@
 ..
 .em }K
 '	\" set title and heading
+.ds TH.DefCatName.1 General Commands Manual
+.ds TH.DefCatName.2 System Calls Manual
+.ds TH.DefCatName.3 Library Functions Manual
+.ds TH.DefCatName.3p Perl Programmers Reference Guide
+.ds TH.DefCatName.4 Kernel Interfaces Manual
+.ds TH.DefCatName.5 File Formats Manual
+.ds TH.DefCatName.6 Games Manual
+.ds TH.DefCatName.7 Miscellaneous Information Manual
+.ds TH.DefCatName.8 System Manager's Manual
+.ds TH.DefCatName.9 Kernel Developer's Manual
 .de TH
 .	PD
 .	if !(\\nS>0) .nr S 10
@@ -144,7 +157,8 @@
 .	ds ]H \\$1\|(\|\\$2\|)
 .	ds ]L \\$3
 .	ds ]W \\$4
-.	ds ]D \\$5
+.	ie !\\$5 .ds ]D \\$5
+.	el .if d TH.DefCatName.\\$2 .ds ]D \\*[TH.DefCatName.\\$2]
 .	ie \n(cR .}H
 .	el .wh 0 }H
 .	ie t .wh -1i }F

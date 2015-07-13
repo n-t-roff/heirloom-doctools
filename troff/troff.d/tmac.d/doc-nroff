@@ -39,8 +39,8 @@
 .ad l
 .rm ad
 .utf8conv -
-.utf8conv '
-.utf8conv `
+.char ' \N'39'
+.char ` \N'96'
 .sentchar .?!
 .ds aD \fI
 .ds aR \fI

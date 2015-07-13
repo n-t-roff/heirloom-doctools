@@ -344,8 +344,7 @@
 .		if \\n(mo10 .ds dD October
 .		if \\n(mo11 .ds dD November
 .		if \\n(mo12 .ds dD December
-.		nr xX 1900+\\n(yr \" local register
-.		as dD \&\ \\n(dy, \\n(xX
+.		as dD \&\ \\n(dy, \\n[year]
 .	\}
 .\}
 .el \{\
@@ -356,7 +355,7 @@
 .ev 1
 .pL
 .if !\\n(cR 'sp \\n(Hmu
-.ie \w\\*(Hs\\*(hT+2n*2+\w\\*(Hs\\*(hT>78n \
+.ie \w\\*(Hs\\*(hT+2n*2+\w\\*(Hs\\*(hT>\\n[.lt] \
 .	tl \\*(Hs\\*(hT\fP\\*(Vs\\*(vT\fP
 .el .tl \\*(Hs\\*(hT\fP\\*(Vs\\*(vT\fP\\*(Hs\\*(hT\fP
 'sp \\n(Hmu
