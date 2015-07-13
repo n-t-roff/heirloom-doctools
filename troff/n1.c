@@ -1101,7 +1101,7 @@ g0:
 			}
 chartest:
 			if (!lgf && !charf && chartab[trtab[k]] != NULL &&
-			    !noschr && (!cmpstrdelim || k != cmpstrdelim) &&
+			    !noschr && (!argdelim || k != argdelim) &&
 			    !(bol && (k == cc || k == c2)))
 				i = setchar(i);
 			return(i);

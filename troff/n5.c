@@ -76,8 +76,6 @@
  * misc processing requests
  */
 
-int	cmpstrdelim	= 0;
-
 void
 casead(void)
 {
@@ -1865,7 +1863,7 @@ cmpstr(tchar c)
 
 	if (ismot(c))
 		return(0);
-	cmpstrdelim = delim = cbits(c);
+	argdelim = delim = cbits(c);
 	savapts = apts;
 	savapts1 = apts1;
 	savfont = font;
@@ -1915,7 +1913,7 @@ rtn:
 	pts = savpts;
 	pts1 = savpts1;
 	mchbits();
-	cmpstrdelim = 0;
+	argdelim = 0;
 	return(val);
 }
 

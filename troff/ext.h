@@ -256,7 +256,7 @@ extern	int	spreadwarn;
 extern	int	spreadlimit;
 extern	int	lastrq;
 extern	int	noschr;
-extern	int	cmpstrdelim;
+extern	int	argdelim;
 extern	int	bol;
 extern	int	prdblesc;
 extern	int	gemu;

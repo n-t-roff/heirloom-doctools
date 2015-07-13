@@ -1626,6 +1626,8 @@ casetl(void)
 		delim = '\'';
 	} else 
 		delim = cbits(delim);
+	noschr = 0;
+	argdelim = delim;
 	bufsz = LNSIZE;
 	buf = malloc(bufsz * sizeof *buf);
 	tp = buf;
@@ -1664,6 +1666,7 @@ casetl(void)
 			*tp++ = i;
 		}
 	}
+	argdelim = 0;
 	if (j<3)
 		w[j] = numtab[HP].val;
 	*tp++ = 0;
