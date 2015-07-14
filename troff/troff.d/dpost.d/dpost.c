@@ -668,6 +668,9 @@ char		temp[4096];
 
 /*****************************************************************************/
 
+static char *linkborderstyle;
+static char *ulinkborderstyle;
+
 static void	sethorscale(char *);
 static void	t_papersize(char *);
 static void	t_cutat(const char *, struct box *, char *);
@@ -682,6 +685,7 @@ static void	t_linkborder(char *);
 static void	t_ulink(char *);
 static void	t_ulinkcolor(char *);
 static void	t_ulinkborder(char *);
+static char	*t_linkborderstyle(char *);
 
 static int	mb_cur_max;
 
@@ -1782,6 +1786,10 @@ devcntrl(
 		    t_linkcolor(buf);
 		else if ( strcmp(str, "SetLinkBorder") == 0 )
 		    t_linkborder(buf);
+		else if ( strcmp(str, "SetBorderStyle") == 0 )
+		    linkborderstyle = t_linkborderstyle(buf);
+		else if ( strcmp(str, "SetUBorderStyle") == 0 )
+		    ulinkborderstyle = t_linkborderstyle(buf);
 		else if ( strcmp(str, "ULink") == 0 )
 		    t_ulink(buf);
 		else if ( strcmp(str, "SetULinkColor") == 0 )
@@ -4677,6 +4685,15 @@ t_anchor(char *lp)
 static char linkcolor[60] = "0 0 1";
 static char linkborder[60] = "0 0 1";
 
+static char *
+t_linkborderstyle(char *arg) {
+	char c, *s;
+	s = arg;
+	for (s = arg; (c = *s) && c != '\n'; s++);
+	*s = 0;
+	return strdup(arg);
+}
+
 static void
 t_link(char *lp)
 {
@@ -4702,12 +4719,15 @@ t_link(char *lp)
 		    pref(lp, tf);
 		    fprintf(tf, "\n"
 			"/Rect [%d %d %d %d]\n"
-			"/Color [%s]\n"
-			"/Border [%s]\n"
-			"/Subtype /Link\n"
-			"/ANN pdfmark\n",
-			llx, -lly, urx, -ury,
-			linkcolor, linkborder);
+			"/Color [%s]\n",
+			llx, -lly, urx, -ury, linkcolor);
+		if (linkborderstyle)
+			fprintf(tf, "/BS << %s >>\n", linkborderstyle);
+		else
+			fprintf(tf, "/Border [%s]\n", linkborder);
+		fprintf(tf,
+		    "/Subtype /Link\n"
+		    "/ANN pdfmark\n");
 		}
 	    }
 	}
@@ -4734,6 +4754,8 @@ t_linkborder(char *lp)
     by = strtod(lp, &lp);
     c = strtod(lp, &lp);
     snprintf(linkborder, sizeof linkborder, "%g %g %g", bx, by, c);
+    free(linkborderstyle);
+    linkborderstyle = NULL;
 }
 
 static char ulinkcolor[60] = "0 0 1";
@@ -4761,10 +4783,12 @@ t_ulink(char *lp)
 		    lp++;
 		    endtext();
 		    fprintf(tf, "[ /Rect [%d %d %d %d]\n"
-			    "/Color [%s]\n"
-			    "/Border [%s]\n",
-			    llx, -lly, urx, -ury,
-			    ulinkcolor, ulinkborder);
+			    "/Color [%s]\n",
+			    llx, -lly, urx, -ury, ulinkcolor);
+		if (ulinkborderstyle)
+			fprintf(tf, "/BS << %s >>\n", ulinkborderstyle);
+		else
+			fprintf(tf, "/Border [%s]\n", ulinkborder);
 		    fprintf(tf, "/Action << /Subtype /URI\n"
 			    "/URI (");
 		    pref_uri(lp, tf);
@@ -4797,4 +4821,6 @@ t_ulinkborder(char *lp)
     by = strtod(lp, &lp);
     c = strtod(lp, &lp);
     snprintf(ulinkborder, sizeof ulinkborder, "%g %g %g", bx, by, c);
+    free(ulinkborderstyle);
+    ulinkborderstyle = NULL;
 }

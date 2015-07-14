@@ -107,12 +107,11 @@
 .fallback BI BIE
 .flig BI 31
 ..
-.ds Sccsdate 07/11/15
+.ds Sccsdate 07/14/15
 .ds Str \*[Sccsdate]
 .substring Str 0 0
 .if '\*[Str]'%' \{\
-.	nr Yr \n(yr+1900
-.	ds Yr \n(Yr
+.	ds Yr \n[year]
 .	substring Yr 2 3
 .	ds Sccsdate \n(mo/\n(dy/\*(Yr
 .\}
@@ -170,6 +169,7 @@
 .ds PS "\fRPostScript\fR
 .ds PDF "\s-1PDF\s+1
 .ds TEX "\fIT\h'-.13m'\v'.165m'E\v'-.165m'\h'-.01m'X\fR
+.ds LaTeX \fIL\v'-.165m'\s'-3'A\s0\v'.165m'\h'-.1m'\\*[TEX]
 .ds UTF \s-1UTF\s+1-8
 .ds H
 .nr PS 10
@@ -209,7 +209,7 @@
 .de ht
 .ev ht
 .tl `\*(NR/\*(TR \fRUser's Manual``Heirloom Documentation Tools`
-.tl '\*[Date]'''\".tl 'Version \n(mo/\n(dy/\n(yr'''
+.tl '\*[Date]'''\".tl 'Version \n(mo/\n(dy/\n[year]'''
 .ev
 ..
 .de hd
@@ -560,8 +560,8 @@ Form	Value\\$2	Argument	Notes\\$1	Explanation
 .	vpt \\n[Bvpt]
 ..
 .\" from file m0
-.\"\X'SetLinkBorder: 0 0 0'
-.\"\X'SetULinkBorder: 0 0 0'
+\X'SetBorderStyle: /S/U/W 0.1'
+\X'SetUBorderStyle: /S/U/W 0.1'
 \X'PDFMark: Author Gunnar Ritter'
 \X,PDFMark: Title Nroff/Troff User's Manual,
 \X'PS: [ {Catalog} << /ViewerPreferences << /DisplayDocTitle true >> >> /PUT pdfmark'
@@ -598,7 +598,7 @@ and others
 Introduction
 .pg
 \*(NR and \*(TR are text processors under
-the \T'ref_1'\s-1UNIX\s+1 Time-Sharing System\*u1\*d\T
+the \s-1UNIX\s+1 Time-Sharing System\T'ref_1'\*u1\*d\T
 that format text for typewriter-like terminals and
 for a typesetter/raster devices, respectively.
 They accept lines of text interspersed with lines of
@@ -634,7 +634,7 @@ is capable of utilizing the full resolution of each terminal.
 On the Heirloom Documentation Tools Edition
 .pg
 In Summer 2005, Sun Microsystems, Inc. released
-\T'ref_6'the source code to the Solaris system,\|\*u6\*d\T
+the source code to the Solaris system,\|\T'ref_6'\*u6\*d\T
 including the System\ V Release\ 4 version of \*[TR,]
 a derivative of AT\[ampersand]T
 \fIDocumenter's Workbench\fR \*[TR,] version 2.
@@ -703,7 +703,7 @@ can be activated to achieve more aesthetically pleasant output:
 \*(TR can compute line breaks for a whole paragraph at once,
 using a variant of an algorithm
 originally developed by Donald Knuth and Michael Plass
-for the \*[TEX] system\T'ref_7'\|\*u7\*d\T.
+for the \*[TEX] system\|\T'ref_7'\*u7\*d\T.
 Interword spaces can be shrunk
 as an alternative to being expanded.
 Inter-letter spaces and letter shapes
@@ -712,14 +712,14 @@ both for computing break points
 and for adjusting output lines;
 this is sometimes called ``micro-typography'',
 .ds U+1EBF \o'e\s-1^\s0'\\k(aX\h'-.8n'\s-1\v'-.15m'´\v'+.15m'\s0\h'|\\n(aXu'
-cf. e.g. the thesis by Hàn Th\*[U+1EBF] Thành\T'ref_8'\|\*u8\*d\T.
+cf. e.g. the thesis by Hàn Th\*[U+1EBF] Thành\|\T'ref_8'\*u8\*d\T.
 All paragraph formatting options can be arbitrarily combined.
 .pg
 A variety of international paper formats
 and hyphenation languages are supported by \*[TR.]
 The algorithm for the latter is derived
 from the respective one developed for \*[TEX]
-by Franklin Liang\T'ref_9'\|\*u9\*d\T;
+by Franklin Liang\|\T'ref_9'\*u9\*d\T;
 \*(TR uses the implementation of \fILibHnj\fR by Raph Levien.
 \*[TEX] hyphenation patterns can be converted
 to the format accepted by \*[TR.]
@@ -728,7 +728,7 @@ Many internal limitations of \*(TR have been removed;
 most notably, \*(TR can now set characters in fractional point sizes.
 .pg
 The \*(TR language has been extended
-similarly as in the \s-1GNU\s+1 version of \*[TR,] \T'ref_10'\*(GR\|\*u10\*d\T;
+similarly as in the \s-1GNU\s+1 version of \*[TR,] \*(GR\|\T'ref_10'\*u10\*d\T;
 for example,
 names of requests, macros, strings, number registers, and fonts
 can consist of more than two characters.
@@ -772,9 +772,9 @@ of how to write well-styled \*(NR documents.
 .pg
 This manual as well as some of the pre- and post-processor commands
 have been derived from \s-1UNIX\s+1 code
-re\%leased by \T'ref_11'Caldera\*u11\*d\T,
+re\%leased by Caldera\T'ref_11'\*u11\*d\T,
 and from materials released by Lucent as parts
-of the \T'ref_12'\fIPlan\ 9\fR system\*u12\*d\T.
+of the \fIPlan\ 9\fR system\T'ref_12'\*u12\*d\T.
 .pg
 .ft B
 Background to the Second Edition
@@ -955,7 +955,7 @@ Stanford University, \s-1CA\s0 94305,
 Report No. \s-1STAN\s0-\s-1CS\s0-83-977,
 1983.
 .ref 10
-<\W'http://groff.ffii.org'http://groff.ffii.org\W>
+<\W'http://www.gnu.org/software/groff'http://www.gnu.org/software/groff\W>
 .ref 11
 <\W'http://www.tuhs.org/Archive/Caldera-license.pdf'http://www.tuhs.org/Archive/Caldera-license.pdf\W>
 .ref 12
@@ -1115,9 +1115,9 @@ and invokes the macro package \fIabc\fR.
 .pg
 Various pre- and post-processors are available for use with \*(NR and \*[TR.]
 These include
-\T'ref_2'the equation preprocessors \fIneqn\fP and \fIeqn\fP\*u2\*d\T
+the equation preprocessors \fIneqn\fP and \fIeqn\fP\T'ref_2'\*u2\*d\T
 (for \*(NR and \*(TR respectively),
-the \T'ref_3'table-construction preprocessor \fItbl\fP\*u3\*d\T,
+the table-construction preprocessor \fItbl\fP\T'ref_3'\*u3\*d\T,
 and \fIpic\fP and \fIgrap\fP
 for various forms of graphics.
 A reverse-line postprocessor \fIcol\fP
@@ -1274,295 +1274,295 @@ T	\*(TR only; no effect in \*[NR.]
 .mht s_general
 General Explanation
 .bt
-\T'do'\fB&do\fI|name\fR		ignored	\(en	Execute \fIname\fR in extension level 3.\T
+\T'do'\fB&do\T\fI|name\fR		ignored	\(en	Execute \fIname\fR in extension level 3.
 .b1
 .lg 0
-\T'xflag'\fB&xflag\fI|N\fR	1	ignored	\(en	Set the extension level permanently to \fIN\fP.\T
+\T'xflag'\fB&xflag\T\fI|N\fR	1	ignored	\(en	Set the extension level permanently to \fIN\fP.
 .lg
 .mht s_font
 Font and Character Size Control
 .bt
-\T'lc_ctype'\fB&lc_ctype\fI|name\fR	ignored	\(en	Set the \s-1LC_CTYPE\s+1 locale.\T
+\T'lc_ctype'\fB&lc_ctype\T\fI|name\fR	ignored	\(en	Set the \s-1LC_CTYPE\s+1 locale.
 .b1
-\T'ps'\fB&ps\fI\|\(+-N\fR	10\|point	previous	E,T,\fBp\fR	Point size; also\T \T'e_s'\fB\es\fI\(+-N\fR.\T
+\T'ps'\fB&ps\T\fI\|\(+-N\fR	10\|point	previous	E,T,\fBp\fR	Point size; also\T \T'e_s'\fB\es\fI\(+-N\fR.
 .b1
-\T'fzoom'\fB&fzoom\fI|F|Z\fR	1	ignored	P,T	Zoom font \fIF\fR by factor \fIZ\fR.\T
+\T'fzoom'\fB&fzoom\T\fI|F|Z\fR	1	ignored	P,T	Zoom font \fIF\fR by factor \fIZ\fR.
 .b1
-\T'ss'\fB&ss\fI|N\fR|[\fIM\fR]	12/36\|m	ignored	E,T	Space-character size
+\T'ss'\fB&ss\T\fI|N\fR|[\fIM\fR]	12/36\|m	ignored	E,T	Space-character size
 set to \fIN\fR/36\|em;
-sentence space \fIM\fR/36\|em.\T
+sentence space \fIM\fR/36\|em.
 .b1
-\T'cs'\fB&cs\fI\|F\|N\|M\fR	off	\(en	P,T	Constant character
+\T'cs'\fB&cs\T\fI\|F\|N\|M\fR	off	\(en	P,T	Constant character
 space (width)
-mode (font \fIF\^\fR\^).\T
+mode (font \fIF\^\fR\^).
 .b1
-\T'bd'\fB&bd\fI|F|N\fR	off	\(en	P,T	Embolden font \fIF\fR by \fIN\fR\(mi1 units.\T
+\T'bd'\fB&bd\T\fI|F|N\fR	off	\(en	P,T	Embolden font \fIF\fR by \fIN\fR\(mi1 units.
 .b1
-\T'bd'\fB&bd|S|\fIF|N\fR	off	\(en	P,T	Embolden Special Font when current font is \fIF\fR.\T
+\T'bd'\fB&bd\T|S|\fIF|N\fR	off	\(en	P,T	Embolden Special Font when current font is \fIF\fR.
 .b1
-\T'ft'\fB&ft\fI|F\fR	Roman	previous	E	Change to font
-\fIF\fR|= \fIx\fR, \fIxx\fR, or 1-4.\T
-\T's_f'Also \fB\ef\fIx\fR,\|\fB\ef(\fIxx\fR,\|\fB\ef\fIN\fR.\T
+\T'ft'\fB&ft\T\fI|F\fR	Roman	previous	E	Change to font
+\fIF\fR|= \fIx\fR, \fIxx\fR, or 1-4.
+Also \T's_f'\fB\ef\fIx\fR,\|\fB\ef(\fIxx\fR,\|\fB\ef\fIN\fR\T.
 .b1
-\T'fp'\fB&fp|\fIN|F|\fR[\fIfile|\fR[\fIsupply\fR]]	ignored	P	Font position; mounts the font \fIfile\fR.\T
+\T'fp'\fB&fp\T|\fIN|F|\fR[\fIfile|\fR[\fIsupply\fR]]	ignored	P	Font position; mounts the font \fIfile\fR.
 .b1
-\T'fps'\fB&fps\fI|map|...\fR		ignored	P,T	Mount a font with a special character map.\T
+\T'fps'\fB&fps\T\fI|map|...\fR		ignored	P,T	Mount a font with a special character map.
 .b1
-\T'feature'\fB&feature\fI|F|\(+-name|...\fR	ignored	P,T	Control OpenType features.\T
+\T'feature'\fB&feature\T\fI|F|\(+-name|...\fR	ignored	P,T	Control OpenType features.
 .b1
-\T'fallback'\fB&fallback\fI|F|A|B|...\fR	ignored	P,T	Select the fallback sequence for font \fIF\fR.\T
+\T'fallback'\fB&fallback\T\fI|F|A|B|...\fR	ignored	P,T	Select the fallback sequence for font \fIF\fR.
 .b1
-\T'hidechar'\fB&hidechar\fI|F|c|d|...\fR	ignored	P,T	Hide the characters \fIc\fR, \fId\fR, etc. from font F.\T
+\T'hidechar'\fB&hidechar\T\fI|F|c|d|...\fR	ignored	P,T	Hide the characters \fIc\fR, \fId\fR, etc. from font F.
 .b1 0
-\T'spacewidth'\fB&spacewidth\fI|\fIN\fR	on	O,T	If \fIN\fR\(!=0, use the space width from the font metrics file.\T
+\T'spacewidth'\fB&spacewidth\T\fI|\fIN\fR	on	O,T	If \fIN\fR\(!=0, use the space width from the font metrics file.
 .b1 0
-\T'fspacewidth'\fB&fspacewidth\fI|F|\fR[\fIN\fR]	ignored	O,T	Set the width
-of the space character in font \fIF\fR to \fIN\fR.\T
+\T'fspacewidth'\fB&fspacewidth\T\fI|F|\fR[\fIN\fR]	ignored	O,T	Set the width
+of the space character in font \fIF\fR to \fIN\fR.
 .mht s_page
 Page Control
 .bt
-\T'pl'\fB&pl\fI\|\(+-N\fR	11i	11i	\fBv\fR	Page length.\T
+\T'pl'\fB&pl\T\fI\|\(+-N\fR	11i	11i	\fBv\fR	Page length.
 .b1
-\T'papersize'\fB&papersize\fI|media\fR	ignored	T,\fBu\fR	Set the paper size.\T
+\T'papersize'\fB&papersize\T\fI|media\fR	ignored	T,\fBu\fR	Set the paper size.
 .b1
-\T'mediasize'\fB&mediasize\fI|media\fR	ignored	T,\fBu\fR	Set the device media size.\T
+\T'mediasize'\fB&mediasize\T\fI|media\fR	ignored	T,\fBu\fR	Set the device media size.
 .b1
-\T'cropat'\fB&cropat\fI|L|T|W|H\fR	ignored	T,\fBp\fR	Set the ``CropBox'' page parameter for \*[PDF] generation.\T
+\T'cropat'\fB&cropat\T\fI|L|T|W|H\fR	ignored	T,\fBp\fR	Set the ``CropBox'' page parameter for \*[PDF] generation.
 .b1
-\T'trimat'\fB&trimat\fI|L|T|W|H\fR	ignored	T,\fBp\fR	Set the ``TrimBox'' page parameter for \*[PDF] generation.\T
+\T'trimat'\fB&trimat\T\fI|L|T|W|H\fR	ignored	T,\fBp\fR	Set the ``TrimBox'' page parameter for \*[PDF] generation.
 .b1
-\T'bleedat'\fB&bleedat\fI|L|T|W|H\fR	ignored	T,\fBp\fR	Set the ``BleedBox'' page parameter for \*[PDF] generation.\T
+\T'bleedat'\fB&bleedat\T\fI|L|T|W|H\fR	ignored	T,\fBp\fR	Set the ``BleedBox'' page parameter for \*[PDF] generation.
 .b1
-\T'bp'\fB&bp|\fI\(+-N\fR	\fIN\(eq\fR1	\(en	B	\
-Eject current page; next page number \fIN\fR.\T
+\T'bp'\fB&bp\T|\fI\(+-N\fR	\fIN\(eq\fR1	\(en	B	\
+Eject current page; next page number \fIN\fR.
 .b1
-\T'pn'\fB&pn\fI|\(+-N	N\(eq\fR1	ignored	\(en	Next page number \fIN\fR.\T
+\T'pn'\fB&pn\T\fI|\(+-N	N\(eq\fR1	ignored	\(en	Next page number \fIN\fR.
 .b1
-\T'po'\fB&po\fI|\(+-N\fR	0;1i	previous	\fBm\fR	Page offset.\T
+\T'po'\fB&po\T\fI|\(+-N\fR	0;1i	previous	\fBm\fR	Page offset.
 .b1
-\T'ne'\fB&ne\fI|N\fR	\(en	\fIN\(eq\fR1v	D,\fBv\fR	Need \fIN\fR vertical space (\fIV\fR = vertical spacing).\T
+\T'ne'\fB&ne\T\fI|N\fR	\(en	\fIN\(eq\fR1v	D,\fBv\fR	Need \fIN\fR vertical space (\fIV\fR = vertical spacing).
 .b1 0
-\T'mk'\fB&mk|\fIR\fR	none	internal	D	Mark current vertical place in register \fIR\fR.\T
+\T'mk'\fB&mk\T|\fIR\fR	none	internal	D	Mark current vertical place in register \fIR\fR.
 .b1 0
-\T'rt'\fB&rt\fI|\(+-N\fR	none	internal	D,\fBv\fR	Return \fI(upward only)\fR to marked vertical place.\T
+\T'rt'\fB&rt\T\fI|\(+-N\fR	none	internal	D,\fBv\fR	Return \fI(upward only)\fR to marked vertical place.
 .mht s_fill
 Text Filling, Adjusting, and Centering
 .bt
-\T'br'\fB&br\fR	\(en	\(en	B	Break.\T
+\T'br'\fB&br\T\fR	\(en	\(en	B	Break.
 .b1
-\T'lsm'\fB&lsm\fI|xx\fR	none	none	\(en	Leading space macro is \fIxx\fR.\T
+\T'lsm'\fB&lsm\T\fI|xx\fR	none	none	\(en	Leading space macro is \fIxx\fR.
 .b1
-\T'brp'\fB&brp\fR	\(en	\(en	B	Break and spread.\T
+\T'brp'\fB&brp\T\fR	\(en	\(en	B	Break and spread.
 .b1
 .lg 0
-\T'fi'\fB&fi\fR	\(fill	\(en	B,E	Fill output lines.\T
+\T'fi'\fB&fi\T\fR	\(fill	\(en	B,E	Fill output lines.
 .lg
 .b1
-\T'nf'\fB&nf\fR	fill	\(en	B,E	No filling or adjusting of output lines.\T
+\T'nf'\fB&nf\T\fR	fill	\(en	B,E	No filling or adjusting of output lines.
 .b1
-\T'ad'\fB&ad\fI|c\fR	adj,both	adjust	E	Adjust output lines with mode \fIc\fR; \fIc\fP\^=\^l,\^r,\^c,\^b,\^p,\^\fInone\fP\T
+\T'ad'\fB&ad\T\fI|c\fR	adj,both	adjust	E	Adjust output lines with mode \fIc\fR; \fIc\fP\^=\^l,\^r,\^c,\^b,\^p,\^\fInone\fP
 .b1
-\T'na'\fB&na\fR	adjust	\(en	E	No output line adjusting.\T
+\T'na'\fB&na\T\fR	adjust	\(en	E	No output line adjusting.
 .b1
-\T'padj'\fB&padj\fI|N\fR	off	on	\(en	Control paragraph-at-once adjustment globally.\T
+\T'padj'\fB&padj\T\fI|N\fR	off	on	\(en	Control paragraph-at-once adjustment globally.
 .b1
-\T'ce'\fB&ce\fI|N\fR	off	\fIN\(eq\fR1	B,E	Center following \fIN\fR input text lines.\T
+\T'ce'\fB&ce\T\fI|N\fR	off	\fIN\(eq\fR1	B,E	Center following \fIN\fR input text lines.
 .b1
-\T'rj'\fB&rj\fI|N\fR	off	\fIN\(eq\fR1	B,E	Right-align following \fIN\fR input text lines.\T
+\T'rj'\fB&rj\T\fI|N\fR	off	\fIN\(eq\fR1	B,E	Right-align following \fIN\fR input text lines.
 .b1
-\T'brnl'\fB&brnl\fI|N\fR	off	\fIN\(eq\fR\(if	B,E	Break at end of next \fIN\fR input text lines.\T
+\T'brnl'\fB&brnl\T\fI|N\fR	off	\fIN\(eq\fR\(if	B,E	Break at end of next \fIN\fR input text lines.
 .b1
-\T'brpnl'\fB&brpnl\fI|N\fR	off	\fIN\(eq\fR\(if	B,E	Break and spread at end of next \fIN\fR input text lines.\T
+\T'brpnl'\fB&brpnl\T\fI|N\fR	off	\fIN\(eq\fR\(if	B,E	Break and spread at end of next \fIN\fR input text lines.
 .b1
-\T'minss'\fB&minss\fI|N\fR	off	off	E,T	Minimum word space when adjusting lines.\T
+\T'minss'\fB&minss\T\fI|N\fR	off	off	E,T	Minimum word space when adjusting lines.
 .b1
-\T'letadj'\fB&letadj\fI|X|U|S|Y|V\fR	off	E,T	Dynamic letter spacing and reshaping when adjusting lines.\T
+\T'letadj'\fB&letadj\T\fI|X|U|S|Y|V\fR	off	E,T	Dynamic letter spacing and reshaping when adjusting lines.
 .b1
-\T'sentchar'\fB&sentchar\fI|c...\fR	\fB.?!:\fR	off	E	Sentence-ending characters.\T
+\T'sentchar'\fB&sentchar\T\fI|c...\fR	\fB.?!:\fR	off	E	Sentence-ending characters.
 .b1
-\T'transchar'\fB&transchar\fI|c..\fR	\fB"')]*\(dg\fR	off	E	Transparent characters for sentence-ending.\T
+\T'transchar'\fB&transchar\T\fI|c..\fR	\fB"')]*\(dg\fR	off	E	Transparent characters for sentence-ending.
 .b1
-\T'track'\fB&track\fI|F|S|N|T|M\fR	ignored	P,T,\fBp\fR	Static letter space tracking.\T
+\T'track'\fB&track\T\fI|F|S|N|T|M\fR	ignored	P,T,\fBp\fR	Static letter space tracking.
 .b1
-\T'kern'\fB&kern\fI|N\fR	1	1	P,T	Control pairwise kerning.\T
+\T'kern'\fB&kern\T\fI|N\fR	1	1	P,T	Control pairwise kerning.
 .b1
-\T'fkern'\fB&fkern\fI|F|N\fR	1	1	P,T	Control the use of kerning tables from font \fIF\fR.\T
+\T'fkern'\fB&fkern\T\fI|F|N\fR	1	1	P,T	Control the use of kerning tables from font \fIF\fR.
 .b1
-\T'kernpair'\fB&kernpair\fI|F|c...|G|d...|N\fR	ignored	P,T	Define a kerning pair.\T
+\T'kernpair'\fB&kernpair\T\fI|F|c...|G|d...|N\fR	ignored	P,T	Define a kerning pair.
 .b1
-\T'kernafter'\fB&kernafter\fI|F|c...|N|d...|M|...\fR	P,T	Add a constant amount of space after a character.\T
+\T'kernafter'\fB&kernafter\T\fI|F|c...|N|d...|M|...\fR	P,T	Add a constant amount of space after a character.
 .b1
-\T'kernbefore'\fB&kernbefore\fI|F|c...|N|d...|M|...\fR	P,T	Add a constant amount of space before a character.\T
+\T'kernbefore'\fB&kernbefore\T\fI|F|c...|N|d...|M|...\fR	P,T	Add a constant amount of space before a character.
 .b1 0
-\T'lhang'\fB&lhang\fI|F|c...|N|d...|M|...\fR	ignored	T	Hanging characters at left margin.\T
+\T'lhang'\fB&lhang\T\fI|F|c...|N|d...|M|...\fR	ignored	T	Hanging characters at left margin.
 .b1 0
-\T'rhang'\fB&rhang\fI|F|c...|N|d...|M|...\fR	ignored	T	Hanging characters at right margin.\T
+\T'rhang'\fB&rhang\T\fI|F|c...|N|d...|M|...\fR	ignored	T	Hanging characters at right margin.
 .mht s_vert
 Vertical Spacing
 .bt
-\T'vs'\fB&vs\fI|N\fR	1/6in;12pts	previous	E,\fBp\fR	Vertical base line spacing (\fIV\fR\^).\T
+\T'vs'\fB&vs\T\fI|N\fR	1/6in;12pts	previous	E,\fBp\fR	Vertical base line spacing (\fIV\fR\^).
 .b1
-\T'ls'\fB&ls\fI|N	N\(eq\fR1	previous	E	Output \fIN\(mi\fR1 \fIV\^\fRs after each text output line.\T
+\T'ls'\fB&ls\T\fI|N	N\(eq\fR1	previous	E	Output \fIN\(mi\fR1 \fIV\^\fRs after each text output line.
 .b1
-\T'sp'\fB&sp\fI|N\fR	\(en	\fIN\(eq\fR1\fIV\fR	B,\fBv\fR	Space \
-vertical distance \fIN\fR \fIin either direction\fR.\T
+\T'sp'\fB&sp\T\fI|N\fR	\(en	\fIN\(eq\fR1\fIV\fR	B,\fBv\fR	Space \
+vertical distance \fIN\fR \fIin either direction\fR.
 .b1
-\T'sv'\fB&sv\fI|N\fR	\(en	\fIN\(eq\fR1\fIV\fR	\fBv\fR	Save vertical distance \fIN\fR.\T
+\T'sv'\fB&sv\T\fI|N\fR	\(en	\fIN\(eq\fR1\fIV\fR	\fBv\fR	Save vertical distance \fIN\fR.
 .b1
-\T'os'\fB&os\fR	\(en	\(en	\(en	Output saved vertical distance.\T
+\T'os'\fB&os\T\fR	\(en	\(en	\(en	Output saved vertical distance.
 .b1 0
-\T'ns'\fB&ns\fR	space	\(en	D	Turn no-space mode on.\T
+\T'ns'\fB&ns\T\fR	space	\(en	D	Turn no-space mode on.
 .b1 0
-\T'rs'\fB&rs\fR	\(en	\(en	D	Restore spacing; turn no-space mode off.\T
+\T'rs'\fB&rs\T\fR	\(en	\(en	D	Restore spacing; turn no-space mode off.
 .mht s_line
 Line Length and Indenting
 .bt
-\T'll'\fB&ll\fI|\(+-N\fR	6.5\|i	previous	E,\fBm\fR	Line length.\T
+\T'll'\fB&ll\T\fI|\(+-N\fR	6.5\|i	previous	E,\fBm\fR	Line length.
 .b1
-\T'in'\fB&in\fI|\(+-N\fR	\fIN\(eq\fR\^0	previous	B,E,\fBm\fR	Indent.\T
+\T'in'\fB&in\T\fI|\(+-N\fR	\fIN\(eq\fR\^0	previous	B,E,\fBm\fR	Indent.
 .b1 0
-\T'ti'\fB&ti\fI|\(+-N\fR	\(en	ignored	B,E,\fBm\fR	Temporary indent.\T
+\T'ti'\fB&ti\T\fI|\(+-N\fR	\(en	ignored	B,E,\fBm\fR	Temporary indent.
 .b1 0
-\T'pshape'\fB&pshape\fI|\(+-I1|\(+-L1|\(+-I2|\(+-L2|\fR...|off	E,\fBm\fR	Define the shape of the current paragraph in \fBad p\fR mode.\T
+\T'pshape'\fB&pshape\T\fI|\(+-I1|\(+-L1|\(+-I2|\(+-L2|\fR...|off	E,\fBm\fR	Define the shape of the current paragraph in \fBad p\fR mode.
 .mht s_mac
 Macros, Strings, Diversion, and Position Traps
 .bt
-\T'de'\fB&de\fI|xx|yy\fR	\(en	\fI.yy=\fB..\fR	\(en	Define or redefine macro \fIxx;\fR end at call of \fIyy\fR.\T
+\T'de'\fB&de\T\fI|xx|yy\fR	\(en	\fI.yy=\fB..\fR	\(en	Define or redefine macro \fIxx;\fR end at call of \fIyy\fR.
 .b1
-\T'am'\fB&am\fI|xx|yy\fR	\(en	\fI.yy=\fB..\fR	\(en	Append to a macro.\T
+\T'am'\fB&am\T\fI|xx|yy\fR	\(en	\fI.yy=\fB..\fR	\(en	Append to a macro.
 .b1
-\T'ds'\fB&ds\fI|xx|string\fR	\(en	ignored	\(en	Define a string \fIxx\fR containing \fIstring\fR.\T
+\T'ds'\fB&ds\T\fI|xx|string\fR	\(en	ignored	\(en	Define a string \fIxx\fR containing \fIstring\fR.
 .b1
-\T'as'\fB&as\fI|xx|string\fR	\(en	ignored	\(en	Append \fIstring\fR to string \fIxx\fR.\T
+\T'as'\fB&as\T\fI|xx|string\fR	\(en	ignored	\(en	Append \fIstring\fR to string \fIxx\fR.
 .b1
-\T'lds'\fB&lds\fI|xx|string\fR	\(en	ignored	\(en	Define local string \fIxx\fR containing \fIstring\fR.\T
+\T'lds'\fB&lds\T\fI|xx|string\fR	\(en	ignored	\(en	Define local string \fIxx\fR containing \fIstring\fR.
 .b1
-\T'substring'\fB&substring\fI|xx|N|\fR[\fIM\fR]	\fIM\fR\(eq\|\(mi1	\(en	Replace string \fIxx\fR by its substring between \fIN\fR and \fIM\fR.\T
+\T'substring'\fB&substring\T\fI|xx|N|\fR[\fIM\fR]	\fIM\fR\(eq\|\(mi1	\(en	Replace string \fIxx\fR by its substring between \fIN\fR and \fIM\fR.
 .b1
-\T'length'\fB&length\fI|R|string\fR	\fIR\fR|set|to|0	\(en	Store the length of \fIstring\fR in register \fIR\fR.\T
+\T'length'\fB&length\T\fI|R|string\fR	\fIR\fR|set|to|0	\(en	Store the length of \fIstring\fR in register \fIR\fR.
 .b1
-\T'index'\fB&index\fI|R|xx|string\fR	ignored	\(en	Store position where \fIstring\fR occurs in \fIxx\fR in register \fIR\fR.\T
+\T'index'\fB&index\T\fI|R|xx|string\fR	ignored	\(en	Store position where \fIstring\fR occurs in \fIxx\fR in register \fIR\fR.
 .b1
-\T'chop'\fB&chop\fI|xx\fR	\(en	ignored	\(en	Remove the last character of \fIxx\fR.\T
+\T'chop'\fB&chop\T\fI|xx\fR	\(en	ignored	\(en	Remove the last character of \fIxx\fR.
 .b1
-\T'rm'\fB&rm\fI|xx\fR	\(en	ignored	\(en	Remove request, macro, or string.\T
+\T'rm'\fB&rm\T\fI|xx\fR	\(en	ignored	\(en	Remove request, macro, or string.
 .b1
-\T'rn'\fB&rn\fI|xx|yy\fR	\(en	ignored	\(en	Rename request, macro, or string \fIxx\fR to \fIyy\fR.\T
+\T'rn'\fB&rn\T\fI|xx|yy\fR	\(en	ignored	\(en	Rename request, macro, or string \fIxx\fR to \fIyy\fR.
 .b1
-\T'di'\fB&di\fI|xx\fR	\(en	end	D	Divert output to macro \fIxx\fR.\T
+\T'di'\fB&di\T\fI|xx\fR	\(en	end	D	Divert output to macro \fIxx\fR.
 .b1
-\T'da'\fB&da\fI|xx\fR	\(en	end	D	Divert and append to \fIxx\fR.\T
+\T'da'\fB&da\T\fI|xx\fR	\(en	end	D	Divert and append to \fIxx\fR.
 .b1
-\T'box'\fB&box\fI|xx\fR	\(en	end	D	Divert output to macro \fIxx\fR, excluding a partially filled line.\T
+\T'box'\fB&box\T\fI|xx\fR	\(en	end	D	Divert output to macro \fIxx\fR, excluding a partially filled line.
 .b1
-\T'boxa'\fB&boxa\fI|xx\fR	\(en	end	D	Divert and append to \fIxx\fR, excluding a partially filled line.\T
+\T'boxa'\fB&boxa\T\fI|xx\fR	\(en	end	D	Divert and append to \fIxx\fR, excluding a partially filled line.
 .b1
-\T'unformat'\fB&unformat\fI|xx\fR	\(en	ignored	\(en	Strip line break information from diversion \fIxx\fR.\T
+\T'unformat'\fB&unformat\T\fI|xx\fR	\(en	ignored	\(en	Strip line break information from diversion \fIxx\fR.
 .b1
-\T'asciify'\fB&asciify\fI|xx\fR	\(en	ignored	\(en	All characters in diversion \fIxx\fR changed to plain text.\T
+\T'asciify'\fB&asciify\T\fI|xx\fR	\(en	ignored	\(en	All characters in diversion \fIxx\fR changed to plain text.
 .b1
-\T'wh'\fB&wh\fI|N|xx\fR	\(en	\(en	\fBv\fR	Set location trap; negative is w.r.t. page bottom.\T
+\T'wh'\fB&wh\T\fI|N|xx\fR	\(en	\(en	\fBv\fR	Set location trap; negative is w.r.t. page bottom.
 .b1
-\T'ch'\fB&ch\fI|xx|N\fR	\(en	\(en	\fBv\fR	Change trap location.\T
+\T'ch'\fB&ch\T\fI|xx|N\fR	\(en	\(en	\fBv\fR	Change trap location.
 .b1
-\T'dwh'\fB&dwh\fI|N|xx\fR	\(en	\(en	D,\fBv\fR	Set location trap in current diversion.\T
+\T'dwh'\fB&dwh\T\fI|N|xx\fR	\(en	\(en	D,\fBv\fR	Set location trap in current diversion.
 .b1
-\T'dch'\fB&dch\fI|xx|N\fR	\(en	\(en	D,\fBv\fR	Change trap location in current diversion.\T
+\T'dch'\fB&dch\T\fI|xx|N\fR	\(en	\(en	D,\fBv\fR	Change trap location in current diversion.
 .b1
-\T'dt'\fB&dt\fI|N|xx\fR	\(en	off	D,\fBv\fR	Set a diversion trap.\T
+\T'dt'\fB&dt\T\fI|N|xx\fR	\(en	off	D,\fBv\fR	Set a diversion trap.
 .b1
-\T'vpt'\fB&vpt\fI|N\fR	1	ignored	\(en	Enable or disable vertical position traps.\T
+\T'vpt'\fB&vpt\T\fI|N\fR	1	ignored	\(en	Enable or disable vertical position traps.
 .b1
-\T'it'\fB&it\fI|N|xx\fR	\(en	off	E	Set an input-line count trap.\T
+\T'it'\fB&it\T\fI|N|xx\fR	\(en	off	E	Set an input-line count trap.
 .b1
-\T'itc'\fB&itc\fI|N|xx\fR	\(en	off	E	Input-line count trap ignoring \fB\ec\fR.\T
+\T'itc'\fB&itc\T\fI|N|xx\fR	\(en	off	E	Input-line count trap ignoring \fB\ec\fR.
 .b1
-\T'return'\fB&return\fR	\(en	\(en	\(en	Return from the current macro.\T
+\T'return'\fB&return\T\fR	\(en	\(en	\(en	Return from the current macro.
 .b1
-\T'shift'\fB&shift\fI|N\fR	\(en	1	\(en	Shift the arguments to the current macro.\T
+\T'shift'\fB&shift\T\fI|N\fR	\(en	1	\(en	Shift the arguments to the current macro.
 .b1
-\T'als'\fB&als\fI|yy|xx\fR	\(en	\(en	\(en	\fIyy\fR is created as an alias for \fIxx\fR.\T
+\T'als'\fB&als\T\fI|yy|xx\fR	\(en	\(en	\(en	\fIyy\fR is created as an alias for \fIxx\fR.
 .b1
-\T'blm'\fB&blm\fI|xx\fR	none	none	\(en	Blank line macro is \fIxx\fR.\T
+\T'blm'\fB&blm\T\fI|xx\fR	none	none	\(en	Blank line macro is \fIxx\fR.
 .b1 0
-\T'em'\fB&em\fI|xx\fR	none	none	\(en	End macro is \fIxx\fI.\T
+\T'em'\fB&em\T\fI|xx\fR	none	none	\(en	End macro is \fIxx\fI.
 .b1 0
-\T'recursionlimit'\fB&recursionlimit\fI|N|M\fR	\(en	\(en	Set the maximum stack depth.\T
+\T'recursionlimit'\fB&recursionlimit\T\fI|N|M\fR	\(en	\(en	Set the maximum stack depth.
 .mht s_reg
 Number Registers
 .bt
-\T'nr'\fB&nr\fI|R|\(+-N|M\fR		\(en	\fBu\fR	Define and set number register \fIR\fR; auto-increment by \fIM\fR.\T
+\T'nr'\fB&nr\T\fI|R|\(+-N|M\fR		\(en	\fBu\fR	Define and set number register \fIR\fR; auto-increment by \fIM\fR.
 .b1
-\T'nrf'\fB&nrf\fI|R|\(+-F|G\fR		\(en	\fBu\fR	Define and set floating-point register \fIR\fR; auto-increment by \fIG\fR.\T
+\T'nrf'\fB&nrf\T\fI|R|\(+-F|G\fR		\(en	\fBu\fR	Define and set floating-point register \fIR\fR; auto-increment by \fIG\fR.
 .b1
-\T'lnr'\fB&lnr\fI|R|\(+-N|M\fR		\(en	\fBu\fR	Define and set local number register \fIR\fR.\T
+\T'lnr'\fB&lnr\T\fI|R|\(+-N|M\fR		\(en	\fBu\fR	Define and set local number register \fIR\fR.
 .b1
-\T'lnrf'\fB&lnrf\fI|R|\(+-F|G\fR		\(en	\fBu\fR	Define and set local floating-point register \fIR\fR.\T
+\T'lnrf'\fB&lnrf\T\fI|R|\(+-F|G\fR		\(en	\fBu\fR	Define and set local floating-point register \fIR\fR.
 .b1
-\T'af'\fB&af\fI|R|c\fR	arabic	\(en	\(en	Assign format to register \fIR\fR (\fIc=\fB1\fR, \fBi\fR, \fBI\fR, \fBa\fR, \fBA\fR).\T
+\T'af'\fB&af\T\fI|R|c\fR	arabic	\(en	\(en	Assign format to register \fIR\fR (\fIc=\fB1\fR, \fBi\fR, \fBI\fR, \fBa\fR, \fBA\fR).
 .b1
-\T'rr'\fB&rr\fI|R\fR	\(en	\(en	\(en	Remove register \fIR\fR.\T
+\T'rr'\fB&rr\T\fI|R\fR	\(en	\(en	\(en	Remove register \fIR\fR.
 .b1 0
-\T'rnn'\fB&rnn\fI|R|S\fR	\(en	\(en	\(en	Rename register \fIR\fR to \fIS\fR.\T
+\T'rnn'\fB&rnn\T\fI|R|S\fR	\(en	\(en	\(en	Rename register \fIR\fR to \fIS\fR.
 .b1 0
-\T'aln'\fB&aln\fI|S|R\fR	\(en	\(en	\(en	Register \fIS\fR is created as an alias for \fIR\fR.\T
+\T'aln'\fB&aln\T\fI|S|R\fR	\(en	\(en	\(en	Register \fIS\fR is created as an alias for \fIR\fR.
 .mht s_tabs
 Tabs, Leaders, and Fields
 .bt
-\T'ta'\fB&ta\fI|Nt|...\fR	8\|n;|0.5\|i	none	E,\fBm\fR	Tab settings; \fIleft\fR type, unless \fIt=\fBR\fR(right), \fBC\fR(centered).\T
+\T'ta'\fB&ta\T\fI|Nt|...\fR	8\|n;|0.5\|i	none	E,\fBm\fR	Tab settings; \fIleft\fR type, unless \fIt=\fBR\fR(right), \fBC\fR(centered).
 .b1
-\T'tc'\fB&tc\fI|c\fR	none	none	E	Tab repetition character.\T
+\T'tc'\fB&tc\T\fI|c\fR	none	none	E	Tab repetition character.
 .b1 0
-\T'lc'\fB&lc\fI|c\fR	\fB.\fR	none	E	Leader repetition character.\T
+\T'lc'\fB&lc\T\fI|c\fR	\fB.\fR	none	E	Leader repetition character.
 .b1 0
-\T'fc'\fB&fc\fI|a|b\fR	off	off	\(en	Set field delimiter \fIa\fR and pad character \fIb\fR.\T
+\T'fc'\fB&fc\T\fI|a|b\fR	off	off	\(en	Set field delimiter \fIa\fR and pad character \fIb\fR.
 .mht s_trans
 Input and Output Conventions and Character Translations
 .bt
-\T'ec'\fB&ec\fI|c\fR	\e	\e	\(en	Set escape character.\T
+\T'ec'\fB&ec\T\fI|c\fR	\e	\e	\(en	Set escape character.
 .b1
-\T'eo'\fB&eo\fR	on	\(en	\(en	Turn off escape character mechanism.\T
+\T'eo'\fB&eo\T\fR	on	\(en	\(en	Turn off escape character mechanism.
 .b1
-\T'ecs'\fB&ecs\fR	\e	\(en	\(en	Save escape character.\T
+\T'ecs'\fB&ecs\T\fR	\e	\(en	\(en	Save escape character.
 .b1
-\T'ecr'\fB&ecr\fR	\e	\(en	\(en	Restore saved escape character.\T
+\T'ecr'\fB&ecr\T\fR	\e	\(en	\(en	Restore saved escape character.
 .b1
-\T'lg'\fB&lg\fI|N\fR	\(en;\|on	on	T	Ligature mode\T
+\T'lg'\fB&lg\T\fI|N\fR	\(en;\|on	on	T	Ligature mode
 on if \fIN\fR>0.
 .b1
 .lg 0
-\T'flig'\fB&flig\fI|F|string|c|...\fR	ignored	T	De\(fine the ligatures in font \fIF\fR.\T
+\T'flig'\fB&flig\T\fI|F|string|c|...\fR	ignored	T	De\(fine the ligatures in font \fIF\fR.
 .lg
 .b1
-\T'fdeferlig'\fB&fdeferlig\fI|F|string|...\fR	ignored	T	Defer ligature building for the first character of \fIstring\fR.\T
+\T'fdeferlig'\fB&fdeferlig\T\fI|F|string|...\fR	ignored	T	Defer ligature building for the first character of \fIstring\fR.
 .b1
-\T'ul'\fB&ul\fI|N\fR	off	\fIN\(eq\fR1	E	Underline (italicize in \*(TR) \fIN\fR input lines.\T
+\T'ul'\fB&ul\T\fI|N\fR	off	\fIN\(eq\fR1	E	Underline (italicize in \*(TR) \fIN\fR input lines.
 .b1
-\T'cu'\fB&cu\fI|N\fR	off	\fIN\(eq\fR1	E	Continuous underline in \*[NR;] like \fBul\fR in \*[TR.]\T
+\T'cu'\fB&cu\T\fI|N\fR	off	\fIN\(eq\fR1	E	Continuous underline in \*[NR;] like \fBul\fR in \*[TR.]
 .b1
-\T'uf'\fB&uf\fI|F\fR	Italic	Italic	\(en	Underline font set to \fIF\fR (to be switched to by \fBul\fR).\T
+\T'uf'\fB&uf\T\fI|F\fR	Italic	Italic	\(en	Underline font set to \fIF\fR (to be switched to by \fBul\fR).
 .b1
-\T'cc'\fB&cc\fI|c\fR	\fB.	.\fR	E	Set control character to \fIc\fR.\T
+\T'cc'\fB&cc\T\fI|c\fR	\fB.	.\fR	E	Set control character to \fIc\fR.
 .b1
-\T'c2'\fB&c2\fI|c\fR	\fB\'	\'\fR	E	Set nobreak control character to \fIc\fR.\T
+\T'c2'\fB&c2\T\fI|c\fR	\fB\'	\'\fR	E	Set nobreak control character to \fIc\fR.
 .b1
-\T'tr'\fB&tr\fI|abcd....\fR	none	\(en	O	Translate \fIa\fR to \fIb\fR, etc. on output.\T
+\T'tr'\fB&tr\T\fI|abcd....\fR	none	\(en	O	Translate \fIa\fR to \fIb\fR, etc. on output.
 .b1
-\T'trin'\fB&trin\fI|abcd....\fR	none	\(en	O	Translate but retranslate with \fBasciify\fR.\T
+\T'trin'\fB&trin\T\fI|abcd....\fR	none	\(en	O	Translate but retranslate with \fBasciify\fR.
 .b1
-\T'trnt'\fB&trnt\fI|abcd....\fR	none	\(en	O	Translate but not on transparent lines.\T
+\T'trnt'\fB&trnt\T\fI|abcd....\fR	none	\(en	O	Translate but not on transparent lines.
 .b1
-\T'ftr'\fB&ftr\fI|F|abcd....\fR	none	\(en	P,T	Font-specific \fBtr\fR.\T
+\T'ftr'\fB&ftr\T\fI|F|abcd....\fR	none	\(en	P,T	Font-specific \fBtr\fR.
 .b1
-\T'char'\fB&char\fI|c|string\fR		ignored	\(en	Define character \fIc\fR to \fIstring\fR.\T
+\T'char'\fB&char\T\fI|c|string\fR		ignored	\(en	Define character \fIc\fR to \fIstring\fR.
 .b1
-\T'fchar'\fB&fchar\fI|c|string\fR	ignored	T	Define fallback for character \fIc\fR to \fIstring\fR.\T
+\T'fchar'\fB&fchar\T\fI|c|string\fR	ignored	T	Define fallback for character \fIc\fR to \fIstring\fR.
 .b1 0
-\T'rchar'\fB&rchar\fI|c...\fR		ignored	\(en	Remove character definitions for \fIc...\fR.\T
+\T'rchar'\fB&rchar\T\fI|c...\fR		ignored	\(en	Remove character definitions for \fIc...\fR.
 .b1 0
-\T'utf8conv'\fB&utf8conv\fI|c1|c2\fR	ignored	\(en	\*(NR \*[UTF] locale character translation.\T
+\T'utf8conv'\fB&utf8conv\T\fI|c1|c2\fR	ignored	\(en	\*(NR \*[UTF] locale character translation.
 .b1 0
-\T'output'\fB&output\fI|string\fR		ignored	\(en	Write \fIstring\fR directly to intermediate output.\T
+\T'output'\fB&output\T\fI|string\fR		ignored	\(en	Write \fIstring\fR directly to intermediate output.
 .br
 .nr nosave 1
 .ne 4
@@ -1572,176 +1572,176 @@ Local Horizontal and Vertical Motions, and the Width Function
 .mht s_draw
 Overstrike, Bracket, Line-drawing, Graphics, and Zero-width Functions
 .bt
-\T'connectchar'\fB&connectchar\fI|c..\fR	\fB"\e(ru\e(ul\e(rn\fR	off	E	Connected characters for line drawing.\T
+\T'connectchar'\fB&connectchar\T\fI|c..\fR	\fB"\e(ru\e(ul\e(rn\fR	off	E	Connected characters for line drawing.
 .mht s_hyphen
 Hyphenation.
 .bt
-\T'nh'\fB&nh\fR	hyphenate	\(en	E	No hyphenation.\T
+\T'nh'\fB&nh\T\fR	hyphenate	\(en	E	No hyphenation.
 .b1
-\T'hy'\fB&hy\fI|N\fR	hyphenate	hyphenate	E	Hyphenate; \fIN =\fR mode.\T
+\T'hy'\fB&hy\T\fI|N\fR	hyphenate	hyphenate	E	Hyphenate; \fIN =\fR mode.
 .b1
-\T'hylang'\fB&hylang\fI|name\fR	off	off	E	Set the hyphenation language.\T
+\T'hylang'\fB&hylang\T\fI|name\fR	off	off	E	Set the hyphenation language.
 .b1
-\T'shc'\fB&shc\fI|c\fR	\(hy	\(hy	E	Set the soft hyphenation character.\T
+\T'shc'\fB&shc\T\fI|c\fR	\(hy	\(hy	E	Set the soft hyphenation character.
 .b1
-\T'hcode'\fB&hcode\fI|abcd...\fR	\(en	E	Hyphenation code of \fIa\fR is \fIb\fR, etc.\T
+\T'hcode'\fB&hcode\T\fI|abcd...\fR	\(en	E	Hyphenation code of \fIa\fR is \fIb\fR, etc.
 .b1
-\T'hylen'\fB&hylen\fI|N\fR	5	5	E	Hyphenate only words of at least \fIN\fR characters in length.\T
+\T'hylen'\fB&hylen\T\fI|N\fR	5	5	E	Hyphenate only words of at least \fIN\fR characters in length.
 .b1
-\T'hlm'\fB&hlm\fI|N\fR	off	off	E	Maximum number of consecutive hyphenated lines.\T
+\T'hlm'\fB&hlm\T\fI|N\fR	off	off	E	Maximum number of consecutive hyphenated lines.
 .b1
-\T'hypp'\fB&hypp\fI|N|M|L\fR	0|0|0	0|0|0	E	Define hyphenation penalties for \fBad p\fR mode.\T
+\T'hypp'\fB&hypp\T\fI|N|M|L\fR	0|0|0	0|0|0	E	Define hyphenation penalties for \fBad p\fR mode.
 .b1
-\T'breakchar'\fB&breakchar\fI|c.\fR	\fB\(hy\(em\fR	off	E	Optional line break characters.\T
+\T'breakchar'\fB&breakchar\T\fI|c.\fR	\fB\(hy\(em\fR	off	E	Optional line break characters.
 .b1
-\T'nhychar'\fB&nhychar\fI|c...\fR	\fB\(hy\(em\fR	off	E	Hyphenation-inhibiting characters.\T
+\T'nhychar'\fB&nhychar\T\fI|c...\fR	\fB\(hy\(em\fR	off	E	Hyphenation-inhibiting characters.
 .b1 0
-\T'hc'\fB&hc\fI|c\fR	\fB\e%	\e%\fR	E	Hyphenation indicator character \fIc\fR.\T
+\T'hc'\fB&hc\T\fI|c\fR	\fB\e%	\e%\fR	E	Hyphenation indicator character \fIc\fR.
 .b1 0
-\T'hw'\fB&hw\fI|word|...\fR	\(en	ignored	\(en	Add words to hyphenation dictionary.\T
+\T'hw'\fB&hw\T\fI|word|...\fR	\(en	ignored	\(en	Add words to hyphenation dictionary.
 .mht s_titles
 Three-Part Titles.
 .bt
-\T'tl'\fB&tl\fI|\'left\'center\'right\'\fR	\(en	\(en	Three part title; delimiter may be any character.\T
+\T'tl'\fB&tl\T\fI|\'left\'center\'right\'\fR	\(en	\(en	Three part title; delimiter may be any character.
 .b1 0
-\T'pc'\fB&pc\fI|c\fR	\fB%\fR	off	\(en	Page number character.\T
+\T'pc'\fB&pc\T\fI|c\fR	\fB%\fR	off	\(en	Page number character.
 .b1 0
-\T'lt'\fB&lt\fI|\(+-N\fR	6.5\|in	previous	E,\fBm\fR	Length of title.\T
+\T'lt'\fB&lt\T\fI|\(+-N\fR	6.5\|in	previous	E,\fBm\fR	Length of title.
 .mht s_onl
 Output Line Numbering.
 .bt
-\T'nm'\fB&nm\fI|\(+-N|M|S|I\fR	off	E	Number mode on or off, set parameters.\T
+\T'nm'\fB&nm\T\fI|\(+-N|M|S|I\fR	off	E	Number mode on or off, set parameters.
 .b1 0
-\T'nn'\fB&nn\fI|N\fR	\(en	\fIN\(eq\fR1	E	Do not number next \fIN\fR lines.\T
+\T'nn'\fB&nn\T\fI|N\fR	\(en	\fIN\(eq\fR1	E	Do not number next \fIN\fR lines.
 .mht s_cond
 Conditional Acceptance of Input
 .bt
-\T'if'\fB&if\fI|c|anything\fR		\(en	\(en	If condition \fIc\fR true, accept \fIanything\fR as input,\T
+\T'if'\fB&if\T\fI|c|anything\fR		\(en	\(en	If condition \fIc\fR true, accept \fIanything\fR as input,
 .b1
 				for multi-line use \fI\e{anything\|\e}\fR.
 .b1
-\T'if'\fB&if|!\fIc|anything\fR	\(en	\(en	If condition \fIc\fR false, accept \fIanything\fR.\T
+\T'if'\fB&if\T|!\fIc|anything\fR	\(en	\(en	If condition \fIc\fR false, accept \fIanything\fR.
 .b1
-\T'if'\fB&if\fI|N|anything\fR		\(en	\fBu\fR	If expression \fIN\fR > 0, accept \fIanything\fR.\T
+\T'if'\fB&if\T\fI|N|anything\fR		\(en	\fBu\fR	If expression \fIN\fR > 0, accept \fIanything\fR.
 .b1
-\T'if'\fB&if|!\fIN|anything\fR	\(en	\fBu\fR	If expression \fIN\fR \(<= 0 [sic], accept \fIanything\fR.\T
+\T'if'\fB&if\T|!\fIN|anything\fR	\(en	\fBu\fR	If expression \fIN\fR \(<= 0 [sic], accept \fIanything\fR.
 .b1
-\T'if'\fB&if|f\fIF|anything\fR	\(en	\fBu\fR	If floating-point expression \fIF\fR > 0, accept \fIanything\fR.\T
+\T'if'\fB&if\T|f\fIF|anything\fR	\(en	\fBu\fR	If floating-point expression \fIF\fR > 0, accept \fIanything\fR.
 .b1
-\T'if'\fB&if|!f\fIF|anything\fR	\(en	\fBu\fR	If floating-point expression \fIF\fR \(<= 0 [sic], accept \fIanything\fR.\T
+\T'if'\fB&if\T|!f\fIF|anything\fR	\(en	\fBu\fR	If floating-point expression \fIF\fR \(<= 0 [sic], accept \fIanything\fR.
 .b1
-\T'if'\fB&if\fI|\'string1\'string2\'|anything\fR	\(en	If \fIstring1\fR identical to \fIstring2\fR,
-accept \fIanything\fR.\T
+\T'if'\fB&if\T\fI|\'string1\'string2\'|anything\fR	\(en	If \fIstring1\fR identical to \fIstring2\fR,
+accept \fIanything\fR.
 .b1
-\T'if'\fB&if|!\fI\|\'string1\'string2\'|anything\fR	\(en	If \fIstring1\fR not identical to \fIstring2\fR,
-accept \fIanything\fR.\T
+\T'if'\fB&if\T|!\fI\|\'string1\'string2\'|anything\fR	\(en	If \fIstring1\fR not identical to \fIstring2\fR,
+accept \fIanything\fR.
 .b1
-\T'ie'\fB&ie\fI|c|anything\fR		\(en	\fBu\fR	If portion of if-else; all above forms (like \fBif\fR).\T
+\T'ie'\fB&ie\T\fI|c|anything\fR		\(en	\fBu\fR	If portion of if-else; all above forms (like \fBif\fR).
 .b1
-\T'el'\fB&el\fI|anything\fR		\(en	\(en	Else portion of if-else.\T
+\T'el'\fB&el\T\fI|anything\fR		\(en	\(en	Else portion of if-else.
 .b1
-\T'while'\fB&while\fI|c|anything\fR	\(en	\(en	Execute \fIanything\fR while \fIc\fR (like \fBif\fR) is true.\T
+\T'while'\fB&while\T\fI|c|anything\fR	\(en	\(en	Execute \fIanything\fR while \fIc\fR (like \fBif\fR) is true.
 .b1 0
-\T'break'\fB&break\fI|n\fR	\(en	1	\(en	Break out of \fIn\fR nested \fBwhile\fR loops.\T
+\T'break'\fB&break\T\fI|n\fR	\(en	1	\(en	Break out of \fIn\fR nested \fBwhile\fR loops.
 .b1 0
-\T'continue'\fB&continue\fI|n\fR	\(en	1	\(en	Continue at the \fIn\fR-th nested \fBwhile\fR loop.\T
+\T'continue'\fB&continue\T\fI|n\fR	\(en	1	\(en	Continue at the \fIn\fR-th nested \fBwhile\fR loop.
 .mht s_env
 Environment Switching.
 .bt
-\T'ev'\fB&ev\fI|name\fR	\fIname\(eq\fR0	previous	\(en	Environment switched (\fIpush down\fR).\T
+\T'ev'\fB&ev\T\fI|name\fR	\fIname\(eq\fR0	previous	\(en	Environment switched (\fIpush down\fR).
 .b1 0
-\T'evc'\fB&evc\fI|name\fR		\(en	\(en	Copy environment \fIname\fR to the current environment.\T
+\T'evc'\fB&evc\T\fI|name\fR		\(en	\(en	Copy environment \fIname\fR to the current environment.
 .mht s_stdin
 Insertions from the Standard Input
 .bt
-\T'rd'\fB&rd\fI|prompt\fR\fR	\(en	\fIprompt=\s-1\fRBEL\s+1	\(en	Read insertion.\T
+\T'rd'\fB&rd\T\fI|prompt\fR\fR	\(en	\fIprompt=\s-1\fRBEL\s+1	\(en	Read insertion.
 .b1 0
-\T'ex'\fB&ex\fR	\(en	\(en	\(en	\
-Exit from \*(NR/\*[TR.]\T
+\T'ex'\fB&ex\T\fR	\(en	\(en	\(en	\
+Exit from \*(NR/\*[TR.]
 .mht s_io
 Input/Output File Switching
 .bt
-\T'so'\fB&so\fI|filename\fR		\(en	\(en	Switch source file \fI(push down)\fR.\T
+\T'so'\fB&so\T\fI|filename\fR		\(en	\(en	Switch source file \fI(push down)\fR.
 .b1
-\T'pso'\fB&pso\fI|string\fR		\(en	\(en	Execute \fIstring\fR and read its output.\T
+\T'pso'\fB&pso\T\fI|string\fR		\(en	\(en	Execute \fIstring\fR and read its output.
 .b1
-\T'nx'\fB&nx\fI|filename\fR		end-of-file	\(en	Next file.\T
+\T'nx'\fB&nx\T\fI|filename\fR		end-of-file	\(en	Next file.
 .br
-\T'sy'\fB&sy\fI|string\fR		\(en	\(en	Execute program \fIstring\fP. Output not interpolated.\T
+\T'sy'\fB&sy\T\fI|string\fR		\(en	\(en	Execute program \fIstring\fP. Output not interpolated.
 .b1
-\T'pi'\fB&pi\fI|string\fR		\(en	\(en	Pipe output to program \fIstring\fP.\T
+\T'pi'\fB&pi\T\fI|string\fR		\(en	\(en	Pipe output to program \fIstring\fP.
 .b1
-\T'cf'\fB&cf\fI|filename\fR		\(en	\(en	Copy file contents to \*(TR output.\T
+\T'cf'\fB&cf\T\fI|filename\fR		\(en	\(en	Copy file contents to \*(TR output.
 .b1
-\T'open'\fB&open\fI|stream|filename\fR	ignored	\(en	Open \fIfilename\fR as \fIstream\fR, truncating.\T
+\T'open'\fB&open\T\fI|stream|filename\fR	ignored	\(en	Open \fIfilename\fR as \fIstream\fR, truncating.
 .b1
-\T'opena'\fB&opena\fI|stream|filename\fR	ignored	\(en	Open \fIfilename\fR as \fIstream\fR, appending.\T
+\T'opena'\fB&opena\T\fI|stream|filename\fR	ignored	\(en	Open \fIfilename\fR as \fIstream\fR, appending.
 .b1
-\T'write'\fB&write\fI|stream|text\fR	ignored	\(en	Write \fItext\fR to file \fIstream\fR.\T
+\T'write'\fB&write\T\fI|stream|text\fR	ignored	\(en	Write \fItext\fR to file \fIstream\fR.
 .b1
-\T'writec'\fB&writec\fI|stream|text\fR	ignored	\(en	Write \fItext\fR without terminating newline.\T
+\T'writec'\fB&writec\T\fI|stream|text\fR	ignored	\(en	Write \fItext\fR without terminating newline.
 .b1 0
-\T'writem'\fB&writem\fI|stream|xx\fR	ignored	\(en	Write contents of string, macro, or diversion \fIxx\fR.\T
+\T'writem'\fB&writem\T\fI|stream|xx\fR	ignored	\(en	Write contents of string, macro, or diversion \fIxx\fR.
 .b1 0
-\T'close'\fB&close\fI|stream\fR		\(en	\(en	Close the file \fIstream\fR.\T
+\T'close'\fB&close\T\fI|stream\fR		\(en	\(en	Close the file \fIstream\fR.
 .mht s_misc
 Miscellaneous
 .bt
-\T'mc'\fB&mc\fI|c|N\fR	\(en	off	E,\fBm\fR	Set margin character \fIc\fR and separation \fIN\fR.\T
+\T'mc'\fB&mc\T\fI|c|N\fR	\(en	off	E,\fBm\fR	Set margin character \fIc\fR and separation \fIN\fR.
 .b1
-\T'lpfx'\fB&lpfx\fI|string\fR	off	off	E	Set line prefix to \fIstring\fR.\T
+\T'lpfx'\fB&lpfx\T\fI|string\fR	off	off	E	Set line prefix to \fIstring\fR.
 .b1
-\T'tm'\fB&tm\fI|string\fR	\(en	newline	\(en	Print \fIstring\fR on terminal (standard error).\T
+\T'tm'\fB&tm\T\fI|string\fR	\(en	newline	\(en	Print \fIstring\fR on terminal (standard error).
 .b1
-\T'tmc'\fB&tmc\fI|string\fR	\(en	newline	\(en	Print \fIstring\fR without newline on terminal.\T
+\T'tmc'\fB&tmc\T\fI|string\fR	\(en	newline	\(en	Print \fIstring\fR without newline on terminal.
 .b1
-\T'nop'\fB&nop\fI|remainder of line\fR	\(en	\(en	Use \fIremainder of line\fR as input.\T
+\T'nop'\fB&nop\T\fI|remainder of line\fR	\(en	\(en	Use \fIremainder of line\fR as input.
 .b1
-\T'ab'\fB&ab\fI|string\fR	\(en	newline	\(en	Print \fIstring\fR on standard error, exit program.\T
+\T'ab'\fB&ab\T\fI|string\fR	\(en	newline	\(en	Print \fIstring\fR on standard error, exit program.
 .b1
-\T'ig'\fB&ig\fI|yy\fR	\(en	\fI.yy=\fB..\fR	\(en	Ignore till call of \fIyy\fR.\T
+\T'ig'\fB&ig\T\fI|yy\fR	\(en	\fI.yy=\fB..\fR	\(en	Ignore till call of \fIyy\fR.
 .b1
-\T'lf'\fB&lf\fI|N|f\fR		\(en	\(en	Set input line number to \fIN\fP and filename to \fIf\fP.\T
+\T'lf'\fB&lf\T\fI|N|f\fR		\(en	\(en	Set input line number to \fIN\fP and filename to \fIf\fP.
 .b1
-\T'pm'\fB&pm\fI|t\fR	\(en	all	\(en	Print macro names and sizes;
+\T'pm'\fB&pm\T\fI|t\fR	\(en	all	\(en	Print macro names and sizes;
 .b1
-				if \fIt\fR present, print only total of sizes.\T
+				if \fIt\fR present, print only total of sizes.
 .b1 0
 .lg 0
-\T'fl'\fB&fl\fR	\(en	\(en	B	Flush output buffer.\T
+\T'fl'\fB&fl\T\fR	\(en	\(en	B	Flush output buffer.
 .lg
 .mht s_err
 Output and Error Messages, Debugging
 .bt
-\T'warn'\fB&warn\fI|\(+-bits\(or\^name\fR	\fIw\fR	\(en	Control warning messages.\T
+\T'warn'\fB&warn\T\fI|\(+-bits\(or\^name\fR	\fIw\fR	\(en	Control warning messages.
 .b1
-\T'spreadwarn'\fB&spreadwarn\fI|N\fR	toggle	\fBm\fR	Spread limit warning.\T
+\T'spreadwarn'\fB&spreadwarn\T\fI|N\fR	toggle	\fBm\fR	Spread limit warning.
 .b1
-\T'errprint'\fB&errprint\fI|string\fR	newline	\(en	Print \fIstring\fR like an error message.\T
+\T'errprint'\fB&errprint\T\fI|string\fR	newline	\(en	Print \fIstring\fR like an error message.
 .b1
-\T'watch'\fB&watch\fI|xx\fR	off	ignore	\(en	Notify on change of string or macro \fIxx\fR.\T
+\T'watch'\fB&watch\T\fI|xx\fR	off	ignore	\(en	Notify on change of string or macro \fIxx\fR.
 .b1
-\T'unwatch'\fB&unwatch\fI|xx\fR	off	ignore	\(en	Disable notification for string or macro \fIxx\fR.\T
+\T'unwatch'\fB&unwatch\T\fI|xx\fR	off	ignore	\(en	Disable notification for string or macro \fIxx\fR.
 .b1
-\T'watchlength'\fB&watchlength\fI|N\fR	ignore	\(en	On change, report contents up to length \fIN\fR.\T
+\T'watchlength'\fB&watchlength\T\fI|N\fR	ignore	\(en	On change, report contents up to length \fIN\fR.
 .b1 0
-\T'watchn'\fB&watchn\fI|R\fR	off	ignore	\(en	Notify on change of register \fIR\fR.\T
+\T'watchn'\fB&watchn\T\fI|R\fR	off	ignore	\(en	Notify on change of register \fIR\fR.
 .b1 0
-\T'unwatchn'\fB&unwatchn\fI|R\fR	off	ignore	\(en	Disable notification for register \fIR\fR.\T
+\T'unwatchn'\fB&unwatchn\T\fI|R\fR	off	ignore	\(en	Disable notification for register \fIR\fR.
 .mht s_color
 Color Support
 .bt
-\T'CL'\fB&CL\fI|color|text\fR	\s-1RGB\s+1|black	\(en	Print \fItext\fR in \fIcolor\fR.*\T
+\T'CL'\fB&CL\T\fI|color|text\fR	\s-1RGB\s+1|black	\(en	Print \fItext\fR in \fIcolor\fR.*
 .mht s_pics
 Picture Inclusion
 .bt
-\T'psbb'\fB&psbb\fI|filename\fR	\(en	\(en	Read the \*(PS bounding box from \fIfilename\fR.\T
+\T'psbb'\fB&psbb\T\fI|filename\fR	\(en	\(en	Read the \*(PS bounding box from \fIfilename\fR.
 .b1
-\T'BP'\fB&BP\fI|source|height|width|position|offset|flags|label\fR	Define a frame and place a picture in it.*\T
+\T'BP'\fB&BP\T\fI|source|height|width|position|offset|flags|label\fR	Define a frame and place a picture in it.*
 .b1 0
-\T'EP'\fB&EP\fR	\(en	\(en	\(en	End a picture started by \fB&BP\fR.*\T
+\T'EP'\fB&EP\T\fR	\(en	\(en	\(en	End a picture started by \fB&BP\fR.*
 .b1 0
-\T'PI'\fB&PI\fI|source|height\fB,\fIwidth\fB,\fIyoffset\fB,\fIxoffset|flags\fR	Low-level picture inclusion.*\T
+\T'PI'\fB&PI\T\fI|source|height\fB,\fIwidth\fB,\fIyoffset\fB,\fIxoffset|flags\fR	Low-level picture inclusion.*
 .br
 .ne 8
 .mht s_pdf
@@ -1749,9 +1749,9 @@ Special Features for \*[PDF] Documents
 .mht s_groff
 \f(BIgroff\fP Compatibility
 .bt 0
-\T'cp'\fB&cp\fI|N\fR	off	\(en	\(en	Enable \*(GR compatibility mode.\T
+\T'cp'\fB&cp\T\fI|N\fR	off	\(en	\(en	Enable \*(GR compatibility mode.
 .b1 0
-\T'mso'\fB&mso\fI|name\fR	\(en	ignored	\(en	Include the macro package \fIname\fR.*\T
+\T'mso'\fB&mso\T\fI|name\fR	\(en	ignored	\(en	Include the macro package \fIname\fR.*
 .mht s_output
 Output Language
 .mht s_device
@@ -1772,196 +1772,196 @@ refer to the detailed description on how to include it.
 .ps 8
 .vs 10
 .tc .
-\T'ab'ab	20\T
-\T'ad'ad	4\T
-\T'af'af	8\T
-\T'aln'aln	8\T
-\T'als'als	7\T
-\T'am'am	7\T
-\T'as'as	7\T
-\T'asciify'asciify	7\T
-\T'bd'bd	2\T
-\T'bleedat'bleedat	3\T
-\T'blm'blm	7\T
-\T'box'box	7\T
-\T'boxa'boxa	7\T
-\T'bp'bp	3\T
-\T'BP'BP	23\T
-\T'br'br	4\T
-\T'break'break	16\T
-\T'breakchar'breakchar	13\T
-\T'brnl'brnl	4\T
-\T'brp'brp	4\T
-\T'brpnl'brpnl	4\T
-\T'c2'c2	10\T
-\T'cc'cc	10\T
-\T'ce'ce	4\T
-\T'cf'cf	19\T
-\T'ch'ch	7\T
-\T'char'char	10\T
-\T'chop'chop	7\T
-\T'close'close	19\T
-\T'CL'CL	22\T
-\T'connectchar'connectchar	12\T
-\T'continue'continue	16\T
-\T'cp'cp	25\T
-\T'cropat'cropat	3\T
-\T'cs'cs	2\T
-\T'cu'cu	10\T
-\T'da'da	7\T
-\T'dch'dch	7\T
-\T'de'de	7\T
-\T'di'di	7\T
-\T'do'do	1\T
-\T'ds'ds	7\T
-\T'dwh'dwh	7\T
-\T'dt'dt	7\T
-\T'ec'ec	10\T
-\T'ecs'ecs	10\T
-\T'ecr'ecr	10\T
-\T'el'el	16\T
-\T'em'em	7\T
-\T'eo'eo	10\T
-\T'EP'EP	23\T
-\T'errprint'errprint	21\T
-\T'ev'ev	17\T
-\T'evc'evc	17\T
-\T'ex'ex	18\T
-\T'fallback'fallback	2\T
-\T'fc'fc	9\T
-\T'fchar'fchar	10\T
-\T'fdeferlig'fdeferlig	10\T
-\T'feature'feature	2\T
-\T'fi'fi	4\T
-\T'fkern'fkern	4\T
-\T'fl'fl	20\T
-\T'flig'flig	10\T
-\T'fp'fp	2\T
-\T'fps'fps	2\T
-\T'fspacewidth'fspacewidth	2\T
-\T'ft'ft	2\T
-\T'fzoom'fzoom	2\T
-\T'hc'hc	13\T
-\T'hcode'hcode	13\T
-\T'hidechar'hidechar	2\T
-\T'hlm'hlm	13\T
-\T'hw'hw	13\T
-\T'hy'hy	13\T
-\T'hylang'hylang	13\T
-\T'hylen'hylen	13\T
-\T'hypp'hypp	13\T
-\T'ie'ie	16\T
-\T'if'if	16\T
-\T'ig'ig	20\T
-\T'in'in	6\T
-\T'index'index	7\T
-\T'it'it	7\T
-\T'itc'itc	7\T
-\T'kern'kern	4\T
-\T'kernafter'kernafter	4\T
-\T'kernbefore'kernbefore	4\T
-\T'kernpair'kernpair	4\T
-\T'lc'lc	9\T
-\T'lc_ctype'lc_ctype	2\T
-\T'lds'lds	7\T
-\T'length'length	7\T
-\T'letadj'letadj	4\T
-\T'lf'lf	20\T
-\T'lg'lg	10\T
-\T'lhang'lhang	4\T
-\T'li'li	10\T
-\T'll'll	6\T
-\T'lnr'lnr	8\T
-\T'lnrf'lnrf	8\T
-\T'lpfx'lpfx	20\T
-\T'ls'ls	5\T
-\T'lsm'lsm	4\T
-\T'lt'lt	14\T
-\T'mc'mc	20\T
-\T'mediasize'mediasize	3\T
-\T'minss'minss	4\T
-\T'mk'mk	3\T
-\T'mso'mso	25\T
-\T'na'na	4\T
-\T'ne'ne	3\T
-\T'nf'nf	4\T
-\T'nh'nh	13\T
-\T'nhychar'nhychar	13\T
-\T'nm'nm	15\T
-\T'nn'nn	15\T
-\T'nop'nop	20\T
-\T'nr'nr	8\T
-\T'nrf'nrf	8\T
-\T'ns'ns	5\T
-\T'nx'nx	19\T
-\T'open'open	19\T
-\T'opena'opena	19\T
-\T'os'os	5\T
-\T'output'output	10\T
-\T'padj'padj	4\T
-\T'papersize'papersize	3\T
-\T'pc'pc	14\T
-\T'pi'pi	19\T
-\T'PI'PI	23\T
-\T'pl'pl	3\T
-\T'pm'pm	20\T
-\T'pn'pn	3\T
-\T'po'po	3\T
-\T'ps'ps	2\T
-\T'psbb'psbb	23\T
-\T'pshape'pshape	6\T
-\T'pso'pso	19\T
-\T'rchar'rchar	10\T
-\T'rd'rd	18\T
-\T'recursionlimit'recursionlimit	7\T
-\T'return'return	7\T
-\T'rhang'rhang	4\T
-\T'rj'rj	4\T
-\T'rm'rm	7\T
-\T'rn'rn	7\T
-\T'rnn'rnn	8\T
-\T'rr'rr	8\T
-\T'rs'rs	5\T
-\T'rt'rt	3\T
-\T'sentchar'sentchar	4\T
-\T'shc'shc	13\T
-\T'shift'shift	7\T
-\T'so'so	19\T
-\T'sp'sp	5\T
-\T'spacewidth'spacewidth	2\T
-\T'spreadwarn'spreadwarn	21\T
-\T'ss'ss	2\T
-\T'substring'substring	7\T
-\T'sv'sv	5\T
-\T'sy'sy	19\T
-\T'ta'ta	9\T
-\T'tc'tc	9\T
-\T'ti'ti	6\T
-\T'tl'tl	14\T
-\T'tm'tm	20\T
-\T'tr'tr	10\T
-\T'track'track	4\T
-\T'transchar'transchar	4\T
-\T'trimat'trimat	3\T
-\T'trin'trin	10\T
-\T'trnt'trnt	10\T
-\T'uf'uf	10\T
-\T'ul'ul	10\T
-\T'unformat'unformat	7\T
-\T'unwatch'unwatch	21\T
-\T'unwatchn'unwatchn	21\T
-\T'utf8conv'utf8conv	10\T
-\T'vs'vs	5\T
-\T'warn'warn	21\T
-\T'watch'watch	21\T
-\T'watchlength'watchlength	21\T
-\T'watchn'watchn	21\T
-\T'wh'wh	7\T
-\T'while'while	16\T
-\T'write'write	19\T
-\T'writec'writec	19\T
-\T'writem'writem	19\T
-\T'xflag'xflag	1\T
+\T'ab'ab\T	20
+\T'ad'ad\T	4
+\T'af'af\T	8
+\T'aln'aln\T	8
+\T'als'als\T	7
+\T'am'am\T	7
+\T'as'as\T	7
+\T'asciify'asciify\T	7
+\T'bd'bd\T	2
+\T'bleedat'bleedat\T	3
+\T'blm'blm\T	7
+\T'box'box\T	7
+\T'boxa'boxa\T	7
+\T'bp'bp\T	3
+\T'BP'BP\T	23
+\T'br'br\T	4
+\T'break'break\T	16
+\T'breakchar'breakchar\T	13
+\T'brnl'brnl\T	4
+\T'brp'brp\T	4
+\T'brpnl'brpnl\T	4
+\T'c2'c2\T	10
+\T'cc'cc\T	10
+\T'ce'ce\T	4
+\T'cf'cf\T	19
+\T'ch'ch\T	7
+\T'char'char\T	10
+\T'chop'chop\T	7
+\T'close'close\T	19
+\T'CL'CL\T	22
+\T'connectchar'connectchar\T	12
+\T'continue'continue\T	16
+\T'cp'cp\T	25
+\T'cropat'cropat\T	3
+\T'cs'cs\T	2
+\T'cu'cu\T	10
+\T'da'da\T	7
+\T'dch'dch\T	7
+\T'de'de\T	7
+\T'di'di\T	7
+\T'do'do\T	1
+\T'ds'ds\T	7
+\T'dwh'dwh\T	7
+\T'dt'dt\T	7
+\T'ec'ec\T	10
+\T'ecs'ecs\T	10
+\T'ecr'ecr\T	10
+\T'el'el\T	16
+\T'em'em\T	7
+\T'eo'eo\T	10
+\T'EP'EP\T	23
+\T'errprint'errprint\T	21
+\T'ev'ev\T	17
+\T'evc'evc\T	17
+\T'ex'ex\T	18
+\T'fallback'fallback\T	2
+\T'fc'fc\T	9
+\T'fchar'fchar\T	10
+\T'fdeferlig'fdeferlig\T	10
+\T'feature'feature\T	2
+\T'fi'fi\T	4
+\T'fkern'fkern\T	4
+\T'fl'fl\T	20
+\T'flig'flig\T	10
+\T'fp'fp\T	2
+\T'fps'fps\T	2
+\T'fspacewidth'fspacewidth\T	2
+\T'ft'ft\T	2
+\T'fzoom'fzoom\T	2
+\T'hc'hc\T	13
+\T'hcode'hcode\T	13
+\T'hidechar'hidechar\T	2
+\T'hlm'hlm\T	13
+\T'hw'hw\T	13
+\T'hy'hy\T	13
+\T'hylang'hylang\T	13
+\T'hylen'hylen\T	13
+\T'hypp'hypp\T	13
+\T'ie'ie\T	16
+\T'if'if\T	16
+\T'ig'ig\T	20
+\T'in'in\T	6
+\T'index'index\T	7
+\T'it'it\T	7
+\T'itc'itc\T	7
+\T'kern'kern\T	4
+\T'kernafter'kernafter\T	4
+\T'kernbefore'kernbefore\T	4
+\T'kernpair'kernpair\T	4
+\T'lc'lc\T	9
+\T'lc_ctype'lc_ctype\T	2
+\T'lds'lds\T	7
+\T'length'length\T	7
+\T'letadj'letadj\T	4
+\T'lf'lf\T	20
+\T'lg'lg\T	10
+\T'lhang'lhang\T	4
+\T'li'li\T	10
+\T'll'll\T	6
+\T'lnr'lnr\T	8
+\T'lnrf'lnrf\T	8
+\T'lpfx'lpfx\T	20
+\T'ls'ls\T	5
+\T'lsm'lsm\T	4
+\T'lt'lt\T	14
+\T'mc'mc\T	20
+\T'mediasize'mediasize\T	3
+\T'minss'minss\T	4
+\T'mk'mk\T	3
+\T'mso'mso\T	25
+\T'na'na\T	4
+\T'ne'ne\T	3
+\T'nf'nf\T	4
+\T'nh'nh\T	13
+\T'nhychar'nhychar\T	13
+\T'nm'nm\T	15
+\T'nn'nn\T	15
+\T'nop'nop\T	20
+\T'nr'nr\T	8
+\T'nrf'nrf\T	8
+\T'ns'ns\T	5
+\T'nx'nx\T	19
+\T'open'open\T	19
+\T'opena'opena\T	19
+\T'os'os\T	5
+\T'output'output\T	10
+\T'padj'padj\T	4
+\T'papersize'papersize\T	3
+\T'pc'pc\T	14
+\T'pi'pi\T	19
+\T'PI'PI\T	23
+\T'pl'pl\T	3
+\T'pm'pm\T	20
+\T'pn'pn\T	3
+\T'po'po\T	3
+\T'ps'ps\T	2
+\T'psbb'psbb\T	23
+\T'pshape'pshape\T	6
+\T'pso'pso\T	19
+\T'rchar'rchar\T	10
+\T'rd'rd\T	18
+\T'recursionlimit'recursionlimit\T	7
+\T'return'return\T	7
+\T'rhang'rhang\T	4
+\T'rj'rj\T	4
+\T'rm'rm\T	7
+\T'rn'rn\T	7
+\T'rnn'rnn\T	8
+\T'rr'rr\T	8
+\T'rs'rs\T	5
+\T'rt'rt\T	3
+\T'sentchar'sentchar\T	4
+\T'shc'shc\T	13
+\T'shift'shift\T	7
+\T'so'so\T	19
+\T'sp'sp\T	5
+\T'spacewidth'spacewidth\T	2
+\T'spreadwarn'spreadwarn\T	21
+\T'ss'ss\T	2
+\T'substring'substring\T	7
+\T'sv'sv\T	5
+\T'sy'sy\T	19
+\T'ta'ta\T	9
+\T'tc'tc\T	9
+\T'ti'ti\T	6
+\T'tl'tl\T	14
+\T'tm'tm\T	20
+\T'tr'tr\T	10
+\T'track'track\T	4
+\T'transchar'transchar\T	4
+\T'trimat'trimat\T	3
+\T'trin'trin\T	10
+\T'trnt'trnt\T	10
+\T'uf'uf\T	10
+\T'ul'ul\T	10
+\T'unformat'unformat\T	7
+\T'unwatch'unwatch\T	21
+\T'unwatchn'unwatchn\T	21
+\T'utf8conv'utf8conv\T	10
+\T'vs'vs\T	5
+\T'warn'warn\T	21
+\T'watch'watch\T	21
+\T'watchlength'watchlength\T	21
+\T'watchn'watchn\T	21
+\T'wh'wh\T	7
+\T'while'while\T	16
+\T'write'write\T	19
+\T'writec'writec\T	19
+\T'writem'writem\T	19
+\T'xflag'xflag\T	1
 .tc
 .di
 .nr zz 5
@@ -2000,6 +2000,7 @@ Escape Sequences for Characters, Indicators, and Functions
 .br
 .Bookmark 1 "Escape Sequences for Characters, Indicators, and Functions"
 .xx
+.sp -1
 .TS
 c2l
 c2l2l
@@ -2254,6 +2255,7 @@ using \fB\ex\fI\'N\'\fR.\T
 \T'n_lss'4.1\T	\T'n_lss'\fBlss\fR\T	\T'n_lsn'Horizontal space\
  corresponding to a line with leading spaces in fill mode.\T
 .TE
+.sp -1
 .in 0
 .fi
 .fn
@@ -5046,7 +5048,7 @@ the latter are commonly used for the ASCII syntax
 quotes in manual pages.
 .xx
 By use of \fButf8conv\fR the three default translations
-can be redefined and additionally translations can be done.
+can be redefined and additional translations can be done.
 If \fIc2\fR is missing a translation is removed.
 This is applied for manual pages where the no translation
 is used.
@@ -6782,16 +6784,31 @@ where \fIbx\fR and \fIby\fR define the horizontal
 and vertical corner radius, respectively,
 and \fIwidth\fR defines the width.
 .pg
+The border style can be changed with the
+\fB\eX\(aqSetBorderStyle: \fIarguments\fB\(aq\fR command.
+The \fIarguments\fR are the same
+as for the \fB/BS\fR pdfmark operator
+or the \*[LaTeX] \fBhyperref\f(CW pdfborderstyle={}\fR variable.
+.pg
 Likewise,
-\fBSetULinkColor\fR and \fBSetULinkBorder\fR
+\fBSetULinkColor\fR, \fBSetULinkBorder\fR, and \fBSetUBorderStyle\fR
 are available for URI links.
+.pg
+E.\^g. for this document the commands
+.x1
+.ft CW
+\eX\(aqSetBorderStyle: /S/U/W 0.1\(aq
+\eX\(aqSetUBorderStyle: /S/U/W 0.1\(aq
+.ft R
+.x2
+are used.
 .\"""
 .pg
 .mha s_groff
 \f(BIgroff\fP Compatibility
 .pg
 Heirloom \*(TR provides most of the extensions
-to the \*(TR language introduced in \T'ref_10'\*(GR\|\*u10\*d\T.
+to the \*(TR language introduced in \*(GR\|\T'ref_10'\*u10\*d\T.
 Consequently, it is possible
 to create documents, macro sets, and preprocessors
 that can be used with both
