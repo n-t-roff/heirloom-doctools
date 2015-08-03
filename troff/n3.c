@@ -1152,7 +1152,7 @@ _collect(int termc)
 			ch = i;
 		while (1) {
 			i = getch();
-			if (termc && i == termc) {
+			if (termc && !quote && i == termc) {
 				if (nsp >= asp)
 					savnxf->argsp = realloc(savnxf->argsp,
 						++asp * sizeof *savnxf->argsp);
