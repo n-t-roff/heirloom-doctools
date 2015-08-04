@@ -1846,21 +1846,49 @@ setuc(void)
 {
 	char	c, d, b[NC], *bp;
 	int	i = 0, n;
+	tchar	r = 0;
+#ifndef NROFF
+	extern int nchtab;
+#endif
 
 	d = getach();
 	do {
 		c = getach();
 		if (i >= sizeof b)
-			return 0;
+			goto rtn;
 		b[i++] = c;
 	} while (c && c != d);
 	b[--i] = 0;
 	if (i == 0 || c != d)
-		return 0;
+		goto rtn;
 	n = strtol(b, &bp, 16);
 	if (n == 0 || *bp != '\0')
-		return 0;
-	return setuc0(n);
+		goto rtn;
+#ifndef NROFF
+	switch (n) {
+	case '\'':
+		bp = "aq";
+		break;
+	case '`':
+		bp = "ga";
+		break;
+	case '-':
+		r = MINUS;
+		goto rtn;
+	default:
+		goto uc;
+	}
+	for (i = 0; i < nchtab; i++)
+		if (strcmp(&chname[chtab[i]], bp) == 0) {
+			r = (i + 128) | chbits;
+			break;
+		}
+	goto rtn;
+uc:
+#endif
+	r = setuc0(n);
+rtn:
+	return r;
 }
 
 
