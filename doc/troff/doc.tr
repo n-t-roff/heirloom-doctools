@@ -50,6 +50,7 @@
 .warn
 .mediasize letter
 .lc_ctype en_US.utf8
+.\".fp 1 R LinLibertine_R otf
 .ig
 .fps math,greek 1 R texgyretermes-regular otf
 .fp 2 I texgyretermes-italic otf
@@ -107,7 +108,8 @@
 .fallback BI BIE
 .flig BI 31
 ..
-.ds Sccsdate 07/14/15
+.\" mo/dy/yr
+.ds Sccsdate 08/04/15
 .ds Str \*[Sccsdate]
 .substring Str 0 0
 .if '\*[Str]'%' \{\
@@ -168,8 +170,8 @@
 .ds GR: "\fIgroff:\fR
 .ds PS "\fRPostScript\fR
 .ds PDF "\s-1PDF\s+1
-.ds TEX "\fIT\h'-.13m'\v'.165m'E\v'-.165m'\h'-.01m'X\fR
-.ds LaTeX \fIL\v'-.165m'\s'-3'A\s0\v'.165m'\h'-.1m'\\*[TEX]
+.ds TEX T\h'-.13m'\v'.165m'E\v'-.165m'\h'-.17m'X
+.ds LaTeX L\h'-.2m'\v'-.165m'\s'-3'A\s0\v'.165m'\h'-.1m'\\*[TEX]
 .ds UTF \s-1UTF\s+1-8
 .ds H
 .nr PS 10
@@ -2252,7 +2254,7 @@ using \fB\ex\fI\'N\'\fR.\T
 \T'n_.z'7.4\T	\T'n_.z'\fB&z\fR\T	\T'n_.z'Name [sic] of current diversion.\T
 \T'n_lsn'4.1\T	\T'n_lsn'\fBlsn\fR\T	\T'n_lsn'Number of leading spaces\
  of a input line in fill mode.\T
-\T'n_lss'4.1\T	\T'n_lss'\fBlss\fR\T	\T'n_lsn'Horizontal space\
+\T'n_lss'4.1\T	\T'n_lss'\fBlss\fR\T	\T'n_lss'Horizontal space\
  corresponding to a line with leading spaces in fill mode.\T
 .TE
 .sp -1
@@ -3276,9 +3278,9 @@ The \fB.blm\fR request can be used to redefine the processing
 of blank input lines.
 With the \fB.lsm\fR request the effect of lines beginning with
 spaces is changed.
-The read-only number register \fBlsn\fR contains the number of
+The read-only number register \A'n_lsn'\fBlsn\fR contains the number of
 leading spaces.
-The read-only number register \fBlss\fR contains the horizontal
+The read-only number register \A'n_lss'\fBlss\fR contains the horizontal
 space which corresponds to the leading spaces.
 Both registers are set also if \fB.lsm\fR is not used.
 .pg
@@ -7971,15 +7973,15 @@ Special Font
 .Bookmark 0 "Input Naming Conventions"
 .1C
 .de mx
-.nf
-.ft I
-.ta .25iC .5i +.45i 3.25iC +.25i +.45i
+.	nf
+.	ft I
+.	ta .25iC .5i +.55i 3.25iC +.25i +.55i
 		Input	Character		Input	Character
 	Char	Name	Name	Char	Name	Name
-.ft R
-.sp .2
-.nr cl 0
-.mk
+.	ft R
+.	sp .2
+.	nr cl 0
+.	mk
 ..
 .br
 .tr ~~
@@ -7991,7 +7993,7 @@ Special Font
 \A'Table II'Table II
 .sp
 .ce 2
-Input Naming Conventions for \', \`,and  \-
+Input Naming Conventions for \', \`, and \-
 and for Non-ASCII Special Characters
 .sp .5i
 .ft R
@@ -8002,39 +8004,40 @@ Non-\s-1ASCII\s+1 characters and \f(BIminus\fP on the standard fonts.
 .sp
 .ft R
 .de cl
-.ie \\n+(cl<2 \{.po +3.0i
-.rt \}
-.el .sc
+.	ie \\n+(cl<2 \{.po +3.0i
+.	rt \}
+.	el .sc
 ..
 .de sc
-.po \\n(POu
-.nr cl 0
+.	po \\n(POu
+.	nr cl 0
 ..
 .nr cl 0 1
+.ds CF \f(CW\\$1\fR
 .de qq
-	\&'	\'	close quote
-	`	\`	open quote
-	\(em	\e(em	3/4 Em dash
-	-	\-	hyphen or
-	\(hy	\e(hy	hyphen
-	\-	\e\-	current font minus
-	\(bu	\e(bu	bullet
-	\(sq	\e(sq	square
-	\(ru	\e(ru	rule
-	\(14	\e(14	1/4
-	\(12	\e(12	1/2
-	\(34	\e(34	3/4
-	\(fi	\e(fi	fi
-	\(fl	\e(fl	fl
-	\(ff	\e(ff	ff
-	\(Fi	\e(Fi	ffi
-	\(Fl	\e(Fl	ffl
-	\(de	\e(de	degree
-	\(dg	\e(dg	dagger
-	\(fm	\e(fm	foot mark
-	\(ct	\e(ct	cent sign
-	\(rg	\e(rg	registered
-	\(co	\e(co	copyright
+	\&'	\\*[CF \(aq]	close quote
+	`	\\*[CF \`]	open quote
+	\(em	\\*[CF \e(em]	3/4 Em dash
+	-	\\*[CF \-]	hyphen or
+	\(hy	\\*[CF \e(hy]	hyphen
+	\-	\\*[CF \e\-]	current font minus
+	\(bu	\\*[CF \e(bu]	bullet
+	\(sq	\\*[CF \e(sq]	square
+	\(ru	\\*[CF \e(ru]	rule
+	\(14	\\*[CF \e(14]	1/4
+	\(12	\\*[CF \e(12]	1/2
+	\(34	\\*[CF \e(34]	3/4
+	\(fi	\\*[CF \e(fi]	fi
+	\(fl	\\*[CF \e(fl]	fl
+	\(ff	\\*[CF \e(ff]	ff
+	\(Fi	\\*[CF \e(Fi]	ffi
+	\(Fl	\\*[CF \e(Fl]	ffl
+	\(de	\\*[CF \e(de]	degree
+	\(dg	\\*[CF \e(dg]	dagger
+	\(fm	\\*[CF \e(fm]	foot mark
+	\(ct	\\*[CF \e(ct]	cent sign
+	\(rg	\\*[CF \e(rg]	registered
+	\(co	\\*[CF \e(co]	copyright
 ..
 .di zz
 .lg 0
@@ -8076,120 +8079,596 @@ insulate the appearance of equations from the choice of standard fonts.
 .ch cl \nmu-\n(.vu-1u
 .mx
 .lg 0
-	\(pl	\e(pl	math plus
-	\(mi	\e(mi	math minus
-	\(eq	\e(eq	math equals
-	\(**	\e(**	math star
-	\(sc	\e(sc	section
-	\(aa	\\(aa	acute accent
-	\(ga	\\(ga	grave accent
-	\(ul	\\(ul	underrule
-	\(sl	\\(sl	slash (matching backslash)
-	\(rs	\e(rs	backslash
-	\(*a	\\(*a	alpha
-	\(*b	\\(*b	beta
-	\(*g	\\(*g	gamma
-	\(*d	\\(*d	delta
-	\(*e	\\(*e	epsilon
-	\(*z	\\(*z	zeta
-	\(*y	\\(*y	eta
-	\(*h	\\(*h	theta
-	\(*i	\\(*i	iota
-	\(*k	\\(*k	kappa
-	\(*l	\\(*l	lambda
-	\(*m	\\(*m	mu
-	\(*n	\\(*n	nu
-	\(*c	\\(*c	xi
-	\(*o	\\(*o	omicron
-	\(*p	\\(*p	pi
-	\(*r	\\(*r	rho
-	\(*s	\\(*s	sigma
-	\(ts	\\(ts	terminal sigma
-	\(*t	\\(*t	tau
-	\(*u	\\(*u	upsilon
-	\(*f	\\(*f	phi
-	\(*x	\\(*x	chi
-	\(*q	\\(*q	psi
-	\(*w	\\(*w	omega
-	\(*A	\\(*A	Alpha
-	\(*B	\\(*B	Beta
-	\(*G	\\(*G	Gamma
-	\(*D	\\(*D	Delta
-	\(*E	\\(*E	Epsilon
-	\(*Z	\\(*Z	Zeta
-	\(*Y	\\(*Y	Eta
-	\(*H	\\(*H	Theta
-	\(*I	\\(*I	Iota
-	\(*K	\\(*K	Kappa
-	\(*L	\\(*L	Lambda
-	\(*M	\\(*M	Mu
-	\(*N	\\(*N	Nu
-	\(*C	\\(*C	Xi
-	\(*O	\\(*O	Omicron
-	\(*P	\\(*P	Pi
-	\(*R	\\(*R	Rho
-	\(*S	\\(*S	Sigma
-	\(*T	\\(*T	Tau
-	\(*U	\\(*U	Upsilon
-	\(*F	\\(*F	Phi
-	\(*X	\\(*X	Chi
-	\(*Q	\\(*Q	Psi
-	\(*W	\\(*W	Omega
-	\(sr	\\(sr	square root
-	\(rn	\\(rn	root en extender
-	\(>=	\\(>=	>=
-	\(<=	\\(<=	<=
-	\(==	\\(==	identically equal
-	\(~=	\\(~=	approx =
-	\(ap	\\(ap	approximates
-	\(!=	\\(!=	not equal
-	\(->	\\(\(mi>	right arrow
-	\(<-	\\(<\(mi	left arrow
-	\(ua	\\(ua	up arrow
-	\(da	\\(da	down arrow
-	\(mu	\\(mu	multiply
-	\(di	\\(di	divide
-	\(+-	\\(+\(mi	plus-minus
-	\(cu	\\(cu	cup (union)
-	\(ca	\\(ca	cap (intersection)
-	\(sb	\\(sb	subset of
-	\(sp	\\(sp	superset of
-	\(ib	\\(ib	improper subset
-	\(ip	\\(ip	improper superset
-	\(if	\\(if	infinity
-	\(pd	\\(pd	partial derivative
-	\(gr	\\(gr	gradient
-	\(no	\\(no	not
-	\(is	\\(is	integral sign
-	\(pt	\\(pt	proportional to
-	\(es	\\(es	empty set
-	\(mo	\\(mo	member of
-	\(br	\\(br	box vertical rule
-	\(dd	\\(dd	double dagger
-	\(rh	\\(rh	right hand
-	\(lh	\\(lh	left hand
-.\"	\(bs	\\(bs	Bell System logo
-	\(or	\\(or	or
-	\(ci	\\(ci	circle
-	\(lt	\\(lt	left top of big curly bracket
-	\(lb	\\(lb	left bottom
-	\(rt	\\(rt	right top
-	\(rb	\\(rb	right bot
-	\(lk	\\(lk	left center of big curly bracket
-	\(rk	\\(rk	right center of big curly bracket
-	\(bv	\\(bv	bold vertical
-	\(lf	\\(lf	left floor (left bottom of big
+	\(pl	\*[CF \e(pl]	math plus
+	\(mi	\*[CF \e(mi]	math minus
+	\(eq	\*[CF \e(eq]	math equals
+	\(**	\*[CF \e(**]	math star
+	\(sc	\*[CF \e(sc]	section
+	\(aa	\*[CF \e(aa]	acute accent
+	\(ga	\*[CF \e(ga]	grave accent
+	\(ul	\*[CF \e(ul]	underrule
+	\(sl	\*[CF \e(sl]	slash (matching backslash)
+	\(rs	\*[CF \e(rs]	backslash
+	\(*a	\*[CF \e(*a]	alpha
+	\(*b	\*[CF \e(*b]	beta
+	\(*g	\*[CF \e(*g]	gamma
+	\(*d	\*[CF \e(*d]	delta
+	\(*e	\*[CF \e(*e]	epsilon
+	\(*z	\*[CF \e(*z]	zeta
+	\(*y	\*[CF \e(*y]	eta
+	\(*h	\*[CF \e(*h]	theta
+	\(*i	\*[CF \e(*i]	iota
+	\(*k	\*[CF \e(*k]	kappa
+	\(*l	\*[CF \e(*l]	lambda
+	\(*m	\*[CF \e(*m]	mu
+	\(*n	\*[CF \e(*n]	nu
+	\(*c	\*[CF \e(*c]	xi
+	\(*o	\*[CF \e(*o]	omicron
+	\(*p	\*[CF \e(*p]	pi
+	\(*r	\*[CF \e(*r]	rho
+	\(*s	\*[CF \e(*s]	sigma
+	\(ts	\*[CF \e(ts]	terminal sigma
+	\(*t	\*[CF \e(*t]	tau
+	\(*u	\*[CF \e(*u]	upsilon
+	\(*f	\*[CF \e(*f]	phi
+	\(*x	\*[CF \e(*x]	chi
+	\(*q	\*[CF \e(*q]	psi
+	\(*w	\*[CF \e(*w]	omega
+	\(*A	\*[CF \e(*A]	Alpha
+	\(*B	\*[CF \e(*B]	Beta
+	\(*G	\*[CF \e(*G]	Gamma
+	\(*D	\*[CF \e(*D]	Delta
+	\(*E	\*[CF \e(*E]	Epsilon
+	\(*Z	\*[CF \e(*Z]	Zeta
+	\(*Y	\*[CF \e(*Y]	Eta
+	\(*H	\*[CF \e(*H]	Theta
+	\(*I	\*[CF \e(*I]	Iota
+	\(*K	\*[CF \e(*K]	Kappa
+	\(*L	\*[CF \e(*L]	Lambda
+	\(*M	\*[CF \e(*M]	Mu
+	\(*N	\*[CF \e(*N]	Nu
+	\(*C	\*[CF \e(*C]	Xi
+	\(*O	\*[CF \e(*O]	Omicron
+	\(*P	\*[CF \e(*P]	Pi
+	\(*R	\*[CF \e(*R]	Rho
+	\(*S	\*[CF \e(*S]	Sigma
+	\(*T	\*[CF \e(*T]	Tau
+	\(*U	\*[CF \e(*U]	Upsilon
+	\(*F	\*[CF \e(*F]	Phi
+	\(*X	\*[CF \e(*X]	Chi
+	\(*Q	\*[CF \e(*Q]	Psi
+	\(*W	\*[CF \e(*W]	Omega
+	\(sr	\*[CF \e(sr]	square root
+	\(rn	\*[CF \e(rn]	root en extender
+	\(>=	\*[CF \e(>=]	>=
+	\(<=	\*[CF \e(<=]	<=
+	\(==	\*[CF \e(==]	identically equal
+	\(~=	\*[CF \e(~=]	approx =
+	\(ap	\*[CF \e(ap]	approximates
+	\(!=	\*[CF \e(!=]	not equal
+	\(->	\*[CF \e(\(mi>]	right arrow
+	\(<-	\*[CF \e(<\(mi]	left arrow
+	\(ua	\*[CF \e(ua]	up arrow
+	\(da	\*[CF \e(da]	down arrow
+	\(mu	\*[CF \e(mu]	multiply
+	\(di	\*[CF \e(di]	divide
+	\(+-	\*[CF \e(+\(mi]	plus-minus
+	\(cu	\*[CF \e(cu]	cup (union)
+	\(ca	\*[CF \e(ca]	cap (intersection)
+	\(sb	\*[CF \e(sb]	subset of
+	\(sp	\*[CF \e(sp]	superset of
+	\(ib	\*[CF \e(ib]	improper subset
+	\(ip	\*[CF \e(ip]	improper superset
+	\(if	\*[CF \e(if]	infinity
+	\(pd	\*[CF \e(pd]	partial derivative
+	\(gr	\*[CF \e(gr]	gradient
+	\(no	\*[CF \e(no]	not
+	\(is	\*[CF \e(is]	integral sign
+	\(pt	\*[CF \e(pt]	proportional to
+	\(es	\*[CF \e(es]	empty set
+	\(mo	\*[CF \e(mo]	member of
+	\(br	\*[CF \e(br]	box vertical rule
+	\(dd	\*[CF \e(dd]	double dagger
+	\(rh	\*[CF \e(rh]	right hand
+	\(lh	\*[CF \e(lh]	left hand
+.\"	\(bs	\*[CF \e(bs]	Bell System logo
+	\(or	\*[CF \e(or]	or
+	\(ci	\*[CF \e(ci]	circle
+	\(lt	\*[CF \e(lt]	left top of big curly bracket
+	\(lb	\*[CF \e(lb]	left bottom
+	\(rt	\*[CF \e(rt]	right top
+	\(rb	\*[CF \e(rb]	right bot
+	\(lk	\*[CF \e(lk]	left center of big curly bracket
+	\(rk	\*[CF \e(rk]	right center of big curly bracket
+	\(bv	\*[CF \e(bv]	bold vertical
+	\(lf	\*[CF \e(lf]	left floor (left bottom of big
 			square bracket)
-	\(rf	\\(rf	right floor (right bottom)
-	\(lc	\\(lc	left ceiling (left top)
-	\(rc	\\(rc	right ceiling (right top)
-	\(``	\\(``	left double quote
-	\(lq	\\(lq	left double quote
-	\(''	\\(''	right double quote
-	\(rq	\\(rq	right double quote
-	\(dq	\\(dq	double quote
-	\(oq	\\(oq	left single quote
-	\(cq	\\(cq	right single quote
-	\(aq	\\(aq	single quote
-.rm EM
+	\(rf	\*[CF \e(rf]	right floor (right bottom)
+	\(lc	\*[CF \e(lc]	left ceiling (left top)
+	\(rc	\*[CF \e(rc]	right ceiling (right top)
+.rm mx
+.ie \n(cl \{\
+.	bp
+.\}
+.1C
+.ft B
+Available characters from groff_char(7)
+.ft R
+.sp
+.ds MG \|\s-2\v'-.4m'*\v'.4m'\s+2
+.\".ds MG \|\s-3\v'-.5m'\(dg\v'.5m'\s+3
+.fi
+The following table list the characters from the \fBgroff_char\fP(7)
+manual page which can be used with Heirloom \*(TR.
+Special characters marked with a * are only defined when
+\*(TR is started with option \f(CW-mgchar\fP.
+If a glyph is actually available depends on the font and
+output device.
+.sp
+.nr AC 0
+.de mx
+.	nf
+.	ft I
+.	ie \n(AC .ta .1i +.55i +.65i +.2i +1.55i +.2i +.8i
+.	el       .ta .1i +.55i +.65i      +1.55i      +.8i
+.	ie \n(AC \tOutput\tInput\t\tPostScript\t\tUnicode\tNotes
+.	el       \tOutput\tInput\tPostScript\tUnicode\tNotes
+.	ft R
+.	sp .2
+.	ns
+..
+.de cl
+.	bp
+..
+.de AC
+.	lds Pi
+.	lds Po
+.	if !\\$4 \{\
+.		ds Pi \\*[CF "\e[\\$4]"]
+.		ds Po \[\\$4]
+.	\}
+.	lds U
+.	if !\\$5 .ds U \U'\\$5'
+.	lds O
+.	lnr Lo 0
+.	ie \\$1P .ds O \\*(Po
+.	el .ie \\$1U .ds O \\*U
+.	el .if !\\$1 \{\
+.		length Lo \\$1
+.		ie \\n(Lo>2 .ds O \[\\$1]
+.		el .ds O \(\\$1
+.	\}
+.	lds I
+.	ie \\$2O .ds I \\*O
+.	el .ie !\\$2 \{\
+.		lnr Wi \w\f(CW\\$2
+.		ie \\n(Wi>\w\f(CW2n .ds I \\*[CF "\e[\\$2]"]
+.		el .ds I \\*[CF \e(\\$2]
+.	\}
+.	el .ie \\n(Lo=2 .ds I \\*[CF \e(\\$1]
+.	el .if \\n(Lo>2 .ds I \\*[CF "\e[\\$1]"]
+.	if \\$3 \{\
+.		ie !\\*I .as I \*(MG
+.		el .if !\\*(Pi .as Pi \*(MG
+.	\}
+.	lds UC
+.	if !\\$5 .ds UC \\*[CF \eU\(aq\\$5\(aq]
+.	ie \n(AC \t\&\\*O\t\\*I\t\\*(Po\t\\*(Pi\t\\*U\t\\*(UC\t\\$6
+.	el       \t\&\\*O\t\\*I\t\\*(Pi\t\\*(UC\t\\$6
+..
+.de P
+.	sp .4
+..
+.mx
+.\" 8-bit ASCII
+.AC U O 0 exclamdown     00A1 "inverted exclamation mark
+.AC U O 0 cent           00A2 "currency unit
+.AC U O 0 sterling       00A3 "pound sterling
+.AC U O 0 currency       00A4 "generic currency symbol
+.AC U O 0 yen            00A5 "Japanese currency symbol
+.AC U O 0 brokenbar      00A6 "broken bar
+.AC U O 0 section        00A7 "section sign
+.AC U O 0 dieresis       00A8 dieresis
+.AC U O 0 copyright      00A9 "copyright symbol
+.AC U O 0 ordfeminine    00AA "feminine ordinal
+.AC U O 0 guillemotleft  00AB "left guillemet [sic]
+.AC U O 0 logicalnot     00AC "logical not
+.AC U O 0 registered     00AE "registered mark symbol
+.AC U O 0 macron         00AF "overbar accent
+.AC U O 0 degree         00B0 "degree
+.AC U O 0 plusminus      00B1 "plus-minus sign
+.AC U O 0 twosuperior    00B2 "superscript 2
+.AC U O 0 threesuperior  00B3 "superscript 3
+.AC U O 0 acute          00B4 "acute accent
+.AC U O 0 mu             00B5 "micro sign
+.AC U O 0 paragraph      00B6 "end of paragraph marker
+.AC U O 0 periodcentered 00B7 "centered period
+.AC U O 0 cedilla        00B8 "cedilly accent
+.AC U O 0 onesuperior    00B9 "superscript 1
+.AC U O 0 ordmasculine   00BA "masculine ordinal
+.AC U O 0 guillemotright 00BB "right guillemet [sic]
+.AC U O 0 onequarter     00BC "1/4 symbol
+.AC U O 0 onehalf        00BD "1/2 symbol
+.AC U O 0 threequarters  00BE "3/4 symbol
+.AC U O 0 questiondown   00BF "inverted question mark
+.AC U O 0 Agrave         00C0 "A grave
+.AC U O 0 Aacute         00C1 "A acute
+.AC U O 0 Acircumflex    00C2 "A circumflex
+.AC U O 0 Atilde         00C3 "A tilde
+.AC U O 0 Adieresis      00C4 "A dieresis
+.AC U O 0 Aring          00C5 "A ring
+.AC U O 0 AE             00C6 "A+E combined
+.AC U O 0 Ccedilla       00C7 "C cedilla
+.AC U O 0 Egrave         00C8 "E grave
+.AC U O 0 Eacute         00C9 "E acute
+.AC U O 0 Ecircumflex    00CA "E circumflex
+.AC U O 0 Edieresis      00CB "E dieresis
+.AC U O 0 Igrave         00CC "I grave
+.AC U O 0 Iacute         00CD "I acute
+.AC U O 0 Icircumflex    00CE "I circumflex
+.AC U O 0 Idieresis      00CF "I dieresis
+.AC U O 0 Eth            00D0 "E th
+.AC U O 0 Ntilde         00D1 "N tilde
+.AC U O 0 Ograve         00D2 "O grave
+.AC U O 0 Oacute         00D3 "O acute
+.AC U O 0 Ocircumflex    00D4 "O circumflex
+.AC U O 0 Otilde         00D5 "O tilde
+.AC U O 0 Odieresis      00D6 "O dieresis
+.AC U O 0 multiply       00D7 multiply
+.AC U O 0 Oslash         00D8 "O slash
+.AC U O 0 Ugrave         00D9 "U grave
+.AC U O 0 Uacute         00DA "U acute
+.AC U O 0 Ucircumflex    00DB "U circumflex
+.AC U O 0 Udieresis      00DC "U dieresis
+.AC U O 0 Yacute         00DD "Y acute
+.AC U O 0 Thorn          00DE Thorn
+.AC U O 0 germandbls     00DF "German double s
+.AC U O 0 agrave         00E0 "a grave
+.AC U O 0 aacute         00E1 "a acute
+.AC U O 0 acircumflex    00E2 "a circumflex
+.AC U O 0 atilde         00E3 "a tilde
+.AC U O 0 adieresis      00E4 "a dieresis
+.AC U O 0 aring          00E5 "a ring
+.AC U O 0 ae             00E6 "a+e combined
+.AC U O 0 ccedilla       00E7 "c cedilla
+.AC U O 0 egrave         00E8 "e grave
+.AC U O 0 eacute         00E9 "e acute
+.AC U O 0 ecircumflex    00EA "e circumflex
+.AC U O 0 edieresis      00EB "e dieresis
+.AC U O 0 igrave         00EC "i grave
+.AC U O 0 iacute         00ED "i acute
+.AC U O 0 icircumflex    00EE "i circumflex
+.AC U O 0 idieresis      00EF "i dieresis
+.AC U O 0 eth            00F0 "e th
+.AC U O 0 ntilde         00F1 "n tilde
+.AC U O 0 ograve         00F2 "o grave
+.AC U O 0 oacute         00F3 "o acute
+.AC U O 0 ocircumflex    00F4 "o circumflex
+.AC U O 0 otilde         00F5 "o tilde
+.AC U O 0 odieresis      00F6 "o dieresis
+.AC U O 0 divide         00F7 divide
+.AC U O 0 oslash         00F8 "o slash
+.AC U O 0 ugrave         00F9 "u grave
+.AC U O 0 uacute         00FA "u acute
+.AC U O 0 ucircumflex    00FB "u circumflex
+.AC U O 0 udieresis      00FC "u dieresis
+.AC U O 0 yacute         00FD "y acute
+.AC U O 0 thorn          00FE thorn
+.AC U O 0 ydieresis      00FF "y dieresis
+.P
+.AC -D \(miD 1 Eth        00D0 "uppercase eth
+.AC Sd ""    1 eth        00F0 "lowercase eth
+.AC TP ""    1 Thorn      00DE "uppercase thorn
+.AC Tp ""    1 thorn      00FE "lowercase thorn
+.AC ss ""    1 germandbls 00DF "German double s
+.P Ligatures
+.AC /L ""    1 Lslash     0141 "L slash
+.AC /l ""    1 lslash     0142 "l slash
+.AC /O ""    1 Oslash     00D8 "O slash
+.AC /o ""    1 oslash     00F8 "o slash
+.AC AE ""    0 AE         00C6 "A+E combined
+.AC ae ""    0 ae         00E6 "a+e combined
+.AC OE ""    0 OE         0152 "O+E combined
+.AC oe ""    0 oe         0153 "o+e combined
+.AC IJ ""    0 IJ         0132 "I+J combined
+.AC ij ""    0 ij         0133 "i+j combined
+.AC .i ""    1 dotlessi   0131 "i without a dot
+.AC .j ""    1 dotlessj   0237 "j without a dot
+.P "Accented Characters
+.AC 'A \(aqA 1 Aacute      00C1 "A acute
+.AC 'C \(aqC 1 Cacute      0106 "C acute
+.AC 'E \(aqE 1 Eacute      00C9 "E acute
+.AC 'I \(aqI 1 Iacute      00CD "C acute
+.AC 'O \(aqO 1 Oacute      00D3 "O acute
+.AC 'U \(aqU 1 Uacute      00DA "U acute
+.AC 'Y \(aqY 1 Yacute      00DD "Y acute
+.AC 'a \(aqa 1 aacute      00E1 "a acute
+.AC 'c \(aqc 1 cacute      0107 "c acute
+.AC 'e \(aqe 1 eacute      00E9 "e acute
+.AC 'i \(aqi 1 iacute      00ED "i acute
+.AC 'o \(aqo 1 oacute      00F3 "o acute
+.AC 'u \(aqu 1 uacute      00FA "u acute
+.AC 'y \(aqy 1 yacute      00FD "y acute
+.AC :A ""    1 Adieresis   00C4 "A dieresis
+.AC :E ""    1 Edieresis   00CB "E dieresis
+.AC :I ""    1 Idieresis   00CF "I dieresis
+.AC :O ""    1 Odieresis   00D6 "O dieresis
+.AC :U ""    1 Udieresis   00FC "U dieresis
+.AC :Y ""    1 Ydieresis   0178 "Y dieresis
+.AC :a ""    1 adieresis   00E4 "a dieresis
+.AC :e ""    1 edieresis   00EB "e dieresis
+.AC :i ""    1 idieresis   00EF "i dieresis
+.AC :o ""    1 odieresis   00F6 "o dieresis
+.AC :u ""    1 udieresis   00FC "u dieresis
+.AC :y ""    1 ydieresis   00FF "y dieresis
+.AC ^A ""    1 Acircumflex 00C2 "A circumflex
+.AC ^E ""    1 Ecircumflex 00CA "E circumflex
+.AC ^I ""    1 Icircumflex 00CE "I circumflex
+.AC ^O ""    1 Ocircumflex 00D4 "O circumflex
+.AC ^U ""    1 Ucircumflex 00DB "U circumflex
+.AC ^a ""    1 acircumflex 00E2 "a circumflex
+.AC ^e ""    1 ecircumflex 00EA "e circumflex
+.AC ^i ""    1 icircumflex 00EE "i circumflex
+.AC ^o ""    1 ocircumflex 00F4 "o circumflex
+.AC ^u ""    1 ucircumflex 00FB "u circumflex
+.AC `A \(gaA 1 Agrave      00C0 "A grave
+.AC `E \(gaE 1 Egrave      00C8 "E grave
+.AC `I \(gaI 1 Igrave      00CC "I grave
+.AC `O \(gaO 1 Ograve      00D2 "O grave
+.AC `U \(gaU 1 Ugrave      00D9 "U grave
+.AC `a \(gaa 1 agrave      00E0 "a grave
+.AC `e \(gae 1 egrave      00E8 "e grave
+.AC `i \(gai 1 igrave      00EC "i grave
+.AC `o \(gao 1 ograve      00F2 "o grave
+.AC `u \(gau 1 ugrave      00F9 "u grave
+.AC ~A ""    1 Atilde      00C3 "A tilde
+.AC ~N ""    1 Ntilde      00D1 "N tilde
+.AC ~O ""    1 Otilde      00D5 "O tilde
+.AC ~a ""    1 atilde      00E3 "a tilde
+.AC ~n ""    1 ntilde      00F1 "n tilde
+.AC ~o ""    1 otilde      00F5 "o tilde
+.AC vS ""    1 Scaron      0160 "S caron
+.AC vs ""    1 scaron      0161 "s caron
+.AC vZ ""    1 Zcaron      017D "Z caron
+.AC vz ""    1 zcaron      017E "z caron
+.AC ,C ""    1 Ccedilla    00C7 "C cedilla
+.AC ,c ""    1 ccedilla    00E7 "c cedilla
+.AC oA ""    1 Aring       00C5 "A ring
+.AC oa ""    1 aring       00E5 "a ring
+.P Accents
+.AC a" ""    1 hungarumlaut 02DD "Hungarian umlaut
+.AC a- a\(mi 1 macron       00AF "overbar accent
+.AC a. ""    1 dotaccent    02D9 "dot accent
+.AC a^ ""    1 circumflex   005E "circumflex accent
+.AC aa ""    0 acute        00B4 "acute accent
+.AC ga ""    0 grave        0060 "grave accent
+.AC ab ""    1 breve        02D8 "breve accent
+.AC ac ""    1 cedilla      00B8 "cedilla accent
+.AC ad ""    1 dieresis     00A8 "umlaut accent
+.AC ah ""    1 caron        02C7 "caron accent
+.AC ao ""    1 ring         02DA "ring accent
+.AC a~ ""    1 tilde        007E "tilde accent
+.AC ho ""    1 ogonek       02dB "hook accent
+.AC ha ""    1 asciicircum  005E "high circumflex
+.AC ti ""    1 asciitilde   007E "tilde in the vertical middle
+.P Quotes
+.AC Bq ""       1 quotedblbase   201E "low double comma quote
+.AC bq ""       1 quotesinglbase 201A "low single comma quote
+.AC lq ""       0 quotedblleft   201C "left double quote
+.AC `` \(ga\(ga 0 ""             ""   \fI(alias)\fP
+.AC rq ""       0 quotedblright  201D "right double quote
+.AC '' \(aq\(aq 0 ""             ""   \fI(alias)\fP
+.AC oq ""       0 quoteleft      2018 "single open quote
+.AC cq ""       0 quoteright     2019 "single closing quote
+.AC aq ""       0 quotesingle    0027 "apostrophe quote
+.AC dq ""       0 quotedbl       0022 "double quote
+.AC Fo ""       1 guillemotleft  00AB "left guillemet
+.AC Fc ""       1 guillemotright 00BB "right guillemet
+.AC fo ""       1 guilsinglleft  2039 "single left angle quotation mark
+.AC fc ""       1 guilsinglright 203A "single right angle quotation mark
+.P Punctuation
+.AC r! "" 1 exclamdown   00A1 "inverted exclamation mark
+.AC r? "" 1 questiondown 00BF "inverted question mark
+.AC em "" 0 emdash       2014 "em-dash symbol
+.AC en "" 0 endash       2013 "en-dash symbol
+.AC hy "" 0 hyphen       2010 "hyphen symbol
+.P Brackets
+.AC lB "" 1 bracketleft    005B "left square bracket
+.AC rB "" 1 bracketright   005D "right square bracket
+.AC lC "" 1 braceleft      007B "left curly bracket
+.AC rC "" 1 braceright     007D "right curly bracket
+.AC la "" 1 angleleft      27E8 "mathematical left angle bracket
+.AC ra "" 1 angleright     27E9 "mathematical right angle bracket
+.AC bv "" 0 braceex        23AA "curly brace vertical extension
+.AC P  "" 0 bracketlefttp  23A1 "left square bracket top
+.AC P  "" 0 bracketleftbt  23A3 "left square bracket bottom
+.AC P  "" 0 bracketleftex  23A2 "left square bracket extension
+.AC P  "" 0 bracketrighttp 23A4 "right square bracket top
+.AC P  "" 0 bracketrightbt 23A6 "right square bracket bottom
+.AC P  "" 0 bracketrightex 23A5 "right square bracket extension
+.AC lt "" 0 bracelefttp    23A7 "left curly brace top
+.AC lk "" 0 braceleftmid   23A8 "left curly brace middle
+.AC lb "" 0 braceleftbt    23A9 "left curly brace bottom
+.AC P  "" 0 braceleftex    23AA "left curly brace extension
+.AC rt "" 0 bracerighttp   23AB "right curly brace top
+.AC rk "" 0 bracerightmid  23AC "right curly brace middle
+.AC rb "" 0 bracerightbt   23AD "right curly brace bottom
+.AC P  "" 0 bracerightex   23AA "right curly brace extension
+.AC P  "" 0 parenlefttp    239B "left parenthesis top
+.AC P  "" 0 parenleftbt    239D "left parenthesis bottom
+.AC P  "" 0 parenleftex    239C "left parenthesis extension
+.AC P  "" 0 parenrighttp   239E "right parenthesis top
+.AC P  "" 0 parenrightbt   23A0 "right parenthesis bottom
+.AC P  "" 0 parenrightex   239F "right parenthesis extension
+.P Arrows
+.AC <- <\(mi 0 arrowleft     2190 "arrow left
+.AC -> \(mi> 0 arrowright    2192 "arrow right
+.AC <> ""    1 arrowboth     2194 "horizontal arrow in both directions
+.AC da ""    0 arrowdown     2193 "arrow down
+.AC ua ""    0 arrowup       2191 "arrow up
+.AC va ""    1 arrowupdn     2195 "vertical arrow in both directions
+.AC lA ""    1 arrowdblleft  21D0 "double arrow left
+.AC rA ""    1 arrowdblright 21D2 "double arrow right
+.AC hA ""    1 arrowdblboth  21D4 "horizontal double arrow in both directions
+.AC dA ""    1 arrowdbldown  21D3 "double arrow down
+.AC uA ""    1 arrowdblup    21D1 "double arrow up
+.AC vA ""    1 uni21D5       21D5 "vertical double arrow in both directions
+.AC an ""    1 arrowhorizex  23AF "horizontal arrow extension
+.P Lines
+.AC ba ""    1 bar           007C "bar
+.AC br ""    0 SF110000      2502 "box rule
+.AC ul ""    0 underscore    005F "underscore
+.AC rn ""    0 overline      203E "overline
+.AC ru ""    0 ""            ""   "baseline rule
+.AC bb ""    1 brokenbar     00A6 "broken bar
+.AC sl ""    0 slash         002F "slash
+.AC rs ""    0 backslash     005C "revers slash
+.P "Text markers
+.AC ci ""    0 circle         25CB "circle
+.AC bu ""    0 bullet         2022 "bullet
+.AC dd ""    0 daggerdbl      2021 "double dagger
+.AC dg ""    0 dagger         2020 "dagger
+.AC lz ""    1 lozenge        25CA "diamond
+.AC sq ""    0 uni25A1        25A1 "square
+.\" \(ps ???
+.AC ps ""    1 paragraph      00B6 "end of paragraph marker
+.AC sc ""    0 section        00A7 "section sign
+.AC lh ""    0 uni261C        261C "hand pointing left
+.AC rh ""    0 a14            261E "hand pointing right
+.AC at ""    0 at             0040 "at
+.AC sh ""    1 numbersign     0023 "number sign
+.AC CR ""    1 carriagereturn 21B5 "carriage return
+.AC OK ""    1 a19            2713 "check mark
+.P "Legal symbols
+.AC co ""    0 copyright      00A9 "copyright sign
+.AC rg ""    0 registered     00AE "registered mark
+.AC tm ""    0 trademark      2122 "trademark symbol
+.AC bs ""    0 ""             ""   "AT&T Bell Labs logo
+.P "Currency symbols
+.AC Do "" 1 dollar   0024 "dollar
+.AC ct "" 0 cent     00A2 "cent
+.\" not available
+.\".AC eu "" 1 ""       ""   "official Euro symbol
+.AC Eu "" 1 Euro     20AC "font-specific Euro glyph
+.AC Ye "" 1 yen      00A5 "Japanese Yen
+.AC Po "" 1 sterling 00A3 "pound sterling
+.AC Cs "" 1 currency 00A4 "Scandinavian currency sign
+.AC Fn "" 1 florin   0192 "Dutch currency sign
+.P Units
+.AC de "" 0 degree       00B0 "degree
+.AC %0 "" 1 perthousand  2030 "per thousand
+.AC fm "" 0 minute       2032 "arc minute sign
+.AC sd "" 1 second       2033 "arc second sign
+.AC mc "" 1 mu           00B5 "micro sign
+.AC Of "" 1 ordfeminine  00AA "feminine ordinal
+.AC Om "" 1 ordmasculine 00BA "masculine ordinal
+.P "Logical symbols
+.AC AN  ""  1 logicaland   2227 "logical and
+.AC OR  ""  1 logicalor    2228 "logical or
+.AC no  ""  0 ""           ""   "logical not
+.AC tno tno 1 logicalnot   00AC "text variant of `no'
+.AC te  ""  0 existential  2203 "there exists
+.AC fa  ""  0 universal    2200 "for all
+.AC st  ""  1 suchthat     220B "such that
+.AC 3d  ""  1 therefore    2234 "therefor
+.AC tf  ""  1 ""           ""   \fI(alias)\fP
+.AC or  ""  0 bar          007C "bitwise OR
+.P "Mathematical symbols
+.AC 12 "" 0 onehalf       00BD "1/2 symbol
+.AC 14 "" 0 onequarter    00BC "1/4 symbol
+.AC 34 "" 0 threequarters 00BE "3/4 symbol
+.AC 18 "" 1 oneeighth     215B "1/8 symbol
+.AC 38 "" 1 threeeighths  215C "3/8 symbol
+.AC 58 "" 1 fiveeighths   215D "5/8 symbol
+.AC 78 "" 1 seveneighths  215E "7/8 symbol
+.AC S1 "" 1 onesuperior   00B9 "superscript 1
+.AC S2 "" 1 twosuperior   00B2 "superscript 2
+.AC S3 "" 1 threesuperior 00B3 "superscript 2
+.P
+.AC pl  ""     0 plus           002B "plus
+.AC mi  ""     0 minus          2212 "minus
+.\" \(-+ ???
+.AC -+  \(mi+  1 uni2213        2213 "minus-plus
+.AC +-  +\(mi  0 ""             ""   "plus-minus
+.AC t+- t+\(mi 1 plusminus      00B1 "text variant of plus-minus
+.AC pc  ""     1 periodcentered 00B7 "period centered
+.AC md  ""     1 dotmath        22C5 "multiplication dot
+.AC mu  ""     0 ""             ""   "multiply sign
+.AC tmu ""     1 multiply       00D7 "text variant of multiply sign
+.AC c*  ""     1 circlemultiply 2297 "multiply sign in circle
+.AC c+  ""     1 circleplus     2295 "plus sign in circle
+.AC di  ""     0 ""             ""   "division sign
+.AC tdi ""     1 divide         00F7 "text variant of division sign
+.\" \(f/ ???
+.AC P   f/     1 fraction       2044 "bar for fractions
+.\".AC f/  ""     1 fraction       2044 "bar for fractions
+.AC **  ""     0 asteriskmath   2217 "mathematical asterisk
+.P
+.AC <= "" 0 lessequal    2264 "less or equal
+.AC >= "" 0 greaterequal 2265 "greater or equal
+.AC << "" 1 uni226A      226A "much less
+.AC >> "" 1 uni226B      226B "much greater
+.AC eq "" 0 equal        003D "equal
+.AC != "" 0 notequal     2260 "not equal
+.AC == "" 0 equivalence  2261 "equivalent
+.AC ne "" 1 uni2262      2262 "not equivalent
+.AC =~ "" 1 congruent    2245 "congruent
+.\" |= vs. ~= problem
+.\".AC |= "" 1 uni2243      2243 "asymptotically equal to
+.AC ap "" 0 similar      223C "similar
+.AC ~~ "" 0 approxequal  2248 "almost equal to
+.\" |= vs. ~= problem
+.\".AC ~= "" 0 approxequal  2248 "almost equal to
+.AC pt "" 0 proportional 221D "proportional
+.P
+.AC es "" 0 emptyset       2205 "empty set
+.AC mo "" 0 element        2208 "element of
+.AC nm "" 1 notelement     2209 "not element of
+.AC sb "" 0 propersubset   2282 "proper subset
+.AC nb "" 1 notsubset      2284 "not subset
+.AC sp "" 0 propersuperset 2283 "proper superset
+.AC nc "" 1 uni2285        2285 "not superset
+.AC ib "" 0 reflexsubset   2286 "subset or equal
+.AC ip "" 0 reflexsuperset 2287 "superset or equal
+.AC ca "" 0 intersection   2229 "intersection
+.AC cu "" 0 union          222A "union
+.P
+.AC /_  "" 1 angle         2220 "angle
+.\" \(pp ???
+.AC pp  "" 1 perpendicular 22A5 "perpendicular
+.AC is  "" 0 integral      222B "integral
+.AC *S  "" 0 summation     2211 "summation
+.AC sum "" 1 ""            ""   \fI(alias)\fP
+.AC *P  "" 0 product       220F "product
+.AC P   "" 1 coproduct     2210 "coproduct
+.AC gr  "" 0 gradient      2207 "gradient
+.AC sr  "" 0 radical       221A "square root
+.AC P   "" 1 sqrt          ""   \fI(alias)\fP
+.AC P   "" 0 radicalex     ""   "square root continuation
+.AC P   "" 1 sqrtex        ""   \fI(alias)\fP
+.P
+.AC lc "" 0 uni2308 2308 "left ceiling
+.AC rc "" 0 uni2309 2309 "right ceiling
+.AC lf "" 0 uni230A 230A "left floor
+.AC rf "" 0 uni230B 230B "right floor
+.P
+.AC if ""    0 infinity    221E "infinity
+.AC Ah ""    1 aleph       2135 "aleph
+.AC Im ""    1 Ifraktur    2111 "Gothic I, imaginary
+.AC Re ""    1 Rfraktur    211C "Gothic R, real
+.AC wp ""    1 weierstrass 2118 "Weierstrass p
+.AC pd ""    0 partialdiff 2202 "partial differentiation
+.AC -h \(mih 1 hbar        210F "Planck constant / 2pi (h-bar)
+.P "Greek glyphs
+.AC +h "" 1 theta1  03D1 "variant theta
+.AC +f "" 1 phi1    03C6 "variant phi
+.AC +p "" 1 omega1  03D6 "variant pi
+.AC +e "" 1 uni03F5 03F5 "variant epsilon
+.P "Card symbols
+.AC CL "" 1 club    2663 "black club suit
+.AC SP "" 1 spade   2660 "black spade suit
+.AC HE "" 1 heart   2665 "black heart suit
+.AC U  "" 0 uni2661 2661 "white heart suit
+.AC DI "" 1 diamond 2666 "black diamond suit
+.AC U  "" 0 uni2662 2662 "white diamond suit
 .ds EM
