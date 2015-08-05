@@ -1691,6 +1691,7 @@ i1:
 			frame->loopf |= LOOP_NEXT;
 		}
 i2:
+		noschr = 0;
 		bol = 1;
 		while ((cbits(i = getch())) == ' ')
 			;
