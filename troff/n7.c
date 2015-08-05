@@ -897,7 +897,7 @@ e1:
 
 
 static int
-maybreak(tchar c)
+maybreak(tchar c, int dv)
 {
 	int	i, k = cbits(c);
 
@@ -909,7 +909,7 @@ maybreak(tchar c)
 	case IMP:
 		return 0;
 	case 0:
-		return k == '-' || k == EMDASH;
+		return dv && (k == '-' || k == EMDASH);
 	default:
 		for (i = 0; breakch[i] && i < NSENT; i++)
 			if (breakch[i] == k)
@@ -1139,7 +1139,7 @@ m2:
 		storelsh(lgs, lgr);
 	}
 #endif	/* !NROFF */
-	if (!maybreak(*(linep - 1))) {
+	if (!maybreak(*(linep - 1), 1)) {
 		*linep = sfmask(*(linep - 1)) | hc;
 		w = -kernadjust(*(linep - 1), *(linep + 1));
 		w += kernadjust(*(linep - 1), *linep);
@@ -1221,6 +1221,7 @@ getword(int x)
 	register tchar i = 0, *wp, nexti, gotspc = 0, t;
 	int noword, n, inword = 0;
 	int lastsp = ' ';
+	static int dv;
 #if defined (EUC) && defined (NROFF) && defined (ZWDELIMS)
 	wchar_t *wddelim;
 	char mbbuf3[MB_LEN_MAX + 1];
@@ -1229,6 +1230,7 @@ getword(int x)
 	tchar m;
 #endif /* EUC && NROFF && ZWDELIMS */
 
+	dv = 0;
 	noword = 0;
 	if (x)
 		if (pendw) {
@@ -1366,7 +1368,7 @@ g0:
 				wordp[-1] |= BLBIT;
 			goto g1;
 		}
-		if (maybreak(j))
+		if (maybreak(j, dv)) {
 			if (wordp > word + 1) {
 				if (!xflag)
 					hyoff = 2;
@@ -1374,6 +1376,10 @@ g0:
 				if (hyp > (hyptr + NHYP - 1))
 					hyp = hyptr + NHYP - 1;
 			}
+		} else {
+			int i = cbits(j);
+			dv = alph(j) || (i >= '0' && i <= '9');
+		}
 		if (xflag && nhychar(j))
 			hyoff = 2;
 	}
@@ -2039,7 +2045,7 @@ parword(void)
 	while (*hyp && *hyp <= wp)
 		hyp++;
 	while (wch) {
-		if (ishyp(wp) && !maybreak(wp[-1])) {
+		if (ishyp(wp) && !maybreak(wp[-1], 1)) {
 			i = sfmask(wp[-1]) | hc;
 			w = width(i);
 			w += kernadjust(wp[-1], i);
@@ -2077,7 +2083,7 @@ parword(void)
 			} }
 #endif	/* !NROFF */
 		}
-		if (pghyphw[pgwords] || (wp > word && maybreak(wp[-1]))) {
+		if (pghyphw[pgwords] || (wp > word && maybreak(wp[-1], 1))) {
 			if (pghyphw[pgwords])
 				pghyphw[pgwords] -= kernadjust(wp[-1], wp[0]);
 			pgne += pgwordw[pgwords];
