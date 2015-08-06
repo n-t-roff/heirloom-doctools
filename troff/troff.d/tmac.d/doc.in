@@ -172,8 +172,7 @@
 .ie \\n(fV==1 \{\
 .	nr aP 0
 .	ie \\n(dZ==1 \{\
-.		if \\n(oM>1 .as b1 \\*(S0
-.\".		if \\n(oM>1:((\\n(sM==1)&(\\n(tP==0)) .as b1 \\*(S0
+.		if \\n(oM .as b1 \\*(S0
 .	\}
 .	el \{\
 .		if \\n(oM>0 \{\
@@ -1413,7 +1412,7 @@
 .de Do
 .if !\\n(aC \{\
 .	ds mN Do
-.	if \\n(.$ \{\
+.	ie \\n(.$ \{\
 .		nr fV \\n(.$
 .		lnr _i_ 0 1
 .		while \\n(.$ \{\
@@ -1422,6 +1421,7 @@
 .		\}
 .		fV
 .	\}
+.	el .ds S0
 .\}
 .ds qL \&\\*(Lq
 .eO
@@ -1517,7 +1517,7 @@
 .de Po
 .if !\\n(aC \{\
 .	ds mN Po
-.	if \\n(.$ \{\
+.	ie \\n(.$ \{\
 .		nr fV \\n(.$
 .		lnr _i_ 0 1
 .		while \\n(.$ \{\
@@ -1526,6 +1526,7 @@
 .		\}
 .		fV
 .	\}
+.	el .ds S0
 .\}
 .ds qL \&(
 .eO
@@ -1541,6 +1542,7 @@
 .			ds A\\n+[_i_] "\\$1
 .			shift
 .		\}
+.		ds S0
 .		fV
 .	\}
 .\}
@@ -1551,7 +1553,7 @@
 .de Qo
 .if !\\n(aC \{\
 .	ds mN Qo
-.	if \\n(.$ \{\
+.	ie \\n(.$ \{\
 .		nr fV \\n(.$
 .		lnr _i_ 0 1
 .		while \\n(.$ \{\
@@ -1560,6 +1562,7 @@
 .		\}
 .		fV
 .	\}
+.	el .ds S0
 .\}
 .ds qL \&\\*q
 .eO
@@ -3994,14 +3997,16 @@ File:
 .	lnr _i_ 10
 .	while \\n[_i_] \{\
 .		nr _i_ -1
-.		nr o\\n[_i_].saved  \\n[o\\n[_i_]]
-.		nr o\\n[_i_] 0
-.		nr v\\n[_i_].saved  \\n[v\\n[_i_]]
-.		nr v\\n[_i_] 0
-.		nr w\\n[_i_].saved  \\n[w\\n[_i_]]
-.		nr w\\n[_i_] 0
-.		ds L\\n[_i_].saved "\\*[L\\n[_i_]]
-.		ds t\\n[_i_].saved "\\*[t\\n[_i_]]
+.		nr nU\\n[_i_].saved \\n[nU\\n[_i_]]
+.		nr nU\\n[_i_] 0
+.		nr  o\\n[_i_].saved  \\n[o\\n[_i_]]
+.		nr  o\\n[_i_] 0
+.		nr  v\\n[_i_].saved  \\n[v\\n[_i_]]
+.		nr  v\\n[_i_] 0
+.		nr  w\\n[_i_].saved  \\n[w\\n[_i_]]
+.		nr  w\\n[_i_] 0
+.		ds  L\\n[_i_].saved "\\*[L\\n[_i_]]
+.		ds  t\\n[_i_].saved "\\*[t\\n[_i_]]
 .	\}
 .	nr Xt.saved  \\n[Xt]
 .	nr Xt 0
@@ -4131,11 +4136,12 @@ File:
 .	lnr _i_ 10
 .	while \\n[_i_] \{\
 .		nr _i_ -1
-.		nr o\\n[_i_]  \\n[o\\n[_i_].saved]
-.		nr v\\n[_i_]  \\n[v\\n[_i_].saved]
-.		nr w\\n[_i_]  \\n[w\\n[_i_].saved]
-.		ds L\\n[_i_] "\\*[L\\n[_i_].saved]
-.		ds t\\n[_i_] "\\*[t\\n[_i_].saved]
+.		nr nU\\n[_i_] \\n[nU\\n[_i_].saved]
+.		nr  o\\n[_i_]  \\n[o\\n[_i_].saved]
+.		nr  v\\n[_i_]  \\n[v\\n[_i_].saved]
+.		nr  w\\n[_i_]  \\n[w\\n[_i_].saved]
+.		ds  L\\n[_i_] "\\*[L\\n[_i_].saved]
+.		ds  t\\n[_i_] "\\*[t\\n[_i_].saved]
 .	\}
 ..
 .\" vim:set syntax=groff:
