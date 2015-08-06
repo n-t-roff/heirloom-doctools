@@ -1373,7 +1373,8 @@ g0:
 				int i;
 				if (!xflag)
 					hyoff = 2;
-				if (hyp[-1] == wordp && (
+				if (hyp > hyptr && wordp > word
+				    && hyp[-1] == wordp && (
 				    (i = cbits(wordp[-1])) == '-'
 				    || i == EMDASH))
 					hyp--;
