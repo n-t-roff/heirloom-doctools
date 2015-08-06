@@ -1370,8 +1370,13 @@ g0:
 		}
 		if (maybreak(j, dv)) {
 			if (wordp > word + 1) {
+				int i;
 				if (!xflag)
 					hyoff = 2;
+				if (hyp[-1] == wordp && (
+				    (i = cbits(wordp[-1])) == '-'
+				    || i == EMDASH))
+					hyp--;
 				*hyp++ = wordp + 1;
 				if (hyp > (hyptr + NHYP - 1))
 					hyp = hyptr + NHYP - 1;
