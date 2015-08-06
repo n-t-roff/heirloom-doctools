@@ -2345,6 +2345,7 @@
 .el \{\
 .	ds mN El
 .	nr iD 0
+.	ds t\\n(lC
 .	ie \\*[L\\n(lC]cL \{\
 .		nr iD 1
 .		cC
@@ -2650,7 +2651,7 @@
 .nr w\\n(tY 0
 .nr h\\n(tY 0
 .nr o\\n(tY 0
-.ds t\\n(tY \\*[t\\n(lC]
+.\".ds t\\n(tY \\*[t\\n(lC]
 .ds L\\n(tY
 .nr v\\n(tY 0
 ..
