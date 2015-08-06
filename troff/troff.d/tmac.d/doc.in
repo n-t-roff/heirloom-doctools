@@ -2347,7 +2347,7 @@
 .		cC
 .	\}
 .	el .ie \\*[L\\n(lC]nU \{\
-.		nr nU 0
+.		nr nU\\n(lC 0
 .	\}
 .	el .ie \\n(mL>0 \{\
 .		nr iD 1
@@ -2492,10 +2492,10 @@
 .\" NS hU macro - Hyphen paragraph list (sub bullet list)
 .\" NS bU macro - Bullet paragraph list
 .de nU
-.nr oM \\n(oM+1
-.nr nU \\n(nU+1
-.ds b1 \&\\n(nU.
-.uL
+.	nr oM +1
+.	nr nU\\n(lC +1
+.	ds b1 \&\\n[nU\\n(lC].
+.	uL
 ..
 .de bU
 .nr oM \\n(oM+1
