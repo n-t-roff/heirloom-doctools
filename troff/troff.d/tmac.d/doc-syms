@@ -157,9 +157,10 @@
 .de __OSx
 .	ie \\n(aP=\\n(aC .aZ
 .	el \{\
-.		lnr _aP_ \\n(aP
+.		lnr i \\n(aP
 .		nr aP +1
-.		if !\\n[C\\n(aP]=3 .as b1 \\*[S\\n[_aP_]]
+.		ie !\\ni .if \\n[C\\n(aP]=2 .as b1 \\*(sV
+.		el .as b1 \\*[S\\ni]
 .		nr cF \\n(.f
 .		nr cZ \\n(.s
 .		nR
