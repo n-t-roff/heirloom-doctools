@@ -267,6 +267,8 @@
 .	\}
 .	el \{\
 .		if ((\\n(sM==1)&(\\n(tP==0)) \{\
+.			as b1 \\*[S\\n(aC]
+.			ds S0
 .			x1
 .		\}
 .	\}
@@ -1295,7 +1297,7 @@
 .\}
 .if \\n(aC \{\
 .	nr aP +1
-.	while \\n[C\\n(aP]=4 \{\
+.	while \\n[C\\n(aP]=4&(\\n(aP<=\\n(aC) \{\
 .		as b1 \\*[A\\n(aP]
 .		if \\n(aP=\\n(aC .aZ
 .		nr aP +1

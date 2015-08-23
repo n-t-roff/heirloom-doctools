@@ -269,14 +269,14 @@
 .	if \\$2paper  .ds vT UNTITLED
 .\}
 .if !\\$3 \{\
-.	if \\$3USD   .ds vT BSD User's Supplementary Documents
-.	if \\$3PS1   .ds vT BSD Programmers's Supplementary Documents
-.	if \\$3AMD   .ds vT BSD Ancestral Manual Documents
-.	if \\$3SMM   .ds vT BSD System Manager's Manual
-.	if \\$3URM   .ds vT BSD Reference Manual
-.	if \\$3PRM   .ds vT BSD Programmers's Manual
-.	if \\$3IND   .ds vT BSD Manual Master Index
-.	if \\$3LOCAL .ds vT BSD Local Manual
+.	if \\$3USD   .ds vT User's Supplementary Documents
+.	if \\$3PS1   .ds vT Programmer's Supplementary Documents
+.	if \\$3AMD   .ds vT Ancestral Manual Documents
+.	if \\$3SMM   .ds vT System Manager's Manual
+.	if \\$3URM   .ds vT Reference Manual
+.	if \\$3PRM   .ds vT Programmer's Manual
+.	if \\$3IND   .ds vT Manual Master Index
+.	if \\$3LOCAL .ds vT Local Manual
 .	if \\$3tahoe .as vT \ (Tahoe Architecture)
 .	if \\$3vax .as vT \ (VAX Architecture)
 .	if \\$3hp300 .as vT \ (HP300 Architecture)
