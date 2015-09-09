@@ -39,13 +39,13 @@
 .\" .mdoc-parse - attempt to parse troff request arguments
 .\"     %beginstrip%
 .do xflag 3
-.nr .g 1
 .if t \{\
 .       so @MACDIR@/doc-ditroff
 .\}
 .if n \{\
 .       so @MACDIR@/doc-nroff
 .\}
+.nr .g 1
 .ds <= \(<=
 .ds >= \(>=
 .ds Lq \(lq
