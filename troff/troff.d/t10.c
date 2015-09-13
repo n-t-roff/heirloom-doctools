@@ -134,7 +134,7 @@ static void	ptlink(int);
 static void	ptulink(int);
 static void	ptyon(int);
 static void	ptchar(int, int);
-static void	pnc(int, struct afmtab *, int);
+static void	pnc(int, struct afmtab *);
 
 void
 growfonts(int n)
@@ -424,7 +424,6 @@ ptout0(tchar *pi, tchar *pend)
 	struct afmtab	*a;
 	register int j;
 	register int k, w = 0;
-	int cw;
 	int	z, dx, dy, dx2, dy2, n, c;
 	register tchar	i;
 	int outsize;	/* size of object being printed */
@@ -574,7 +573,6 @@ ptout0(tchar *pi, tchar *pend)
 				k = ftrans(xfont, k);
 		}
 	}
-	cw = w;
 	if (xfont != mfont)
 		ptfont();
 	if (xpts != mpts || zoomtab[xfont] != mzoom)
@@ -700,12 +698,11 @@ ptout0(tchar *pi, tchar *pend)
 			oput('c');
 			oput(k);
 			oput('\n');
-			fdprintf(ptid, "x h %d\n", cw);
 		}
 	} else {
 		if (esc)
 			ptesc();
-		pnc(k, a, cw);
+		pnc(k, a);
 	}
 	if (bd && !fmtchar) {
 		bd -= HOR;
@@ -713,9 +710,8 @@ ptout0(tchar *pi, tchar *pend)
 			ptesc();
 		if (k < 128) {
 			fdprintf(ptid, "c%c\n", k);
-			fdprintf(ptid, "x h %d\n", cw);
 		} else
-			pnc(k, a, cw);
+			pnc(k, a);
 		if (z)
 			esc -= bd;
 	}
@@ -726,21 +722,18 @@ ptout0(tchar *pi, tchar *pend)
 }
 
 static void
-pnc(int k, struct afmtab *a, int cw) {
+pnc(int k, struct afmtab *a) {
 	int j;
 
 	if (k >= nchtab + 128) {
 		if (a && (j = a->fitab[k-nchtab-128-32]) < a->nchars &&
 		    a->nametab[j] != NULL) {
 			fdprintf(ptid, "CPS%s\n", a->nametab[j]);
-			fdprintf(ptid, "x h %d\n", cw);
 		} else {
 			fdprintf(ptid, "N%d\n", k - (nchtab+128));
-			fdprintf(ptid, "x h %d\n", cw);
 		}
 	} else {
 		fdprintf(ptid, "C%s\n", &chname[chtab[k - 128]]);
-		fdprintf(ptid, "x h %d\n", cw);
 	}
 }
 
