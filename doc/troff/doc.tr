@@ -7159,7 +7159,8 @@ then a command, then other parameters.
 \fBx T \fIs\fP	\fRname of typesetter is \fIs\fR
 .nr nosave 0
 \fBx r \fIn h v\fP	\fRresolution is \fIn\fR units/inch;
-		\fIh\fR = minimum horizontal motion, \fIv\fR = minimum vertical
+		\fIh\fR = minimum horizontal motion, \fIv\fR =\
+ minimum vertical motion
 .nr nosave 1
 \fBx i	\fRinitialize\fP
 \fBx f \fIn s\fP	\fRmount font \fIs\fR on font position \fIn\fR
