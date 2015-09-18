@@ -1357,6 +1357,12 @@ copy:
 	case 'r':	/* full em up */
 	case 'd':	/* half em down */
 		return(sethl(k));
+	case 'I':
+		if (xflag) {
+			i = setgA() + '0';
+			goto gx;
+		}
+		goto dfl;
 	case 'A':	/* set anchor */
 		if (gflag) {	/* acceptable as name */
 			i = setgA() + '0';

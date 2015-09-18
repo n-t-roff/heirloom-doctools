@@ -408,7 +408,7 @@
 .\}
 .el \{\
 .	lnr _l_ 0
-.	length _l_ \\*[A\\n(aP]
+.	length _l_ "\\*[A\\n(aP]
 .	lds _lc_
 .	lds _slc_
 .	if \\n[_l_] \{\
@@ -1884,11 +1884,13 @@
 .	lnr _l_ 0
 .	length _l_ "\\$1
 .	ie \\n[_l_]>1&(\\n[_l_]<4) \{\
-.		ie d mdoc.cm.\\$1 .nr aT 1
+.		ie !\I\\$1 .nr aT 2
+.		el .ie d mdoc.cm.\\$1 .nr aT 1
 .		el .nr aT 2
 .	\}
 .	el .ie \\n[_l_]=1 \{\
-.		ie d z\\$1 .nr aT \\*(z\\$1
+.		ie !\I\\$1 .nr aT 2
+.		el .ie d z\\$1 .nr aT \\*(z\\$1
 .		el .nr aT 2
 .	\}
 ..
@@ -2243,8 +2245,10 @@
 .			lds _tS_ \\*(\\$1
 .			substring _tS_ 1 \\n[_x_]-1
 .			lnr _m_ 0
-.			if d mdoc.cm.\\*[_tS_]  .nr _m_ 1
-.			if d mdoc.ncm.\\*[_tS_] .nr _m_ 1
+.			if !\I\\*[_tS_] \{\
+.				if d mdoc.cm.\\*[_tS_]  .nr _m_ 1
+.				if d mdoc.ncm.\\*[_tS_] .nr _m_ 1
+.			\}
 .			if \\n[_m_] \{\
 .				ds _tS_ \\*(\\$1
 .				box lV.box
@@ -2294,8 +2298,11 @@
 .		if !\\n(tW \{\
 .			lnr _x_ 0
 .			index _x_ tS " \"
-.			ie \\n[_x_]>=0 .nr w\\n(lC \w\\*(tS
-.			el .ie d mdoc.cm.\\*(tS .nr w\\n(lC \\n[\\*(tS]
+.			lnr m 0
+.			ie \\n[_x_]>=0 .
+.			el .ie !\I\\*(tS .
+.			el .if d mdoc.cm.\\*(tS .nr m 1
+.			ie \\nm .nr w\\n(lC \\n[\\*(tS]
 .			el .nr w\\n(lC \w\\*(tS
 .			nr tW 1
 .		\}
@@ -2819,7 +2826,7 @@
 .\"
 .\" NS Dl macro - display (one line) literal
 .de Dl
-'ta .5i 1i 1.5i 2i 2.5i 3i 3.5i 4i 4.5i 5i 5.5i 6i 6.5i
+.ta T .5i
 .in +\\n(Dsu
 .ie \\n(aC==0 \{\
 .	ie \\n(.$==0 \{\
@@ -2845,7 +2852,7 @@
 .\"
 .\" NS D1 macro - display (one line)
 .de D1
-'ta .5i 1i 1.5i 2i 2.5i 3i 3.5i 4i 4.5i 5i 5.5i 6i 6.5i
+.ta T .5i
 .in +\\n(Dsu
 .ie \\n(aC==0 \{\
 .	ie \\n(.$==0 \{\
@@ -3032,8 +3039,8 @@
 .\" NS Fa macro - Function arguments
 .de Fa
 .if \\n(aC==0 \{\
-.       ie \\n(.$==0 .tm Usage: .Fa Function Arguments ... \\*(Pu (#\\n(.c)
-.       el \{\
+.	ie \\n(.$==0 .tm Usage: .Fa Function Arguments ... \\*(Pu (#\\n(.c)
+.	el \{\
 .		ds mN Fa
 .		nr fV \\n(.$
 .		lnr _i_ 0 1
