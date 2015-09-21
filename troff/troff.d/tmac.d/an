@@ -54,8 +54,15 @@
 .	nr )I.def 7n
 .\}
 .el \{\
+.	ie \*(.Thtml \{\
+.		nr cR 1
+.		nh
+.		rm hy
+.	\}
+.	el \{\
+.		hy 14
+.	\}
 .	so @MACDIR@/tmac.gchar
-.	hy 14
 .	nr )I.def .5i
 .\}
 .ds lq \(lq

@@ -5,7 +5,7 @@ CRYPT = -sOwnerPassword="`dd if=/dev/random bs=12 count=1 2>/dev/null | \
 	-dKeyLength=128 -dPermissions=-300
 TROFFFLAGS = -mgchar
 
-.SUFFIXES: .tr .ps .pdf
+.SUFFIXES: .tr .ps .pdf .html
 
 .tr.ps:
 	rm -f $@; trap "rm -f $$$$.ps" 0 2 3; \
@@ -15,9 +15,13 @@ TROFFFLAGS = -mgchar
 .ps.pdf:
 	gs -sOutputFile=$@ $(DISTFLAGS) -f $<
 
+.tr.html:
+	tbl $< | troff -Thtml $(TROFFFLAGS) | dhtml -t \
+	    "Nroff/Troff User's Manual" > $@
+
 all: doc.ps
 
 clean:
-	rm -f doc.ps doc.pdf core log *~
+	rm -f doc.ps doc.pdf doc.html core log *~
 
 mrproper: clean

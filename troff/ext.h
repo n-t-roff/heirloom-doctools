@@ -78,6 +78,7 @@ extern	long	lvmot;
 extern	size_t	*chtab;
 #else
 extern	short	*chtab;
+extern	int	html;
 #endif
 extern	int	*pnp;
 extern	int	*pstab;

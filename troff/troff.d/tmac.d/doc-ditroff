@@ -83,6 +83,13 @@
 .tr *\(**
 .nr sI \w\f(CW,u*5
 .nr Ti \n(sIu
+.if \*(.Thtml \{\
+.	nr cR 1
+.	nh
+.	rm hy
+.	\" pseudo-transition to first page (else "x font" is not output):
+.	br
+.\}
 .nr Pp .5v
 .ds lS \0
 .nr lS \w'\0'u
@@ -108,15 +115,20 @@
 .		ie !\\*(gPNull .as hT \|(\|\\*(cH\\*(gP\|)
 .		el .as hT \\|(\\|\\*(cH\\|)
 .	\}
-.	wh 0 hM
-.	wh -1.25i fM
+.	ie \\n(cR \{\
+.		hM
+.	\}
+.	el \{\
+.		wh 0 hM
+.		wh -1.25i fM
+.	\}
 .	\" .tm Here is gX == \\n(gX
 .	ie \\n(gX==1 \{\
 .		rm n1
-.		bp
+.		if !\\n(cR .bp
 .	\}
 .	el \{\
-'		bp
+.		if !\\n(cR 'bp
 .	\}
 .	nr % 1
 .	nr gX 0

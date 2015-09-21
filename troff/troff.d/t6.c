@@ -2813,6 +2813,8 @@ un2tr(int c, int *fp)
 			cpushback(buf);
 			unadd(c, NULL);
 			return WORDSP;
+		} else if (html) {
+			return c;
 		} else {
 			if (warn & WARN_CHAR)
 				errprint("no glyph available for %U", c);

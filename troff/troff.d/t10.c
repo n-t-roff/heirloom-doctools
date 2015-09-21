@@ -195,6 +195,7 @@ ptinit(void)
 	size_t	l;
 	size_t	l2;
 
+	if (!strcmp(devname, "html")) html = 1;
 	growfonts(NFONT+1);
 	memcpy(bdtab, initbdtab,
 		max((NFONT+1) * sizeof *bdtab, sizeof initbdtab));
@@ -730,7 +731,8 @@ pnc(int k, struct afmtab *a) {
 		    a->nametab[j] != NULL) {
 			fdprintf(ptid, "CPS%s\n", a->nametab[j]);
 		} else {
-			fdprintf(ptid, "N%d\n", k - (nchtab+128));
+			fdprintf(ptid, "N%d\n",
+			    k - (html ? 0 : (nchtab + 128)) );
 		}
 	} else {
 		fdprintf(ptid, "C%s\n", &chname[chtab[k - 128]]);

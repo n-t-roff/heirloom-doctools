@@ -13,10 +13,12 @@ SUBDIRS = \
 	troff/libhnj \
 	troff/libhnj/hyphen.d \
 	troff/troff.d/font \
+	troff/troff.d/font/devhtml \
 	troff/troff.d/tmac.d \
 	troff/troff.d/postscript \
 	troff/troff.d \
 	troff/troff.d/dpost.d \
+	troff/troff.d/dhtml \
 	troff/nroff.d \
 	troff/nroff.d/terms.d \
 	picpack \

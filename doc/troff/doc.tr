@@ -2047,7 +2047,8 @@ Reference	Sequence	Meaning
 \T'e_a'9.1\T	\T'e_a'\fB\ea\fR\T	\T'e_a'Non-interpreted leader character\T
 \T'e_A'24.6\T	\T'e_A'\fB\eA\fI\'string\'\fR\T	\T'e_A'Anchor definition\T
 \T'e_b'12.3\T	\T'e_b'\fB\eb\fI\'abc...\'\fR\T	\T'e_b'Bracket building function\T
-\T'e_B'1.4\T	\T'e_B'\fB\eB\fI\'string\'\fR\T	\T'e_B'Test if \fIstring\fR is a numerical expression\T
+\T'e_B'1.4\T	\T'e_B'\fB\eB\fI\(aqstring\(aq\fR\T	\T'e_B'Test if\
+ \fIstring\fR is a numerical expression\T
 \T'e_c'4.2\T	\T'e_c'\fB\ec\fR\T	\T'e_c'Interrupt text processing\T
 \T'e_C'2.1\T	\T'e_C'\fB\eC\fI\'xxx\'\fR\T	\T'e_C'Character named \fIxxx\fP\T
 \T'e_d'11.1\T	\T'e_d'\fB\ed\fR\T	\T'e_d'Forward (down) 1/2\|em vertical motion (1/2 line in \*(NR)\T
@@ -2058,6 +2059,8 @@ Reference	Sequence	Meaning
 \T'e_g'8\T	\T'e_g'\fB\eg\fIx\fR,\fB\eg(\fIxx\fR,\fB\eg[\fIxxx\fB]\fR\T	\T'e_g'Format of number register \fIx\fP, \fIxx\fR, or \fIxxx\fR\T
 \T'e_h'11.1\T	\T'e_h'\fB\eh\fI\'N\'\fR\T	\T'e_h'Local horizontal motion; move right \fIN\fR \fI(negative left)\fR\T
 \T'e_H'2.3\T	\T'e_H'\fB\eH\fI\'N\'\fR\T	\T'e_H'Height of current font is \fIN\fR\T
+\T'e_I'1.1\T	\T'e_I'\fB\eI\fI\(aqstring\(aq\fR\T	\T'e_B'Test if\
+ \fIstring\fR is a valid identifier name\T
 \T'e_j'4.1\T	\T'e_j'\fB\ej\fI\'\(+-N\'\fR\T	\T'e_j'Penalty for breaking a line after the current word is \fIN\fR\T
 \T'e_J'4.1\T	\T'e_J'\fB\eJ\fI\'\(+-N\'\fR\T	\T'e_J'Default line breaking penalty is \fIN\fR\T
 \T'e_k'11.3\T	\T'e_k'\fB\ek\fIx\fR,\fB\ek(\fIxx\fR,\fB\ek[\fIxxx\fB]\fR\T	\T'e_k'Mark horizontal \fIinput\fR place in register \fIx,\fR \fIxx\fR, or \fIxxx\fR\T
@@ -2327,6 +2330,8 @@ only one and two character names were permitted
 for request, macro, string, number register, and font names.
 Heirloom \*(TR can accept names containing a (nearly) arbitrary
 number of \s-1ASCII\s+1 characters.
+Escape \A'e_I'\fB\eI\fR\(aq\fIstring\fR\(aq can by used to test if
+\fIstring\fR is a valid identifier name.
 By default, request and macro names are still required
 to contain at most two characters for compatibility reasons.
 The \fB\-x\fR command line option,

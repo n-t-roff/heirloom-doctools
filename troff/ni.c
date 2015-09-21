@@ -62,6 +62,7 @@ char	devname[20] = "37";
 char	*termtab = FNTDIR;              /* rest added in ptinit() */
 char	*fontfile = FNTDIR;             /* rest added in casefp() */
 char	devname[20]	 = "ps";	/* default typesetter */
+int	html;
 
 #endif
 char	obuf[OBUFSZ];	/* characters collected here for typesetter output */
