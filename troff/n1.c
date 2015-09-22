@@ -1212,9 +1212,6 @@ ge:
 	case 'g':	/* return format of a number register */
 		setaf();
 		goto g0;
-	case 'N':	/* absolute character number */
-		i = setabs();
-		goto gx;
 	case 'P':	/* output line trap */
 		if (xflag == 0)
 			break;
@@ -1258,6 +1255,9 @@ copy:
 		if ((i = setuc()) == 0 && !tryglf)
 			goto g0;
 		return(i);
+	case 'N':	/* absolute character number */
+		i = setabs();
+		goto gx;
 	case 'E':	/* eschar out of copy mode */
 		if (xflag == 0)
 			goto dfl;
