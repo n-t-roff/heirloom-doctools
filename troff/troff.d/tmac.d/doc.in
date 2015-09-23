@@ -2245,7 +2245,7 @@
 .			lds _tS_ \\*(\\$1
 .			substring _tS_ 1 \\n[_x_]-1
 .			lnr _m_ 0
-.			if !\I\\*[_tS_] \{\
+.			if \I\\*[_tS_] \{\
 .				if d mdoc.cm.\\*[_tS_]  .nr _m_ 1
 .				if d mdoc.ncm.\\*[_tS_] .nr _m_ 1
 .			\}
