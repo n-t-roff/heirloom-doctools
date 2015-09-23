@@ -2225,7 +2225,7 @@ using \fB\ex\fI\'N\'\fR.\T
 \T'n_.L'5.1\T	\T'n_.L'\fB&L\fR\T	\T'n_.L'Current \fBls\fP value.\T
 \T'n_.minss'4.1\T	\T'n_.minss'\fB&minss\fR\T	\T'n_.minss'Current minimum space size.\T
 \T'n_.n'4\T	\T'n_.n'\fB&n\fR\T	\T'n_.n'Length of text portion on previous output line.\T
-\T'n_.ns'5\T	\T'n_.ns'\fB&ns\fR\T	\T'n_.ns'Non-zero of no-space mode is active.\T
+\T'n_.ns'5\T	\T'n_.ns'\fB&ns\fR\T	\T'n_.ns'Non-zero if no-space mode is active.\T
 \T'n_.nhychar'13\T	\T'n_.nhychar'\fB&nhychar\fR\T	\T'n_.nhychar'Current hyphenation-inhibiting characters.\T
 \T'n_.o'3\T	\T'n_.o'\fB&o\fR\T	\T'n_.o'Current page offset.\T
 \T'n_.p'3\T	\T'n_.p'\fB&p\fR\T	\T'n_.p'Current page length.\T

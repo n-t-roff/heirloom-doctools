@@ -526,6 +526,8 @@ sl:
 			i = dilev;
 		else if (strcmp(&name[1], "defpenalty") == 0)
 			i = dpenal ? dpenal - INFPENALTY0 - 1 : 0;
+		else if (strcmp(&name[1], "ns") == 0)
+			i = dip->nls;
 		else
 			goto s0;
 	} else if (strcmp(name, "lss") == 0)
