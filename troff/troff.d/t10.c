@@ -510,17 +510,19 @@ ptout0(tchar *pi, tchar *pend)
 		case LINKON:
 			linkout = sbits(i);
 			linkhp = hpos + esc;
+			if (html) ptlink(sbits(i));
 			return(pi+outsize);
 		case LINKOFF:
-			ptlink(sbits(i));
+			ptlink(html ? 0 : sbits(i));
 			linkout = 0;
 			return(pi+outsize);
 		case ULINKON:
 			linkout = sbits(i);
 			linkhp = hpos + esc;
+			if (html) ptulink(sbits(i));
 			return(pi+outsize);
 		case ULINKOFF:
-			ptulink(sbits(i));
+			ptulink(html ? 0 : sbits(i));
 			linkout = 0;
 			return(pi+outsize);
 		case INDENT:
@@ -920,8 +922,12 @@ ptanchor(int n)
 		return;
 	for (rp = anchors; rp; rp = rp->next)
 		if (rp->cnt == n) {
-			fdprintf(ptid, "x X Anchor %d,%d %s\n",
-				vpos + lead - lss, hpos + esc, rp->name);
+			if (html) {
+				fdprintf(ptid, "x X Anchor %s\n", rp->name);
+			} else {
+				fdprintf(ptid, "x X Anchor %d,%d %s\n",
+				    vpos + lead - lss, hpos + esc, rp->name);
+			}
 			break;
 		}
 }
@@ -933,13 +939,21 @@ _ptlink(int n, struct ref *rstart, const char *type)
 
 	if (ascii)
 		return;
+	if (html && !n) {
+		fdprintf(ptid, "x X %s\n", type);
+		return;
+	}
 	for (rp = rstart; rp; rp = rp->next)
 		if (rp->cnt == n) {
-			fdprintf(ptid, "x X %s %d,%d,%d,%d %s\n",
-				type,
-				linkhp, vpos + pts2u(1),
-				hpos + esc, vpos - pts * 8 / 10,
-				rp->name);
+			if (html)
+				fdprintf(ptid, "x X %s %s\n", type, rp->name);
+			else
+				fdprintf(ptid, "x X %s %d,%d,%d,%d %s\n",
+				    type,
+				    linkhp, vpos + pts2u(1),
+				    hpos + esc, vpos - pts * 8 / 10,
+				    rp->name);
+			break;
 		}
 }
 

@@ -198,3 +198,23 @@ out_x_f(int num, char *nam) {
 		n->data.p = strdup(nam);
 	}
 }
+
+void
+out_begin_link(char *l) {
+	printf("<a href=\"#%s\">", l);
+}
+
+void
+out_begin_ulink(char *l) {
+	printf("<a href=\"%s\">", l);
+}
+
+void
+out_end_link(void) {
+	fputs("</a>", stdout);
+}
+
+void
+out_anchor(char *a) {
+	printf("<span id=\"%s\"></span>", a);
+}

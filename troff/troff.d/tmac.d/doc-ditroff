@@ -73,7 +73,7 @@
 .ds sH \fB\s10
 .ds sP \s0
 .ds sY \fB\s10
-.ds sX \fR\s10
+.ds sX \fB\s10
 .ds tF \fR
 .ds tN \s9
 .ds vA \fI\s10

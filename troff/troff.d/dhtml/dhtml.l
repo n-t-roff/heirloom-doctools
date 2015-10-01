@@ -32,18 +32,32 @@
 #include "main.h"
 static int i0;
 %}
-%x X X_FONT_NUM X_FONT_NAM X_T
+%x X FONT_NUM FONT_NAM T X_X LINK ULINK ANCHOR
 WS  [ ]
 NWS [^ \n]
 %%
-<X>f{NWS}*{WS}+		{ BEGIN X_FONT_NUM; }
-<X>T{NWS}*{WS}+		{ BEGIN X_T; }
-<X>[^fT].*		{ BEGIN 0; }
-<X_FONT_NUM>[0-9]+{WS}+	{ i0 = atoi(yytext);
-			  BEGIN X_FONT_NAM; }
-<X_FONT_NAM>{NWS}+	{ out_x_f(i0, yytext);
+<X>f{NWS}*{WS}+		{ BEGIN FONT_NUM; }
+<X>T{NWS}*{WS}+		{ BEGIN T; }
+<X>X{NWS}*{WS}+		{ BEGIN X_X; }
+<X>[^fTX].*		{ BEGIN 0; }
+<FONT_NUM>[0-9]+{WS}+	{ i0 = atoi(yytext);
+			  BEGIN FONT_NAM; }
+<FONT_NAM>{NWS}+	{ out_x_f(i0, yytext);
 			  BEGIN 0; }
-<X_T>{NWS}+		{ out_x_T(yytext);
+<T>{NWS}+		{ out_x_T(yytext);
+			  BEGIN 0; }
+<X_X>Link{WS}+		{ BEGIN LINK; }
+<X_X>ULink{WS}+		{ BEGIN ULINK; }
+<X_X>U?Link{WS}*\n	{ out_end_link();
+			  BEGIN 0; }
+<X_X>Anchor{WS}+	{ BEGIN ANCHOR; }
+<X_X>LC_TYPE.*		{ BEGIN 0; }
+<X_X>[^AL].*		{ BEGIN 0; }
+<LINK>.+		{ out_begin_link(yytext);
+			  BEGIN 0; }
+<ULINK>.+		{ out_begin_ulink(yytext);
+			  BEGIN 0; }
+<ANCHOR>.+		{ out_anchor(yytext);
 			  BEGIN 0; }
 c.			{ char_c(yytext[1]); }
 [0-9][0-9].		{ char_c(yytext[2]); }

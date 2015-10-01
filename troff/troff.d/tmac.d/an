@@ -39,7 +39,6 @@
 .\" OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
 .\" EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 .do xflag 3
-.nr .g 1
 .ie n \{\
 .	nr cR 1
 .	utf8conv -
@@ -65,6 +64,7 @@
 .	so @MACDIR@/tmac.gchar
 .	nr )I.def .5i
 .\}
+.nr .g 1
 .ds lq \(lq
 .ds rq \(rq
 '	\" reset the basic page layout

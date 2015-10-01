@@ -1,5 +1,9 @@
 #define hdecr() hdec += 10 * fontsize
 
+void out_anchor(char *);
+void out_begin_link(char *);
+void out_begin_ulink(char *);
+void out_end_link(void);
 void out_f(int);
 void out_h(int);
 void out_n(int);
