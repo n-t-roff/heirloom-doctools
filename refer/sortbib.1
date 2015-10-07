@@ -72,71 +72,75 @@
 .\"	from 4.3BSD-Tahoe sortbib.1	6.1 (Berkeley) 4/29/85
 .\"
 .\".TH SORTBIB 1 "April 29, 1985"
-.TH SORTBIB 1 "12/12/05" "Heirloom Documentation Tools" "BSD System Compatibility"
-.UC 5
-.SH NAME
-sortbib \- sort bibliographic database
-.SH SYNOPSIS
-\fBsortbib\fR [\fB\-s\ \fIKEYS\fR] \fIdatabase\fR ...
-.SH DESCRIPTION
-.I Sortbib
+.Dd December 12, 2005
+.Dt SORTBIB 1
+.Os
+.Sh NAME
+.Nm sortbib
+.Nd sort bibliographic database
+.Sh SYNOPSIS
+.Nm
+.Op Fl s Ar KEYS
+.Ar database
+.Ar ...
+.Sh DESCRIPTION
+.Nm
 sorts files of records containing
-.I refer
-key-letters by user-specified keys.
-Records may be separated by blank lines,
-or by \&.[ and \&.] delimiters,
-but the two styles may not be mixed together.
+.Cm refer
+key-letters by user-specified keys. Records may be separated by blank lines,
+or by \&.[ and \&.] delimiters, but the two styles may not be mixed together.
 This program reads through each
-.I database
-and pulls out key fields, which are sorted separately.
-The sorted key fields contain the file pointer,
-byte offset, and length of corresponding records.
+.Ar database
+and pulls out key fields, which are sorted separately. The sorted key fields
+contain the file pointer, byte offset, and length of corresponding records.
 These records are delivered using disk seeks and reads, so
-.I sortbib
+.Nm
 may not be used in a pipeline to read standard input.
-.PP
+.Pp
 By default,
-.I sortbib
+.Nm
 alphabetizes by the first %A and the %D fields,
 which contain the senior author and date.
 The
-.B \-s
+.Fl s
 option is used to specify new
-.IR \s-1KEYS\s0 .
+.Ar KEYS .
 For instance,
-.BR \-s ATD
+.Fl -s Ar ATD
 will sort by author, title, and date,
 while
-.BR \-s A+D
+.Fl s Ar A+D
 will sort by all authors, and date.
 Sort keys past the fourth are not meaningful.
 No more than 16 databases may be sorted together at one time.
 Records longer than 4096 characters will be truncated.
-.PP
-.I Sortbib
+.Pp
+.Nm
 sorts on the last word on the %A line,
 which is assumed to be the author's last name.
 A word in the final position, such as ``jr.'' or ``ed.'',
 will be ignored if the name beforehand ends with a comma.
 Authors with two-word last names or unusual constructions
 can be sorted correctly by using the
-.I nroff
+.Cm nroff
 convention ``\e0'' in place of a blank.
 A %Q field is considered to be the same as %A,
 except sorting begins with the first, not the last, word.
-.I Sortbib
+.Nm
 sorts on the last word of the %D line, usually the year.
 It also ignores leading articles (like ``A'' or ``The'')
 when sorting by titles in the %T or %J fields;
 it will ignore articles of any modern European language.
 If a sort-significant field is absent from a record,
-.I sortbib
+.Nm
 places that record before other records containing that field.
-.SH SEE ALSO
-refer(1), addbib(1), roffbib(1), indxbib(1), lookbib(1)
-.SH NOTES
-Records with missing author fields
-should probably be sorted by title.
-.PP
-Written by
-Greg Shenaut & Bill Tuthill.
+.Sh SEE ALSO
+.Xr addbib 1 ,
+.Xr indxbib 1 ,
+.Xr lookbib 1 ,
+.Xr refer 1 ,
+.Xr roffbib 1
+.Sh NOTES
+Records with missing author fields should probably be sorted by title.
+.Pp
+Written by Greg Shenaut & Bill Tuthill.
