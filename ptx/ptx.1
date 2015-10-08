@@ -32,30 +32,27 @@
 .\" WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
 .\" OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
 .\" EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-.TH PTX 1 "2/2/07" "Heirloom Documentation Tools" "User Commands"
-.SH NAME
-ptx \- permuted index
-.SH SYNOPSIS
-.HP
-.ad l
-.nh
-\fBptx\fR
-[\fB\-ftr\fR]
-[\fB\-w\fI\ n\fR]
-[\fB\-g\fI\ n\fR]
-[\fB\-o\fI\ only\fR]
-[\fB\-i\fI\ ignore\fR]
-[\fB\-b\fI\ break\fR]
-[\fIinput\ \fR[\fIoutput\fR]]
-.br
-.hy 1
-.ad b
-.SH DESCRIPTION
-.I Ptx
+.Dd February 2, 2007
+.Dt PTX 1
+.Os
+.Sh NAME
+.Nm ptx
+.Nd permuted index
+.Sh SYNOPSIS
+.Nm
+.Op Fl ftr
+.Op Fl w Ar n
+.Op Fl g Ar n
+.Op Fl o Ar only
+.Op Fl i Ar ignore
+.Op Fl b Ar break
+.Op Ar input Op Ar output
+.Sh DESCRIPTION
+.Nm
 generates a permuted index to file
-.I input
+.Ar input
 on file
-.I output
+.Ar output
 (standard input and output default).
 It has three phases: the first does the permutation, generating
 one line for each keyword in an input line.
@@ -64,99 +61,98 @@ The permuted file is then
 sorted.
 Finally, the sorted lines are rotated so the keyword
 comes at the middle of the page.
-.I Ptx
+.Nm
 produces output in the form:
-.br
-.IP
+.Bd -literal -offset XXXXX
 \&.xx "tail" "before keyword" "keyword and after" "head"
-.LP
+.Ed
+.Pp
 where .xx may be an
-.I nroff
+.Cm nroff
 or
-.IR troff (1)
+.Xr troff  1
 macro
 for user-defined formatting.
-Once choice for this macro is supplied in the `\-mptx'
+Once choice for this macro is supplied in the
+.Sq Fl mptx
 macro package.
 The
-.I before keyword
+.Em before keyword
 and
-.I keyword and after
+.Em keyword and after
 fields incorporate as much of the line as will fit
 around the keyword when it is printed at the middle of the page.
-.I Tail
+.Em tail
 and
-.I head,
+.Em head
 at least one of which is an empty string "",
 are wrapped-around pieces small enough to fit
 in the unused space at the opposite end of the line.
 When original text must be discarded, `/' marks the spot.
-.PP
+.Pp
 The following options can be applied:
-.TP
-.BR \-f
+.Bl -tag -width XXXXX
+.It Fl f
 Fold upper and lower case letters for sorting.
-.TP 
-.BR \-t
+.It Fl t
 Prepare the output for the phototypesetter,
 i.e. set the default line length to 100 characters.
-.TP 
-.BI \-w " n"
+.It Fl w Ar n
 Use the next argument,
-.I n,
+.Ar n,
 as the width of the output line.
 The default line length is 72 characters.
-.TP
-.BI \-g " n"
+.It Fl g Ar n
 Use the next argument,
-.I n,
+.Ar n,
 as the number of characters to allow for each gap
 among the four parts of the line as finally printed.
 The default gap is 3 characters.
-.TP 
-.BR \-o " only"
-Use as keywords only the words given in the \fIonly\fR file.
-.TP 
-.BR \-i " ignore"
+.It Fl o Ar only
+Use as keywords only the words given in the
+.Ar only
+file.
+.It Fl i Ar ignore
 Do not use as keywords any words given in the
-.I
-ignore
+.Ar ignore
 file.
-If the \fB-\fIi\fR and \fB-\fIo\fR options are missing, use /usr/ucblib/eign
-as the 
-.I
-ignore
+If the
+.Fl i
+and
+.Fl o
+options are missing, use
+.Pa /usr/ucblib/eign
+as the
+.Ar ignore
 file.
-.TP 
-.BR \-b " break"
-Use the characters in the 
-.I
-break
+.It Fl b Ar break
+Use the characters in the
+.Ar break
 file to separate words.
-In any case, tab, newline, and space characters are always used as break characters.
-.TP
-.BR \-r
+In any case, tab, newline, and space characters are always used as break
+characters.
+.It Fl r
 Take any leading nonblank characters of each input line to
 be a reference identifier (as to a page or chapter)
 separate from the text of the line.
 Attach that identifier as a 5th field on each output line.
-.SH "ENVIRONMENT VARIABLES"
-.TP
-.BR LANG ", " LC_ALL
+.El
+.Sh ENVIRONMENT VARIABLES
+.Bl -tag -width XXXXXXXXXXXX
+.It Ev LANG , Ev LC_ALL
 See
-.IR locale (7).
-.TP
-.B LC_COLLATE
+.Xr locale 7 .
+.It Ev LC_COLLATE
 Determines the sort order.
-.TP
-.B LC_CTYPE
+.It Ev LC_CTYPE
 Determines the mapping of bytes to characters.
-.SH FILES
-/usr/5bin/sort
-.br
-/usr/ucblib/eign
-.br
-/usr/ucblib/doctools/tmac/ptx
-.SH NOTES
+.El
+.Sh FILES
+.Bl -ohang -compact
+.It Pa /usr/5bin/sort
+.It Pa /usr/ucblib/eign
+.It Pa /usr/ucblib/doctools/tmac/ptx
+.El
+.Sh NOTES
 Line length counts do not account for overstriking or
 proportional spacing.
