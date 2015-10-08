@@ -32,99 +32,103 @@
 .\" WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
 .\" OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
 .\" EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-.TH TBL 1 "March 2, 2015" "Heirloom Documentation Tools"
-.SH NAME
-tbl \- format tables for nroff or troff
-.SH SYNOPSIS
-.B tbl
-.RB [ \-g | \-T\c
-.IR name ]
-.RB [ \-me | \-mm | \-ms ]
-.RI [ "files ..." ]
-.SH DESCRIPTION
-.I Tbl
+.Dd March 2, 2015
+.Dt TBL 1 "Heirloom Documentation Tools"
+.Sh NAME
+.Nm tbl
+.Nd format tables for nroff or troff
+.Sh SYNOPSIS
+.Nm
+.Op Fl g | Fl T Ar name
+.Op Fl me | Fl mm | Fl ms
+.Op Ar
+.Sh DESCRIPTION
+.Nm
 is a preprocessor for formatting tables for
-.I nroff
+.Xr nroff
 or
-.IR troff .
+.Xr troff .
 The input files are copied to the standard output,
-except for lines between .TS and .TE
+except for lines between
+.Li .TS
+and
+.Li .TE
 command lines, which are assumed to describe tables
 and reformatted.
-Arbitrary whitespace can be inserted between the dot and the commands TS or
-TE.
-Macros with these names are ignored by tbl if "'" is used instead of ".".
-.SH OPTIONS
-.TP
-.B \-g
-.I tbl
+Arbitrary whitespace can be inserted between the dot and the commands
+.Li .TS
+or
+.Li .TE .
+Macros with these names are ignored by tbl if
+.Sq '
+is used instead of
+.Sq \&. .
+.Sh OPTIONS
+.Bl -tag -width ".Fl T Ar name"
+.It Fl g
+.Nm
 normally uses line drawing commands with repeated
 underline and box rule characters
 (\el and \eL).
 With the
-.B \-g
+.Fl g
 option,
 graphic drawing commands (\eD) are used instead.
 (This should only be used when processing troff input.)
 Option
-.B \-g
+.Fl g
 overrides a previous
-.BI \-T name\c
-\&.
-.TP
-.BR \-me | \-mm | \-ms
+.Fl T Ar name .
+.It Fl me | mm | ms
 With these options the respective macro packages
 are copied to the beginning of the output.
 Details are given in the reference manual.
-.TP
-.BI \-T name
+.It Fl T Ar name
 Configure nroff input processing.
-.I name
+.Ar name
 can be one of:
-.RS
-.TP
-.B locale
+. Bl -tag -width ".Cm locale"
+. It Cm locale
 If
-.I tbl
+. Nm
 is used to process nroff input in an UTF-8 locale and
-.B \-Tlocale
+. Fl Tlocale
 is given lines are printed using Unicode box characters
 instead of underline and box rule characters.
 If the current locale does not support UTF-8 this Option
 has the same effect as
-.BR \-Tlp .
+. Fl Tlp .
 Option
-.B \-Tlocale
+. Fl Tlocale
 overrides a previous
-.BR \-g .
-.TP
-.B lp
+. Fl g .
+. It Cm lp
 Use ASCII characters (\-, =, |, +)
 instead of underline and box rule characters.
 Overrides a previous
-.BR \-g .
-.TP
-.B X
+. Fl g .
+. It Cm X
 The
-.B \-TX
+. Fl TX
 option causes
-.I tbl
+. Nm
 not to produce fractional line motions.
-.RE
-.SH "EXTENSIONS TO THE AT&T TBL KEY LETTERS
-.TP
-.BR x , X
+. El
+.El
+.Sh "EXTENSIONS TO THE AT&T TBL KEY LETTERS
+.Bl -tag -width ".Cm x , X"
+.It Cm x , X
 Expand column to make table as wide as the current line length.
 If there is more then one column with a x specifier these
 columns are expanded by the same amount.
 This feature had been a GNU tbl extension.
-.SH EXAMPLE
-As an example, letting \\t represent a tab (which should
+.El
+.Sh EXAMPLE
+As an example, letting \(rst represent a tab (which should
 be typed as a genuine tab)
 the input
-.IP ""
+.Bd -unfilled -literal -offset indent
 \&.TS
-.nf
 c s s
 c c s
 c c c
@@ -140,11 +144,10 @@ Branchburg\\t1644\\t3.49
 Bridgewater\\t7897\\t3.81
 Far Hills\\t240\\t3.19
 \&.TE
-.LP
-.fi
+.Ed
+.Pp
 yields
-.ne 10
-.IP " "
+.Pp
 .TS
 c s s
 c c s
@@ -161,22 +164,24 @@ Branchburg	1644	3.49
 Bridgewater	7897	3.81
 Far Hills	240	3.19
 .TE
-.PP
+.Pp
 If no arguments are given,
-.I tbl
+.Nm
 reads the standard input,
 so it may be used as a filter.
 When it is used with
-.I eqn
+.Xr eqn
 or
-.I neqn
+.Xr neqn
 the
-.I tbl
+.Nm
 command should be first, to minimize the volume
 of data passed through
 pipes.
-.SH SEE ALSO
-troff(1), eqn(1)
-.br
-M. E. Lesk,
-.I TBL.
+.Sh SEE ALSO
+.Xr troff 1 ,
+.Xr eqn 1
+.Rs
+.%A "M. E. Lesk"
+.%T TBL
+.Re
