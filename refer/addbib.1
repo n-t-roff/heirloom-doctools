@@ -73,97 +73,123 @@
 .\"	from 4.3BSD-Tahoe addbib.1	6.1 (Berkeley) 4/29/85
 .\"
 .\".TH ADDBIB 1 "April 29, 1985"
-.TH ADDBIB 1 "12/12/05" "Heirloom Documentation Tools" "BSD System Compatibility"
-.UC 5
-.SH NAME
-addbib \- create or extend bibliographic database
-.SH SYNOPSIS
-\fBaddbib\fR
-[\fB\-p\fI\ promptfile\fR] [\fB\-a\fR] \fIdatabase\fR
-.SH DESCRIPTION
-When this program starts up, answering ``y''
-to the initial ``Instructions?'' prompt yields directions;
-typing ``n'' or \s-2RETURN\s0 skips them.
-.I Addbib
-then prompts for various bibliographic fields,
-reads responses from the terminal,
-and sends output records to a
-.I database.
-A null response (just \s-2RETURN\s0) means to leave out that field.
-A minus sign (\-) means to go back to the previous field.
-A trailing backslash allows a field to be continued on the next line.
-The repeating ``Continue?'' prompt allows the user
-either to resume by typing ``y'' or \s-2RETURN\s0,
-to quit the current session by typing ``n'' or ``q'',
+.Dd December 12, 2005
+.Dt ADDBIB 1
+.Os
+.Sh NAME
+.Nm addbib
+.Nd create or extend bibliographic database
+.Sh SYNOPSIS
+.Nm
+.Op Fl p Ar promptfile
+.Op Fl a
+.Ar database
+.Sh DESCRIPTION
+When this program starts up, answering
+.Sq y
+to the initial
+.Dq Instructions?
+prompt yields directions; typing
+.Sq n
+or
+.Cm RETURN
+skips them.
+.Nm
+then prompts for various bibliographic fields, reads responses from the
+terminal, and sends output records to a
+.Ar database .
+A null response
+.Aq just Cm RETURN
+means to leave out that field.  A minus sign
+.Aq -
+means to go back to the previous field. A trailing backslash allows a field to
+be continued on the next line. The repeating
+.Dq Continue?
+prompt allows the user either to resume by typing
+.Sq y
+or
+.Cm RETURN ,
+to quit the current session by typing
+.Sq n
+or
+.Sq q ,
 or to edit the
-.I database
-with any system editor \fI(vi, ex, edit, ed).\fP
-.PP
+.Ar database
+with any system editor
+.Aq Cm vi , Cm ex , Cm edit , Cm ed ,
+.Pp
 The
-.B \-a
-option suppresses prompting for an abstract;
-asking for an abstract is the default.
-Abstracts are ended with a \s-2CTRL\s0-d.
+.Fl a
+option suppresses prompting for an abstract; asking for an abstract is the
+default.  Abstracts are ended with a
+.Cm CTRL-d .
 The
-.B \-p
+.Fl p
 option causes
-.I addbib
+.Nm
 to use a new prompting skeleton, defined in
-.I promptfile.
-This file should contain prompt strings, a tab,
-and the key-letters to be written to the
-.I database.
-.PP
+.Ar promptfile .
+This file should contain prompt strings, a tab, and the key-letters to be
+written to the
+.Ar database .
+.Pp
 The most common key-letters and their meanings are given below.
-.I Addbib
-insulates you from these key-letters,
-since it gives you prompts in English,
-but if you edit the bibliography file later on,
-you will need to know this information.
+.Nm
+insulates you from these key-letters, since it gives you prompts in English,
+but if you edit the bibliography file later on, you will need to know this
+information.
+.Bl -column "Col1, Col2"
+.It Sx \&%A Ta Author's name
+.It Sx \&%B Ta Book containing article referenced
+.It Sx \&%C Ta City (place of publication)
+.It Sx \&%D Ta Date of publication
+.It Sx \&%E Ta Editor of book containing article referenced
+.It Sx \&%F Ta Footnote number or label (supplied by Cm refer )
+.It Sx \&%G Ta Government order number
+.It Sx \&%H Ta Header commentary, printed before reference
+.It Sx \&%I Ta Issuer (publisher)
+.It Sx \&%J Ta Journal containing article
+.It Sx \&%K Ta Keywords to use in locating reference
+.It Sx \&%L Ta Label field used by Fl k
+option of
+.Cm refer
+.It Sx \&%M Ta Bell Labs Memorandum (undefined)
+.It Sx \&%N Ta Number within volume
+.It Sx \&%O Ta Other commentary, printed at end of reference
+.It Sx \&%P Ta Page number(s)
+.It Sx \&%Q Ta Corporate or Foreign Author (unreversed)
+.It Sx \&%R Ta Report, paper, or thesis (unpublished)
+.It Sx \&%S Ta Series title
+.It Sx \&%T Ta Title of article or book
+.It Sx \&%V Ta Volume number
+.It Sx \&%X Ta Abstract \(em used by Cm roffbib ,
+not by
+.Cm refer
+.It Sx %Y,Z Ta ignored by Cm refer
+.El
 .sp
-.nf
-	%A	Author's name
-	%B	Book containing article referenced
-	%C	City (place of publication)
-	%D	Date of publication
-	%E	Editor of book containing article referenced
-	%F	Footnote number or label (supplied by \fIrefer\fP\|)
-	%G	Government order number
-	%H	Header commentary, printed before reference
-	%I	Issuer (publisher)
-	%J	Journal containing article
-	%K	Keywords to use in locating reference
-	%L	Label field used by \fB\-k\fP option of \fIrefer\fP
-	%M	Bell Labs Memorandum (undefined)
-	%N	Number within volume
-	%O	Other commentary, printed at end of reference
-	%P	Page number(s)
-	%Q	Corporate or Foreign Author (unreversed)
-	%R	Report, paper, or thesis (unpublished)
-	%S	Series title
-	%T	Title of article or book
-	%V	Volume number
-	%X	Abstract \(em used by \fIroffbib\fP, not by \fIrefer\fP
-	%Y,Z	ignored by \fIrefer\fP
-.fi
-.sp
-Except for `A', each field should be given just once.
-Only relevant fields should be supplied.
+Except for
+.Sq A ,
+each field should be given just once. Only relevant fields should be supplied.
 An example is:
-.sp
-.nf
-	%A	Bill Tuthill
-	%T	Refer \(em A Bibliography System
-	%I	Computing Services
-	%C	Berkeley
-	%D	1982
-	%O	\s-1UNX\s0 4.3.5.
-.fi
-.sp
-.SH FILES
-.DT
-promptfile	optional file to define prompting
-.SH SEE ALSO
-refer(1), sortbib(1), roffbib(1), indxbib(1), lookbib(1)
-.SH NOTES
+.Bl -column "Col1, Col2"
+.It Sx \&%A Ta Bill Tuthill
+.It Sx \&%T Ta Refer \(em A Bibliography System
+.It Sx \&%I Ta Computing Services
+.It Sx \&%C Ta Berkeley
+.It Sx \&%D Ta 1982
+.It Sx \&%O Ta Cm UNX 4.3.5.
+.El
+.Sh FILES
+.Bl -tag -width promptfile
+.It promptfile
+optional file to define prompting
+.El
+.Sh SEE ALSO
+.Xr indxbib 1 ,
+.Xr lookbib 1 ,
+.Xr refer 1 ,
+.Xr roffbib 1 ,
+.Xr sortbib 1
+.Sh NOTES
 Written by Al Stangenberger & Bill Tuthill.
