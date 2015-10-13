@@ -220,6 +220,7 @@ pchar1(register tchar i)
 static void
 outtp(tchar i)
 {
+#ifndef NROFF
 	int	j = cbits(i);
 
 #ifdef	EUC
@@ -228,6 +229,7 @@ outtp(tchar i)
 	else
 #endif	/* EUC */
 		fdprintf(ptid, "%c", j);
+#endif
 }
 
 #ifndef	NROFF
