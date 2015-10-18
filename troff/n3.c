@@ -115,6 +115,7 @@ static const struct {
 	{ "breakchar",		(void(*)(int))casebreakchar },
 	{ "brp",		(void(*)(int))casebrp },
 	{ "char",		(void(*)(int))casechar },
+	{ "chomp",		(void(*)(int))casechomp },
 	{ "chop",		(void(*)(int))casechop },
 	{ "close",		(void(*)(int))caseclose },
 	{ "connectchar",	(void(*)(int))caseconnectchar },

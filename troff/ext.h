@@ -261,6 +261,7 @@ extern	int	argdelim;
 extern	int	bol;
 extern	int	prdblesc;
 extern	int	gemu;
+extern	int	chomp;
 
 /* n1.c */
 extern	void	mainloop(void);
@@ -491,6 +492,7 @@ extern	void	caseel(void);
 extern	void	caseie(void);
 extern	void	caseif(int);
 extern	void	casenop(void);
+extern	void	casechomp(void);
 extern	void	casereturn(void);
 extern	void	casewhile(void);
 extern	void	casebreak(void);

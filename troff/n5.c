@@ -1719,6 +1719,12 @@ casenop(void)
 }
 
 void
+casechomp(void) {
+	chomp = 1;
+	caseif(3);
+}
+
+void
 casereturn(void)
 {
 	flushi();

@@ -1697,7 +1697,11 @@ Miscellaneous
 .b1
 \T'tmc'\fB&tmc\T\fI|string\fR	\(en	newline	\(en	Print \fIstring\fR without newline on terminal.
 .b1
-\T'nop'\fB&nop\T\fI|remainder of line\fR	\(en	\(en	Use \fIremainder of line\fR as input.
+\T'nop'\fB&nop\T\fI|remainder of line\fR	\(en	\(en	Use \
+\fIremainder of line\fR as input.
+.b1
+\T'chomp'\fB&chomp\T\fI|remainder of line\fR	\(en	\(en	Use \
+\fIremainder of line without newline\fR as input.
 .b1
 \T'ab'\fB&ab\T\fI|string\fR	\(en	newline	\(en	Print \fIstring\fR on standard error, exit program.
 .b1
@@ -1801,6 +1805,7 @@ refer to the detailed description on how to include it.
 \T'cf'cf\T	19
 \T'ch'ch\T	7
 \T'char'char\T	10
+\T'chomp'chomp\T	20
 \T'chop'chop\T	7
 \T'close'close\T	19
 \T'CL'CL\T	22
@@ -6012,6 +6017,9 @@ and written on the standard error.
 but does not write a terminating newline.
 .bta nop
 \fB&nop\fI|remainder of line\fR	\(en	\(en	Use \fIremainder of line\fR as input.
+.bta chomp
+\fB&chomp\fI|remainder of line\fR	\(en	\(en	Use \fIremainder of \
+line without newline\fR as input.
 .bta ab
 \fB&ab\fI|string\fR	\(en	newline	\(en	\
 After skipping initial blanks, \fIstring\fR (rest of the line) is read in \T'copy mode'\fIcopy mode\fR\T

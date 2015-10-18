@@ -192,3 +192,4 @@ int	defcf;
 int	donep;
 int	gemu;
 int	argdelim;
+int	chomp;

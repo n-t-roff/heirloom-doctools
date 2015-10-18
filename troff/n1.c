@@ -1514,7 +1514,7 @@ again:
 			/* CK: Bugfix: .bp followed by ..
 			 * The "<" is questionable */
 			if (ejf && frame->pframe->tail_cnt < ejl && dip == d)
-				return i;
+				goto r;
 			i = rbf();
 		}
 		else {
@@ -1606,7 +1606,12 @@ g4:
 		else
 			setcbits(i, ESC);
 	}
-	return(i);
+r:
+	if (chomp && cbits(i) == '\n') {
+		chomp = 0;
+		i = getch0();
+	}
+	return i;
 }
 
 void
