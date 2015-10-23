@@ -193,3 +193,4 @@ int	donep;
 int	gemu;
 int	argdelim;
 int	chomp;
+int	chompend;

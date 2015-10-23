@@ -262,6 +262,7 @@ extern	int	bol;
 extern	int	prdblesc;
 extern	int	gemu;
 extern	int	chomp;
+extern	int	chompend;
 
 /* n1.c */
 extern	void	mainloop(void);

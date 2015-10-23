@@ -324,12 +324,12 @@ text(void)
 	numtab[HP].val = 0;
 	if ((dip == d) && (numtab[NL].val == -1)) {
 		newline(1); 
-		return;
+		goto r;
 	}
 	setnel();
 	if (ce || rj || !fi) {
 		nofill();
-		return;
+		goto r;
 	}
 	if (pendw)
 		goto t4;
@@ -362,7 +362,7 @@ text(void)
 t1:
 		nflush = pendt = ch = spcnt = 0;
 		callsp();
-		return;
+		goto r;
 	}
 	ch = i;
 	if (spcnt) {
@@ -444,6 +444,11 @@ t6:
 	ckul();
 rtn:
 	nflush = 0;
+r:
+	if (chomp) {
+		chomp = 0;
+		chompend = 1;
+	}
 }
 
 
@@ -454,7 +459,9 @@ nofill(void)
 	register tchar i, nexti;
 	int k, oev;
 
-	if (!pendnf) {
+	if (chompend) {
+		chompend = 0;
+	} else if (!pendnf && !chomp) {
 		over = 0;
 		tbreak();
 		if (trap)
@@ -496,6 +503,9 @@ nofill(void)
 			nel -= k;
 			numtab[HP].val += k;
 		}
+	}
+	if (chomp) {
+		return;
 	}
 	if (ce) {
 		ce--;
@@ -1337,7 +1347,11 @@ a0:
 		w = sps;
 	}
 	cdp = cht = 0;
-	storeword(t, w + k);
+	if (chompend) {
+		chompend = 0;
+	} else {
+		storeword(t, w + k);
+	}
 	if (spflg) {
 		if (xflag == 0 || ses != 0)
 			storeword(t | SENTSP, ses);

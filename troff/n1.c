@@ -1607,10 +1607,6 @@ g4:
 			setcbits(i, ESC);
 	}
 r:
-	if (chomp && cbits(i) == '\n') {
-		chomp = 0;
-		i = getch0();
-	}
 	return i;
 }
 
