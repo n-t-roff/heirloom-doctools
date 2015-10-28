@@ -1080,8 +1080,12 @@ setfont(int a)
 	if (/* i == 'S' || */ i == '0')
 		return;
 	if ((j = findft(i, 0)) == -1)
-		if ((j = setfp(0, i, 0)) == -1)	/* try to put it in position 0 */
+		if ((j = setfp(0, i, 0)) == -1) { /* try to put it in position 0 */
+			if (xflag) {
+				font1 = font;
+			}
 			return;
+		}
 s0:
 	font1 = font;
 	font = j;
