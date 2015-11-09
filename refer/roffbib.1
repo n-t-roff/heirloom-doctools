@@ -73,99 +73,99 @@
 .\"	from 4.3BSD-Tahoe roffbib.1	6.2 (Berkeley) 5/7/86
 .\"
 .\".TH ROFFBIB 1 "May 7, 1986"
-.TH ROFFBIB 1 "12/12/05" "Heirloom Documentation Tools" "BSD System Compatibility"
-.UC 5
-.SH NAME
-roffbib \- run off bibliographic database
-.SH SYNOPSIS
-.HP
-.ad l
-.nh
-\fBroffbib\fR
-[\fB\-ehnorsxVQ\fR]
-[\fB\-T\fIterm\fR]
-[\fB\-m\fImac\fR]
-[\fIfile\ \fR...]
-.br
-.hy 1
-.ad b
-.SH DESCRIPTION
-.I Roffbib
+.Dd December 12, 2005
+.Dt ROFFBIB 1
+.Os
+.Sh NAME
+.Nm roffbib
+.Nd run off bibliographic database
+.Sh SYNOPSIS
+.Nm
+.Op Fl ehnorsxVQ
+.Op Fl T Ns Ar term
+.Op Fl m Ns Ar mac
+.Op Ar
+.Sh DESCRIPTION
+.Nm
 prints out all records in a bibliographic database,
 in bibliography format rather than as footnotes or endnotes.
 Generally it is used in conjunction with
-.IR sortbib :
-.LP
-.RS
+.Cm sortbib :
+.Bd -literal
 sortbib  database | roffbib
-.RE
-.LP
-.I Roffbib
+.Ed
+.Nm
 accepts most of the options understood by
-.IR nroff (1),
+.Xr nroff 1 ,
 most importantly the
-.B \-T
+.Fl T
 flag to specify terminal type.
-.PP
+.Pp
 If abstracts or comments are entered following the %X field key,
-.I roffbib
+.Nm
 will format them into paragraphs for an annotated bibliography.
 Several %X fields may be given if several
 annotation paragraphs are desired.
 The
-.B \-x
+.Fl x
 flag will suppress the printing of these abstracts.
-.PP
+.Pp
 A user-defined set of macros
 may be specified after the
-.B \-m
+.Fl m
 option.
 There should be a space between the
-.B \-m
+.Fl m
 and the macro filename.
 This set of macros will replace the ones
-defined in /usr/ucblib/doctools/tmac/bib.
+defined in
+.Pa /usr/ucblib/doctools/tmac/bib .
 The
-.B \-V
+.Fl V
 flag will send output to the Versatec; the
-.B \-Q
+.Fl Q
 flag will queue output for the phototypesetter.
-.PP
+.Pp
 Four command-line registers control formatting style
 of the bibliography, much like the number registers of
-.IR ms (7).
+.Xr ms 7 .
 The command-line argument
-.BR \-r N1
+.Fl r Ns Ar N1
 will number
 the references starting at one (1).
 The flag
-.BR \-r V2
+.Fl r Ns Ar V2
 will double space the biblio\%graphy,
 while
-.BR \-r V1
+.Fl r Ns Ar V1
 will double space references
 but single space annotation paragraphs.
 The line length can be changed from the default 6.5 inches
 to 6 inches with the
-.BR \-r L6i
+.Fl r Ns Ar L6i
 argument,
 and the page offset can be set from the default of 0
 to one inch by specifying
-.BR \-r O1i
+.Fl r Ns Ar O1i
 (capital O, not zero).
 Note: with the
-.B \-V
+.Fl V
 and
-.B \-Q
+.Fl Q
 flags
 the default page offset is already one inch.
-.SH FILES
-.ta \w'/usr/ucblib/doctools/tmac/bib\0\0'u
-.nf
-/usr/ucblib/doctools/tmac/bib	file of macros used by \fInroff/troff\fP
-.fi
-.SH SEE ALSO
-refer(1), addbib(1), sortbib(1), indxbib(1), lookbib(1)
-.SH NOTES
+.Sh FILES
+.Bl -tag -width /usr/ucblib/doctools/tmac/bib
+.It Pa /usr/ucblib/doctools/tmac/bib
+file of macros used by
+.Cm nroff Ns / Ns Cm troff
+.El
+.Sh SEE ALSO
+.Xr addbib 1 ,
+.Xr indxbib 1 ,
+.Xr lookbib 1 ,
+.Xr refer 1 ,
+.Xr sortbib 1
+.Sh NOTES
 Users have to rewrite macros
 to create customized formats.

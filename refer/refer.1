@@ -70,39 +70,35 @@
 .\"
 .\"
 .\".TH REFER 1 "May 12, 1986"
-.TH REFER 1 "12/12/05" "Heirloom Documentation Tools" "BSD System Compatibility"
-.AT 3
-.SH NAME
-refer \- find and insert literature references in documents
-.SH SYNOPSIS
-.HP
-.ad l
-.nh
-\fBrefer\fR
-[\fB\-abcenPS\fR]
-[\fB\-f\fIn\fR]
-[\fB\-k\fIx\fR]
-[\fB\-l\fIm\fB,\fIn\fR]
-[\fB\-p\ \fIbib\fR]
-[\fB\-s\fIkeys\fR]
-[\fB\-B\fIl\fB.\fIm\fR]
-[\fIfile\fR ...]
-.br
-.hy 1
-.ad b
-.SH DESCRIPTION
-.I Refer
+.Dd December 12, 2005
+.Dt REFER 1
+.Os
+.Sh NAME
+.Nm refer
+.Nd find and insert literature references in documents
+.Sh SYNOPSIS
+.Nm
+.Op Fl abcenPS
+.Op Fl f Ns Ar n
+.Op Fl k Ns Ar x
+.Op Fl l Ns Ar m , Ns Ar n
+.Op Fl p Ar bib
+.Op Fl s Ns Ar keys
+.Op Fl B Ns Ar l , Ns Ar m
+.Op Ar
+.Sh DESCRIPTION
+.Nm
 is a preprocessor for
-.I nroff
+.Cm nroff
 or
-.IR troff (1)
+.Xr troff 1
 that finds and formats references for footnotes or endnotes.
 It is also the base for a series of programs designed to
 index, search, sort, and print stand-alone bibliographies,
 or other data entered in the appropriate form.
-.PP
+.Pp
 Given an incomplete citation with sufficiently precise keywords,
-.I refer
+.Cm refer
 will search a bibliographic database for references
 containing these keywords anywhere in the title, author, journal, etc.
 The input file (or standard input)
@@ -113,167 +109,145 @@ and are replaced by information from the bibliographic database.
 The user may also search different databases,
 override particular fields, or add new fields.
 The reference data, from whatever source, are assigned to a set of
-.I troff
+.Cm troff
 strings.
 Macro packages such as
-.IR ms (7)
+.Xr ms  7
 print the finished reference text from these strings.
 By default references are flagged by footnote numbers.
-.PP
+.Pp
 The following options are available:
-.TP 6
-.BI \-a n
+.Bl -tag -width XXXXXXXX
+.It Fl a Ns Ar n
 Reverse the first
-.I n
+.Ar n
 author names (Jones, J. A. instead of J. A. Jones).
 If
-.I n
+.Ar n
 is omitted all author names are reversed.
-.ns
-.TP
-.B \-b
+.It Fl b
 Bare mode: do not put any flags in text (neither numbers nor labels).
-.ns
-.TP
-.BI \-c keys
+.It Fl c Ns Ar keys
 Capitalize (with C\s-2APS\s0 S\s-2MALL\s+2 C\s-2APS\s0)
 the fields whose key-letters are in
-.IR keys .
-.ns
-.TP
-.B \-e
+.Ar keys .
+.It Fl e
 Instead of leaving the references where encountered,
 accumulate them until a sequence of the form
-.nf
+.Bd -literal
 	.[
 	$LIST$
 	.]
-.fi
+.Ed
 is encountered, and then write out all references collected so far.
 Collapse references to same source.
-.ns
-.TP
-.BI \-f n
+.It Fl f Ns Ar n
 Set the footnote number to
-.I n
+.Ar n
 instead of the default of 1 (one).
 With labels rather than numbers,
 this flag is a no-op.
-.ns
-.TP
-.BI \-k x
+.It Fl k Ns Ar x
 Instead of numbering references, use labels as specified in a
 reference data line beginning
-.I %x;
+.Ar \&%x;
 by default
-.I x
+.Ar x
 is
-.B L.
-.ns
-.TP
-.BI \-l m , n
+.Em L.
+.It Fl l Ns Ar m , Ns Ar n
 Instead of numbering references, use labels made from
 the senior author's last name and the year of publication.
 Only the first
-.I m
+.Ar m
 letters of the last name
 and the last
-.I n
+.Ar n
 digits of the date are used.
 If either
-.I m
+.Ar m
 or
-.I n
+.Ar n
 is omitted the entire name or date respectively is used.
-.ns
-.TP
-.B \-n
-Do not search the default file /usr/ucblib/reftools/papers/Ind.
+.It Fl n
+Do not search the default file
+.Pa /usr/ucblib/reftools/papers/Ind .
 If there is a REFER environment variable,
 the specified file will be searched instead of the default file;
 in this case the
-.B \-n
+.Fl n
 flag has no effect.
-.ns
-.TP
-.BI \-p \0bib
+.It Fl p Ar bib
 Take the next argument
-.I bib
+.Ar bib
 as a file of references to be searched.
 The default file is searched last.
-.ns
-.TP
-.BI \-s keys
+.It Fl s Ar keys
 Sort references by fields whose key-letters are in the
-.I keys
+.Ar keys
 string;
 permute reference numbers in text accordingly.
 Implies
-.BR \-e .
+.Fl e .
 The key-letters in
-.I keys
+.Ar keys
 may be followed by a number to indicate how many such fields
 are used, with
-.B +
+.Em +
 taken as a very large number.
 The default is
-.B AD
+.Em AD
 which sorts on the senior author and then date; to sort, for example,
 on all authors and then title, use
-.BR -sA+T .
-.ns
-.TP
-.BI \-B l.m
+.Fl -s Ns Ar A+T .
+.It Fl B Ns Ar l . Ns Ar m
 Bibliography mode.
 Take a file composed of records separated by blank lines,
 and turn them into
-.I troff
+.Cm troff
 input.
 Label
-.I l
+.Em l
 will be turned into the macro
-.I .m
+.Em .m
 with
-.I l
+.Em l
 defaulting to
-.B %X
+.Em \&%X
 and
-.I .m
+.Em .m
 defaulting to
-.B .AP
+.Em .AP
 (annotation paragraph).
-.ns
-.TP
-.B \-P
+.It Fl P
 Place punctuation marks .,:;?! after the reference signal,
 rather than before.
 (Periods and commas used to be done with strings.)
-.ns
-.TP
-.B \-S
+.It Fl S
 Produce references in the Natural or Social Science format.
-.PP
+.El
+.Pp
 To use your own references,
 put them in the format described below.
 They can be searched more rapidly by running
-.IR indxbib (1)
+.Xr indxbib  1
 on them before using
-.I refer;
+.Cm refer;
 failure to index results in a linear search.
 When
-.I refer
+.Cm refer
 is used with the
-.I eqn,
-.I neqn
+.Cm eqn ,
+.Cm neqn
 or
-.I tbl
+.Cm tbl
 preprocessors
-.I refer
+.Cm refer
 should be first, to minimize the volume
 of data passed through pipes.
-.PP
+.Pp
 The
-.I refer
+.Cm refer
 preprocessor and associated programs
 expect input from a file of references
 composed of records separated by blank lines.
@@ -285,19 +259,18 @@ and finally the contents of the field,
 and continue until the next line starting with ``%''.
 The output ordering and formatting of fields
 is controlled by the macros specified for
-.I nroff/troff
+.Cm nroff Ns / Ns Cm troff
 (for footnotes and endnotes) or
-.I roffbib
+.Cm roffbib
 (for stand-alone bibliographies).
 For a list of the most common key-letters
 and their corresponding fields, see
-.IR addbib (1).
+.Xr addbib  1 .
 An example of a
-.I refer
+.Cm refer
 entry is given below.
-.SH EXAMPLE
-.PP
-.nf
+.Sh EXAMPLE
+.Bd -literal
 %A	M. E. Lesk
 %T	Some Applications of Inverted Indexes on the \s-1UNIX\s0 System
 %B	\s-1UNIX\s0 Programmer's Manual
@@ -305,17 +278,23 @@ entry is given below.
 %I	Bell Laboratories
 %C	Murray Hill, NJ
 %D	1978
-.fi
-.SH FILES
-.ta \w'/usr/ucblib/reftools/papers\0\0'u
-/usr/ucblib/reftools/papers	directory of default publication lists
-.br
-/usr/ucblib/reftools  	directory of companion programs
-.SH SEE ALSO
-addbib(1), sortbib(1), roffbib(1), indxbib(1), lookbib(1)
-.SH NOTES
+.Ed
+.Sh FILES
+.Bl -tag -width /usr/ucblib/reftools/papers
+.It Pa /usr/ucblib/reftools/papers
+directory of default publication lists
+.It Pa /usr/ucblib/reftools
+directory of companion programs
+.El
+.Sh SEE ALSO
+.Xr addbib 1 ,
+.Xr indxbib 1 ,
+.Xr lookbib 1 ,
+.Xr roffbib 1 ,
+.Xr sortbib 1
+.Sh NOTES
 Blank spaces at the end of lines in bibliography fields
 will cause the records to sort and reverse incorrectly.
 Sorting large numbers of references causes a core dump.
-.PP
+.Pp
 Written by Mike Lesk.
