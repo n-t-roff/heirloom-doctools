@@ -17,7 +17,10 @@ clean:
 mrproper:	clean
 
 $(BIN):		$(OBJ)
-		$(LINK.c) $(OBJ) -o $@
+		$(CC) $(LDFLAGS) $(OBJ) -o $@
+
+.c.o:
+		$(CC) $(CFLAGS) $(CPPFLAGS) -c $<
 
 char.o:		char.h main.h $(BST)/bst.h lib.h tr_out.h
 dhtml.o:	dhtml.h tr_out.h char.h main.h
