@@ -919,7 +919,7 @@ maybreak(tchar c, int dv)
 	case IMP:
 		return 0;
 	case 0:
-		return dv && (k == '-' || k == EMDASH);
+		return (!gemu || dv) && (k == '-' || k == EMDASH);
 	default:
 		for (i = 0; breakch[i] && i < NSENT; i++)
 			if (breakch[i] == k)
@@ -1387,7 +1387,7 @@ g0:
 				int i;
 				if (!xflag)
 					hyoff = 2;
-				if (hyp > hyptr && wordp > word
+				if (gemu && hyp > hyptr && wordp > word
 				    && hyp[-1] == wordp && (
 				    (i = cbits(wordp[-1])) == '-'
 				    || i == EMDASH))
