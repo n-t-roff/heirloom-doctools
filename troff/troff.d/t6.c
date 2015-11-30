@@ -1102,11 +1102,15 @@ setwd(void)
 	int	savhp, savapts, savapts1, savfont, savfont1, savpts, savpts1;
 	int	savlgf;
 	int	rst = 0, rsb = 0;
+	int	n;
 
 	base = numtab[SB].val = numtab[ST].val = wid = numtab[CT].val = 0;
 	if (ismot(i = getch()))
 		return;
 	delim = i;
+	argdelim = delim;
+	n = noschr;
+	noschr = 0;
 	savhp = numtab[HP].val;
 	numtab[HP].val = 0;
 	savapts = apts;
@@ -1145,6 +1149,8 @@ setwd(void)
 	}
 	if (!issame(i, delim))
 		nodelim(delim);
+	argdelim = 0;
+	noschr = n;
 	setn1(wid, 0, (tchar) 0);
 	prwatchn(&numtab[CT]);
 	prwatchn(&numtab[SB]);
