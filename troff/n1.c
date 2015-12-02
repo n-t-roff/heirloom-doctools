@@ -2241,6 +2241,7 @@ casechar(int flag)
 
 	defcf++;
 	charf++;
+	lgf++;
 	if (skip(1))
 		return;
 	c = getch();
