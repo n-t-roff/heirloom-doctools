@@ -142,7 +142,10 @@ width(register tchar j)
 			goto set;
 		}
 	} else if (i == ' ' && issentsp(j))
+	{
+		_minflg = 0;
 		return(ses);
+	}
 	if (i==ohc)
 		return(0);
 	if (!xflag || !isdi(j)) {
