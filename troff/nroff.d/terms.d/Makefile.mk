@@ -72,16 +72,16 @@ tab.4000A: tab.4000a
 
 install: all
 	test -d $(ROOT)$(TABDIR) || mkdir -p $(ROOT)$(TABDIR)
+	cd $(ROOT)$(TABDIR) && rm -f tab.300S tab.300S-12 tab.4000A
 	for i in $(TABS) tab.utf8; \
 	do \
 		$(INSTALL) -c -m 644 $$i $(ROOT)$(TABDIR)/$$i || exit; \
 	done
-	rm -f $(ROOT)$(TABDIR)/tab.300S
-	cd $(ROOT)$(TABDIR) && ln -s tab.300s tab.300S
-	rm -f $(ROOT)$(TABDIR)/tab.300S-12
-	cd $(ROOT)$(TABDIR) && ln -s tab.300s-12 tab.300S-12
-	rm -f $(ROOT)$(TABDIR)/tab.4000A
-	cd $(ROOT)$(TABDIR) && ln -s tab.4000a tab.4000A
+	if cd $(ROOT)$(TABDIR); then \
+		test -e tab.300S    || ln -s tab.300s tab.300S; \
+		test -e tab.300S-12 || ln -s tab.300s-12 tab.300S-12; \
+		test -e tab.4000A   || ln -s tab.4000a tab.4000A; \
+	fi
 
 clean:
 	rm -f $(TABS) $(LINKS)
