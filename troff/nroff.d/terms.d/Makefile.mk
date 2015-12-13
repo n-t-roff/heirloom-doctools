@@ -77,11 +77,10 @@ install: all
 	do \
 		$(INSTALL) -c -m 644 $$i $(ROOT)$(TABDIR)/$$i || exit; \
 	done
-	if cd $(ROOT)$(TABDIR); then \
-		test -e tab.300S    || ln -s tab.300s tab.300S; \
-		test -e tab.300S-12 || ln -s tab.300s-12 tab.300S-12; \
-		test -e tab.4000A   || ln -s tab.4000a tab.4000A; \
-	fi
+	cd $(ROOT)$(TABDIR) || exit 1; \
+	test -e tab.300S    || ln -s tab.300s tab.300S       || exit 1; \
+	test -e tab.300S-12 || ln -s tab.300s-12 tab.300S-12 || exit 1; \
+	test -e tab.4000A   || ln -s tab.4000a tab.4000A     || exit 1;
 
 clean:
 	rm -f $(TABS) $(LINKS)
