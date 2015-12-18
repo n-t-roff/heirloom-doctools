@@ -391,9 +391,7 @@ extern	int	roman(int, int (*)(tchar));
 extern	int	roman0(int, int (*)(tchar), char *, char *);
 extern	int	abc(int, int (*)(tchar));
 extern	int	abc0(int, int (*)(tchar));
-#undef	atoi
-#define	atoi	xxatoi
-extern	int	atoi(void);
+extern	int	hatoi(void);
 #undef	atof
 #define	atof	xxatof
 extern	float	atof(void);

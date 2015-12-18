@@ -65,6 +65,8 @@
 .	nr )I.def .5i
 .\}
 .nr .g 1
+.ds la \(la
+.ds ra \(ra
 .ds lq \(lq
 .ds rq \(rq
 '	\" reset the basic page layout
@@ -475,4 +477,5 @@
 .		PP
 .	\}
 ..
+.so @MACDIR@/an-ext
 .\" vim:set filetype=groff:

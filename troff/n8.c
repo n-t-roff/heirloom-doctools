@@ -226,7 +226,7 @@ caseht(void)
 	if (skip(0))
 		return;
 	noscale++;
-	thresh = atoi();
+	thresh = hatoi();
 	noscale = 0;
 }
 

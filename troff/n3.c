@@ -1262,7 +1262,7 @@ caseshift(void)
 		i = 1;
 	else {
 		noscale++;
-		i = atoi();
+		i = hatoi();
 		noscale--;
 		if (nonumb)
 			return;
@@ -1511,7 +1511,7 @@ casewatchlength(void)
 
 	if (!skip(1)) {
 		noscale++;
-		i = atoi();
+		i = hatoi();
 		noscale--;
 		if (!nonumb)
 			watchlength = i;
@@ -1765,9 +1765,9 @@ casesubstring(void)
 	if (skip(1))
 		return;
 	noscale++;
-	n1 = atoi();
+	n1 = hatoi();
 	if (skip(0) == 0)
-		n2 = atoi();
+		n2 = hatoi();
 	noscale--;
 	savip = ip;
 	ip = (filep)contp->mx;

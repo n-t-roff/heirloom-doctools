@@ -992,7 +992,7 @@ setps(void)
 			dfact = INCH;
 			dfactd = 72;
 			res = HOR;
-			j = atoi();
+			j = hatoi();
 			res = dfactd = dfact = 1;
 			if (nonumb)
 				return;
@@ -1196,7 +1196,7 @@ tchar mot(void)
 
 	j = HOR;
 	delim = getch(); /*eat delim*/
-	if ((n = atoi())) {
+	if ((n = hatoi())) {
 		if (vflag)
 			j = VERT;
 		i = makem(quant(n, j));
@@ -1313,7 +1313,7 @@ caselg(void)
 	lg = 1;
 	if (skip(0))
 		return;
-	lg = atoi();
+	lg = hatoi();
 }
 
 static void
@@ -1564,7 +1564,7 @@ casefp(int spec)
 
 	lgf++;
 	skip(0);
-	if ((i = xflag ? atoi() : cbits(getch()) - '0') < 0 || i > 255)
+	if ((i = xflag ? hatoi() : cbits(getch()) - '0') < 0 || i > 255)
 	bad:	errprint("fp: bad font position %d", i);
 	else if (skip(0) || !(j = getrq(3)))
 		errprint("fp: no font name");
@@ -1733,9 +1733,9 @@ casecs(void)
 	if ((i = findft(i, 1)) < 0)
 		goto rtn;
 	skip(0);
-	cstab[i] = atoi();
+	cstab[i] = hatoi();
 	skip(0);
-	j = atoi();
+	j = hatoi();
 	if (nonumb)
 		ccstab[i] = 0;
 	else
@@ -1770,7 +1770,7 @@ bd0:
 bd1:
 	skip(0);
 	noscale++;
-	bdtab[j] = atoi();
+	bdtab[j] = hatoi();
 	noscale = 0;
 }
 
@@ -1806,9 +1806,9 @@ casess(int flg)
 	noscale++;
 	if (skip(flg == 0))
 		minsps = minspsz = 0;
-	else if ((i = atoi()) != 0 && !nonumb) {
+	else if ((i = hatoi()) != 0 && !nonumb) {
 		if (xflag && flg == 0 && !skip(0)) {
-			j = atoi();
+			j = hatoi();
 			if (!nonumb) {
 				sesspsz = j & 0177;
 				spacesz = sesspsz;
@@ -1848,7 +1848,7 @@ caseletadj(void)
 	int	s, n, x, l, h;
 
 	dfact = LAFACT / 100;
-	if (skip(0) || (n = atoi()) == 0) {
+	if (skip(0) || (n = hatoi()) == 0) {
 		letspsz = 0;
 		letsps = 0;
 		lspmin = 0;
@@ -1860,20 +1860,20 @@ caseletadj(void)
 	if (skip(1))
 		goto ret;
 	dfact = LAFACT / 100;
-	l = atoi();
+	l = hatoi();
 	if (skip(1))
 		goto ret;
 	noscale++;
-	s = atoi();
+	s = hatoi();
 	noscale--;
 	if (skip(1))
 		goto ret;
 	dfact = LAFACT / 100;
-	x = atoi();
+	x = hatoi();
 	if (skip(1))
 		goto ret;
 	dfact = LAFACT / 100;
-	h = atoi();
+	h = hatoi();
 	letspsz = s;
 	lspmin = LAFACT - n;
 	lspmax = x - LAFACT;
@@ -1907,7 +1907,7 @@ casefspacewidth(void)
 		fontab[f][0] = fontbase[f]->spacewidth;
 	} else {
 		noscale++;
-		n = atoi();
+		n = hatoi();
 		noscale--;
 		unitsPerEm = 1000;
 		if (n >= 0)
@@ -1922,7 +1922,7 @@ void
 casespacewidth(void)
 {
 	noscale++;
-	spacewidth = skip(0) || atoi();
+	spacewidth = skip(0) || hatoi();
 	noscale--;
 }
 
@@ -1938,7 +1938,7 @@ tchar xlss(void)
 
 	getch();
 	dfact = lss;
-	i = quant(atoi(), VERT);
+	i = quant(hatoi(), VERT);
 	dfact = 1;
 	getch();
 	if (i >= 0)
@@ -2287,7 +2287,7 @@ getfzoom(void)
 void
 casekern(void)
 {
-	kern = skip(0) || atoi() ? 1 : 0;
+	kern = skip(0) || hatoi() ? 1 : 0;
 }
 
 void
@@ -2304,7 +2304,7 @@ casefkern(void)
 	if (skip(0))
 		fontbase[f]->kernfont = 0;
 	else {
-		j = atoi();
+		j = hatoi();
 		if (!nonumb)
 			fontbase[f]->kernfont = j ? j : -1;
 	}
@@ -2365,10 +2365,10 @@ setpapersize(int setmedia)
 		return;
 	c = cbits(ch);
 	if (isdigit(c) || c == '(') {
-		x = atoi();
+		x = hatoi();
 		if (!nonumb) {
 			skip(1);
-			y = atoi();
+			y = hatoi();
 		}
 		if (nonumb || x == 0 || y == 0)
 			return;
@@ -2521,7 +2521,7 @@ casekernpair(void)
 	if (b == 0 || skip(1))
 		goto done;
 	noscale++;
-	n = atoi();
+	n = hatoi();
 	noscale--;
 	unitsPerEm = 1000;
 	n = _unitconv(n);
@@ -2579,7 +2579,7 @@ kernsingle(int **tp)
 		if (skip(1))
 			break;
 		noscale++;
-		n = atoi();
+		n = hatoi();
 		noscale--;
 		if (tp[f] == NULL)
 			tp[f] = calloc(NCHARS, sizeof *tp);

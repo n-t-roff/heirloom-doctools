@@ -2036,7 +2036,7 @@ caself(void)	/* set line number and file */
 
 	if (skip(1))
 		return;
-	n = atoi();
+	n = hatoi();
 	cfline[ifi] = numtab[CD].val = n - 2;
 	if (skip(0))
 		return;
@@ -2169,7 +2169,7 @@ casedb(void)
 	if (skip(1))
 		return;
 	noscale++;
-	debug = max(atoi(), 0);
+	debug = max(hatoi(), 0);
 	noscale = 0;
 #endif	/* DEBUG */
 }
@@ -2188,7 +2188,7 @@ casexflag(void)
 	gemu = 0;
 	skip(1);
 	noscale++;
-	i = atoi();
+	i = hatoi();
 	noscale--;
 	if (!nonumb)
 		_xflag = xflag = i & 3;
@@ -2204,7 +2204,7 @@ casecp(void)
 #endif
 		gflag = 1;
 		noscale++;
-		if (skip(1) || (atoi() && !nonumb))
+		if (skip(1) || (hatoi() && !nonumb))
 			xflag = 1;
 		else
 			xflag = 3;
@@ -2222,9 +2222,9 @@ caserecursionlimit(void)
 {
 	skip(1);
 	noscale++;
-	max_recursion_depth = atoi();
+	max_recursion_depth = hatoi();
 	skip(0);
-	max_tail_depth = atoi();
+	max_tail_depth = hatoi();
 	noscale--;
 }
 

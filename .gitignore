@@ -1,2 +1,5 @@
 .DS_STORE
 *.swp
+*.o
+Makefile
+y.tab.*

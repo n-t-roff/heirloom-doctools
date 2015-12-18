@@ -3,7 +3,8 @@ MACS = acm.me bib chars.me deltext.me e eqn.me \
 	ms.cov ms.eqn ms.ref ms.tbl ms.ths ms.toc null.me refer.me \
 	s sh.me tbl.me thesis.me v vgrind \
 	tmac.gchar andoc doc doc-common doc-nroff doc-syms \
-	pictures color pm srefs ptx safe g padj taa naa
+	pictures color pm srefs ptx safe g padj taa naa \
+	an-ext
 IMACS =	an doc-ditroff
 OMACS = $(IMACS:%=%.out)
 

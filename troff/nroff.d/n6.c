@@ -51,6 +51,7 @@
  */
 
 #include <stdio.h>
+#include <string.h>
 #ifdef	EUC
 #include <limits.h>
 #include <stdlib.h>
@@ -158,9 +159,17 @@ setch(int delim)
 		if (s - temp == 1)
 			return temp[0];
 		else if (s - temp != 2) {
+			size_t l;
 			*s = '\0';
+			l = strlen(temp);
 			if (j != ']')
 				nodelim(']');
+			else if (gemu && (l == 6 || (l == 7
+			    && temp[6] >= '0' && temp[6] <= '9'))
+			    && temp[5] >= '0' && temp[5] <= '9'
+			    && temp[4] >= '0' && temp[4] <= '9'
+			    && !strncmp(temp, "char", 4))
+				return atoi(temp + 4) + nchtab + _SPECCHAR_ST;
 			else if ((j = findch(temp)) > 0)
 				return j | chbits;
 			else if (warn & WARN_CHAR)
@@ -272,7 +281,7 @@ setps(void)
 		} else if (xflag) {	/* \s+[dd], */
 			k = j == '[' ? ']' : j;			/* \s-'dd' */
 			setcbits(c, k);
-			atoi();
+			hatoi();
 			if (nonumb)
 				return;
 			if (!issame(getch(), c))
@@ -439,7 +448,7 @@ mot(void)
 
 	j = HOR;
 	delim = getch(); /*eat delim*/
-	if ((n = atoi())) {
+	if ((n = hatoi())) {
 		if (vflag)
 			j = VERT;
 		i = makem(quant(n, j));
@@ -557,7 +566,7 @@ bd0:
 bd1:
 	skip(0);
 	noscale++;
-	bdtab[j] = atoi();
+	bdtab[j] = hatoi();
 	noscale = 0;
 }
 
@@ -608,7 +617,7 @@ xlss(void)
 
 	getch();
 	dfact = lss;
-	i = quant(atoi(), VERT);
+	i = quant(hatoi(), VERT);
 	dfact = 1;
 	getch();
 	if (i >= 0)

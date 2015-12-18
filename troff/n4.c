@@ -865,7 +865,7 @@ agetch(void)
 }
 
 int
-atoi(void)
+hatoi(void)
 {
 	struct acc	a;
 

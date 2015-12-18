@@ -1422,7 +1422,7 @@ g0:
 	} else
 g1:		nexti = GETCH();
 	j = cbits(i = nexti);
-	if (gemu && j == FILLER)
+	if (gemu && (j == FILLER || j == UNPAD))
 		inword = 0;
 	else
 	if (!ismot(i) && j != ohc)

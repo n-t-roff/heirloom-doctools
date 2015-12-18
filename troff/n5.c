@@ -153,7 +153,7 @@ casepadj(void)
 	if (skip(0))
 		padj = 1;
 	else {
-		n = atoi();
+		n = hatoi();
 		if (!nonumb)
 			padj = n;
 	}
@@ -245,7 +245,7 @@ casehy(void)
 	if (skip(0))
 		return;
 	noscale++;
-	i = atoi();
+	i = hatoi();
 	noscale = 0;
 	if (nonumb)
 		return;
@@ -267,7 +267,7 @@ casehlm(void)
 
 	if (!skip(0)) {
 		noscale++;
-		i = atoi();
+		i = hatoi();
 		noscale = 0;
 		if (!nonumb)
 			hlm = i;
@@ -315,7 +315,7 @@ casehylen(void)
 	if (skip(0))
 		hylen = 5;
 	else {
-		n = atoi();
+		n = hatoi();
 		if (!nonumb)
 			hylen = n;
 	}
@@ -444,7 +444,7 @@ cerj(int dorj)
 
 	noscale++;
 	skip(0);
-	i = max(atoi(), 0);
+	i = max(hatoi(), 0);
 	if (nonumb)
 		i = 1;
 	tbreak();
@@ -483,7 +483,7 @@ _brnl(int p)
 	if (skip(0))
 		n = INT_MAX;
 	else {
-		n = atoi();
+		n = hatoi();
 		if (nonumb || n < 0)
 			n = p ? brpnl : brpnl;
 	}
@@ -737,7 +737,7 @@ casevpt(void)
 {
 	if (skip(1))
 		return;
-	vpt = atoi() != 0;
+	vpt = hatoi() != 0;
 }
 
 
@@ -1200,7 +1200,7 @@ getev(int *nxevp, char **namep)
 	c = cbits(ch);
 	if (xflag == 0 || isdigit(c) || c == '(') {
 		noscale++;
-		nxev = atoi();
+		nxev = hatoi();
 		noscale = 0;
 		if (nonumb) {
 			flushi();
@@ -1790,7 +1790,7 @@ casecontinue(int _break)
 	struct s	*s;
 
 	noscale++;
-	if (skip(0) || (i = atoi()) <= 0 || nonumb)
+	if (skip(0) || (i = hatoi()) <= 0 || nonumb)
 		i = 1;
 	noscale--;
 	j = 0;
@@ -2078,7 +2078,7 @@ T:
 	for (j = 0; j < NTAB - 1 && !nonumb; j++) {
 		if (skip(0))
 			break;
-		T[j] = atoi() & TABMASK;
+		T[j] = hatoi() & TABMASK;
 		if (!nonumb)
 			switch (cbits(ch)) {
 			case 'C':
@@ -2183,7 +2183,7 @@ caseul(void)
 	if (skip(0))
 		i = 1;
 	else 
-		i = atoi();
+		i = hatoi();
 	if (ul && (i == 0)) {
 		font = sfont;
 		ul = cu = 0;
@@ -2226,7 +2226,7 @@ caseit(int cflag)
 	it = itc = itmac = 0;
 	noscale++;
 	skip(0);
-	i = atoi();
+	i = hatoi();
 	skip(0);
 	if (!nonumb && (itmac = getrq(1))) {
 		it = i;
@@ -2405,7 +2405,7 @@ casenn(void)
 {
 	noscale++;
 	skip(0);
-	nn = max(atoi(), 1);
+	nn = max(hatoi(), 1);
 	noscale = 0;
 }
 

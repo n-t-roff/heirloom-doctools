@@ -126,7 +126,7 @@ setline(void)
 	delim = c;
 	vflag = 0;
 	dfact = EM;
-	length = quant(atoi(), HOR);
+	length = quant(hatoi(), HOR);
 	dfact = 1;
 	if (!length) {
 		eat(delim);
@@ -288,7 +288,7 @@ setvline(void)
 	delim = c;
 	dfact = lss;
 	vflag++;
-	i = quant(atoi(), VERT);
+	i = quant(hatoi(), VERT);
 	dfact = 1;
 	if (!i) {
 		eat(delim);
@@ -379,7 +379,7 @@ setdraw (void)	/* generate internal cookies for a drawing function */
 			ch = c;
 		vflag = 0;
 		dfact = type == DRAWTHICKNESS ? 1 : EM;
-		dx[i] = quant(atoi(), HOR);
+		dx[i] = quant(hatoi(), HOR);
 		if (dx[i] > MAXMOT)
 			dx[i] = MAXMOT;
 		else if (dx[i] < -MAXMOT)
@@ -390,7 +390,7 @@ setdraw (void)	/* generate internal cookies for a drawing function */
 		}
 		vflag = 1;
 		dfact = lss;
-		dy[i] = quant(atoi(), VERT);
+		dy[i] = quant(hatoi(), VERT);
 		if (type == DRAWTHICKNESS)
 			dy[i] = 0;
 		else if (dy[i] > MAXMOT)
