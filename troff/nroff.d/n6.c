@@ -159,22 +159,27 @@ setch(int delim)
 		if (s - temp == 1)
 			return temp[0];
 		else if (s - temp != 2) {
-			size_t l;
 			*s = '\0';
-			l = strlen(temp);
 			if (j != ']')
 				nodelim(']');
-			else if (gemu && (l == 6 || (l == 7
-			    && temp[6] >= '0' && temp[6] <= '9'))
-			    && temp[5] >= '0' && temp[5] <= '9'
-			    && temp[4] >= '0' && temp[4] <= '9'
-			    && !strncmp(temp, "char", 4))
-				return atoi(temp + 4) + nchtab + _SPECCHAR_ST;
-			else if ((j = findch(temp)) > 0)
-				return j | chbits;
-			else if (warn & WARN_CHAR)
-				errprint("missing glyph \\[%s]", temp);
-			return 0;
+			else {
+				size_t l = strlen(temp);
+				if (gemu && (l == 6 || (l == 7
+				    && temp[6] >= '0' && temp[6] <= '9'))
+				    && temp[5] >= '0' && temp[5] <= '9'
+				    && temp[4] >= '0' && temp[4] <= '9'
+				    && !strncmp(temp, "char", 4)) {
+					int i = atoi(temp + 4);
+					if (i <= 255)
+						return i + nchtab +
+						    _SPECCHAR_ST;
+				}
+				if ((j = findch(temp)) > 0)
+					return j | chbits;
+				else if (warn & WARN_CHAR)
+					errprint("missing glyph \\[%s]", temp);
+				return 0;
+			}
 		}
 	} else {
 		if ((*s++ = getach()) == 0 || (*s++ = getach()) == 0)

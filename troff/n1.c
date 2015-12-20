@@ -2299,6 +2299,9 @@ casechar(int flag)
 	}
 	tp[i++] = '\n';
 	tp[i] = 0;
+	i = k;
+	if (++i >= NCHARS)
+		morechars(i);
 	free(chartab[k]);
 	chartab[k] = tp;
 	gchtab[k] |= CHBIT;

@@ -30,7 +30,7 @@ install: all
 			|| exit; \
 	done
 	test -d $(ROOT)$(FNTDIR)/devps || mkdir -p $(ROOT)$(FNTDIR)/devps
-	cd devps && for i in ? ?.afm ?? ??.afm DESC MustRead.html; \
+	cd devps && for i in ? ?.afm ?? ??.afm DESC MustRead.html FONTMAP; \
 	do \
 		$(INSTALL) -c -m 644 $$i $(ROOT)$(FNTDIR)/devps/ || exit; \
 	done

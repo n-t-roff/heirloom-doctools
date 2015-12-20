@@ -31,9 +31,12 @@
 .\"     groff/tmac/an-ext.tmac
 .
 .
+.\" groff's man macros control hyphenation with this register.
+.if t .nr HY 1
 .\" Declare start of command synopsis.  Sets up hanging indentation.
 .de SY
 .	ie !\\n(mS \{\
+.		nh
 .		nr mS 1
 .		nr mA \\n(.j
 .		ad l
@@ -51,6 +54,7 @@
 .de YS
 .	in \\n(mIu
 .	ad \\n(mA
+.	hy \\n(HY
 .	nr mS 0
 ..
 .\" Declare optional option.
@@ -61,18 +65,22 @@
 .\" Start URL.
 .de UR
 .	ds m1 "\\$1
+.	nh
 ..
 .\" End URL.
 .de UE
 .	nop \\*(la\\*(m1\\*(ra\\$*
+.	hy \\n(HY
 ..
 .\" Start email address.
 .de MT
 .	ds m1 "\\$1
+.	nh
 ..
 .\" End email address.
 .de ME
 .	nop \\*(la\\*(m1\\*(ra\\$*
+.	hy \\n(HY
 ..
 .\" Continuation line for .TP header.
 .de TQ

@@ -771,7 +771,18 @@ tchar setch(int delim)
 	}
 	c = 0;
 	if (delim == '[' || delim == 'C') {
-		if ((c = postchar(temp, &f)) != 0) {
+		size_t l = strlen(temp);
+		if (gemu && (l == 6 || (l == 7
+		    && temp[6] >= '0' && temp[6] <= '9'))
+		    && temp[5] >= '0' && temp[5] <= '9'
+		    && temp[4] >= '0' && temp[4] <= '9'
+		    && !strncmp(temp, "char", 4)) {
+			int i = atoi(temp + 4);
+			// Die Zuordung darueber stimmt nicht.
+			if (i <= 127)
+				c = i + nchtab + 128;
+		}
+		if (!c && (c = postchar(temp, &f))) {
 			c |= chbits & ~FMASK;
 			setfbits(c, f);
 		}
