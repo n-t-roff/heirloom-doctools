@@ -464,7 +464,6 @@
 .nr )p 0 1
 .ds ]I \\\\n(]
 .ds ]R \\\\n()
-.bd S 3 3
 .ds R \(rg
 .ds S \s10
 '	\" For Tru64 UNIX manpages. Use of this is discouraged.
