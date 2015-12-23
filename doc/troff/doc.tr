@@ -109,7 +109,7 @@
 .flig BI 31
 ..
 .\" mo/dy/yr
-.ds Sccsdate 09/29/15
+.ds Sccsdate 12/23/15
 .ds Str \*[Sccsdate]
 .substring Str 0 0
 .if '\*[Str]'%' \{\
@@ -5769,13 +5769,14 @@ Condition
 Name	True If
 _
 \fBc\fI G\fR	T{
-character \fIG\fR exists in the current font,
+Character \fIG\fR exists in the current font,
 where \fIG\fR is either an \s-1ASCII\s+1 or localized input
 character, a \*(TR special character \T'e_('\fB\e(\fIxx\fR\T or
 \T'e_['\fB\e[\fIxxx\fB]\fR\T, or a \T'e_U'\fB\eU\fI\'X\'\fR\T escape sequence
 T}
-\fBd\fI xx\fR	there is a request, macro, or string \fIxx\fR
-\fBr\fI xx\fR	number register \fIxx\fR has been accessed
+\fBd\fI xx\fR	There is a request, macro, or string \fIxx\fR
+\fBr\fI xx\fR	Number register \fIxx\fR has been accessed
+\fBF \fIfont\fR	Font named \fIfont\fP exists
 \fBo\fR	Current page number is odd
 \fBe\fR	Current page number is even
 \fBt\fR	Formatter is \*(TR

@@ -156,10 +156,16 @@ bst_add(struct bst *bst, union bst_val key, union bst_val data) {
  */
 int
 bst_del(struct bst *bst, union bst_val key) {
-	struct bst_node *p, **pp, *n, *t;
+	struct bst_node *n;
 	if (srch_node(bst, key, &n) != NODE_FOUND) {
 		return BST_ENOENT;
 	}
+	return bst_del_node(bst, n);
+}
+
+int
+bst_del_node(struct bst *bst, struct bst_node *n) {
+	struct bst_node *p, **pp, *t;
 	if (!n->parent) {
 		p = NULL;
 		pp = &bst->root;

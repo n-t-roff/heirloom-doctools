@@ -55,3 +55,4 @@ struct bst {
 int bst_add(struct bst *bst, union bst_val key, union bst_val data);
 int bst_srch(struct bst *bst, union bst_val key, struct bst_node **node);
 int bst_del(struct bst *bst, union bst_val key);
+int bst_del_node(struct bst *bst, struct bst_node *node);

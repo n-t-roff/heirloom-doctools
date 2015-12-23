@@ -1673,6 +1673,14 @@ caseif(int x)
 		}
 		warn = w;
 		break;
+	case 'F':
+		if (xflag == 0)
+			goto dfl;
+		if (!skip(1)) {
+			j = getrq(3);
+			true = findft(j, 0) != -1;
+		}
+		break;
 	case ' ':
 		break;
 	default:
