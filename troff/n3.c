@@ -745,9 +745,13 @@ copyb(void)
 			j = 0;
 			goto c0;
 		}
-		if ((state == 2) && (i == mn[j])) {
-			j++;
-			goto c0;
+		if (state == 2) {
+			if (i == mn[j]) {
+				j++;
+				goto c0;
+			} else if (i == ' ' || i == '\t') {
+				goto c0;
+			}
 		}
 		state = 0;
 c0:
