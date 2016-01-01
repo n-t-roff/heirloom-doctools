@@ -1,3 +1,12 @@
+2016-01-01
+    Spaces are now allowed in filenames of .cf, .fp, .lf, .nx,
+    and .so requests.  The documentation stated that %20 could be
+    used to escape spaces.  However this was not implemented.
+    The implementation has now been changed to allow spaces by
+    quoting the filename with '"'.  Additionally character codes
+    up to 255 are allowed now in filenames.  (Bug reported by
+    Jacob Parker (https://github.com/jacobp100).)
+
 2015-06-08
     mdoc: Macro Lb with library definitions for FreeBSD and
     NetBSD added.
