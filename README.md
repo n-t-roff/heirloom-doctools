@@ -23,6 +23,8 @@ If there are any problems please send a mail to
 
 The GNU roff (groff) [mailing list](https://lists.gnu.org/mailman/listinfo/groff) is used for Heirloom doctools announcements and can also be used for discussions.
 The subject need to start with `[Heirloom]` in this case.
-But please don't send bug reports to the groff list, use the
+
+It is recommended to subscribe to the groff mailing list for every &lowast;roff user.
+But please *don't* send Heirloom bug reports to the groff list, use the
 [issue list](https://github.com/n-t-roff/heirloom-doctools/issues)
 instead.
