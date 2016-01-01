@@ -109,7 +109,7 @@
 .flig BI 31
 ..
 .\" mo/dy/yr
-.ds Sccsdate 12/23/15
+.ds Sccsdate 01/01/15
 .ds Str \*[Sccsdate]
 .substring Str 0 0
 .if '\*[Str]'%' \{\
@@ -2985,16 +2985,8 @@ likewise).
 \fIsupply\fR may also be the basename of a file like
 \fIfile\fR above.
 .xx
-The character \fB%\fR can be used to escape arbitrary bytes in
-font file names.
-In particular, this is necessary to use font
-files whose names contain spaces, bytes outside the ASCII range,
-or a \fB%\fR itself.
-\fB%\fIxx\fR represents the byte with the hexadecimal
-code \fIxx\fR, e.g., \fB%20\fR is a space character.
-In the path names
-in TROFFONTS, only the \fB%\fR and \fB:\fR characters have to be masked
-using this mechanism.
+The \fIfilename\fP may be surrounded by double-quotes to permit imbedded
+space characters.
 .bta fps
 \fB&fps\fI|map|...\fR		ignored	P,T	\
 Mount a font with a special character map.

@@ -1382,7 +1382,7 @@ copy:
 	case 'F':
 	case 'm':
 	case 'M':
-		if (gflag) {	/* font family, color */
+		if (gflag || gemu) {	/* font family, color */
 			if ((i = getsn(0)) > 0 && warn & WARN_ESCAPE)
 				errprint("\\%c[%s] unimplemented",
 						k, macname(i));
@@ -1833,14 +1833,20 @@ getname(void)
 {
 	register int	j, k;
 	tchar i;
+	int delim = ' ';
 
 	lgf++;
-	for (k = 0; ; k++) {
-		if (((j = cbits(i = getch())) <= ' ') || (j > 0176))
+	k = 0;
+	while (1) {
+		if (((j = cbits(i = getch())) < 32) || j == delim)
 			break;
+		if (xflag && !k && j == '"') {
+			delim = j;
+			continue;
+		}
 		if (k + 1 >= NS)
 			nextf = realloc(nextf, NS += 14);
-		nextf[k] = j & BYTEMASK;
+		nextf[k++] = j & BYTEMASK;
 	}
 	nextf[k] = 0;
 	ch = i;
