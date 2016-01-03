@@ -1838,7 +1838,8 @@ getname(void)
 	lgf++;
 	k = 0;
 	while (1) {
-		if (((j = cbits(i = getch())) < 32) || j == delim)
+		if ((j = cbits(i = getch())) < 32 || j == delim || (!xflag
+		    && j > 0176))
 			break;
 		if (xflag && !k && j == '"') {
 			delim = j;

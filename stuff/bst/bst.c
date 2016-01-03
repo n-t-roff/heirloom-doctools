@@ -46,7 +46,7 @@ static void *malloc_exit(size_t size);
 
 int
 bst_add(struct bst *bst, union bst_val key, union bst_val data) {
-	struct bst_node *p, *n, *c, *gc, *t;
+	struct bst_node *n, *c, *gc, *t;
 	switch (srch_node(bst, key, &n)) {
 	case NODE_FOUND:
 		fprintf(stderr, "bst_add: Key does already exist\n");
@@ -71,73 +71,91 @@ bst_add(struct bst *bst, union bst_val key, union bst_val data) {
 	c->key = key;
 	c->data = data;
 	while (n) {
-		if (n->left == c) n->bf++;
-		else n->bf--;
-		if (!n->bf) break;
+		if (n->left == c)
+			n->bf++;
+		else
+			n->bf--;
+		if (!n->bf)
+			break;
 		if (n->bf == -2) {
 			if (c->bf == -1) {
-				if (!(p = c->parent = n->parent))
+				if (!(t = c->parent = n->parent))
 					bst->root = c;
-				else if (p->left == n) p->left = c;
-				else p->right = c;
+				else if (t->left == n)
+					t->left = c;
+				else
+					t->right = c;
 				n->parent = c;
-				if ((t = n->right = c->left)) t->parent = n;
+				if ((t = n->right = c->left))
+					t->parent = n;
 				c->left = n;
-				n->bf += 1 - c->bf;
-				c->bf++;
+				n->bf = c->bf = 0;
 			} else if (c->bf == 1) {
-				if ((t = c->left = gc->right)) t->parent = c;
-				n->right = gc;
-				gc->parent = n;
+				if ((t = c->left = gc->right))
+					t->parent = c;
 				gc->right = c;
 				c->parent = gc;
-				c->bf -= 1 + gc->bf;
-				gc->bf--;
-				t = gc;
-				gc = c;
-				c = t;
-				if (!(p = c->parent = n->parent))
-					bst->root = c;
-				else if (p->left == n) p->left = c;
-				else p->right = c;
-				n->parent = c;
-				if ((t = n->right = c->left)) t->parent = n;
-				c->left = n;
-				n->bf += 1 - c->bf;
-				c->bf++;
+				if (!(t = gc->parent = n->parent))
+					bst->root = gc;
+				else if (t->left == n)
+					t->left = gc;
+				else
+					t->right = gc;
+				n->parent = gc;
+				if ((t = n->right = gc->left))
+					t->parent = n;
+				gc->left = n;
+				if (!gc->bf)
+					n->bf = c->bf = 0;
+				else if (gc->bf > 0) {
+					n->bf = 0;
+					c->bf = -1;
+				} else {
+					n->bf = 1;
+					c->bf = 0;
+				}
+				gc->bf = 0;
 			}
 			break;
-		} else if (n->bf == 2) {
+		}
+		if (n->bf == 2) {
 			if (c->bf == 1) {
-				if (!(p = c->parent = n->parent))
+				if (!(t = c->parent = n->parent))
 					bst->root = c;
-				else if (p->left == n) p->left = c;
-				else p->right = c;
+				else if (t->left == n)
+					t->left = c;
+				else
+					t->right = c;
 				n->parent = c;
-				if ((t = n->left = c->right)) t->parent = n;
+				if ((t = n->left = c->right))
+					t->parent = n;
 				c->right = n;
-				n->bf -= 1 + c->bf;
-				c->bf--;
+				n->bf = c->bf = 0;
 			} else if (c->bf == -1) {
-				if ((t = c->right = gc->left)) t->parent = c;
-				n->left = gc;
-				gc->parent = n;
+				if ((t = c->right = gc->left))
+					t->parent = c;
 				gc->left = c;
 				c->parent = gc;
-				c->bf += 1 - gc->bf;
-				gc->bf++;
-				t = gc;
-				gc = c;
-				c = t;
-				if (!(p = c->parent = n->parent))
-					bst->root = c;
-				else if (p->left == n) p->left = c;
-				else p->right = c;
-				n->parent = c;
-				if ((t = n->left = c->right)) t->parent = n;
-				c->right = n;
-				n->bf -= 1 + c->bf;
-				c->bf--;
+				if (!(t = gc->parent = n->parent))
+					bst->root = gc;
+				else if (t->left == n)
+					t->left = gc;
+				else
+					t->right = gc;
+				n->parent = gc;
+				if ((t = n->left = gc->right))
+					t->parent = n;
+				gc->right = n;
+				if (!gc->bf)
+					n->bf = c->bf = 0;
+				else if (gc->bf > 0) {
+					c->bf = 0;
+					n->bf = -1;
+				} else {
+					c->bf = 1;
+					n->bf = 0;
+				}
+				gc->bf = 0;
 			}
 			break;
 		}
@@ -171,19 +189,23 @@ bst_del_node(struct bst *bst, struct bst_node *n) {
 		pp = &bst->root;
 	} else {
 		p = n->parent;
-		if (p->left == n) pp = &p->left;
-		else pp = &p->right;
+		if (p->left == n)
+			pp = &p->left;
+		else
+			pp = &p->right;
 	}
 	if (!n->left) {
 		*pp = n->right;
-		if (n->right) n->right->parent = p;
+		if (n->right)
+			n->right->parent = p;
 	} else {
 		*pp = n->left;
 		n->left->parent = p;
 		if (n->right) {
 			n->right->parent = n->left;
 			if (n->left->right) {
-				for (t = n->right; t->left; t = t->left);
+				for (t = n->right; t->left; t = t->left)
+					;
 				t->left = n->left->right;
 				n->left->right->parent = t;
 			}
