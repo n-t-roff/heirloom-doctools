@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015, Carsten Kunze
+ * Copyright (c) 2015-2016, Carsten Kunze
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -45,7 +45,7 @@ static void *malloc_exit(size_t size);
  */
 
 int
-bst_add(struct bst *bst, union bst_val key, union bst_val data) {
+bst_padd(struct bst *bst, union bst_val key, union bst_val data, int bal) {
 	struct bst_node *n, *c, *gc, *t;
 	switch (srch_node(bst, key, &n)) {
 	case NODE_FOUND:
@@ -70,6 +70,9 @@ bst_add(struct bst *bst, union bst_val key, union bst_val data) {
 	c->parent = n;
 	c->key = key;
 	c->data = data;
+	if (!bal)
+		return 0;
+	gc = NULL;
 	while (n) {
 		if (n->left == c)
 			n->bf++;
@@ -166,54 +169,178 @@ bst_add(struct bst *bst, union bst_val key, union bst_val data) {
 	return 0;
 }
 
-/* Unbalanced node delete.  Will be reimplemented AVL conform eventually.
+/* Delete node
  *
  * Returns:
  *   0           No error
- *   BST_ENOENT  Key not found
- */
+ *   BST_ENOENT  Key not found */
+
 int
-bst_del(struct bst *bst, union bst_val key) {
+bst_pdel(struct bst *bst, union bst_val key, int bal) {
 	struct bst_node *n;
 	if (srch_node(bst, key, &n) != NODE_FOUND) {
 		return BST_ENOENT;
 	}
-	return bst_del_node(bst, n);
+	bst_pdel_node(bst, n, bal);
+	return 0;
 }
 
-int
-bst_del_node(struct bst *bst, struct bst_node *n) {
-	struct bst_node *p, **pp, *t;
-	if (!n->parent) {
+void
+bst_pdel_node(struct bst *bst, struct bst_node *n, int bal) {
+	struct bst_node *p, **pp, *t, *x;
+	int bfc;
+	if (!(t = n->parent)) {
 		p = NULL;
 		pp = &bst->root;
 	} else {
-		p = n->parent;
-		if (p->left == n)
+		p = t;
+		if (p->left == n) {
 			pp = &p->left;
-		else
+			bfc = -1;
+		} else {
 			pp = &p->right;
-	}
-	if (!n->left) {
-		*pp = n->right;
-		if (n->right)
-			n->right->parent = p;
-	} else {
-		*pp = n->left;
-		n->left->parent = p;
-		if (n->right) {
-			n->right->parent = n->left;
-			if (n->left->right) {
-				for (t = n->right; t->left; t = t->left)
-					;
-				t->left = n->left->right;
-				n->left->right->parent = t;
-			}
-			n->left->right = n->right;
+			bfc = 1;
 		}
 	}
+	if (!n->left) {
+		if ((*pp = t = n->right))
+			t->parent = p;
+	} else if (!n->right) {
+		*pp = t = n->left;
+		t->parent = p;
+	} else {
+		for (t = n->right; t->left; t = t->left)
+			;
+		if (t == n->right) {
+			p = t;
+			bfc = 1;
+		} else {
+			if ((t->parent->left = t->right))
+				t->right->parent = t->parent;
+			t->right         = n->right;
+			t->right->parent = t;
+			p                = t->parent;
+			bfc              = -1;
+		}
+		*pp             = t;
+		t->parent       = n->parent;
+		t->left         = n->left;
+		t->left->parent = t;
+		t->bf           = n->bf;
+	}
 	free(n);
-	return 0;
+	if (!bal)
+		return;
+	while (p) {
+		int bf;
+		bf = p->bf += bfc;
+		if (bf == -1 || bf == 1)
+			break;
+		if (bf == -2) {
+			if ((bf = (n = p->right)->bf) != 1) {
+				if (!(t = n->parent = p->parent))
+					bst->root = n;
+				else if (t->left == p)
+					t->left = n;
+				else
+					t->right = n;
+				p->parent = n;
+				if ((t = p->right = n->left))
+					t->parent = p;
+				n->left = p;
+				if (bf) {
+					p->bf = n->bf = 0;
+				} else {
+					n->bf = 1;
+					p->bf = -1;
+					break;
+				}
+				p = n;
+			} else {
+				x = n->left;
+				if ((t = n->left = x->right))
+					t->parent = n;
+				x->right = n;
+				n->parent = x;
+				if (!(t = x->parent = p->parent))
+					bst->root = x;
+				else if (t->left == p)
+					t->left = x;
+				else
+					t->right = x;
+				p->parent = x;
+				if ((t = p->right = x->left))
+					t->parent = p;
+				x->left = p;
+				if (!(bf = x->bf))
+					p->bf = n->bf = 0;
+				else if (bf > 0) {
+					p->bf = 0;
+					n->bf = -1;
+				} else {
+					p->bf = 1;
+					n->bf = 0;
+				}
+				x->bf = 0;
+				p = x;
+			}
+		} else if (bf == 2) {
+			if ((bf = (n = p->left)->bf) != -1) {
+				if (!(t = n->parent = p->parent))
+					bst->root = n;
+				else if (t->left == p)
+					t->left = n;
+				else
+					t->right = n;
+				p->parent = n;
+				if ((t = p->left = n->right))
+					t->parent = p;
+				n->right = p;
+				if (bf) {
+					p->bf = n->bf = 0;
+				} else {
+					n->bf = -1;
+					p->bf = 1;
+					break;
+				}
+				p = n;
+			} else {
+				x = n->right;
+				if ((t = n->right = x->left))
+					t->parent = n;
+				x->left = n;
+				n->parent = x;
+				if (!(t = x->parent = p->parent))
+					bst->root = x;
+				else if (t->left == p)
+					t->left = x;
+				else
+					t->right = x;
+				p->parent = x;
+				if ((t = p->left = x->right))
+					t->parent = p;
+				x->right = p;
+				if (!(bf = x->bf))
+					p->bf = n->bf = 0;
+				else if (bf > 0) {
+					n->bf = 0;
+					p->bf = -1;
+				} else {
+					n->bf = 1;
+					p->bf = 0;
+				}
+				x->bf = 0;
+				p = x;
+			}
+		}
+		n = p;
+		if ((p = p->parent)) {
+			if (n == p->left)
+				bfc = -1;
+			else
+				bfc = 1;
+		}
+	}
 }
 
 int /* 0: found, !0: not found */

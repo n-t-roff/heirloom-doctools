@@ -84,7 +84,7 @@ rdftmap(char *path) {
 	close(fd);
 	inibuf(buf, size);
 	while ((key = getword(0)) && (val = getword(1))) {
-		if (bst_add(&map, (union bst_val)(void *)key,
+		if (avl_add(&map, (union bst_val)(void *)key,
 		    (union bst_val)(void *)val)) {
 			fprintf(stderr, "%s: Error while adding font "
 			    "mapping %s -> %s\n", progname, key, val);

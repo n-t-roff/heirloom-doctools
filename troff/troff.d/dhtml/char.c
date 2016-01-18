@@ -53,11 +53,11 @@ char_open(void) {
 		if (!(w = get_word(&b, &s, &n, &t))) return;
 		if (!(l = get_line(&b, &s, NULL))) return;
 		if (n == 1)
-			bst_add(&chrdat, I2BST(*w), S2BST(l));
+			avl_add(&chrdat, I2BST(*w), S2BST(l));
 		else if (n != 2 && !(t & ~1))
-			bst_add(&numdat, I2BST(atoi(w)), S2BST(l));
+			avl_add(&numdat, I2BST(atoi(w)), S2BST(l));
 		else
-			bst_add(&namdat, S2BST(w), S2BST(l));
+			avl_add(&namdat, S2BST(w), S2BST(l));
 	}
 }
 

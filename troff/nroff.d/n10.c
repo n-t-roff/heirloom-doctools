@@ -165,11 +165,11 @@ ptinit(void)
 			csi_width[0] = 0;
 			utf8 = 1;
 			n_strcat(tt, "utf8", ttl); /* shorter than "locale" */
-			bst_add(&utf8oc, UTF8OC_KEY('-'),
+			avl_add(&utf8oc, UTF8OC_KEY('-'),
 			    UTF8OC_VAL(strdup("\xe2\x80\x90")));
-			bst_add(&utf8oc, UTF8OC_KEY('`'),
+			avl_add(&utf8oc, UTF8OC_KEY('`'),
 			    UTF8OC_VAL(strdup("\xe2\x80\x98")));
-			bst_add(&utf8oc, UTF8OC_KEY('\''),
+			avl_add(&utf8oc, UTF8OC_KEY('\''),
 			    UTF8OC_VAL(strdup("\xe2\x80\x99")));
 		} else
 		{
@@ -866,7 +866,7 @@ caseutf8conv(void) {
 	if (skip(0)) {
 		if (!bst_srch(&utf8oc, UTF8OC_KEY(i), &n)) {
 			free(n->data.p);
-			bst_del(&utf8oc, UTF8OC_KEY(i));
+			avl_del(&utf8oc, UTF8OC_KEY(i));
 		}
 	} else {
 		char *s;
@@ -882,7 +882,7 @@ caseutf8conv(void) {
 			s = strdup(t.codetab[o-_SPECCHAR_ST]);
 		}
 		if (bst_srch(&utf8oc, UTF8OC_KEY(i), &n)) {
-			bst_add(&utf8oc, UTF8OC_KEY(i), UTF8OC_VAL(s));
+			avl_add(&utf8oc, UTF8OC_KEY(i), UTF8OC_VAL(s));
 		} else {
 			free(n->data.p);
 			n->data.p = s;

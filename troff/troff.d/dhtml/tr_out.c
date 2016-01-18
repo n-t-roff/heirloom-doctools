@@ -192,7 +192,7 @@ void
 out_x_f(int num, char *nam) {
 	struct bst_node *n;
 	if (bst_srch(&fonts, I2BST(num), &n)) {
-		bst_add(&fonts, I2BST(num), S2BST(strdup(nam)));
+		avl_add(&fonts, I2BST(num), S2BST(strdup(nam)));
 	} else {
 		free(n->data.p);
 		n->data.p = strdup(nam);

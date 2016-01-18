@@ -70,7 +70,7 @@ storechar(tchar c, int row, int col) {
 	long s = cbits(c);
 	if (s != DASH && s != BAR) return;
 	if (bst_srch(&coords, XY2KEY(row, col), NULL))
-		if (bst_add(&coords, XY2KEY(row, col), BST_VAL(c)))
+		if (avl_add(&coords, XY2KEY(row, col), BST_VAL(c)))
 			fprintf(stderr,
 			    "BST: Unexpected internal error\n");
 }
