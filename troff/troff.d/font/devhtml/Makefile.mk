@@ -9,7 +9,7 @@ install:
 	install -m 644 CHAR DESC $$d/; \
 	echo charset >> $$d/DESC; \
 	sed '1,2d;s/[[:space:]].*//' charset >> $$d/DESC; \
-	for i in $(HTMLFONTS); do \
+	for i in $(FONTS); do \
 		install -m 644 $$i $$d/; \
 		./$(BIN) $$i >> $$d/$$i; \
 	done
