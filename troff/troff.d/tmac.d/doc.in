@@ -2837,7 +2837,7 @@
 .		nr fV \\n(.$
 .		lnr _i_ 0 1
 .		while \\n(.$ \{\
-.			ds A\\n+[_i_] \\$1
+.			ds A\\n+[_i_] "\\$1
 .			shift
 .		\}
 .		fV
