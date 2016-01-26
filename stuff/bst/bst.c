@@ -36,7 +36,6 @@
 
 static int srch_node(struct bst *, union bst_val, struct bst_node **);
 static struct bst_node *alloc_node(void);
-static void *malloc_exit(size_t size);
 
 /* Returns:
  *   0           No error
@@ -233,10 +232,11 @@ bst_pdel_node(struct bst *bst, struct bst_node *n, int bal) {
 		return;
 	while (p) {
 		int bf;
-		bf = p->bf += bfc;
-		if (bf == -1 || bf == 1)
-			break;
-		if (bf == -2) {
+		switch(p->bf += bfc) {
+		case -1:
+		case  1:
+			return;
+		case -2:
 			if ((bf = (n = p->right)->bf) != 1) {
 				if (!(t = n->parent = p->parent))
 					bst->root = n;
@@ -253,7 +253,7 @@ bst_pdel_node(struct bst *bst, struct bst_node *n, int bal) {
 				} else {
 					n->bf = 1;
 					p->bf = -1;
-					break;
+					return;
 				}
 				p = n;
 			} else {
@@ -284,7 +284,8 @@ bst_pdel_node(struct bst *bst, struct bst_node *n, int bal) {
 				x->bf = 0;
 				p = x;
 			}
-		} else if (bf == 2) {
+			break;
+		case 2:
 			if ((bf = (n = p->left)->bf) != -1) {
 				if (!(t = n->parent = p->parent))
 					bst->root = n;
@@ -301,7 +302,7 @@ bst_pdel_node(struct bst *bst, struct bst_node *n, int bal) {
 				} else {
 					n->bf = -1;
 					p->bf = 1;
-					break;
+					return;
 				}
 				p = n;
 			} else {
@@ -387,18 +388,8 @@ end:
 
 static struct bst_node *
 alloc_node(void) {
-	struct bst_node *n = malloc_exit(sizeof(struct bst_node));
+	struct bst_node *n = malloc(sizeof(struct bst_node));
 	n->left = n->right = NULL;
 	n->bf = 0;
 	return n;
-}
-
-static void *
-malloc_exit(size_t size) {
-	void *p;
-	if (!(p = malloc(size))) {
-		fprintf(stderr, "Out of memory\n");
-		exit(1);
-	}
-	return p;
 }

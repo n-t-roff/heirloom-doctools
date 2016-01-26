@@ -79,10 +79,6 @@ int	dtab;
 int	plotmode;
 int	esct;
 
-char	*xchname;		/* hy, em, etc. */
-size_t	*xchtab;		/* indexes into chname[] */
-char	*chname;
-size_t	*chtab;
 int	nchtab = 0;
 
 int	*bdtab;
@@ -119,11 +115,11 @@ int	c_isalnum;
 int	utf8;
 int	tlp;
 
-static int utf8occmp(union bst_val, union bst_val);
-static struct bst utf8oc = {
-	NULL,
-	utf8occmp
-};
+static int bst_intcmp(union bst_val, union bst_val);
+static int bst_strcmp(union bst_val, union bst_val);
+
+static struct bst utf8oc  = { NULL, bst_intcmp };
+static struct bst chnames = { NULL, bst_strcmp };
 
 #define UTF8OC_KEY(c) ((union bst_val)(int)c)
 #define UTF8OC_VAL(s) ((union bst_val)(void *)s)
@@ -132,7 +128,7 @@ void
 ptinit(void)
 {
 	int i, j;
-	char *p, *cp, c, *p2;
+	char *p, c, *p2;
 	char *tt;
 	size_t ttl;
 	int nread, fd;
@@ -140,8 +136,7 @@ ptinit(void)
 	char *check;
 	extern int initbdtab[], initfontlab[];
 	int nl;
-	size_t chnmsiz, codsiz;
-	int nch;
+	size_t codsiz;
 	char *codestr;
 	char *code;
 
@@ -210,25 +205,19 @@ ptinit(void)
 		while (j < i && (check[j] == ' ' || check[j] == '\t')) j++;
 		codsiz += i-j;
 	}
-	chnmsiz = 0;
-	nch = 0;
 	while (1) {
 		char c0;
 		int cmt;
 		i = 0;
 		while ((c = *p) && c != ' ' && c != '\t' && c != '\n') {
 			p++;
-			chnmsiz++;
 			if (!i++) c0 = c;
 		}
 		if (i == 1 && c0 == '#' && c == ' ') {
-			chnmsiz--;
 			cmt = 1;
 		} else {
-			chnmsiz++;
 			cmt = 0;
 		}
-		nch++;
 		if (!cmt) {
 			while ((c = *p) && (c == ' ' || c == '\t')) p++;
 			while ((c = *p) && c >= '0' && c <= '9') p++;
@@ -246,11 +235,7 @@ ptinit(void)
 
 	t.codetab = calloc(NROFFCHARS-_SPECCHAR_ST, sizeof *t.codetab);
 	t.width = calloc(NROFFCHARS, sizeof *t.width);
-	xchname = calloc(chnmsiz+1, sizeof *xchname);
-	xchtab = calloc(nch+1, sizeof *xchtab);
 	code = malloc(codsiz);
-	chname = xchname;
-	chtab = xchtab;
 
 	p = codestr;
 	p2 = code;
@@ -291,11 +276,10 @@ ptinit(void)
 		t.width[i] = 1;	/* default widths */
 
 	i = 0;
-/* this ought to be a pointer array and in place in codestr */
-	cp = chname + 1;	/* bug if starts at 0, in setch */
 	nl = 1;
 next_line:
 	while (p < codestr + nread) {
+		char *s;
 		while ((c = *p) == ' ' || c == '\t' || c == '\n') {
 			if (c == '\n') nl = 1;
 			p++;
@@ -310,19 +294,17 @@ next_line:
 			errprint("too many names in charset for %s", tt);
 			exit(1);
 		}
-		chtab[i] = cp - chname;	/* index, not pointer */
+		s = p;
 		j = 0;
 		while ((c = *p) != ' ' && c != '\t') {
-			*cp++ = c;
 			p++;
 			j++;
 		}
-		if (j == 1 && cp[-1] == '#' && c == ' ') {
-			cp--;
+		if (j == 1 && p[-1] == '#' && c == ' ') {
 			while (*p && *p != '\n') p++;
 			goto next_line;
 		}
-		*cp++ = '\0';
+		*p++ = '\0';
 		while (*p == ' ' || *p == '\t')
 			p++;
 		t.width[i+_SPECCHAR_ST] = *p++ - '0';
@@ -333,7 +315,7 @@ next_line:
 		p2 += strlen(p2) + 1;
 		p++;
 		i++;
-		nchtab++;
+		addch(s);
 	}
 
 	sps = EM;
@@ -477,16 +459,18 @@ specnames(void)
 
 
 int 
-findch (	/* find char s in chname */
-    register char *s
-)
-{
-	register int	i;
+findch(char *s) {
+	struct bst_node *n;
+	if (bst_srch(&chnames, (union bst_val)(void *)s, &n))
+		return 0;
+	return n->data.i + _SPECCHAR_ST;
+}
 
-	for (i = 0; chtab[i] != 0; i++)
-		if (strcmp(s, &chname[chtab[i]]) == 0)
-			return(i + _SPECCHAR_ST);
-	return(0);
+int
+addch(char *s) {
+	avl_add(&chnames, (union bst_val)(void *)strdup(s),
+	    (union bst_val)(int)nchtab);
+	return nchtab++ + _SPECCHAR_ST;
 }
 
 void
@@ -892,8 +876,13 @@ caseutf8conv(void) {
 }
 
 static int
-utf8occmp(union bst_val a, union bst_val b) {
+bst_intcmp(union bst_val a, union bst_val b) {
 	return a.i < b.i ? -1 :
 	       a.i > b.i ?  1 :
 	                    0 ;
+}
+
+static int
+bst_strcmp(union bst_val a, union bst_val b) {
+	return strcmp(a.p, b.p);
 }

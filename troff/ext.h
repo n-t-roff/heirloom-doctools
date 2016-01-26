@@ -594,4 +594,5 @@ extern	int	fetchrq(tchar *);
 extern	void	morechars(int);
 #ifdef NROFF
 extern	void	caseutf8conv(void);
+extern	int	addch(char *);
 #endif

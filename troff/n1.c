@@ -113,8 +113,10 @@ static void	printlong(long, int);
 static void	printn(long, long);
 static char	*sprintlong(char *s, long, int);
 static char	*sprintn(char *s, long n, int b);
+#ifndef	NROFF
 #define	vfdprintf	xxvfdprintf
 static void	vfdprintf(int fd, const char *fmt, va_list ap);
+#endif
 static tchar	setyon(void);
 static void	_setenv(void);
 static tchar	setZ(void);
@@ -605,6 +607,7 @@ errprint(const char *s, ...)	/* error message printer */
 }
 
 
+#ifndef	NROFF
 /*
  * Scaled down version of C Library printf.
  * Only %s %u %d (==%u) %o %c %x %D are recognized.
@@ -710,15 +713,11 @@ loop:
 			putchar(chname[chtab[i-128]]);
 			putchar(chname[chtab[i-128]+1]);
 		}
-#ifndef	NROFF
 		else if ((i = tr2un(i, fbits(t))) != -1)
 			goto U;
-#endif	/* !NROFF */
 	} else if (c == 'U') {
 		i = va_arg(ap, int);
-#ifndef	NROFF
 	U:
-#endif	/* !NROFF */
 		putchar('U');
 		putchar('+');
 		if (i < 0x1000)
@@ -743,6 +742,7 @@ loop:
 	}
 	goto loop;
 }
+#endif	/* !NROFF */
 
 
 static void
@@ -2274,10 +2274,8 @@ casechar(int flag)
 #ifndef	NROFF
 		k = ps2cc(name) + nchtab + 128 + 32 + 128 - 32 + nchtab;
 #else
-		if ((k = findch(name)) <= 0) {
-			errprint("invalid character name \\[%s]", name);
-			return;
-		}
+		if (!(k = findch(name)))
+			k = addch(name);
 #endif
 	} else if (iscopy(c))
 		k = cbits(c = setuc0(k));

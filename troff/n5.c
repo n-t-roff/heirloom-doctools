@@ -1308,19 +1308,13 @@ evc(struct env *dp, struct env *sp)
 		dp->_evname = name;
 	}
 	if (sp->_hcode) {
-		int *p;
-		p = malloc(dp->_nhcode * sizeof *dp->_hcode);
-		memcpy(p, sp->_hcode, dp->_nhcode * sizeof *dp->_hcode);
-		free(dp->_hcode);
-		dp->_hcode = p;
+		dp->_hcode = malloc(dp->_nhcode * sizeof *dp->_hcode);
+		memcpy(dp->_hcode, sp->_hcode, dp->_nhcode *
+		    sizeof *dp->_hcode);
 	}
 	if (sp->_lpfx) {
-		tchar *p;
-		p = malloc(dp->_nlpfx * sizeof *dp->_lpfx);
-		memcpy(p, sp->_lpfx, dp->_nlpfx *
-		    sizeof *dp->_lpfx);
-		free(dp->_lpfx);
-		dp->_lpfx = p;
+		dp->_lpfx = malloc(dp->_nlpfx * sizeof *dp->_lpfx);
+		memcpy(dp->_lpfx, sp->_lpfx, dp->_nlpfx * sizeof *dp->_lpfx);
 	}
 	dp->_pendnf = 0;
 	dp->_pendw = 0;
