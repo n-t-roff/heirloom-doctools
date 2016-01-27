@@ -20,3 +20,4 @@ clean:
 mrproper:	clean
 
 $(BIN):		$(OBJS)
+		$(LINK.c) $(OBJS) -o $@

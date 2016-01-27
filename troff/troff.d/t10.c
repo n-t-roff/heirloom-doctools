@@ -232,7 +232,7 @@ ptinit(void)
 			termtab);
 		done3(1);
 	}
-	filebase = malloc(dev.filesize + 2*EXTRAFONT);	/* enough room for whole file */
+	filebase = malloc(dev.filesize + 3*EXTRAFONT);	/* enough room for whole file */
 	memcpy(filebase, &descp[sizeof dev], dev.filesize); /* all at once */
 	free(descp);
 	pstab = (int *) filebase;
