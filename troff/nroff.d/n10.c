@@ -79,7 +79,7 @@ int	dtab;
 int	plotmode;
 int	esct;
 
-int	nchtab = 0;
+int	nchtab;
 
 int	*bdtab;
 int	*fontlab;
@@ -117,6 +117,8 @@ int	tlp;
 
 static int bst_intcmp(union bst_val, union bst_val);
 static int bst_strcmp(union bst_val, union bst_val);
+
+static int nch;
 
 static struct bst utf8oc  = { NULL, bst_intcmp };
 static struct bst chnames = { NULL, bst_strcmp };
@@ -317,7 +319,7 @@ next_line:
 		i++;
 		addch(s);
 	}
-
+	nchtab = nch;
 	sps = EM;
 	ses = EM;
 	ics = EM * 2;
@@ -469,8 +471,8 @@ findch(char *s) {
 int
 addch(char *s) {
 	avl_add(&chnames, (union bst_val)(void *)strdup(s),
-	    (union bst_val)(int)nchtab);
-	return nchtab++ + _SPECCHAR_ST;
+	    (union bst_val)(int)nch);
+	return nch++ + _SPECCHAR_ST;
 }
 
 void
