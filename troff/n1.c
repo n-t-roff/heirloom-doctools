@@ -1329,7 +1329,7 @@ copy:
 #ifdef NROFF
 	case '/':
 	case ',':
-		if (gflag == 0)
+		if (!(gflag || gemu))
 			goto dfl;
 		goto g0;
 	case '|':
@@ -1341,7 +1341,7 @@ copy:
 			goto dfl;
 		return(makem((int)(EM)/12));	/* italic correction */
 	case ',':
-		if (gflag == 0)
+		if (!(gflag || gemu))
 			goto dfl;
 		return(makem(0));	/* left italic correction */
 	case '|':	/* narrow space */
