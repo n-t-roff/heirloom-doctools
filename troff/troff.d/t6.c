@@ -720,8 +720,8 @@ const struct amap {
 	{ NULL, NULL }
 };
 
-tchar setch(int delim)
-{
+tchar
+setch(int delim) {
 	register int j;
 	char	temp[NC];
 	tchar	c, d[2] = {0, 0};
@@ -772,15 +772,26 @@ tchar setch(int delim)
 	c = 0;
 	if (delim == '[' || delim == 'C') {
 		size_t l = strlen(temp);
-		if (gemu && (l == 6 || (l == 7
-		    && temp[6] >= '0' && temp[6] <= '9'))
-		    && temp[5] >= '0' && temp[5] <= '9'
-		    && temp[4] >= '0' && temp[4] <= '9'
-		    && !strncmp(temp, "char", 4)) {
-			int i = atoi(temp + 4);
-			// Die Zuordung darueber stimmt nicht.
-			if (i <= 127)
-				c = i + nchtab + 128;
+		if (gemu) {
+			if (l == 5 && *temp == 'u'
+			    && isxdigit(temp[1])
+			    && isxdigit(temp[2])
+			    && isxdigit(temp[3])
+			    && isxdigit(temp[4])) {
+				int n;
+				n = strtol(temp + 1, NULL, 16);
+				if (n)
+					c = setuc0(n);
+			} else if ((l == 6 || (l == 7
+			    && isdigit(temp[6])))
+			    && isdigit(temp[5])
+			    && isdigit(temp[4])
+			    && !strncmp(temp, "char", 4)) {
+				int i = atoi(temp + 4);
+				// Die Zuordung darueber stimmt nicht.
+				if (i <= 127)
+					c = i + nchtab + 128;
+			}
 		}
 		if (!c && (c = postchar(temp, &f))) {
 			c |= chbits & ~FMASK;

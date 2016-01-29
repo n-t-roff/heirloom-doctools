@@ -164,15 +164,26 @@ setch(int delim)
 				nodelim(']');
 			else {
 				size_t l = strlen(temp);
-				if (gemu && (l == 6 || (l == 7
-				    && temp[6] >= '0' && temp[6] <= '9'))
-				    && temp[5] >= '0' && temp[5] <= '9'
-				    && temp[4] >= '0' && temp[4] <= '9'
-				    && !strncmp(temp, "char", 4)) {
-					int i = atoi(temp + 4);
-					if (i <= 255)
-						return i + nchtab +
-						    _SPECCHAR_ST;
+				if (gemu) {
+					if (l == 5 && *temp == 'u'
+					    && isxdigit(temp[1])
+					    && isxdigit(temp[2])
+					    && isxdigit(temp[3])
+					    && isxdigit(temp[4])) {
+						int n;
+						n = strtol(temp + 1, NULL, 16);
+						if (n)
+							return setuc0(n);
+					} else if ((l == 6 || (l == 7
+					    && isdigit(temp[6])))
+					    && isdigit(temp[5])
+					    && isdigit(temp[4])
+					    && !strncmp(temp, "char", 4)) {
+						int i = atoi(temp + 4);
+						if (i <= 255)
+							return i + nchtab +
+							    _SPECCHAR_ST;
+					}
 				}
 				if ((j = findch(temp)) > 0)
 					return j | chbits;
