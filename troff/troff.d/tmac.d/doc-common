@@ -322,6 +322,7 @@
 .	ds oS \\$1
 .	if !\\$1 .as oS \0\\$2
 .\}
+.ds operating-system \\*(oS\" for groff_mdoc.7
 ..
 .de Dd
 .if !\\*(dD .nr gX 1
@@ -436,4 +437,26 @@
 .		br
 .	\}
 ..
+.\" For displaying groff_mdoc.7:
+.ds volume-operating-system BSD
+.ds volume-ds-1 General Commands Manual
+.ds volume-ds-2 System Calls Manual
+.ds volume-ds-3 Library Functions Manual
+.ds volume-ds-4 Kernel Interfaces Manual
+.ds volume-ds-5 File Formats Manual
+.ds volume-ds-6 Games Manual
+.ds volume-ds-7 Miscellaneous Information Manual
+.ds volume-ds-8 System Manager's Manual
+.ds volume-ds-9 Kernel Developer's Manual
+.ds volume-ds-USD   User's Supplementary Documents
+.ds volume-ds-PS1   Programmer's Supplementary Documents
+.ds volume-ds-AMD   Ancestral Manual Documents
+.ds volume-ds-SMM   System Manager's Manual
+.ds volume-ds-URM   User's Reference Manual
+.ds volume-ds-PRM   Programmer's Manual
+.ds volume-ds-KM    Kernel Manual
+.ds volume-ds-IND   Manual Master Index
+.ds volume-ds-LOCAL Local Manual
+.ds volume-ds-CON   Contributed Software Manual
+.ds volume-as-i386         i386
 .\" vim:set syntax=nroff:

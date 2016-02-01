@@ -692,7 +692,8 @@
 .de In
 .	if !\\n(aC \{\
 .		ie !\\n(.$ .tm Usage: .In <include_filename> (#\\n(.c)
-.		el .ie \\n(nS \{\
+.		\" For displaying groff_mdoc.7
+.		el .ie \\n(nS:\\n[in-synopsis-section] \{\
 .			sp
 .			ft B
 .			if 1 #include <\\$1>
@@ -915,7 +916,7 @@
 .\" NS Pa macro - Pathname
 .de Pa
 .if \\n(aC==0 \{\
-.       ie \\n(.$==0 \&\\*(pA~\fP\s0
+.	ie \\n(.$==0 \&\\*(pA~\fP\s0
 .	el \{\
 .		ds mN Pa
 .		nr fV \\n(.$
@@ -927,12 +928,16 @@
 .		fV
 .	\}
 .\}
-.if \\n(aC>\\n(aP \{\
+.ie \\n(aC>\\n(aP \{\
 .	as b1 \\*(pA
 .	nr aP \\n(aP+1
-.       nr cF \\n(.f
+.	nr cF \\n(.f
 .	nr cZ \\n(.s
-.       nR
+.	nR
+.\}
+.el .if \\n(aC \{\
+.	as b1 \&\\*(pA~\fP\s0
+.	aZ
 .\}
 ..
 .\" NS Sy macro - Symbolics
@@ -2134,8 +2139,8 @@
 .\" NS L[0-9] registers - stack of list types
 .de Bl
 .ie \\n(.$==0 \{\
-.tm Usage: .Bl [[-hang | -ohang | -tag] [-width]] [ -item | -enum | -bullet |
-.tm            -diag] (#\\n(.c)
+.tm Usage: .Bl [[-hang | -ohang | -tag] [-width]] [-item | -enum [-nested] |
+.tm            -bullet | -diag] (#\\n(.c)
 .\}
 .el \{\
 .	ds mN Bl
@@ -2171,6 +2176,8 @@
 .		ds L\\n(lC nU
 .		nr w\\n(lC 3n
 .		nr tC  1
+.		ds nU\\n(lC.tag
+.		nr nU\\n(lC.nested 0
 .	\}
 .	el .ie \\*[_$1_]-bullet \{\
 .		nr aP \\n(aP+1
@@ -2307,7 +2314,7 @@
 .			nr tW 1
 .		\}
 .	\}
-.	el .if \\*[A\\n(aP]-offset \{\
+.	el .ie \\*[A\\n(aP]-offset \{\
 .		nr iD 1
 .		nr aP \\n(aP+1
 .		ie \\*[A\\n(aP]indent \{\
@@ -2331,6 +2338,11 @@
 .				el .nr o\\n(lC \\*(tS
 .			\}
 .		\}
+.	\}
+.	el .if \\*[A\\n(aP]-nested \{\
+.		nr iD 1
+.		nr nU\\n(lC.nested 1
+.		nr w\\n(lC +2n
 .	\}
 .	if \\n(iD==0 \{\
 .		if \\*[L\\n(lC]cL \{\
@@ -2507,7 +2519,13 @@
 .de nU
 .	nr oM +1
 .	nr nU\\n(lC +1
-.	ds b1 \&\\n[nU\\n(lC].
+.	ds b1
+.	if \\n[nU\\n(lC.nested] \{\
+.		lnr i \\n(lC-1
+.		as b1 \\*[nU\\ni.tag]
+.	\}
+.	as b1 \&\\n[nU\\n(lC].
+.	ds nU\\n(lC.tag \\*(b1
 .	uL
 ..
 .de bU
@@ -3370,9 +3388,10 @@
 .nr dK 0
 .nr pK 0
 .nr bK 0
+.nr cK 0
 .ds rS
 .rm U1 U2 U3 U4 U5 U6 U7 U8
-.rm uK jK iK nK oK rK qK tK vK dK pK bK
+.rm uK jK iK nK oK rK qK tK vK dK pK bK cK
 ..
 .\" NS rZ macro - reference print
 .de rZ
@@ -3440,6 +3459,11 @@
 .	nr Kl \\n(Kl-1
 .	if \\n(Kl==0 \&\\*(qK.
 .	if \\n(Kl>0 \&\\*(qK,
+.\}
+.if \\n(cK \{\
+.	nr Kl \\n(Kl-1
+.	if \\n(Kl==0 \&\\*(cK.
+.	if \\n(Kl>0 \&\\*(cK,
 .\}
 .if \\n(dK \{\
 .	nr Kl \\n(Kl-1
@@ -3525,6 +3549,30 @@
 .		nR
 .	\}
 .	el .rR
+.\}
+..
+.de %C
+.if \\n(aC==0 \{\
+.	ie \\n(.$==0 .tm Usage: .%C city_name (#\\n(.c)
+.	el \{\
+.		nr cK \\n(cK+1
+.		nr Kl \\n(Kl+1
+.		ds rS cK
+.		ds mN %C
+.		nr fV \\n(.$
+.		lnr i 0 1
+.		while \\n(.$ \{\
+.			ds A\\n+i "\\$1
+.			shift
+.		\}
+.		fV
+.	\}
+.\}
+.if \\n(aC>\\n(aP \{\
+.	nr aP \\n(aP+1
+.	nr cF \\n(.f
+.	nr cZ \\n(.s
+.	rR
 .\}
 ..
 .\" NS %D macro - [reference] Date

@@ -67,6 +67,10 @@
 .nr cF \\n(.f
 .nr cZ \\n(.s
 .ds __aa \&\f\\n(cF\s\\n(cZ
+.if \\n(aC=0&\\n(.$ .if \\$1-devel \{\
+.	as __aa \& (currently under development)
+.	shift
+.\}
 .if \\n(aC=0&\\n(.$ \{\
 .	nr fV \\n(.$
 .	lnr i 0 1
@@ -202,48 +206,13 @@
 .		__OSx
 .	\}
 ..
-.de Fx
-.	lds OsName FreeBSD
-.	if !\\n(aC \{\
-.		ie !\\n(.$ \\*[OsName]
-.		el \{\
-.			ds mN Fx
-.			lnr i 0 1
-.			nr fV \\n(.$
-.			while \\n(.$ \{\
-.				ds A\\n+i "\\$1
-.				shift
-.			\}
-.			fV
-.		\}
-.	\}
-.	if \\n(aC \{\
-.		as b1 \\*[OsName]
-.		__OSx
-.	\}
-..
-.de Nx
-.	lds OsName NetBSD
-.	if !\\n(aC \{\
-.		ie !\\n(.$ \\*[OsName]
-.		el \{\
-.			ds mN Nx
-.			lnr i 0 1
-.			nr fV \\n(.$
-.			while \\n(.$ \{\
-.				ds A\\n+i "\\$1
-.				shift
-.			\}
-.			fV
-.		\}
-.	\}
-.	if \\n(aC \{\
-.		as b1 \\*[OsName]
-.		__OSx
-.	\}
-..
-.de Ox
-.	lds OsName OpenBSD
+.ds Fx.OsName  FreeBSD
+.ds Nx.OsName  NetBSD
+.ds Ox.OsName  OpenBSD
+.ds Dx.OsName  DragonFly
+.ds Bsx.OsName BSD/OS
+.de _BSDx
+.	lds OsName \\*[\\$0.OsName]
 .	if !\\n(aC \{\
 .		ie !\\n(.$ \\*[OsName]
 .		el \{\
@@ -262,6 +231,11 @@
 .		__OSx
 .	\}
 ..
+.als Fx  _BSDx
+.als Nx  _BSDx
+.als Ox  _BSDx
+.als Dx  _BSDx
+.als Bsx _BSDx
 .\" The Bt macro should go away now
 .\" Ns Bt macro - prints "is currently in beta test." (HISTORY section)
 .de Bt
@@ -330,15 +304,15 @@
 .as St-isoC-tcor2 (\\*(Lq\\*(tNISO\~C\^90\\*[__aa], Technical Corrigendum 2
 .as St-isoC-tcor2 \\*(Rq)
 .ds St-iso8601 \&\\*(tNISO\\*[__aa] 8601\\*(sV
-.ds St-iso8802-3 \&\\*(tNISO\\*[__aa] 8802-3: 1989\\*(sV
+.ds St-iso8802-3 \&\\*(tNISO/IEC\\*[__aa] 8802-3:1989\\*(sV
 .ds St-ieee754 \&\\*(tNIEEE Std\\*[__aa] 754-1985\\*(sV
 .ds St-xcu5 \&\\*(tNX/Open Commands and Utilities Issue 5\\*[__aa]\\*(sV
 .as St-xcu5 (\\*(Lq\\*(tNXCU5\\*[__aa]\\*(Rq)
 .ds St-xsh4.2 \&\\*(tNX/Open System Interfaces and Headers Issue\\~4, Version
 .as St-xsh4.2 \\~2\\*[__aa]\\*(sV
 .as St-xsh4.2 (\\*(Lq\\*(tNXSH4.2\\*[__aa]\\*(Rq)
-.ds St-xcurses4.2 \&\\*(tNX/Open Curses Issue\~4, Version\~2
-.as St-xcurses4.2 (\\*(Lq\\*(tNXCURSES\\*[__aa] 4.2\\*(Rq)
+.ds St-xcurses4.2 \&\\*(tNX/Open Curses Issue\~4, Version\~2\\*(sV
+.as St-xcurses4.2 (\\*(Lq\\*(tNXCURSES\\*[__aa]\^4.2\\*(Rq)
 .ds St-xns5 \&\\*(tNX/Open\\*[__aa] Networking Services Issue\~5\\*(sV
 .as St-xns5 (\*(Lq\\*(tNXNS\\*[__aa]\^5\*(Rq)
 .ds St-xns5.2 \&\\*(tNX/Open\\*[__aa] Networking Services Issue\~5.2\\*(sV
@@ -353,8 +327,8 @@
 .ds St-xpg4.3 \&\\*(tNX/Open Portability Guide Issue 4, Version 3\\*[__aa]
 .as St-xpg4.3 \\*(sV
 .as St-xpg4.3 (\\*(Lq\\*(tNXPG4.3\\*[__aa]\\*(Rq)
-.ds St-xsh5 \&\\*(tNX/Open System Interfaces and Headers Issue\~5
-.as St-xsh5 (\\*(Lq\\*(tNXSH\\*[__aa] 5\\*(Rq)
+.ds St-xsh5 \&\\*(tNX/Open System Interfaces and Headers Issue\~5\\*(sV
+.as St-xsh5 (\\*(Lq\\*(tNXSH\\*[__aa]5\\*(Rq)
 .ds St-susv1 \&\\*(tNVersion 1 of the Single UNIX Specification\\*[__aa]\\*(sV
 .as St-susv1 (\\*(Lq\\*(tNSUSv1\\*[__aa]\\*(Rq)
 .ds St-susv2 \&\\*(tNVersion 2 of the Single UNIX Specification\\*[__aa]\\*(sV
@@ -404,12 +378,16 @@
 .ds Lb.libarchive Reading and Writing Streaming Archives Library (libarchive,\
  \-larchive)
 .ds Lb.libarm ARM Architecture Library (libarm, \-larm)
+.ds Lb.libarm32 ARM32 Architecture Library (libarm32, \-larm32)
 .\" libblacklist (NetBSD)
 .ds Lb.libbluetooth Bluetooth Library (libbluetooth, \-lbluetooth)
 .ds Lb.libbsm Basic Security Module Library (libbsm, \-lbsm)
 .ds Lb.libc Standard C Library (libc, \-lc)
+.ds Lb.libc_r Reentrant C\~Library (libc_r, \-lc_r)
 .ds Lb.libcalendar Calendar Arithmetic Library (libcalendar, \-lcalendar)
 .ds Lb.libcam Common Access Method User Library (libcam, \-lcam)
+.ds Lb.libcdk Curses Development Kit Library (libcdk, \-lcdk)
+.ds Lb.libcipher FreeSec Crypt Library (libcipher, \-lcipher)
 .ds Lb.libcapsicum Capsicum Library (libcapsicum, \-lcapsicum)
 .ds Lb.libcompat Compatibility Library (libcompat, \-lcompat)
 .ds Lb.libcrypt Crypt Library (libcrypt, \-lcrypt)
@@ -420,18 +398,23 @@
  \-ldevinfo)
 .ds Lb.libdevstat Device Statistics Library (libdevstat, \-ldevstat)
 .\" libdpv
+.ds Lb.libdisk Interface to Slice and Partition Labels Library (libdisk, \-ldisk)
 .ds Lb.libdwarf DWARF Access Library (libdwarf, \-ldwarf)
 .ds Lb.libedit Command Line Editor Library (libedit, \-ledit)
 .ds Lb.libelf ELF Access Library (libelf, \-lelf)
+.ds Lb.libevent Event Notification Library (libevent, \-levent)
 .ds Lb.libexecinfo Backtrace Information Library (libexecinfo, \-lexecinfo)
 .ds Lb.libfetch File Transfer Library for URLs (libfetch, \-lfetch)
 .\" libfigpar
 .ds Lb.libform Curses Form Library (libform, \-lform)
 .ds Lb.libgeom Userland API Library for kernel GEOM subsystem (libgeom, \-lgeom)
+.ds Lb.libgpib General-Purpose Instrument Bus (GPIB) library (libgpib, \-lgpib)
 .ds Lb.libgpio General-Purpose Input Output (GPIO) library (libgpio, \-lgpio)
 .ds Lb.libi386 i386 Architecture Library (libi386, \-li386)
 .ds Lb.libintl Internationalized Message Handling Library (libintl, \-lintl)
 .ds Lb.libipsec IPsec Policy Control Library (libipsec, \-lipsec)
+.ds Lb.libipx IPX Address Conversion Support Library (libipx, \-lipx)
+.ds Lb.libiscsi iSCSI protocol library (libiscsi, \-liscsi)
 .ds Lb.libjail Jail Library (libjail, \-ljail)
 .ds Lb.libkiconv Kernel side iconv library (libkiconv, \-lkiconv)
 .ds Lb.libkse N:M Threading Library (libkse, \-lkse)
@@ -445,8 +428,11 @@
 .ds Lb.libmenu Curses Menu Library (libmenu, \-lmenu)
 .\" libmt (?)
 .ds Lb.libnetgraph Netgraph User Library (libnetgraph, \-lnetgraph)
+.ds Lb.libnetpgp Netpgp signing, verification, encryption and decryption (libnetpgp, \-lnetpgp)
+.ds Lb.libossaudio OSS Audio Emulation Library (libossaudio, \-lossaudio)
 .ds Lb.libnv Name/value pairs library (libnv, \-lnv)
 .ds Lb.libpam Pluggable Authentication Module Library (libpam, \-lpam)
+.ds Lb.libpcap Packet Capture Library (libpcap, \-lpcap)
 .ds Lb.libpci PCI Bus Access Library (libpci, \-lpci)
 .ds Lb.libposix \\*(Px\\*[__aa] Compatibility Library (libposix, \-lposix)
 .ds Lb.libpmc Performance Counters Library (libpmc, \-lpmc)
@@ -456,6 +442,7 @@
 .ds Lb.libprop Property Container Object Library (libprop, \-lprop)
 .ds Lb.libpthread \\*(Px\\*[__aa] Threads Library (libpthread, \-lpthread)
 .ds Lb.libpuffs puffs Convenience Library (libpuffs, \-lpuffs)
+.ds Lb.librefuse File System in Userspace Convenience Library (librefuse, \-lrefuse)
 .ds Lb.libresolv DNS Resolver Library (libresolv, \-lresolv)
 .ds Lb.librpcsec_gss RPC GSS-API Authentication Library (librpcsec_gss,\
  \-lrpcsec_gss)
@@ -463,6 +450,9 @@
 .ds Lb.librt \\*(Px\\*[__aa] Real-time Library (librt, \-lrt)
 .ds Lb.librtld_db Run-time Linker Debugging Library (librtld_db, \-lrtld_db)
 .ds Lb.libsdp Bluetooth Service Discovery Protocol User Library (libsdp, \-lsdp)
+.ds Lb.libssp Buffer Overflow Protection Library (libssp, \-lssp)
+.ds Lb.libSystem System Library (libSystem, \-lSystem)
+.ds Lb.libtermcap Termcap Access Library (libtermcap, \-ltermcap)
 .ds Lb.libstdthreads C11 Threads Library (libstdthreads, \-lstdthreads)
 .ds Lb.libterminfo Terminal Information Library (libterminfo, \-lterminfo)
 .ds Lb.libthr 1:1 Threading Library (libthr, \-lthr)
