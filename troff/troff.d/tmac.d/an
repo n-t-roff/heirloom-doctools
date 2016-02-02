@@ -517,4 +517,10 @@
 .	\}
 ..
 .so @MACDIR@/an-ext
+.\" For groff_www.7
+.de URL
+.	nop \\$2 \(la\\$1\(ra\\$3
+..
+.als MTO URL
+.als FTP URL
 .\" vim:set filetype=groff:
