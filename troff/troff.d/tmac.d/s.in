@@ -34,6 +34,9 @@
 .\"
 .\" Portions Copyright (c) 2005 Gunnar Ritter, Freiburg i. Br., Germany
 .\"
+.\" Macros .QS and .QE copied from Plan9 sys/lib/tmac/tmac.s
+.\" (Lucent Public License Version 1.02)
+.\"
 .\" Sccsid @(#)s.in	1.4 (gritter) 11/13/06
 .\"
 .ds // @MACDIR@/
@@ -263,6 +266,19 @@
 .ll -\\n(QIu
 .ti \\n(.iu
 .if \\n(TM .ls 1
+..
+.\" Macros QS and QE copied from Plan9 sys/lib/tmac/tmac.s
+.de QS
+.br
+.LP
+.in +\\n(QIu
+.ll -\\n(QIu
+..
+.de QE
+.br
+.ll +\\n(QIu
+.in -\\n(QIu
+.LP
 ..
 .	\" SH - section header
 .de SH
