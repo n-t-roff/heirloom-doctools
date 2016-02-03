@@ -166,18 +166,18 @@ setch(int delim)
 				size_t l = strlen(temp);
 				if (gemu) {
 					if (l == 5 && *temp == 'u'
-					    && isxdigit(temp[1])
-					    && isxdigit(temp[2])
-					    && isxdigit(temp[3])
-					    && isxdigit(temp[4])) {
+					    && isxdigit((unsigned)temp[1])
+					    && isxdigit((unsigned)temp[2])
+					    && isxdigit((unsigned)temp[3])
+					    && isxdigit((unsigned)temp[4])) {
 						int n;
 						n = strtol(temp + 1, NULL, 16);
 						if (n)
 							return setuc0(n);
 					} else if ((l == 6 || (l == 7
-					    && isdigit(temp[6])))
-					    && isdigit(temp[5])
-					    && isdigit(temp[4])
+					    && isdigit((unsigned)temp[6])))
+					    && isdigit((unsigned)temp[5])
+					    && isdigit((unsigned)temp[4])
 					    && !strncmp(temp, "char", 4)) {
 						int i = atoi(temp + 4);
 						if (i <= 255)
