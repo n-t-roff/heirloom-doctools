@@ -82,53 +82,74 @@
 .\" NS nA register - Section Header SEE ALSO flag
 .\" NS nT register - Section Header STANDARDS flag
 .de Sh
-.	nr nS 0
-.	nr sE 0
-.	nr iS 0
-.	nr nA 0
-.	nr nF 0
-.	nr nT 0
-.	nr nY 0
-.	nr aN 0
-.	nr oT 0
-.	ds Sh.title \\$1
-.	ad
-.	ie \\$1NAME .hK
-.	el .ie \\$1SYNOPSIS \{\
-.		nr nS 1
-.		na
+.	if \\n(aC=0&\\n(.$ \{\
+.		nr nS 0
+.		nr sE 0
+.		nr iS 0
+.		nr nA 0
+.		nr nF 0
+.		nr nT 0
+.		nr nY 0
+.		nr aN 0
+.		nr oT 0
+.		nr Sh.a 1
+.		ds Sh.title \\$1
+.		ad
+.		ie \\$1NAME .hK
+.		el .ie \\$1SYNOPSIS \{\
+.			nr nS 1
+.			na
+.		\}
+.		el .ie \\$1DESCRIPTION \{\
+.			rr fB
+.			rr Fb
+.			ds Fb
+.			nr fY 0
+.			nr fZ 0
+.		\}
+.		el .ie \\$1FILES .nr nF 1
+.		el .ie \\$1SEE \{\
+.			nr sE 1
+.			nr nA 1
+.			na
+.		\}
+.		el .ie \\$1STANDARDS .nr nT 1
+.		el .if \\$1AUTHORS .nr nY 1
+.		in 0
+.		pL
+.		sp
+.		ns
+.		ta T .5i
+.		if !\\n(cR .ne 3
+.		fi
+.		ds b1 \&\\*(sH
+.		ds mN Sh
+.		nr fV \\n(.$
+.		lnr i 0 1
+.		while \\n(.$ \{\
+.			ds A\\n+i "\\$1
+.			shift
+.		\}
+.		fV
 .	\}
-.	el .ie \\$1DESCRIPTION \{\
-.		rr fB
-.		rr Fb
-.		ds Fb
-.		nr fY 0
-.		nr fZ 0
+.	while \\n(aC&(\\n(aC>\\n(aP) \{\
+.		nr aP +1
+.		ie \\n[C\\n(aP]=1 \{\
+.			\"as b1 \\*(sV
+.			\\*[A\\n(aP]
+.		\}
+.		el .as b1 \\*[A\\n(aP]\\*(sV
 .	\}
-.	el .ie \\$1FILES .nr nF 1
-.	el .ie \\$1SEE \{\
-.		nr sE 1
-.		nr nA 1
-.		na
+.	if !\\*(b1 \{\
+.		nop \\*(b1\&\fR\s10\&
+.		ds b1
+.		aY
 .	\}
-.	el .ie \\$1STANDARDS .nr nT 1
-.	el .if \\$1AUTHORS .nr nY 1
-.	in 0
-.	pL
-.	sp
-.	ns
-.	ta T .5i
-.	if !\\n(cR .ne 3
-.	fi
-.	if 1 \&\\*(sH\\$1
-.	shift
-.	while \\n(.$ \{\
-.		if 1 \&\|\\$1
-.		shift
+.	if \\n[Sh.a] \{\
+.		nr Sh.a 0
+.		in +\\n(Tiu
+.		ns
 .	\}
-.	if 1 \&\fR\s10\&
-.	in +\\n(Tiu
-.	ns
 ..
 .\" NS aV macro - parse argument vector (recursive) (.aV arg ... )
 .\" NS fV macro - parse argument vector (recursive) (.fV)
@@ -3166,6 +3187,10 @@
 .\}
 .if \\n(aC>\\n(aP \{\
 .	nr aP \\n(aP+1
+.	while \\n[C\\n(aP]=4 \{\
+.		as b1 \\*[A\\n(aP]
+.		nr aP +1
+.	\}
 .	nr cF \\n(.f
 .	nr cZ \\n(.s
 .	as b1 \\*(fN\\*[A\\n(aP]\fP\s0\\*(lp
@@ -3947,6 +3972,10 @@ File:
 .	ie \\$1-nosplit \{\
 .		nr xX 1
 .		nr nY 0
+.	\}
+.	el .ie \\$1-split \{\
+.		nr xX 1
+.		nr nY 1
 .	\}
 .	el .nr xX 0
 .	ie \\n(.$==0 .tm Usage: .An author_name ... \\*(Pu (#\\n(.c)

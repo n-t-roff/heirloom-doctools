@@ -109,6 +109,7 @@
 .nr Qo 12n
 .nr Qq 12n
 .nr Sc 3
+.nr Sh 8n \" groff
 .nr Sm 8n
 .nr So 12n
 .nr Sq 12n
@@ -199,6 +200,7 @@
 .ds mdoc.cm.Qo
 .ds mdoc.cm.Qq
 .ds mdoc.cm.Sc
+.ds mdoc.cm.Sh
 .ds mdoc.cm.Sm
 .ds mdoc.cm.So
 .ds mdoc.cm.Sq
