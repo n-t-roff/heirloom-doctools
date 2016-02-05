@@ -80,6 +80,7 @@
 .nr Fc 3
 .nr Fo 16n
 .nr Fn 16n
+.nr Ft 8n\" ? (groff)
 .nr Fx 4
 .nr I1 6n
 .nr I2 12n
@@ -171,6 +172,7 @@
 .ds mdoc.cm.Fc
 .ds mdoc.cm.Fo
 .ds mdoc.cm.Fn
+.ds mdoc.cm.Ft
 .ds mdoc.cm.Fx
 .ds mdoc.cm.I1
 .ds mdoc.cm.I2
@@ -253,7 +255,7 @@
 .if !\\$1 .ds dT \\$1
 .if !\\$2 \{\
 .	ds cH \\$2
-.	if \\$2>=1 .if \\$2<=9 \{\
+.	ie \B\\$2 .if \\$2>=1 .if \\$2<=9 \{\
 .		lds _OS_ BSD \"
 .		ie     \\$2=1 .ds vT \\*[_OS_]General Commands Manual
 .		el .ie \\$2=2 .ds vT \\*[_OS_]System Calls Manual
@@ -266,24 +268,24 @@
 .		el            .ds vT \\*[_OS_]Kernel Developer's Manual
 .		nr sN \\$2
 .	\}
-.	if \\$2unass  .ds vT DRAFT
-.	if \\$2draft  .ds vT DRAFT
-.	if \\$2paper  .ds vT UNTITLED
+.	el .ie \\$2unass .ds vT DRAFT
+.	el .ie \\$2draft .ds vT DRAFT
+.	if     \\$2paper .ds vT UNTITLED
 .\}
 .if !\\$3 \{\
-.	if \\$3USD   .ds vT User's Supplementary Documents
-.	if \\$3PS1   .ds vT Programmer's Supplementary Documents
-.	if \\$3AMD   .ds vT Ancestral Manual Documents
-.	if \\$3SMM   .ds vT System Manager's Manual
-.	if \\$3URM   .ds vT Reference Manual
-.	if \\$3PRM   .ds vT Programmer's Manual
-.	if \\$3IND   .ds vT Manual Master Index
-.	if \\$3LOCAL .ds vT Local Manual
-.	if \\$3tahoe .as vT \ (Tahoe Architecture)
-.	if \\$3vax .as vT \ (VAX Architecture)
-.	if \\$3hp300 .as vT \ (HP300 Architecture)
-.	if \\$3sparc .as vT \ (SPARC Architecture)
-.	if \\*(vTLOCAL .ds vT \\$3
+.	ie     \\$3USD     .ds vT User's Supplementary Documents
+.	el .ie \\$3PS1     .ds vT Programmer's Supplementary Documents
+.	el .ie \\$3AMD     .ds vT Ancestral Manual Documents
+.	el .ie \\$3SMM     .ds vT System Manager's Manual
+.	el .ie \\$3URM     .ds vT Reference Manual
+.	el .ie \\$3PRM     .ds vT Programmer's Manual
+.	el .ie \\$3IND     .ds vT Manual Master Index
+.	el .ie \\$3LOCAL   .ds vT Local Manual
+.	el .ie \\$3tahoe   .as vT \ (Tahoe Architecture)
+.	el .ie \\$3vax     .as vT \ (VAX Architecture)
+.	el .ie \\$3hp300   .as vT \ (HP300 Architecture)
+.	el .ie \\$3sparc   .as vT \ (SPARC Architecture)
+.	el .if \\*(vTLOCAL .ds vT \\$3
 .\}
 ..
 .\" NS Os macro - Operating System (behaviour changes after first call)

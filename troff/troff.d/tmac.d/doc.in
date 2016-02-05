@@ -528,7 +528,7 @@
 .\" needs work - not very translatable
 .de Cd
 .if \\n(aC==0 \{\
-.       ie \\n(.$==0 .tm Usage: .Cd Configuration file declaration (#\\n(.c)
+.	ie \\n(.$==0 .tm Usage: .Cd Configuration file declaration (#\\n(.c)
 .	el \{\
 .		ds mN Cd
 .		nr fV \\n(.$
@@ -540,11 +540,10 @@
 .		fV
 .	\}
 .\}
-.br
 .if \\n(aC>\\n(aP \{\
 .	as b1 \\*(nM
 .	nr aP \\n(aP+1
-.       nr cF \\n(.f
+.	nr cF \\n(.f
 .	nr cZ \\n(.s
 .	ie \\n(nS \{\
 .		if \\*(mNCd \{\
@@ -557,8 +556,8 @@
 .			ti -\\n(iSu
 .			nr nS \\n(nS+1
 .		\}
-.	nR
-.	in -\\n(iSu
+.		nR
+.		in -\\n(iSu
 .	\}
 .	el .nR
 .\}
@@ -928,9 +927,6 @@
 .	\}
 .\}
 ..
-.de Lk
-.	Pa \\$*
-..
 .de Mt
 .	Pa \\$*
 ..
@@ -1071,12 +1067,16 @@
 .	\}
 .\}
 .ie \\n(aC>\\n(aP \{\
+.	lnr aP-1 \\n(aP
 .	nr aP \\n(aP+1
 .	ie \\n[C\\n(aP]==1 \{\
 .		if \\n(sM \{\
-.			if \\*[__inline_mN]Oc \{\
-.				if \\*[A\\n(aP]Cm .as b1 \\*(sV
+.			lnr S 0
+.			ie \\*[A\\n(aP]Fn .nr S 1
+.			el .if \\*[__inline_mN]Oc \{\
+.				if \\*[A\\n(aP]Cm .nr S 1
 .			\}
+.			if \\nS .as b1 \\*[S\\n[aP-1]]
 .		\}
 .		\\*[A\\n(aP]
 .	\}
@@ -3240,22 +3240,21 @@
 .	f\\n[C\\n(aP]
 .\}
 .el  \{\
-.	ie \\n(nS>0 .as b1 \\*(rp\fR;\fP\f\\n(cF\s\\n(cZ
-.	el .as b1 \\*(rp\f\\n(cF\s\\n(cZ
+.	ie \\n(nS .as b1 \\*(rp\fR;\fP\f\\n(cF\s\\n(cZ
+.	el        .as b1 \\*(rp\f\\n(cF\s\\n(cZ
 .	aZ
 .\}
 ..
 .de f3
-.ie \\n(nS>0 .as b1 \\*(rp\f\\n(cF\s\\n(cZ\\*[A\\n(aP]
-.el .as b1 \\*(rp\f\\n(cF\s\\n(cZ\\*[A\\n(aP]
-.ie \\n(aC>\\n(aP \{\
-.	No
-.\}
-.el .aZ
+.	as b1 \\*(rp\f\\n(cF\s\\n(cZ\\*[A\\n(aP]
+.	ie \\n(aC>\\n(aP \{\
+.		No
+.	\}
+.	el .aZ
 ..
 .de f4
-.ie \\n(nS>0 .as b1 \\*(rp\fR;\fP\f\\n(cF\s\\n(cZ\\*[S\\n(aP]\\*[A\\n(aP]
-.el .as b1 \\*(rp\f\\n(cF\s\\n(cZ\\*[S\\n(aP]\\*[A\\n(aP]
+.ie \\n(nS .as b1 \\*(rp\fR;\fP\f\\n(cF\s\\n(cZ\\*[S\\n(aP]\\*[A\\n(aP]
+.el        .as b1 \\*(rp\f\\n(cF\s\\n(cZ\\*[S\\n(aP]\\*[A\\n(aP]
 .ie \\n(aC>\\n(aP \{\
 .	nr aP \\n(aP+1
 .	No
@@ -4014,8 +4013,7 @@ File:
 .el \{\
 .	ds mN Rv
 .	if \\$1-std \{\
-.		nr cH \\*(cH
-.		if (\\n(cH<2):(\\n(cH>3) \
+.		if \B\\*(cH .if (\\*(cH<2):(\\*(cH>3) \
 .			tm Usage: .Rv -std sections 2 and 3 only
 .		br
 .		ie \\$2 \\*[__rV1.1]\\*[__rV2]
@@ -4055,16 +4053,27 @@ File:
 .	\}
 .	if \\n(aC>\\n(aP \{\
 .		nr aP \\n(aP+1
-.		ie \\n[C\\n(aP]>2 .nR
-.		el .ie \\n[C\\n(aP]=1 .\\*[A\\n(aP]
+.		ie \\n[C\\n(aP]>2 \{\
+.			as b1 \\*[Lk.t]
+.			ds Lk.t
+.			nR
+.		\}
+.		el .ie \\n[C\\n(aP]=1 \{\
+.			as b1 \\*[Lk.t]
+.			ds Lk.t
+.			\\*[A\\n(aP]
+.		\}
 .		el .ie !\\n[C\\n(aP]=2 \{\
 .			tm .Lk: \\*[A\\n(aP]: Unexpected argument type \\n[C\\n(aP] (#\\n(.c)
 .		\}
 .		el \{\
-.			as b1 \fB\\*[A\\n(aP]\fP
+.			ie \\*[Lk.t] .ds Lk.t \fB\\*[A\\n(aP]\fP
+.			el .ds Lk.t \fI\\*[A\\n(aP]\fP: \\*[Lk.t]
 .			Lk
 .		\}
 .	\}
+.	as b1 \\*[Lk.t]
+.	ds Lk.t
 .	aZ
 ..
 .de saveState

@@ -35,6 +35,7 @@
 .\"     %beginstrip%
 .\"
 .nh
+.rm ne
 .rm hy
 .ad l
 .rm ad
