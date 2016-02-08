@@ -463,14 +463,18 @@ mot(void)
 	tchar	c, delim;
 
 	j = HOR;
+	noschr++;
 	delim = getch(); /*eat delim*/
+	if (noschr) noschr--;
 	if ((n = hatoi())) {
 		if (vflag)
 			j = VERT;
 		i = makem(quant(n, j));
 	} else
 		i = 0;
+	noschr++;
 	c = getch();
+	if (noschr) noschr--;
 	if (!issame(c, delim))
 		nodelim(delim);
 	vflag = 0;
