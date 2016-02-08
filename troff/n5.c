@@ -1675,6 +1675,8 @@ caseif(int x)
 			true = findft(j, 0) != -1;
 		}
 		break;
+	case 'v':
+		/* break; */
 	case ' ':
 		break;
 	default:

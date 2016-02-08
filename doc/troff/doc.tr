@@ -5779,6 +5779,7 @@ T}
 \fBe\fR	Current page number is even
 \fBt\fR	Formatter is \*(TR
 \fBn\fR	Formatter is \*(NR
+\fBv\fR	Never.  (\fBv\fR is used by other roff variants.)
 .TE
 If the condition \fIc\fR is \fItrue\fR, or if the number \fIN\fR is greater than zero,
 or if the strings compare identically (including motions and character size and font),
