@@ -39,6 +39,10 @@
 .\" If -man macros, check to see if groff or troff/nroff is being used
 .\"
 .do xflag 3
+.als am1 am
+.als de1 de
+.als as1 as
+.als ds1 ds
 .de Dd
 .	rn Dd xX
 .	so @MACDIR@/doc
