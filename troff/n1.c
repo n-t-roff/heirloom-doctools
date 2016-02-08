@@ -1428,19 +1428,21 @@ copy:
 	case '@':
 		if (xflag == 0)
 			goto dfl;
-		k = cbits(j = getch0());
+		k = cbits(i = getch0());
 		switch (k) {
 		case '{':
 			pushinlev();
 			break;
 		case '}':
-			if ((j = popinlev()) != 0)
-				return(j);
+			if ((i = popinlev()) != 0)
+				return(i);
 			break;
 		default:
 			if (warn & WARN_ESCAPE)
 				errprint("undefined inline environment "
 				         "function \\@%c", k);
+			pbbuf[pbp++] = i;
+			goto dfl;
 		}
 		goto g0;
 	case ';':	/* ligature suppressor (only) */
