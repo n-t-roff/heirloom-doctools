@@ -41,11 +41,15 @@
 .\" OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
 .\" EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 .do xflag 3
+.als am1 am
+.als de1 de
+.als as1 as
+.als ds1 ds
 .ie n \{\
 .	nr cR 1
 .	utf8conv -
-.	char ' \N'39'
-.	char ` \N'96'
+.	char ' \N39
+.	char ` \N96
 .	sentchar .?!
 .	ns
 .	nh
@@ -71,23 +75,23 @@
 .ds ra \(ra
 .ds lq \(lq
 .ds rq \(rq
-'	\" reset the basic page layout
+.	\" reset the basic page layout
 .de }E
 .	}f
 .	ad b
 .	in \\n()Ru+\\n(INu
 .	ll \\n(LLu
 ..
-'	\" default tabs
+.	\" default tabs
 .de DT
-'	ta T .5i
+.	ta T .5i
 ..
-'	\" set type font and size
+.	\" set type font and size
 .de }f
 .	ps \\nS
 .	ft 1
 ..
-'	\" handle the head of the page
+.	\" handle the head of the page
 .de }H
 .	ev 1
 .	sp .5i
@@ -102,7 +106,7 @@
 .	ev
 .	ns
 ..
-'	\" handle the foot of the page
+.	\" handle the foot of the page
 .de }F
 .	ie \n(cR \{\
 .		pl +5
@@ -127,14 +131,14 @@
 .	}N
 .	ll \\n(LLu
 ..
-'	\" no runout unless there was a .TH
+.	\" no runout unless there was a .TH
 .de }K
 .	}N
 .	pl 1
 .	ll \\n(LLu
 ..
 .em }K
-'	\" set title and heading
+.	\" set title and heading
 .ds TH.DefCatName.1 General Commands Manual
 .ds TH.DefCatName.2 System Calls Manual
 .ds TH.DefCatName.3 Library Functions Manual
@@ -165,6 +169,7 @@
 .	el .if !\n(cR .wh -1.167i }F
 .	ie !\n(cR .em }M
 .	el \{\
+.		als bp br
 .		pl 2000000000u \" pl is signed int
 .		em }F
 .	\}
@@ -176,12 +181,13 @@
 .	nr )R 0
 .	if n .na
 ..
-'	\" section heading
+.	\" section heading
 .de SH
+.	if !\\n(.z .di
 .	}X 0
 .	nr )E 2
 \&\\$1 \|\\$2 \|\\$3 \|\\$4 \|\\$5 \|\\$6 \|\\$7 \|\\$8 \|\\$9
-'	\" HP-UX compatibility macros
+.	\" HP-UX compatibility macros
 .	if \\$1NAME \{\
 .		if !\\*()H \{\
 .			ie \\n(.g==1 \{\
@@ -190,13 +196,13 @@
 .			el \{\
 .				ds }c 1
 .			\}
-'			\" constant width
+.			\" constant width
 .			de C
 .				ft C
 .				it 1 }N
 .				if !\\\\$* \&\\\\$1 \\\\$2 \\\\$3 \\\\$4 \\\\$5 \\\\$6 \\\\$7 \\\\$8 \\\\$9
 \\..
-'			\" combinations with constant width
+.			\" combinations with constant width
 .			de CR
 .				}S \\*(}c 1 \& "\\\\$1" "\\\\$2" "\\\\$3" "\\\\$4" "\\\\$5" "\\\\$6" "\\\\$7" "\\\\$8" "\\\\$9"
 \\..
@@ -215,7 +221,7 @@
 .			de BC
 .				}S 3 \\*(}c \& "\\\\$1" "\\\\$2" "\\\\$3" "\\\\$4" "\\\\$5" "\\\\$6" "\\\\$7" "\\\\$8" "\\\\$9"
 \\..
-'			\" various stuff
+.			\" various stuff
 .			de CD
 .				CR "\\\\$1" "\\\\$2"
 \\..
@@ -255,7 +261,7 @@
 .		\}
 .	\}
 ..
-'	\" sub section heading
+.	\" sub section heading
 .\}
 .de SS
 .	ie n .}X 3n
@@ -264,7 +270,7 @@
 \&\\$1 \|\\$2 \|\\$3 \|\\$4 \|\\$5 \|\\$6 \|\\$7 \|\\$8 \|\\$9
 .	br
 ..
-'	\" subroutine for section heading
+.	\" subroutine for section heading
 .de }X
 .	}E
 .	ti \\$1
@@ -276,39 +282,39 @@
 .	SM
 .	B
 ..
-'	\" end of SH (cf }X above and }N below)
+.	\" end of SH (cf }X above and }N below)
 .de }2
 .	nr )E 0
 .	}E
 .	nr )I \\n[)I.def]
 .	ns
 ..
-'	\" italic
+.	\" italic
 .de I
 .	ft 2
-.	ie \\$* .it 1 }N
+.	ie !\\n(.$ .it 1 }N
 .	el \&\\$*\fR
 ..
-'	\" bold
+.	\" bold
 .de B
 .	ft 3
-.	ie \\$* .it 1 }N
+.	ie !\\n(.$ .it 1 }N
 .	el \&\\$*\fR
 ..
-'	\" small
+.	\" small
 .de SM
 .	ps \\nS-1
-.	ie \\$* .it 1 }N
+.	ie !\\n(.$ .it 1 }N
 .	el \&\\$*\s\\nS
 ..
-'	\" small and bold
+.	\" small and bold
 .de SB
 .	ps \\nS-1
 .	ft B
-.	ie \\$* .it 1 }N
+.	ie !\\n(.$ .it 1 }N
 .	el \&\\$*\fR\s\\nS
 ..
-'	\" combinations of Roman, italic, bold
+.	\" combinations of Roman, italic, bold
 .de RI
 .	lds Text \&
 .	lnr State 0
@@ -375,7 +381,7 @@
 .	nop \\*[Text]
 .	}f
 ..
-'	\" make special case of shift out of italic
+.	\" make special case of shift out of italic
 .de }S
 .	ds ]F
 .	if \\$12 .if !\\$5 .ds ]F \^
@@ -395,7 +401,7 @@
 .	el \\$3
 .	}f
 ..
-'	\" paragraph
+.	\" paragraph
 .de LP
 .	PP
 ..
@@ -409,13 +415,13 @@
 .de P
 .	PP
 ..
-'	\" paragraph distance
+.	\" paragraph distance
 .de PD
 .	if t .nr )P .4v
 .	if n .nr )P 1v
 .	if !\\$1 .nr )P \\$1v
 ..
-'	\" hanging indent
+.	\" hanging indent
 .de HP
 .	sp \\n()Pu
 .	ne 2
@@ -425,12 +431,12 @@
 .	ti \\n()Ru+\\n(INu
 .	}f
 ..
-'	\" indented paragraph
+.	\" indented paragraph
 .de IP
 .	TP \\$2
 \&\\$1
 ..
-'	\" hanging label
+.	\" hanging label
 .de TP
 .	if \\n()E .return
 .	if !\\$1 .nr )I \\$1n
@@ -442,7 +448,7 @@
 .	nf
 .	di ]B
 ..
-'	\" end of TP (cf }N below)
+.	\" end of TP (cf }N below)
 .de }0
 .	fi
 .	}1
@@ -465,21 +471,22 @@
 .			do vpt 0
 .			sp -1
 .			do vpt 1
-.			do nop \h'\\n[}pos]u'\c
+.			do nop \h\\n[}pos]u\c
 .		\}
 .	\}
 .	}f
 ..
-'	\" handle end of 1-line features
+.	\" handle end of 1-line features
 .de }N
 .	if \\n()E .br
 .	di
-.	if \\n()E0 .}f
-.	if \\n()E1 .}0
-.	if \\n()E2 .}2
+.	ie !\\n()E .}f
+.	el .ie \\n()E=1 .}0
+.	el .if \\n()E=2 .}2
 .	nr )E 0
 ..
-'	\" increase relative indent
+.als an-trap }N
+.	\" increase relative indent
 .de RS
 .	nr ]\\n+()p \\n()I
 .	nr )\\n()p \\n()R
@@ -488,7 +495,7 @@
 .	nr )I \\n[)I.def]
 .	}E
 ..
-'	\" decrease relative indent
+.	\" decrease relative indent
 .de RE
 .	if !\\$1 \{\
 .		ie \\$10 .nr )p 1 1
@@ -506,7 +513,7 @@
 .ds ]R \\\\n()
 .ds R \(rg
 .ds S \s10
-'	\" For Tru64 UNIX manpages. Use of this is discouraged.
+.	\" For Tru64 UNIX manpages. Use of this is discouraged.
 .de LI
 .	ie !\\$1 \{\
 .		TP
