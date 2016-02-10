@@ -504,6 +504,8 @@ extern	void	caseec(void);
 extern	void	caseeo(void);
 extern	void	caseecs(void);
 extern	void	caseecr(void);
+extern	void	caseescoff(void);
+extern	void	caseescon(void);
 extern	void	caseta(void);
 extern	void	casene(void);
 extern	void	casetr(int);

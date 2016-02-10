@@ -788,7 +788,6 @@ setch(int delim) {
 			    && isdigit((unsigned)temp[4])
 			    && !strncmp(temp, "char", 4)) {
 				int i = atoi(temp + 4);
-				// Die Zuordung darueber stimmt nicht.
 				if (i <= 127)
 					c = i + nchtab + 128;
 			}

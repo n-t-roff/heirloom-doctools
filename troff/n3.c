@@ -126,6 +126,8 @@ static const struct {
 	{ "ecs",		(void(*)(int))caseecs },
 	{ "ecr",		(void(*)(int))caseecr },
 	{ "errprint",		(void(*)(int))caseerrprint },
+	{ "escoff",		(void(*)(int))caseescoff },
+	{ "escon",		(void(*)(int))caseescon },
 	{ "evc",		(void(*)(int))caseevc },
 	{ "fallback",		(void(*)(int))casefallback },
 	{ "fchar",		(void(*)(int))casefchar },

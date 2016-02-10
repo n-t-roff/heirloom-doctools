@@ -1529,6 +1529,12 @@ Input and Output Conventions and Character Translations
 .b1
 \T'ecr'\fB&ecr\T\fR	\e	\(en	\(en	Restore saved escape character.
 .b1
+\T'escoff'\fB&escoff\T \fIesc ...\fR	on	ignored	\(en	\
+Disable escapes \fIesc \&...\|\fR.
+.b1
+\T'escon'\fB&escon\T \fIesc ...\fR	on	ignored	\(en	\
+Enable escapes \fIesc \&...\|\fR.
+.b1
 \T'lg'\fB&lg\T\fI|N\fR	\(en;\|on	on	T	Ligature mode
 on if \fIN\fR>0.
 .b1
@@ -1831,6 +1837,8 @@ refer to the detailed description on how to include it.
 \T'eo'eo\T	10
 \T'EP'EP\T	23
 \T'errprint'errprint\T	21
+\T'escoff'escoff\T	10
+\T'escon'escon\T	10
 \T'ev'ev\T	17
 \T'evc'evc\T	17
 \T'ex'ex\T	18
@@ -1958,6 +1966,7 @@ refer to the detailed description on how to include it.
 \T'unwatch'unwatch\T	21
 \T'unwatchn'unwatchn\T	21
 \T'utf8conv'utf8conv\T	10
+\T'vpt'vpt\T	7
 \T'vs'vs\T	5
 \T'warn'warn\T	21
 \T'watch'watch\T	21
@@ -4811,6 +4820,24 @@ Set escape character to \fB\e\fR, or to \fIc\fR, if given.
 \fB&ecs\fR	\e	\(en	\(en	Save escape character.
 .bta ecr
 \fB&ecr\fR	\e	\(en	\(en	Restore saved escape character.
+.bta escoff
+\fB&escoff \fIesc ...\fR	on	ignored	\(en	Disable escapes \fIesc\
+ \&...\|\fR.
+For example the request
+.in +2n
+.ps -1
+\f(CW&escoff ; @\fR
+.ps +1
+.in -2n
+would disable escapes
+\fB\e;\fR, \fB\e@{\fR, and \fB\e@}\fR.
+The request had been added as a workaround for manual pages which by mistake
+escape normal charaters.
+At the moment only one-character arguments are valid.
+This may change in future versions.
+.bta escon
+\fB&escon \fIesc ...\fR	on	ignored	\(en	Enable escapes \fIesc\
+ \&...\|\fR.
 .sc
 Ligatures.
 .lg 0

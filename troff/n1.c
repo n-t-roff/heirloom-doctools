@@ -107,6 +107,7 @@ char	mbbuf1[MB_LEN_MAX + 1];
 char	*mbbuf1p = mbbuf1;
 wchar_t	twc = 0;
 #endif	/* EUC */
+static unsigned char escoff[126-31];
 
 static void	initg(void);
 static void	printlong(long, int);
@@ -122,6 +123,7 @@ static void	_setenv(void);
 static tchar	setZ(void);
 static int	setgA(void);
 static int	setB(void);
+static void	_caseesc(int);
 
 #ifdef	DEBUG
 int	debug = 0;	/*debug flag*/
@@ -1112,6 +1114,13 @@ ge:
 	k = cbits(j = getch0());
 	if (ismot(j))
 		return(j);
+	if (k >= 32 && k <= 126 && escoff[k-32]) {
+		if (clonef || copyf || tryglf) {
+			pbbuf[pbp++] = j;
+			return eschar;
+		}
+		return j;
+	}
 	switch (k) {
 
 	case '\n':	/* concealed newline */
@@ -2560,4 +2569,30 @@ setB(void)
 	} while (!nlflg);
 	lgf--;
 	return y;
+}
+
+void
+caseescoff(void) {
+	_caseesc(1);
+}
+
+void
+caseescon(void) {
+	_caseesc(0);
+}
+
+static void
+_caseesc(int off) {
+	int c;
+	if (skip(1)) return;
+	while (1) {
+		c = cbits(getch());
+		if (c < 32 || c > 126)
+			errprint("Invalid character '%c' for .esc%s\n",
+			    c, off ? "off" : "on");
+		else
+			escoff[c-32] = (unsigned char)off;
+		if (skip(0))
+			return;
+	}
 }
