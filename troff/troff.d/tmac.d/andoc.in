@@ -43,6 +43,8 @@
 .als de1 de
 .als as1 as
 .als ds1 ds
+.escoff ; @
+.nr .g 1
 .de Dd
 .	rn Dd xX
 .	so @MACDIR@/doc

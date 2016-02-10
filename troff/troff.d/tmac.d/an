@@ -45,6 +45,7 @@
 .als de1 de
 .als as1 as
 .als ds1 ds
+.escoff ; @
 .ie n \{\
 .	nr cR 1
 .	utf8conv -
@@ -75,6 +76,7 @@
 .ds ra \(ra
 .ds lq \(lq
 .ds rq \(rq
+.ds Tm \(tm
 .	\" reset the basic page layout
 .de }E
 .	}f
@@ -186,7 +188,13 @@
 .	if !\\n(.z .di
 .	}X 0
 .	nr )E 2
-\&\\$1 \|\\$2 \|\\$3 \|\\$4 \|\\$5 \|\\$6 \|\\$7 \|\\$8 \|\\$9
+.	lds T \&\\$1
+.	shift
+.	while \\n(.$ \{\
+.		as T " \|\\$1
+.		shift
+.	\}
+.	nop \\*T
 .	\" HP-UX compatibility macros
 .	if \\$1NAME \{\
 .		if !\\*()H \{\
@@ -232,7 +240,7 @@
 .				IR "\\\\$1" "\\\\$2"
 \\..
 .			de ER
-[\\\\$1]\\\\$2
+.				nop [\\\\$1]\\\\$2
 \\..
 .			de EV
 .				CR "\\\\$1" "\\\\$2"
@@ -252,7 +260,7 @@
 .			de S3
 .				sp \\n()Pu
 .				ne 2
-\&\\\\$1 \|\\\\$2 \|\\\\$3 \|\\\\$4 \|\\\\$5 \|\\\\$6 \|\\\\$7 \|\\\\$8 \|\\\\$9
+.				nop \&\\\\$1 \|\\\\$2 \|\\\\$3 \|\\\\$4 \|\\\\$5 \|\\\\$6 \|\\\\$7 \|\\\\$8 \|\\\\$9
 .				br
 \\..
 .			de P
@@ -262,13 +270,25 @@
 .	\}
 ..
 .	\" sub section heading
-.\}
 .de SS
+.	if !\\n(.z \{\
+.		br
+.		di
+.		\\n(.z
+.	\}
 .	ie n .}X 3n
 .	el   .}X .25i
 .	nr )E 2
-\&\\$1 \|\\$2 \|\\$3 \|\\$4 \|\\$5 \|\\$6 \|\\$7 \|\\$8 \|\\$9
-.	br
+.	if \\n(.$ \{\
+.		lds T \&\\$1
+.		shift
+.		while \\n(.$ \{\
+.			as T " \|\\$1
+.			shift
+.		\}
+.		nop \\*T
+.		br
+.	\}
 ..
 .	\" subroutine for section heading
 .de }X
@@ -461,11 +481,12 @@
 .	ll \\n(LLu
 .	in \\n()Ru+\\n(INu+\\n()Iu
 .	ti \\n(INu
-.	ie !\\n()Iu+\\n()Ru-\w\\*(]Xu-3p \{\\*(]X
+.	ie !\\n()Iu+\\n()Ru-\w\\*(]Xu-3p \{\
+.		nop \\*(]X
 .		br
 .	\}
 .	el \{\
-\\*(]X\h|\\n()Iu+\\n()Ru\c
+.		nop \\*(]X\h|\\n()Iu+\\n()Ru\c
 .		if \\n(.X \{\
 .			do nop \k[}pos]
 .			do vpt 0
@@ -497,9 +518,13 @@
 ..
 .	\" decrease relative indent
 .de RE
-.	if !\\$1 \{\
+.	ie !\\$1 \{\
 .		ie \\$10 .nr )p 1 1
 .		el .nr )p \\$1 1
+.	\}
+.	el .if !\\n()p \{\
+.		tm \\n(.F \\n(.c: .RE without .RS ignored
+.		return
 .	\}
 .	ds ]i \\*(]I\\n()p
 .	ds ]r \\*(]R\\n()p
@@ -530,4 +555,20 @@
 ..
 .als MTO URL
 .als FTP URL
+.de AT
+.	ie \\$14 .ds ]W System III
+.	el .ie \\$15 \{\
+.		ds ]W System V
+.		if !\\$2 .as ]W " Release \\$2
+.	\}
+.	el .ds ]W 7th Edition
+..
+.de UC
+.	ie     \\$14 .ds ]W 4th
+.	el .ie \\$15 .ds ]W 4.2
+.	el .ie \\$16 .ds ]W 4.3
+.	el .ie \\$17 .ds ]W 4.4
+.	el                 .ds ]W 3rd
+.	as ]W " Berkeley Distribution
+..
 .\" vim:set filetype=groff:
