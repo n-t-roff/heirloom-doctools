@@ -39,6 +39,7 @@
 .\" .mdoc-parse - attempt to parse troff request arguments
 .\"     %beginstrip%
 .do xflag 3
+.escoff ; @
 .if t \{\
 .       so @MACDIR@/doc-ditroff
 .\}
@@ -2621,7 +2622,8 @@
 .	if \\n(nF==1 \{\
 .		if n .ds pA \\*(aA
 .	\}
-.	nr oM \\n(oM-1
+.	ie \\n(oM .nr oM -1
+.	el .tm .BL -tag: Argument expected after .It (#\\n(.c)
 .	nr tP 0
 .	ds b1
 .	aY
@@ -2822,8 +2824,8 @@
 ..
 .\" This is packed abnormally close, intercol width should be an option
 .de W6
-.ta \w\\*(A1 u +\w\\*(A2 u +\w\\*(A3 u +\w\\*(A4 u +\w\\*(A5 u +\w\\*(A6
-.nr eW \w\\*(A1 u+\w\\*(A2 u+\w\\*(A3 u+\w\\*(A4 u+\w\\*(A5 u+\w\\*(A6
+.ta \w\\*(A1 u +\w\\*(A2 u +\w\\*(A3 u +\w\\*(A4 u +\w\\*(A5 u +\w\\*(A6 u
+.nr eW \w\\*(A1 u+\w\\*(A2 u+\w\\*(A3 u+\w\\*(A4 u+\w\\*(A5 u+\w\\*(A6 u
 '	in +\\n(eWu+\\n[o\\n(lC]u
 ..
 .\" NS cL macro - column items

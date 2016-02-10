@@ -59,6 +59,7 @@
 .nr Brc 3
 .nr Bro 12n
 .nr Brq 12n
+.nr Bsx 4 \" groff: 1
 .nr Bx 4
 .nr Cd 12n
 .nr Cm 10n
@@ -68,6 +69,7 @@
 .nr Ds 6n
 .nr Dq 12n
 .nr Dv 12n
+.nr Dx 4 \" groff: 1
 .nr Ec 3
 .nr El 1
 .nr Eo 12n
@@ -151,6 +153,7 @@
 .ds mdoc.cm.Brc
 .ds mdoc.cm.Bro
 .ds mdoc.cm.Brq
+.ds mdoc.cm.Bsx
 .ds mdoc.cm.Bx
 .ds mdoc.cm.Cd
 .ds mdoc.cm.Cm
@@ -160,6 +163,7 @@
 .ds mdoc.cm.Ds
 .ds mdoc.cm.Dq
 .ds mdoc.cm.Dv
+.ds mdoc.cm.Dx
 .ds mdoc.cm.Ec
 .ds mdoc.cm.El
 .ds mdoc.cm.Eo
