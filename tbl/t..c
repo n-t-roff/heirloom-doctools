@@ -23,8 +23,9 @@
 
 /* t..c : external declarations */
 
-# include "stdio.h"
-# include "ctype.h"
+# include <stdio.h>
+# include <ctype.h>
+# include <inttypes.h>
 
 # if defined (__GLIBC__) && defined (_IO_getc_unlocked)
 # undef getc
@@ -81,7 +82,7 @@ extern int *linestop;
 extern char *leftover;
 extern char *last, *ifile;
 extern int *topat;
-extern int texname;
+extern intptr_t texname;
 extern int texct;
 extern int texct2;
 extern char texstr[];
@@ -119,16 +120,16 @@ int swapin(void);
 /* t2.c */
 void tableput(void);
 /* t3.c */
-void getcomm(void);
+int getcomm(void);
 void backrest(char *);
 /* t4.c */
-void getspec(void);
-void readspec(void);
+int getspec(void);
+int readspec(void);
 /* t5.c */
-void gettbl(void);
+int gettbl(void);
 int nodata(int);
 int oneh(int);
-void permute(void);
+int permute(void);
 int vspand(int, int, int);
 int vspen(char *);
 /* t6.c */
@@ -136,7 +137,7 @@ void maktab(void);
 void wide(char *, char *, char *);
 int filler(char *);
 /* t7.c */
-void runout(void);
+int runout(void);
 void runtabs(int, int);
 int ifline(char *);
 void need(void);
@@ -148,20 +149,20 @@ void funnies(int, int);
 void putfont(char *);
 void putsize(char *);
 /* t9.c */
-void yetmore(void);
+int yetmore(void);
 int domore(char *);
 /* tb.c */
 void checkuse(void);
 int real(char *);
 char *chspace(void);
 void updspace(char *, char *, int);
-int *alocv(int);
+struct colstr *alocv(int);
 void release(void);
 /* tc.c */
-void choochar(void);
+int choochar(void);
 int point(int);
 /* te.c */
-void error(char *);
+int error(char *);
 char *errmsg(int);
 char *gets1(char **, char **, size_t *);
 void un1getc(int);
@@ -178,7 +179,7 @@ void warnon(void);
 void warnoff(void);
 void svgraph(void);
 /* tg.c */
-int get_text(char *, int, int, char *, char *);
+char *get_text(char *, int, int, char *, char *);
 void untext(void);
 char *nreg(char *, size_t, const char *, int);
 /* ti.c */

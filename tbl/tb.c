@@ -64,26 +64,30 @@ int maxvec = 0;
 char **spvecs;
 
 char *
-chspace(void)
-{
-char *pp;
-int n;
-if (spcount>=maxvec) {
-	n = maxvec + 20;
-	spvecs = realloc(spvecs, n * sizeof *spvecs);
-	if (spvecs == NULL)
-		error("Too many characters in table");
-	do
-		spvecs[maxvec] = 0;
-	while (++maxvec < n);
+chspace(void) {
+	char *pp;
+	int n;
+	if (spcount>=maxvec) {
+		n = maxvec + 20;
+		spvecs = realloc(spvecs, n * sizeof *spvecs);
+		if (spvecs == NULL) {
+			error("Too many characters in table");
+			return NULL;
+		}
+		do
+			spvecs[maxvec] = 0;
+		while (++maxvec < n);
+	}
+	if (spvecs[spcount])
+		return(spvecs[spcount++]);
+	spvecs[spcount++]= pp = calloc(MAXCHS+MAXSTR,1);
+	if (pp == 0) {
+		error("no space for characters");
+		return NULL;
+	}
+	return(pp);
 }
-if (spvecs[spcount])
-	return(spvecs[spcount++]);
-spvecs[spcount++]= pp = calloc(MAXCHS+MAXSTR,1);
-if (pp == 0)
-	error("no space for characters");
-return(pp);
-}
+
 void
 updspace(char *old, char *new, int area)
 {
@@ -105,38 +109,40 @@ for (i = 0; i < spcount; i++)
 		break;
 	}
 }
+
 static int MAXPC;
 char *thisvec;
 int tpcount = -1;
 char **tpvecs;
 
-int *
-alocv(int n)
-{
-int *tp, *q;
-if (tpcount<0 || thisvec+n > tpvecs[tpcount]+MAXCHS)
-	{
-	tpcount++;
-	if (tpcount >= MAXPC) {
-		tpvecs = realloc(tpvecs, (tpcount+1) * sizeof *tpvecs);
-		if (tpvecs == 0) goto nospace;
-		memset(&tpvecs[MAXPC], 0, (tpcount+1-MAXPC) * sizeof *tpvecs);
-		MAXPC = tpcount+1;
-	}
-	if (tpvecs[tpcount]==0)
-		{
-		tpvecs[tpcount] = calloc(MAXCHS,1);
+struct colstr *
+alocv(int n) {
+	int *tp, *q;
+	if (tpcount<0 || thisvec+n > tpvecs[tpcount]+MAXCHS) {
+		tpcount++;
+		if (tpcount >= MAXPC) {
+			tpvecs = realloc(tpvecs, (tpcount+1) * sizeof *tpvecs);
+			if (tpvecs == 0) goto nospace;
+			memset(&tpvecs[MAXPC], 0, (tpcount+1-MAXPC) * sizeof *tpvecs);
+			MAXPC = tpcount+1;
 		}
-	thisvec = tpvecs[tpcount];
-	if (thisvec == 0)
-	nospace:error("no space for vectors");
+		if (tpvecs[tpcount]==0) {
+			tpvecs[tpcount] = calloc(MAXCHS,1);
+		}
+		thisvec = tpvecs[tpcount];
+		if (thisvec == 0) {
+nospace:
+			error("no space for vectors");
+			return (struct colstr *)-1;
+		}
 	}
-tp=(int *)thisvec;
-thisvec+=n;
-for(q=tp; q<(int *)thisvec; q++)
-	*q=0;
-return(tp);
+	tp=(int *)thisvec;
+	thisvec+=n;
+	for(q=tp; q<(int *)thisvec; q++)
+		*q=0;
+	return (struct colstr *)tp;
 }
+
 void
 release(void)
 {

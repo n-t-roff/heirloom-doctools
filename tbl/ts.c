@@ -32,13 +32,13 @@ match(char *s1, char *s2)
 			s2++;
 	return(0);
 }
+
 int 
-prefix(char *small, char *big)
-{
-int c;
-while ((c= *small++) == *big++)
-	if (c==0) return(1);
-return(c==0);
+prefix(char *small, char *big) {
+	int c;
+	while ((c= *small++) == *big++)
+		if (c==0) return(1);
+	return(c==0);
 }
 
 /* returns: 1 for match, 0 else */

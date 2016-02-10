@@ -174,7 +174,7 @@ swapin(void)
 # endif
 	fprintf(tabout, ".lf 1 %s\n", ifile);
 	if (tabin==NULL)
-		error("Can't open file");
+		return error("Can't open file");
 	sargc--;
 	sargv++;
 	return(1);

@@ -25,17 +25,21 @@
 # include "t..c"
 # include <stdlib.h>
 # include <inttypes.h>
+
 /* get_text was originally gettext and was renamed */
-int 
+char *
 get_text(char *sp, int ilin, int icol, char *fn, char *sz)
 {
 	/* get a section of text */
 	char *line = NULL;
 	size_t linesize = 0;
-	int oname;
+	char *oname;
 	char *vs;
 	if (texname==0) texct2 = texname = 300;
-	if (texct2>0 && point(texct2)) error("Too many text block diversions");
+	if (texct2>0 && point(texct2)) {
+		error("Too many text block diversions");
+		return (char *)-1;
+	}
 	if (textflg==0)
 		{
 		fprintf(tabout, ".nr %d \\n(.lu\n", SL); /* remember old line length */
@@ -45,7 +49,7 @@ get_text(char *sp, int ilin, int icol, char *fn, char *sz)
 	fprintf(tabout, ".am %02d 00\n", icol+80);
 	fprintf(tabout, ".br\n");
 	if (texct2 < 0)
-		fprintf(tabout, ".di %c+\n", texname);
+		fprintf(tabout, ".di %c+\n", (int)texname);
 	else
 		fprintf(tabout, ".do di %d+\n", texct2);
 	rstofill();
@@ -81,8 +85,8 @@ get_text(char *sp, int ilin, int icol, char *fn, char *sz)
 	fprintf(tabout, ".di\n");
 	if (texct2 < 0)
 		{
-		fprintf(tabout, ".nr %c| \\n(dn\n", texname);
-		fprintf(tabout, ".nr %c- \\n(dl\n", texname);
+		fprintf(tabout, ".nr %c| \\n(dn\n", (int)texname);
+		fprintf(tabout, ".nr %c- \\n(dl\n", (int)texname);
 		}
 	else
 		{
@@ -96,13 +100,13 @@ get_text(char *sp, int ilin, int icol, char *fn, char *sz)
 		tcopy (sp, line+3);
 	else
 		*sp=0;
-	oname=texname;
+	oname = (char *)texname;
 	if (texct2 < 0)
 		texname = texstr[++texct];
 	else
 		texname = ++texct2;
 	free(line);
-	return(oname);
+	return oname;
 }
 void
 untext(void)

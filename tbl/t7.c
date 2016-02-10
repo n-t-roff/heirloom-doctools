@@ -25,7 +25,8 @@
 # include "t..c"
 # include <inttypes.h>
 # define realsplit ((ct=='a'||ct=='n') && table[ldata][c].rcol)
-void
+
+int
 runout(void)
 {
 	int i;
@@ -41,45 +42,49 @@ runout(void)
 	for(i=0; i<nlin; i++)
 		putline(i,i);
 	if (leftover)
-		yetmore();
+		if (yetmore())
+			return -1;
 	fprintf(tabout, ".fc\n");
 	fprintf(tabout, ".nr T. 1\n");
 	fprintf(tabout, ".T# 1\n");
 	if (ctrflg)
 		fprintf(tabout, ".in \\n(#Iu\n");
+	return 0;
 }
+
 void
 runtabs(int lform, int ldata)
 {
-int c, ct, vforml, lf;
-fprintf(tabout, ".ta ");
-for(c=0; c<ncol; c++)
-	{
-	vforml=lform;
-	for(lf=prev(lform); lf>=0 && vspen(table[lf][c].col); lf=prev(lf))
-		vforml=lf;
-	if (fspan(vforml,c))
-		continue;
-	switch(ct=ctype(vforml,c))
+	int c, ct, vforml, lf;
+	fprintf(tabout, ".ta ");
+	for(c=0; c<ncol; c++)
 		{
-		case 'n':
-		case 'a':
-			if (table[ldata][c].rcol)
-			  if (lused[c]) /*Zero field width*/
-				fprintf(tabout, "\\n(%du ",c+CMID);
-		case 'c':
-		case 'l':
-		case 'r':
-		    if (realsplit? rused[c]: (used[c]+lused[c]))
-			fprintf(tabout, "\\n(%du ",c+CRIGHT);
+		vforml=lform;
+		for (lf=prev(lform); lf>=0 && vspen(table[lf][c].col);
+		    lf=prev(lf))
+			vforml=lf;
+		if (fspan(vforml,c))
 			continue;
-		case 's':
-			if (lspan(lform, c))
-				fprintf(tabout, "\\n(%du ", c+CRIGHT);
-			continue;
+		switch(ct=ctype(vforml,c))
+			{
+			case 'n':
+			case 'a':
+				if (table[ldata][c].rcol)
+				  if (lused[c]) /*Zero field width*/
+					fprintf(tabout, "\\n(%du ",c+CMID);
+			case 'c':
+			case 'l':
+			case 'r':
+			    if (realsplit? rused[c]: (used[c]+lused[c]))
+				fprintf(tabout, "\\n(%du ",c+CRIGHT);
+				continue;
+			case 's':
+				if (lspan(lform, c))
+					fprintf(tabout, "\\n(%du ", c+CRIGHT);
+				continue;
+			}
 		}
-	}
-fprintf(tabout, "\n");
+	fprintf(tabout, "\n");
 }
 int 
 ifline(char *s)

@@ -26,15 +26,18 @@
 # include <string.h>
 # include "t..c"
 # include <inttypes.h>
+
 static int morelines(int);
-void
+
+int
 gettbl(void)
 {
 	int icol, ch;
 	char *ocbase;
 	size_t linesize = MAXSTR;
 	morelines(0);
-	cbase=cstore=cspace= chspace();
+	if (!(cbase = cstore = cspace = chspace()))
+		return -1;
 	textflg=0;
 	for (nlin=nslin=0; ocbase=cbase, gets1(&cbase, &cstore, &linesize); nlin++)
 	{
@@ -47,7 +50,8 @@ gettbl(void)
 		}
 		if (cprefix("TC", cstore) || cprefix("T&", cstore))
 		{
-			readspec();
+			if (readspec())
+				return -1;
 			nslin++;
 		}
 		if (nlin>=MAXLIN && !morelines(nlin))
@@ -73,7 +77,9 @@ gettbl(void)
 			instead[nlin]=(char *)0;
 			fullbot[nlin]=0;
 		}
-		table[nlin] = (struct colstr *) alocv((ncol+2)*sizeof(table[0][0]));
+		if ((table[nlin] = alocv((ncol+2)*sizeof(table[0][0])))
+		    == (struct colstr *)-1)
+			return -1;
 		if (cstore[1]==0)
 			switch(cstore[0])
 			{
@@ -87,22 +93,24 @@ gettbl(void)
 			table[nlin][icol].col = cstore;
 			table[nlin][icol].rcol=0;
 			ch=1;
-			if (match(cstore, "T{")) /* text follows */
+			if (match(cstore, "T{")) { /* text follows */
 				/* get_text was originally gettext and was renamed */
-				table[nlin][icol].col =
-					(char *)(intptr_t)get_text(cstore, nlin, icol,
-						font[stynum[nlin]][icol],
-						csize[stynum[nlin]][icol]);
-			else
-			{
+				if ((table[nlin][icol].col =
+				    get_text(cstore, nlin, icol,
+				    font[stynum[nlin]][icol],
+				    csize[stynum[nlin]][icol])) == (char *)-1)
+					return -1;
+			} else {
 				for(; (ch= *cstore) != '\0' && ch != tab; cstore++)
 					;
 				*cstore++ = '\0';
 				switch(ctype(nlin,icol)) /* numerical or alpha, subcol */
 				{
 				case 'n':
-					table[nlin][icol].rcol =
-					    (char *)maknew(table[nlin][icol].col);
+					if ((table[nlin][icol].rcol =
+					    maknew(table[nlin][icol].col))
+					    == (char *)-1)
+						return -1;
 					break;
 				case 'a':
 					table[nlin][icol].rcol = table[nlin][icol].col;
@@ -122,13 +130,16 @@ gettbl(void)
 		while (*cstore != '\0')
 			cstore++;
 		if (cstore-cspace > MAXCHS)
-			cbase = cstore = cspace = chspace();
+			if (!(cbase = cstore = cspace = chspace()))
+				return -1;
 	}
 	last = cstore;
-	permute();
+	if (permute())
+		return -1;
 	if (textflg) untext();
-	return;
+	return 0;
 }
+
 int 
 nodata(int il)
 {
@@ -155,8 +166,10 @@ oneh(int lin)
 	}
 	return(k);
 }
+
 # define SPAN "\\^"
-void
+
+int
 permute(void)
 {
 	int irow, jcol, is;
@@ -169,7 +182,8 @@ permute(void)
 			{
 				is = prev(irow);
 				if (is<0)
-					error("Vertical spanning in first row not allowed");
+					return error("Vertical spanning in "
+					    "first row not allowed");
 				start = table[is][jcol].col;
 				strig = table[is][jcol].rcol;
 				while (irow<nlin &&vspand(irow,jcol,0))
@@ -185,7 +199,9 @@ permute(void)
 			}
 		}
 	}
+	return 0;
 }
+
 int 
 vspand(int ir, int ij, int ifform)
 {

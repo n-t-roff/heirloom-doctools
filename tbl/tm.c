@@ -23,6 +23,7 @@
 
  /* tm.c: split numerical fields */
 # include "t..c"
+
 char *
 maknew(char *str)
 {
@@ -34,42 +35,42 @@ maknew(char *str)
 		if (c == '\\' && *(str+1)== '&')
 			ba=str;
 	str=p;
-	if (ba==0)
-		{
-		for (dpoint=0; *str; str++)
-			{
+	if (ba==0) {
+		for (dpoint=0; *str; str++) {
 			if ((*str&0377)==decimalpoint && !ineqn(str,p) &&
 				((str>p && digit(*(str-1))) ||
 				digit(*(str+1))))
 					dpoint=str;
-			}
+		}
 		if (dpoint==0)
-			for(; str>p; str--)
-			{
+			for(; str>p; str--) {
 			if (digit( * (str-1) ) && !ineqn(str, p))
 				break;
 			}
 		if (!dpoint && p==str) /* not numerical, don't split */
-			return(0);
+			return NULL;
 		if (dpoint) str=dpoint;
-		}
+	}
 	else
 		str = ba;
 	p =str;
-	if (exstore ==0 || exstore >exlim)
-		{
-		exstore = chspace();
+	if (exstore ==0 || exstore >exlim) {
+		if (!(exstore = chspace()))
+			return (char *)-1;
 		exlim= exstore+MAXCHS;
-		}
+	}
 	q = exstore;
 	ba = exstore + MAXSTR;
 	do {
-		if (exstore > ba)
+		if (exstore > ba) {
 			error("numeric field too big");
+			return (char *)-1;
+		}
 	} while ((*exstore++ = *str++));
 	*p = 0;
 	return(q);
-	}
+}
+
 int 
 ineqn(char *s, char *p)
 {

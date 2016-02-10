@@ -24,22 +24,26 @@
  /* t2.c:  subroutine sequencing for one table */
 # include "t..c"
 void
-tableput(void)
-{
-saveline();
-savefill();
-ifdivert();
-cleanfc();
-getcomm();
-getspec();
-gettbl();
-getstop();
-checkuse();
-choochar();
-maktab();
-runout();
-release();
-rstofill();
-endoff();
-restline();
+tableput(void) {
+	saveline();
+	savefill();
+	ifdivert();
+	cleanfc();
+	if (getcomm())
+		return;
+	if (getspec())
+		return;
+	if (gettbl())
+		return;
+	getstop();
+	checkuse();
+	if (choochar())
+		return;
+	maktab();
+	if (runout())
+		return;
+	release();
+	rstofill();
+	endoff();
+	restline();
 }

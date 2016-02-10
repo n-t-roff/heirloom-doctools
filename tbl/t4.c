@@ -31,9 +31,9 @@ static int morecols(int);
 static int moreheads(int);
 static void initspec(int);
 static void inithead(int, int);
-void
-getspec(void)
-{
+
+int
+getspec(void) {
 	int i;
 	moreheads(0);
 	morecols(0);
@@ -41,13 +41,16 @@ getspec(void)
 	nclin=ncol=0;
 	oncol =0;
 	left1flg=rightl=0;
-	readspec();
+	if (readspec())
+		return -1;
 	fprintf(tabout, ".rm");
 	for(i=0; i<ncol; i++)
 		fprintf(tabout, " %02d", 80+i);
 	fprintf(tabout, "\n");
+	return 0;
 }
-void
+
+int
 readspec(void)
 {
 	int icol, c, sawchar, stopc, i;
@@ -59,7 +62,7 @@ readspec(void)
 		{
 		default:
 			if (c != tab)
-				error("bad table specification character");
+				return error("bad table specification character");
 		case ' ': /* note this is also case tab */
 			continue;
 		case '\n':
@@ -71,15 +74,16 @@ readspec(void)
 			if(sawchar)
 				nclin++;
 			if (nclin>=MAXHEAD && !moreheads(nclin))
-				error("too many lines in specification");
+				return error("too many lines in specification");
 			icol=0;
 			if (ncol==0 || nclin==0)
-				error("no specification");
+				return error("no specification");
 			if (c== '.')
 			{
 				while ((c=get1char()) && c != '\n')
 					if (c != ' ' && c != '\t')
-						error("dot not last character on format line");
+						return error(
+						    "dot not last character on format line");
 				/* fix up sep - default is 3 except at edge */
 				for(icol=0; icol<ncol; icol++)
 					if (sep[icol]<0)
@@ -87,8 +91,8 @@ readspec(void)
 				if (oncol == 0)
 					oncol = ncol;
 				else if (oncol +2 <ncol)
-					error("tried to widen table in T&, not allowed");
-				return;
+					return error("tried to widen table in T&, not allowed");
+				return 0;
 			}
 			sawchar=0;
 			continue;
@@ -100,22 +104,24 @@ readspec(void)
 		case 'c': case 's': case 'n': case 'r': case 'l':  case 'a':
 			style[nclin][icol]=c;
 			if (c== 's' && icol<=0)
-				error("first column can not be S-type");
+				return error("first column can not be S-type");
 			if (c=='s' && style[nclin][icol-1] == 'a')
 			{
-				fprintf(tabout, ".tm warning: can't span a-type cols, changed to l\n");
+				fprintf(tabout,
+				    ".tm warning: can't span a-type cols, changed to l\n");
 				style[nclin][icol-1] = 'l';
 			}
 			if (c=='s' && style[nclin][icol-1] == 'n')
 			{
-				fprintf(tabout, ".tm warning: can't span n-type cols, changed to c\n");
+				fprintf(tabout,
+				    ".tm warning: can't span n-type cols, changed to c\n");
 				style[nclin][icol-1] = 'c';
 			}
 			icol++;
 			if (c=='^' && nclin<=0)
-				error("first row can not contain vertical span");
+				return error("first row can not contain vertical span");
 			if (icol>=MAXCOL && !morecols(icol))
-				error("too many columns in table");
+				return error("too many columns in table");
 			sawchar=1;
 			continue;
 		case 'b': case 'i':
@@ -168,7 +174,7 @@ readspec(void)
 				if (c>= '0' && c<= '9') break;
 			}
 			if (stopc) if (get1char()!=stopc)
-				error("Nonterminated font name");
+				return error("Nonterminated font name");
 			continue;
 		case 'P': case 'p':
 			if (sawchar == 0)
@@ -188,11 +194,11 @@ readspec(void)
 					*snp++ = c;
 				else break;
 				if (snp-temp>20)
-					error("point size too large");
+					return error("point size too large");
 			}
 			*snp = 0;
 			if (atoi(temp)>36)
-				error("point size unreasonable");
+				return error("point size unreasonable");
 			un1getc (c);
 			continue;
 		case 'V': case 'v':
@@ -213,7 +219,7 @@ readspec(void)
 					*snp++ = c;
 				else break;
 				if (snp-temp>20)
-					error(
+					return error(
 					"vertical spacing value too large");
 			}
 			*snp=0;
@@ -229,7 +235,7 @@ readspec(void)
 				style[nclin][icol] = 'c';
 				icol++;
 				if (icol >= MAXCOL && !morecols(icol)) {
-					error("too many columns in table");
+					return error("too many columns in table");
 				}
 				sawchar = 1;
 			}
@@ -260,7 +266,7 @@ readspec(void)
 				if (stopc && c== stopc)
 					break;
 				if (snp-cll[icol-1]>CLLEN)
-					error ("column width too long");
+					return error ("column width too long");
 				*snp++ =c;
 			}
 			*snp=0;
@@ -295,8 +301,9 @@ readspec(void)
 			continue;
 		}
 	}
-	error("EOF reading table specification");
+	return error("EOF reading table specification");
 }
+
 static int
 morecols(int n)
 {

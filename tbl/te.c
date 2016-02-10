@@ -26,19 +26,14 @@
 # include <errno.h>
 # include <string.h>
 # include <stdlib.h>
-void
-error(char *s)
-{
-fprintf(stderr, "\n%s: line %d: %s\n", ifile, iline, s);
-# ifndef gcos
-fprintf(stderr, "%s quits\n", progname);
-exit(1);
-# endif
-# ifdef gcos
-fprintf(stderr, "run terminated due to error condition detected by tbl preprocessor\n");
-exit(0);
-# endif
+
+int
+error(char *s) {
+	fprintf(stderr, "\n%s: line %d: %s\n", ifile, iline, s);
+	fprintf(stderr, "%s quits\n", progname);
+	return -1;
 }
+
 char *
 errmsg(int errnum)
 {

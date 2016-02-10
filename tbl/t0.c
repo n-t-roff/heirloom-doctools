@@ -70,7 +70,7 @@ int *topat;	/* topat[MAXLIN] */
 int nlin, ncol;
 int iline = 1;
 char *ifile = "Input";
-int texname = 'a';
+intptr_t texname = 'a';
 int texct = 0;
 int texct2 = -1;
 char texstr[] = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWYXZ0123456789";
