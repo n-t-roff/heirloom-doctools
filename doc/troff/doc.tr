@@ -109,7 +109,7 @@
 .flig BI 31
 ..
 .\" mo/dy/yr
-.ds Sccsdate 01/30/16
+.ds Sccsdate 02/10/16
 .ds Str \*[Sccsdate]
 .substring Str 0 0
 .if '\*[Str]'%' \{\
@@ -1094,8 +1094,9 @@ Currently defined names are
 \fBps\fR for (default) \*(PS output at 72\|000 dpi,
 \fBpsmed\fR for \*(PS output at 3600 dpi,
 \fBpslow\fR for \*(PS output at 432 dpi,
+\fBpost\fR for \*(PS output at 720 dpi with legacy fonts,
 and
-\fBpost\fR for \*(PS output at 720 dpi with legacy fonts.
+\fBhtml\fR for producing HTML output with the \fBdhtml\fR postprocessor.
 .bt
 	\fB\-u\fIN\fR	Set the emboldening amount,
 i.e. the number of times a character is printed to simulate bold output,
@@ -1201,6 +1202,7 @@ in less efficient or less compact output
 under these circumstances.
 .ta .3i 1.2i
 .in 1.2i
+.ne 4 \" 160210
 .bt
 	\fB\-M\ \fImarks\fR	\
 Print marks (in combination with the \T'trimat'\fBtrimat\fR\T \*(TR request).
@@ -4823,13 +4825,7 @@ Set escape character to \fB\e\fR, or to \fIc\fR, if given.
 .bta escoff
 \fB&escoff \fIesc ...\fR	on	ignored	\(en	Disable escapes \fIesc\
  \&...\|\fR.
-For example the request
-.in +2n
-.ps -1
-\f(CW&escoff ; @\fR
-.ps +1
-.in -2n
-would disable escapes
+For example the request \fB&escoff ; @\fR would disable escapes
 \fB\e;\fR, \fB\e@{\fR, and \fB\e@}\fR.
 The request had been added as a workaround for manual pages which by mistake
 escape normal charaters.
@@ -5072,7 +5068,7 @@ for \fIc...\fR;
 applies to both \fBchar\fR and \fBfchar\fR.
 .bta utf8conv
 \fB&utf8conv\fI|c1|c2\fR	ignored	\(en	\*(NR only:
-With \f(CW-Tlocale\fR and a \*[UTF] locale, "\fB-\fR" is replaced
+With \fB\-Tlocale\fR and a \*[UTF] locale, "\fB-\fR" is replaced
 by a \*[UTF] hyphen, and "\fB\e-\fR" remains the ASCII
 hyphen-minus character. This is because in manual
 pages, "\fB\e\N'45'\fR" represents the ASCII option
@@ -5791,7 +5787,7 @@ c2|c2
 c2|c2
 c2|l2.
 Condition
-Name	True If
+Name	True if
 _
 \fBc\fI G\fR	T{
 Character \fIG\fR exists in the current font,
@@ -6830,7 +6826,7 @@ The border style can be changed with the
 \fB\eX\(aqSetBorderStyle: \fIarguments\fB\(aq\fR command.
 The \fIarguments\fR are the same
 as for the \fB/BS\fR pdfmark operator
-or the \*[LaTeX] \fBhyperref\f(CW pdfborderstyle={}\fR variable.
+or the \*[LaTeX] \fBhyperref pdfborderstyle={}\fR variable.
 .pg
 Likewise,
 \fBSetULinkColor\fR, \fBSetULinkBorder\fR, and \fBSetUBorderStyle\fR
@@ -6838,7 +6834,7 @@ are available for URI links.
 .pg
 E.\^g. for this document the commands
 .x1
-.ft CW
+.ft B
 \eX\(aqSetBorderStyle: /S/U/W 0.1\(aq
 \eX\(aqSetUBorderStyle: /S/U/W 0.1\(aq
 .ft R
@@ -6929,7 +6925,7 @@ Nevertheless it is not recommend to do so
 without reason.
 For instance macro packages read \en(.g to test
 if they are processed with groff.
-Setting \fB&g\fR to 1 with the \fB&nr\fR request
+Setting \fB&g\fR to \fB1\fR with the \fB&nr\fR request
 also has some side effects in Heirloom \*(TR:
 .de ListBegin
 .	sp .25
@@ -6948,6 +6944,10 @@ also has some side effects in Heirloom \*(TR:
 .ListBegin
 .tr &&
 .ListItem
+\fIgroff\fR\^'s notation for accessing symbols with
+\fB\e[char\fIn\fB]\fR and \fB\e[u\fIXXXX\fB]\fR
+are enabled.
+.ListItem
 The escape \fB\e%\fR marks optional hyphenation points
 inside a word or suppresses hyphenation prefixed to a word
 (\fIeven when this word containes dashes\fR).
@@ -6957,12 +6957,15 @@ that no character is before word (e.\^g. quotes or parentheses).
 suppression escape when it follows the zero-width characters
 \fB\e)\fR or \fB\e&\fR.
 This does not work with traditional \*(TR, unfortunately.
-The command \f(CW.nr\|\^.g\|\|1\fR enables the \*(GR behaviour.
+The command \fB.nr\|\^.g\|\|1\fR enables the \*(GR behaviour.
 .ListItem
 The algorithm \*(GR uses for the three part title request \fB.tl\fR
 leads to a different placement of the middle title element
 with \*(NR under certain conditions.
 This is emulated by setting \fB.g\fR to 1.
+.ListItem
+\fIgroff\fR\^'s left italic correction escape \fB\e,\fR is removed
+from the input instead of producing a \(oq\fB,\fR\(cq.
 .ListEnd
 .tr &.
 .pg
@@ -8252,8 +8255,8 @@ Available characters from groff_char(7)
 .fi
 The following table list the characters from the \fBgroff_char\fP(7)
 manual page which can be used with Heirloom \*(TR.
-Special characters marked with a * are only defined when
-\*(TR is started with option \f(CW-mgchar\fP.
+Special characters marked with a \fB*\fR are only defined when
+\*(TR is started with option \fB\-mgchar\fP.
 If a glyph is actually available depends on the font and
 output device.
 .sp
