@@ -34,10 +34,12 @@ dence.
 
 The source code has been compiled successfully on:
 
-OpenBSD         5.7
-NetBSD          6.1.5, 7-CURRENT
-FreeBSD         8.4, 9.3, 10.1, 11-CURRENT
+OpenBSD         CURRENT
+NetBSD          6.1.5, 7, CURRENT
+FreeBSD         8.4, 9.3, 10.1, CURRENT
 Linux           Slackware 14.1, OpenSuse 13.2
+Mac OS X
+SmartOS
 
 To build and install manually:
 

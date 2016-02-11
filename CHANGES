@@ -1,3 +1,25 @@
+2016-02-11
+    tbl troff bug fixed:  Height of table had been calculated
+    wrong.  This could lead to graphics artifacts if a table is
+    at page bottom.
+
+2016-02-10
+    Many changes to -man and -mdoc.  Heirloom's manual page for-
+    matting is now quite compatible to groff.
+
+2016-02-08
+    Operator 'v' added for ".if".  (Some manpages using this.)
+
+2016-02-02
+    -ms: Macros .QS and .QE added.
+
+2016-01-29
+    Support for groff's notation \[uXXXX] added.
+
+2016-01-26
+    nroff: Use of new names for .char now possible.  (Up to now
+    only names found in the tab file could be used.)
+
 2016-01-01
     Spaces are now allowed in filenames of .cf, .fp, .lf, .nx,
     and .so requests.  The documentation stated that %20 could be
@@ -6,6 +28,49 @@
     quoting the filename with '"'.  Additionally character codes
     up to 255 are allowed now in filenames.  (Bug reported by
     Jacob Parker (https://github.com/jacobp100).)
+
+2015-12-23
+    groff's operator ".if F <font>" added.
+
+2015-12-18
+    Support for groff's notation \[char<n>] added.
+
+2015-12-10
+    File system case-sensitivity issue fixed.  (Reported by Henry
+    McGilton.)
+
+2015-10-28
+    Set previous font to current font in case of unknown font.
+    This is the groff behaviour.  E.g. \fIfoo\fP \f(CWbar\fP blah
+    did underline "blah" in AT&T nroff.
+
+2015-09-23
+    \n[.ns] implemented (had only been documented up to now).
+
+2015-09-21
+    Basic HTML support added.
+
+2015-09-18
+    Escape \I added (test if argument is a valid identifier).  \I
+    is equivalent to groff's \A.
+
+2015-07-14
+    PDFMark: \X'SetBorderStyle' added.
+
+2015-07-08
+    Special groff compatibility mode for manual pages added which
+    is enabled when register .g is set to 1.
+
+2015-06-24
+    .box bug fixed: .box did discard part of roff's state.
+
+2015-06-22
+    mm(7): .PGFORM added to allow line length change inside docu-
+    ment.
+
+2015-06-10
+    .ie-.el bug fixed.  Up to now .ie-.el did not work fully re-
+    liable in AT&T roff.  (Found during -mdoc debugging.)
 
 2015-06-08
     mdoc: Macro Lb with library definitions for FreeBSD and
