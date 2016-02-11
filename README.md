@@ -17,6 +17,8 @@ A git repository can be kept up-to-date with
 
 Bugs can be reported at the
 [issue list](https://github.com/n-t-roff/heirloom-doctools/issues).
+Please wait before creating a patch or a pull request,
+since someone else could already be working on this issue or has a solution.
 
 If there are any problems please send a mail to
 &lt;troff [at] arcor [dot] de&gt;.
