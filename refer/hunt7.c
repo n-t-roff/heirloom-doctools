@@ -44,7 +44,10 @@ findline(char *in, char **out, int outlen, long indexdate)
 	char *p, **ftp;
 	static FILE *fa = NULL;
 	long lp, llen;
-	int len, k, nofil;
+# ifdef D1
+	int len;
+# endif
+	int k, nofil;
 
 # if D1
 	fprintf(stderr, "findline: %s\n", in);
@@ -127,7 +130,9 @@ findline(char *in, char **out, int outlen, long indexdate)
                 if (*out == NULL) {
                 	return(0);
                 }
+# ifdef D1
 		len = fread(*out, 1, llen, fa);
+# endif
 		*(*out + llen) = 0;
 # ifdef D1
 		fprintf(stderr, "length as read is %d\n",len);

@@ -3147,7 +3147,7 @@ printencsep(int *colp)
 static int *
 printencvector(struct afmtab *a)
 {
-    int	i, j, k, n, col = 0, s, w;
+    int	i, j, k, n, col = 0, s;
     int	*encmap = NULL;
 
     fprintf(gf, "/Encoding-@%s@0 [\n", a->Font.intname);
@@ -3157,7 +3157,6 @@ printencvector(struct afmtab *a)
      * for later squeezing of characters >= 0400.
      */
     s = 128 - 32;
-    w = 128;
     encmap = calloc(256 + nchtab + a->nchars, sizeof *encmap);
     col += fprintf(gf, "/.notdef");
     printencsep(&col);
