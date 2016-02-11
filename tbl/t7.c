@@ -110,13 +110,13 @@ need(void)
 		else
 			texlin++;
 	}
-	(void) fprintf(tabout, ".ne %dv+%dp\n", texlin, 2 * horlin);
 	/*
 	 * For nroff runs, we need to reserve space for the full height of the
 	 * horizontal rules.  If we don't reserve sufficient height, we'll have
 	 * problems trying to draw the vertical lines across the page boundary.
 	 */
-	(void) fprintf(tabout, ".if n .ne %dv\n", 2 * texlin + 2 * horlin + 2);
+	(void) fprintf(tabout, ".ie n .ne %dv\n", 2 * texlin + 2 * horlin + 2);
+	(void) fprintf(tabout, ".el .ne %dv\n", texlin + 1);
 }
 
 void
