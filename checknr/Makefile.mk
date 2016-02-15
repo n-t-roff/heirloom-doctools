@@ -1,6 +1,6 @@
 OBJ = checknr.o
 
-FLAGS = -D$(SYSTEM) -I../include
+FLAGS = $(DEFINES) -I../include
 
 .c.o:
 	$(CC) $(CFLAGS) $(WARN) $(CPPFLAGS) $(FLAGS) -c $<

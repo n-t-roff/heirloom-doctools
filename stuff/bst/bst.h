@@ -29,7 +29,6 @@
 #include <stdint.h>
 
 #define BST_EEXIST -2
-#define BST_EINTL  -3
 #define BST_ENOENT -4
 
 union bst_val {

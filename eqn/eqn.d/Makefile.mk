@@ -3,7 +3,7 @@ OBJ = diacrit.o e.o eqnbox.o font.o fromto.o funny.o glob.o integral.o \
 	io.o lex.o lookup.o mark.o matrix.o move.o over.o paren.o pile.o \
 	shift.o size.o sqrt.o text.o version.o
 
-FLAGS = -I. -I.. -I../../include -D$(SYSTEM)
+FLAGS = -I. -I.. -I../../include $(DEFINES)
 
 .c.o:
 	$(CC) $(CFLAGS) $(WARN) $(CPPFLAGS) $(FLAGS) -c $<

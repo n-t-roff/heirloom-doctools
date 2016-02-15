@@ -39,9 +39,7 @@ static struct bst_node *alloc_node(void);
 
 /* Returns:
  *   0           No error
- *   BST_EEXIST  Key already exists
- *   BST_EINTL   Internal error
- */
+ *   BST_EEXIST  Key already exists */
 
 int
 bst_padd(struct bst *bst, union bst_val key, union bst_val data, int bal) {
@@ -62,9 +60,6 @@ bst_padd(struct bst *bst, union bst_val key, union bst_val data, int bal) {
 		c = alloc_node();
 		bst->root = c;
 		break;
-	default:
-		fprintf(stderr, "BST: Unexpected internal srch_node error\n");
-		return BST_EINTL;
 	}
 	c->parent = n;
 	c->key = key;

@@ -5,7 +5,7 @@ OBJ = dpost.o draw.o color.o pictures.o ps_include.o afm.o \
 	asciitype.o otf.o ../fontmap.o $(BST)/bst.o
 
 FLAGS = -I. -I.. -DFNTDIR='"$(FNTDIR)"' -DPSTDIR='"$(PSTDIR)"' $(EUC) \
-	-D$(SYSTEM) -I../../../include -I.. -I$(BST)
+	$(DEFINES) -I../../../include -I.. -I$(BST)
 
 .c.o:
 	$(CC) $(CFLAGS) $(WARN) $(CPPFLAGS) $(FLAGS) -c $<

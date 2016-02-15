@@ -1,7 +1,7 @@
 OBJ = coord.o for.o frame.o grap.o grapl.o input.o label.o main.o misc.o \
 	plot.o print.o ticks.o version.o
 
-FLAGS = -DLIBDIR='"$(LIBDIR)"' -D$(SYSTEM) -I../include
+FLAGS = -DLIBDIR='"$(LIBDIR)"' $(DEFINES) -I../include
 
 YFLAGS = -d
 

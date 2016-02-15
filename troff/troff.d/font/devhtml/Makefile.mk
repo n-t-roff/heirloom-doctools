@@ -20,4 +20,4 @@ clean:
 mrproper:	clean
 
 $(BIN):		$(OBJS)
-		$(LINK.c) $(OBJS) -o $@
+		$(CC) $(CFLAGS) $(CPPFLAGS) $(LDFLAGS) $(OBJS) -o $@

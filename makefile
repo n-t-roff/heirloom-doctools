@@ -34,10 +34,9 @@ MAKEFILES = $(SUBDIRS:=/Makefile)
 
 .SUFFIXES: .mk
 .mk:
-	echo SYSTEM = SYS_`uname` >$@
-	cat version.mk mk.config $< >>$@
+	cat cfg.mk $< >$@
 
-dummy: $(MAKEFILES) all
+dummy: cfg.mk $(MAKEFILES) all
 
 makefiles: $(MAKEFILES)
 
@@ -48,6 +47,7 @@ makefiles: $(MAKEFILES)
 	done
 
 mrproper: clean
+	rm -f cfg.mk config.log
 	+ for i in $(SUBDIRS); \
 	do \
 		(cd "$$i" && $(MAKE) $@) || exit; \
@@ -69,3 +69,6 @@ heirloom-doctools.pkg: all
 	pkgmk -a `uname -m` -d $(PKGTEMP) -r $(PKGROOT) -f $(PKGPROTO) $@
 	pkgtrans -o -s $(PKGTEMP) `pwd`/$@ $@
 	rm -rf $(PKGROOT) $(PKGPROTO) $(PKGTEMP)/$@
+
+cfg.mk:
+	./configure

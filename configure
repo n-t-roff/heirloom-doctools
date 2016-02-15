@@ -1,0 +1,178 @@
+#!/bin/sh
+
+# Copyright (c) 2016, Carsten Kunze
+# All rights reserved.
+#
+# Redistribution and use in source and binary forms, with or without
+# modification, are permitted provided that the following conditions are met:
+#
+# 1. Redistributions of source code must retain the above copyright notice,
+#    this list of conditions and the following disclaimer.
+#
+# 2. Redistributions in binary form must reproduce the above copyright notice,
+#    this list of conditions and the following disclaimer in the documentation
+#    and/or other materials provided with the distribution.
+#
+# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+# AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+# IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+# ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
+# LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+# CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+# SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+# INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+# CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+# ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+# POSSIBILITY OF SUCH DAMAGE.
+
+usage () {
+	echo "Usage: $0 [-s]"
+	echo "	-s	Silence output"
+	exit $1
+}
+
+check_for () {
+	[ -e $LOG ] && echo >>$LOG
+	A="Checking for $1 ... "
+	echo "$A" >>$LOG
+	[ -z $SFLAG ] && printf "$A"
+}
+
+compile () {
+	rm -f $TMPNAM
+	$MAKE -f $OUTMK $TMPNAM >> $LOG 2>&1
+}
+
+test_result () {
+	if [ $? -eq 0 ]; then
+		echo success >>$LOG
+		[ -z $SFLAG ] && echo yes
+		[ -e $TMPC ] && rm -f $TMPC
+		true
+	else
+		[ -z $SFLAG ] && echo no
+		if [ -e $TMPC ]; then
+			echo "Failed program:" >>$LOG
+			pr -n -t $TMPC >>$LOG
+			rm -f $TMPC
+		fi
+		false
+	fi
+}
+
+SFLAG=
+
+while [ $# -gt 0 ]; do
+	case $1 in
+	-s) SFLAG=1;;
+	*)
+		echo "$0: $1: Unknown option" >&2
+		usage 1;;
+	esac
+	shift
+done
+
+INMK=mk.config
+OUTMK=cfg.mk
+CFG=config
+TMPNAM=.$CFG
+TMPMK=${TMPNAM}.mk
+TMPC=${TMPNAM}.c
+LOG=${CFG}.log
+rm -f $LOG
+cat version.mk $INMK > $OUTMK || exit 1
+DEFS=
+MAKE=
+
+check_for "make(1)"
+
+cat <<EOT >$TMPMK
+all:
+	true
+EOT
+make -f $TMPMK >> $LOG 2>&1
+test_result && MAKE=make
+
+if [ -z "$MAKE" ]; then
+	echo "Failed makefile:" >>$LOG
+	pr -n -t $TMPMK >>$LOG
+
+	check_for "bmake(1)"
+
+	cat <<EOT >$TMPMK
+all:
+	true
+EOT
+	bmake -f $TMPMK >> $LOG 2>&1
+	test_result && MAKE=bmake
+fi
+
+check_for "strlcpy(3)"
+
+cat <<EOT >$TMPC
+	#include <string.h>
+	int
+	main (int argc, char **argv) {
+		char a[10];
+		strlcpy(a, *argv, sizeof a);
+		return 0;
+	}
+EOT
+compile
+test_result && DEFS="$DEFS -DHAVE_STRLCPY"
+
+check_for "strlcat(3)"
+
+cat <<EOT >$TMPC
+	#include <string.h>
+	int
+	main (int argc, char **argv) {
+		char a[10];
+		*a = 0;
+		strlcat(a, *argv, sizeof a);
+		return 0;
+	}
+EOT
+compile
+test_result && DEFS="$DEFS -DHAVE_STRLCAT"
+
+check_for "wcslcpy(3)"
+
+cat <<EOT >$TMPC
+	#include <stdio.h>
+	#include <wchar.h>
+	int
+	main (int argc, char **argv) {
+		wchar_t a, b;
+		a = getwchar();
+		wcslcpy(&b, &a, 1);
+		return 0;
+	}
+EOT
+compile
+test_result && DEFS="$DEFS -DHAVE_WCSLCPY"
+
+check_for '$(LEX)'
+
+cp pic/picl.l . || exit 1
+$MAKE -f $OUTMK picl.c >>$LOG 2>&1
+test_result
+
+if [ ! -e picl.c ]; then
+	check_for 'flex(1)'
+
+	$MAKE -f $OUTMK picl.c LEX=flex >>$LOG 2>&1
+	test_result && echo "LEX=flex" >>$OUTMK
+fi
+
+if [ ! -e picl.c ]; then
+	check_for 'lex(1)'
+
+	$MAKE -f $OUTMK picl.c LEX=lex >>$LOG 2>&1
+	test_result && echo "LEX=lex" >>$OUTMK
+fi
+
+rm -f picl.*
+
+[ -n "$DEFS" ] && echo "DEFINES=$DEFS" >>$OUTMK
+rm -f $TMPNAM*
