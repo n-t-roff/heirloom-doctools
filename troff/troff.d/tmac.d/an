@@ -339,8 +339,14 @@
 .	lds Text \&
 .	lnr State 0
 .	while \\n(.$ \{\
-.		ie \\n[State] .as Text \fI\\$1
-.		el            .as Text \fR\\$1
+.		ie \\n[State] \{\
+.			as Text \fI\\$1
+.			nr State 0
+.		\}
+.		el \{\
+.			as Text \fR\\$1
+.			nr State 1
+.		\}
 .		shift
 .	\}
 .	nop \\*[Text]
@@ -350,8 +356,14 @@
 .	lds Text \&
 .	lnr State 0
 .	while \\n(.$ \{\
-.		ie \\n[State] .as Text \fB\\$1
-.		el            .as Text \fR\\$1
+.		ie \\n[State] \{\
+.			as Text \fB\\$1
+.			nr State 0
+.		\}
+.		el \{\
+.			as Text \fR\\$1
+.			nr State 1
+.		\}
 .		shift
 .	\}
 .	nop \\*[Text]
@@ -361,8 +373,14 @@
 .	lds Text \&
 .	lnr State 0
 .	while \\n(.$ \{\
-.		ie \\n[State] .as Text \fR\\$1
-.		el            .as Text \fI\\$1
+.		ie \\n[State] \{\
+.			as Text \fR\\$1
+.			nr State 0
+.		\}
+.		el \{\
+.			as Text \fI\\$1
+.			nr State 1
+.		\}
 .		shift
 .	\}
 .	nop \\*[Text]
@@ -372,8 +390,14 @@
 .	lds Text \&
 .	lnr State 0
 .	while \\n(.$ \{\
-.		ie \\n[State] .as Text \fB\\$1
-.		el            .as Text \fI\\$1
+.		ie \\n[State] \{\
+.			as Text \fB\\$1
+.			nr State 0
+.		\}
+.		el \{\
+.			as Text \fI\\$1
+.			nr State 1
+.		\}
 .		shift
 .	\}
 .	nop \\*[Text]
@@ -383,8 +407,14 @@
 .	lds Text \&
 .	lnr State 0
 .	while \\n(.$ \{\
-.		ie \\n[State] .as Text \fR\\$1
-.		el            .as Text \fB\\$1
+.		ie \\n[State] \{\
+.			as Text \fR\\$1
+.			nr State 0
+.		\}
+.		el \{\
+.			as Text \fB\\$1
+.			nr State 1
+.		\}
 .		shift
 .	\}
 .	nop \\*[Text]
@@ -394,8 +424,14 @@
 .	lds Text \&
 .	lnr State 0
 .	while \\n(.$ \{\
-.		ie \\n[State] .as Text \fI\\$1
-.		el            .as Text \fB\\$1
+.		ie \\n[State] \{\
+.			as Text \fI\\$1
+.			nr State 0
+.		\}
+.		el \{\
+.			as Text \fB\\$1
+.			nr State 1
+.		\}
 .		shift
 .	\}
 .	nop \\*[Text]
