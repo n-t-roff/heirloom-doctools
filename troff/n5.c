@@ -2135,12 +2135,15 @@ casetr(int flag)
 	tchar k;
 
 	lgf++;
+	tryglf++;
 	skip(1);
+	if (!ch && cbits(getch()) == '\n')
+		goto r;
 	while ((i = cbits(k=getch())) != '\n') {
 		if (ismot(k))
-			return;
+			goto r;
 		if (ismot(k = getch()))
-			return;
+			goto r;
 		if ((j = cbits(k)) == '\n')
 			j = ' ';
 		trtab[i] = j;
@@ -2153,6 +2156,8 @@ casetr(int flag)
 		else
 			trnttab[i] = j;
 	}
+r:
+	tryglf--;
 }
 
 
