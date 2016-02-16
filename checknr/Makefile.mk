@@ -8,7 +8,7 @@ FLAGS = $(DEFINES) -I../include
 all: checknr
 
 checknr: $(OBJ)
-	$(CC) $(LDFLAGS) $(OBJ) $(LIBS) -o checknr
+	$(CC) $(CFLAGS) $(LDFLAGS) $(OBJ) $(LIBS) -o checknr
 
 install:
 	$(INSTALL) -c checknr $(ROOT)$(BINDIR)/checknr

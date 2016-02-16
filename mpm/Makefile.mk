@@ -11,7 +11,7 @@ FLAGS = $(EUC) $(DEFINES)
 all: pm
 
 pm: $(OBJ)
-	$(CXX) $(LDFLAGS) $(OBJ) $(LIBS) -lm -o pm
+	$(CXX) $(CFLAGS) $(LDFLAGS) $(OBJ) $(LIBS) -lm -o pm
 
 install: all
 	test -d $(ROOT)$(LIBDIR) || mkdir -p $(ROOT)$(LIBDIR)

@@ -9,7 +9,7 @@ FLAGS =
 all: checkeq
 
 checkeq: $(OBJ)
-	$(CC) $(LDFLAGS) $(OBJ) $(LIBS) -o checkeq
+	$(CC) $(CFLAGS) $(LDFLAGS) $(OBJ) $(LIBS) -o checkeq
 
 install:
 	$(INSTALL) -c checkeq $(ROOT)$(BINDIR)/checkeq

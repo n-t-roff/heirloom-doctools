@@ -8,7 +8,7 @@ FLAGS = $(EUC) -DLIBDIR='"$(LIBDIR)"' $(DEFINES) -I../include
 all: vgrind vfontedpr
 
 vfontedpr: $(OBJ)
-	$(CC) $(LDFLAGS) $(OBJ) $(LIBS) -o vfontedpr
+	$(CC) $(CFLAGS) $(LDFLAGS) $(OBJ) $(LIBS) -o vfontedpr
 
 vgrind: vgrind.sh
 	rm -f $@

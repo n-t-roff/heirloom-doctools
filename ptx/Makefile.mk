@@ -8,7 +8,7 @@ FLAGS = -DLIBDIR='"$(LIBDIR)"' $(EUC)
 all: ptx
 
 ptx: $(OBJ)
-	$(CC) $(LDFLAGS) $(OBJ) $(LIBS) -o ptx
+	$(CC) $(CFLAGS) $(LDFLAGS) $(OBJ) $(LIBS) -o ptx
 
 install:
 	$(INSTALL) -c ptx $(ROOT)$(BINDIR)/ptx

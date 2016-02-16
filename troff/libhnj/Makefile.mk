@@ -12,7 +12,7 @@ libhnj.a: $(OBJ)
 	$(RANLIB) $@
 
 test: test.o libhnj.a
-	$(CC) $(LDFLAGS) test.o -L. -lhnj -o test
+	$(CC) $(CFLAGS) $(LDFLAGS) test.o -L. -lhnj -o test
 
 install:
 

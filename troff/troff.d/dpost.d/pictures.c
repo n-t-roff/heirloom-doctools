@@ -172,10 +172,13 @@ picture (
     frame[0] = frame[1] = -1;		/* default frame height, width */
     frame[2] = frame[3] = 0;		/* and y and x offsets */
 
-    for ( i = 0, p = hwo-1; i < 4 && p != NULL; i++, p = strchr(p, ',') )
-	if ( sscanf(++p, "%lf%c", &frame[i], &units) == 2 )
+    for ( i = 0, p = hwo; i < 4 && p != NULL; i++, p = strchr(p, ',') ) {
+    	if (i)
+		p++;
+	if ( sscanf(p, "%lf%c", &frame[i], &units) == 2 )
 	    if ( units == 'i' || units == ',' || units == '\0' )
 		frame[i] *= res;
+    }
 
     if ( frame[0] <= 0 )		/* check what we got for height */
 	frame[0] = totrap;

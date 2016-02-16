@@ -8,7 +8,7 @@ FLAGS = -I../troff/troff.d/dpost.d
 all: picpack
 
 picpack: $(OBJ)
-	$(CC) $(LDFLAGS) $(OBJ) $(LIBS) -o picpack
+	$(CC) $(CFLAGS) $(LDFLAGS) $(OBJ) $(LIBS) -o picpack
 
 install:
 	$(INSTALL) -c picpack $(ROOT)$(BINDIR)/picpack

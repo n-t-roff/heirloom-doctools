@@ -11,7 +11,7 @@ FLAGS = -I. -I.. -I../../include $(DEFINES)
 all: eqn
 
 eqn: $(OBJ)
-	$(CC) $(LDFLAGS) $(OBJ) $(LIBS) -o eqn
+	$(CC) $(CFLAGS) $(LDFLAGS) $(OBJ) $(LIBS) -o eqn
 
 e.c: e.y
 	$(YACC) -d ../e.y

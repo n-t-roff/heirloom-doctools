@@ -12,7 +12,7 @@ YFLAGS = -d
 all: picy.c picl.c pic
 
 pic: $(OBJ)
-	$(CC) $(LDFLAGS) $(OBJ) $(LIBS) -lm -o pic
+	$(CC) $(CFLAGS) $(LDFLAGS) $(OBJ) $(LIBS) -lm -o pic
 
 y.tab.h: picy.c
 

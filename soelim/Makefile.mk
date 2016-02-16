@@ -8,7 +8,7 @@ FLAGS =
 all: soelim
 
 soelim: $(OBJ)
-	$(CC) $(LDFLAGS) $(OBJ) $(LIBS) -o soelim
+	$(CC) $(CFLAGS) $(LDFLAGS) $(OBJ) $(LIBS) -o soelim
 
 install:
 	$(INSTALL) -c soelim $(ROOT)$(BINDIR)/soelim

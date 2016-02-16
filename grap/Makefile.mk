@@ -11,7 +11,7 @@ YFLAGS = -d
 all: grap.c grapl.c grap
 
 grap: $(OBJ)
-	$(CC) $(LDFLAGS) $(OBJ) $(LIBS) -lm -o grap
+	$(CC) $(CFLAGS) $(LDFLAGS) $(OBJ) $(LIBS) -lm -o grap
 
 y.tab.h: grap.c
 

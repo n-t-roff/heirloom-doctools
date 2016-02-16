@@ -9,7 +9,7 @@ FLAGS = -DMACDIR='"$(MACDIR)"'
 all: tbl
 
 tbl: $(OBJ)
-	$(CC) $(LDFLAGS) $(OBJ) $(LIBS) -o tbl
+	$(CC) $(CFLAGS) $(LDFLAGS) $(OBJ) $(LIBS) -o tbl
 
 install:
 	$(INSTALL) -c tbl $(ROOT)$(BINDIR)/tbl

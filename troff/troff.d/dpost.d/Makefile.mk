@@ -13,7 +13,7 @@ FLAGS = -I. -I.. -DFNTDIR='"$(FNTDIR)"' -DPSTDIR='"$(PSTDIR)"' $(EUC) \
 all: dpost
 
 dpost: $(OBJ)
-	$(CC) $(LDFLAGS) $(OBJ) $(LIBS) -o dpost
+	$(CC) $(CFLAGS) $(LDFLAGS) $(OBJ) $(LIBS) -o dpost
 
 install:
 	$(INSTALL) -c dpost $(ROOT)$(BINDIR)/dpost

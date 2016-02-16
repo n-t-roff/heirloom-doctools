@@ -9,7 +9,7 @@ utf-8: genutf8
 	-./genutf8 >utf-8
 
 genutf8: genutf8.o
-	-$(CC) $(LDFLAGS) genutf8.o $(LIBS) -o genutf8
+	-$(CC) $(CFLAGS) $(LDFLAGS) genutf8.o $(LIBS) -o genutf8
 
 genutf8.o: genutf8.c
 	-$(CC) $(CFLAGS) $(WARN) $(CPPFLAGS) $(EUC) -c genutf8.c

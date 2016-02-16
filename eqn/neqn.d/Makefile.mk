@@ -11,7 +11,7 @@ FLAGS = -I. -I.. -I../../include -DNEQN $(DEFINES)
 all: neqn
 
 neqn: $(OBJ)
-	$(CC) $(LDFLAGS) $(OBJ) $(LIBS) -o neqn
+	$(CC) $(CFLAGS) $(LDFLAGS) $(OBJ) $(LIBS) -o neqn
 
 e.c: e.y
 	$(YACC) -d ../e.y

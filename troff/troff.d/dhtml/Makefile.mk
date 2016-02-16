@@ -17,7 +17,7 @@ clean:
 mrproper:	clean
 
 $(BIN):		$(OBJ)
-		$(CC) $(LDFLAGS) $(OBJ) -o $@
+		$(CC) $(CFLAGS) $(LDFLAGS) $(OBJ) -o $@
 
 .c.o:
 		$(CC) $(CFLAGS) $(CPPFLAGS) -c $<

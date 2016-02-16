@@ -1122,9 +1122,9 @@ afmgetkern(struct afmtab *a, int ch1, int ch2)
 		do {
 			if (kp->sorted == 0)
 				sortkernpairs(kp);
-			if (ch2 >= kp->ch2[0] && ch2 <= kp->ch2[kp->cnt-1]) {
+			r = kp->cnt - 1;
+			if (ch2 >= kp->ch2[0] && r >= 0 && ch2 <= kp->ch2[r]) {
 				l = 0;
-				r = kp->cnt-1;
 				do {
 					m = (l+r) / 2;
 					if (ch2 < kp->ch2[m])

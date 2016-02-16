@@ -20,25 +20,25 @@ FLAGS =	-DMACDIR='"$(MACDIR)"' -DREFDIR='"$(REFDIR)"' $(EUC) $(DEFINES) \
 all: refer addbib lookbib sortbib roffbib indxbib mkey inv hunt papers/runinv
 
 refer: $(ROBJ)
-	$(CC) $(LDFLAGS) $(ROBJ) $(LIBS) -o $@
+	$(CC) $(CFLAGS) $(LDFLAGS) $(ROBJ) $(LIBS) -o $@
 
 addbib: $(AOBJ)
-	$(CC) $(LDFLAGS) $(AOBJ) $(LIBS) -o $@
+	$(CC) $(CFLAGS) $(LDFLAGS) $(AOBJ) $(LIBS) -o $@
 
 lookbib: $(LOBJ)
-	$(CC) $(LDFLAGS) $(LOBJ) $(LIBS) -o $@
+	$(CC) $(CFLAGS) $(LDFLAGS) $(LOBJ) $(LIBS) -o $@
 
 sortbib: $(SOBJ)
-	$(CC) $(LDFLAGS) $(SOBJ) $(LIBS) -o $@
+	$(CC) $(CFLAGS) $(LDFLAGS) $(SOBJ) $(LIBS) -o $@
 
 mkey: $(MOBJ)
-	$(CC) $(LDFLAGS) $(MOBJ) $(LIBS) -o $@
+	$(CC) $(CFLAGS) $(LDFLAGS) $(MOBJ) $(LIBS) -o $@
 
 inv: $(IOBJ)
-	$(CC) $(LDFLAGS) $(IOBJ) $(LIBS) -o $@
+	$(CC) $(CFLAGS) $(LDFLAGS) $(IOBJ) $(LIBS) -o $@
 
 hunt: $(HOBJ)
-	$(CC) $(LDFLAGS) $(HOBJ) $(LIBS) -o $@
+	$(CC) $(CFLAGS) $(LDFLAGS) $(HOBJ) $(LIBS) -o $@
 
 indxbib: indxbib.sh
 	rm -f $@

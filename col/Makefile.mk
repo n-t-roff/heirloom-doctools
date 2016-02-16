@@ -7,7 +7,7 @@ FLAGS = $(DEFINES) -I../include
 all: $(BIN)
 
 $(BIN): $(OBJ)
-	$(CC) $(LDFLAGS) $(OBJ) -o $(BIN)
+	$(CC) ${CFLAGS} $(LDFLAGS) $(OBJ) -o $(BIN)
 
 install:
 	$(INSTALL) -c $(BIN) $(ROOT)$(BINDIR)/$(BIN)
