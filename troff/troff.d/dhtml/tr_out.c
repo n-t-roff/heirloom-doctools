@@ -90,6 +90,7 @@ out_f(int num) {
 		closefont = "</span>";
 	} else
 	if (!strcmp(nam, "CW") ||
+	    !strcmp(nam, "CR") ||
 	    !strcmp(nam, "C")) {
 		fputs("<span style=\"font-family: monospace\">", stdout);
 		closefont = "</span>";

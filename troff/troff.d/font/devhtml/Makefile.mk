@@ -1,6 +1,6 @@
 BIN=		makefont
 OBJS=		$(BIN).o
-FONTS=		R I B BI C CW CI CB H HI HB S
+FONTS=		R I B BI C CW CR CI CB H HI HB S
 
 all:		$(BIN)
 

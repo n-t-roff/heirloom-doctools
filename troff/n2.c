@@ -130,6 +130,17 @@ pchar(register tchar i)
 			j = eschar;	/* fall through */
 	default:
 	dfl:
+#ifndef NROFF
+		if (html) {
+			if (!xflag || !isdi(i)) {
+				setcbits(i, j >= NCHARS ? j :
+				    tflg ? trnttab[j] : trtab[j]);
+				if (xon == 0 && drawfcn == 0 && i < NCHARS)
+					setcbits(i, ftrans(fbits(i),
+					    cbits(i)));
+			}
+		} else
+#endif
 		if (!xflag || !isdi(i)) {
 			setcbits(i, tflg ? trnttab[j] : trtab[j]);
 			if (xon == 0 && drawfcn == 0)

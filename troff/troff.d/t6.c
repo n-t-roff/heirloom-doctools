@@ -128,6 +128,8 @@ width(register tchar j)
 		return(k);
 	}
 	i = cbits(j);
+	if (html && i >= NCHARS)
+		i = ' ';
 	if (i < ' ') {
 		if (i == '\b')
 			return(-widthp);
@@ -460,7 +462,7 @@ int
 kernadjust(tchar c, tchar d)
 {
 	lastkern = 0;
-	if (!kern || ismot(c) || ismot(d))
+	if (!kern || ismot(c) || ismot(d) || html)
 		return 0;
 	if (!isdi(c)) {
 		c = trtab[cbits(c)] | (c & SFMASK);

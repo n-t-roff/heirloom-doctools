@@ -89,8 +89,7 @@ char_N(int i) {
 	if (!bst_srch(&numdat, I2BST(i), &n))
 		fputs(n->data.p, stdout);
 	else
-		fprintf(stderr, "%s: Unknown character number %d\n",
-		    progname, i);
+		printf("&#%d;", i);
 	hdecr();
 }
 

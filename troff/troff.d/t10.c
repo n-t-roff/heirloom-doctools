@@ -563,6 +563,9 @@ ptout0(tchar *pi, tchar *pend)
 	if (k < 040 && k != DRAWFCN)
 		return(pi+outsize);
 	if (k >= 32) {
+		if (html && k >= NCHARS)
+			w = getcw(0);
+		else
 		if (widcache[k-32].fontpts == xfont + (xpts<<8)  && !setwdf &&
 				kern == 0 && horscale == 0) {
 			w = widcache[k-32].width;
