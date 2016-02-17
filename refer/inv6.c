@@ -38,7 +38,7 @@ whash(FILE *ft, FILE *fa, FILE *fb, int nhash, int iflong, long *ptotct, int *ph
 	int k; 
 	long lp;
 	long *hpt;
-	int *hfreq = NULL;
+	int *hfreq;
 
 	hpt = calloc (nhash+1, sizeof(*hpt));
 	assert (hpt != NULL);
@@ -82,7 +82,9 @@ whash(FILE *ft, FILE *fa, FILE *fb, int nhash, int iflong, long *ptotct, int *ph
 	fwrite(&nhash, sizeof(nhash), 1, fa);
 	fwrite(&iflong, sizeof(iflong), 1, fa);
 	fwrite(hpt, sizeof(*hpt), nhash, fa);
+	free(hpt);
 	fwrite (hfreq, sizeof(*hfreq), nhash, fa);
+	free(hfreq);
 	*ptotct = totct;
 	*phused = hused;
 }

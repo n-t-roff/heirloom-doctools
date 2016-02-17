@@ -46,18 +46,20 @@ static char *charfile = "charset";
 int
 main(int argc, char **argv) {
 	int i;
-	char *b;
+	char *b, *b0;
 	ssize_t s;
 	progname = argv[0];
 	if (argc != 2) return usage();
 	fontname = argv[1];
-	s = read_file(&b);
+	s = read_file(&b0);
+	b = b0;
 	if (!(i = find_font(&b, &s))) {
 		fprintf(stderr, "%s: Font %s not found in %s.\n",
 		    progname, fontname, charfile);
 		exit(EXIT_FAILURE);
 	}
 	out_font(b, s, i);
+	free(b0);
 	return EXIT_SUCCESS;
 }
 

@@ -1932,6 +1932,7 @@ parcomp(int start)
 	pgopt[pglnout] = start;
 	free(_cost);
 	free(_hypc);
+	free(_brcnt);
 	free(prevbreak);
 }
 

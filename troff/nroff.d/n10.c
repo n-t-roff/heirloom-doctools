@@ -336,8 +336,9 @@ next_line:
 	specnames();	/* install names like "hyphen", etc. */
 	if (eqflg)
 		t.Adj = t.Hor;
-	free(check);
 	free(codestr);
+	free(tt);
+	free(check);
 }
 
 char *
