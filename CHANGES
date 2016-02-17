@@ -1,3 +1,12 @@
+2016-02-17
+    tbl:  Invalid memory access bug fixed.  (When testing if a
+    line starts with '_' or '=' it did not check if the string is
+    empty.)
+
+2016-02-16
+    .tr bugfix:  When the first character given to .tr was un-
+    known, all character translations had been done wrong.
+
 2016-02-11
     tbl troff bug fixed:  Height of table had been calculated
     wrong.  This could lead to graphics artifacts if a table is
