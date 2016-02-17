@@ -86,15 +86,20 @@ runtabs(int lform, int ldata)
 		}
 	fprintf(tabout, "\n");
 }
-int 
-ifline(char *s)
-{
-if (!point((intptr_t)s)) return(0);
-if (s[0] == '\\') s++;
-if (s[1] ) return(0);
-if (s[0] == '_') return('-');
-if (s[0] == '=') return('=');
-return(0);
+
+int
+ifline(char *s) {
+	if (!point((intptr_t)s) || !*s)
+		return 0;
+	if (*s == '\\')
+		s++;
+	if (s[1])
+		return 0;
+	if (*s == '_')
+		return '-';
+	if (*s == '=')
+		return '=';
+	return 0;
 }
 
 void

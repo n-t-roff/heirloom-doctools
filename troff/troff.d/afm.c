@@ -538,7 +538,12 @@ afmnamelook(struct afmtab *a, const char *name)
 		if (a->nametab[np->afpos] == 0 ||
 				strcmp(a->nametab[np->afpos], name) == 0)
 			break;
-		c += n&1 ? -((n+1)/2) * ((n+1)/2) : ((n+1)/2) * ((n+1)/2);
+		h = (n + 1) / 2;
+		h *= h;
+		if (n & 1)
+			c -= h;
+		else
+			c += h;
 		n++;
 		while (c >= a->nameprime)
 			c -= a->nameprime;
