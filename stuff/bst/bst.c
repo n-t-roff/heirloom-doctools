@@ -56,7 +56,7 @@ bst_padd(struct bst *bst, union bst_val key, union bst_val data, int bal) {
 		c = alloc_node();
 		n->right = c;
 		break;
-	case TREE_EMPTY:
+	default:
 		c = alloc_node();
 		bst->root = c;
 		break;
