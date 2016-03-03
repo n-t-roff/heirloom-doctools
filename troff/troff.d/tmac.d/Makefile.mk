@@ -5,8 +5,7 @@ MACS = acm.me bib chars.me deltext.me e eqn.me \
 	tmac.gchar andoc doc doc-common doc-nroff doc-syms \
 	pictures color pm srefs ptx safe g padj taa naa \
 	an-ext
-IMACS =	an doc-ditroff
-OMACS = $(IMACS:%=%.out)
+OMACS =	an doc-ditroff
 
 .SUFFIXES: .in
 .in:
@@ -20,8 +19,8 @@ install: all
 	do \
 		$(INSTALL) -c -m 644 $$i $(ROOT)$(MACDIR)/$$i || exit; \
 	done
-	for i in $(IMACS); do \
-		$(INSTALL) -c -m 644 $${i}.out $(ROOT)$(MACDIR)/$$i || exit; \
+	for i in $(OMACS); do \
+		$(INSTALL) -c -m 644 $${i} $(ROOT)$(MACDIR)/$$i || exit; \
 	done
 	test -d $(ROOT)$(MANDIR)/man7 || mkdir -p $(ROOT)$(MANDIR)/man7
 	$(INSTALL) -c -m 644 mcolor.7 $(ROOT)$(MANDIR)/man7/mcolor.7
@@ -32,5 +31,4 @@ clean:
 
 mrproper: clean
 
-$(OMACS): $(IMACS) tmac.gchar
-	sed 's:@MACDIR@:$(MACDIR):; s:@LIBDIR@:$(LIBDIR):' $(@:%.out=%) >$@
+$(OMACS): tmac.gchar
