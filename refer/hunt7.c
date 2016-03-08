@@ -131,8 +131,9 @@ findline(char *in, char **out, int outlen, long indexdate)
                 	return(0);
                 }
 # ifdef D1
-		len = fread(*out, 1, llen, fa);
+		len =
 # endif
+		fread(*out, 1, llen, fa);
 		*(*out + llen) = 0;
 # ifdef D1
 		fprintf(stderr, "length as read is %d\n",len);

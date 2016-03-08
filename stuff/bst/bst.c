@@ -35,7 +35,6 @@
 #define TREE_EMPTY   3
 
 static int srch_node(struct bst *, union bst_val, struct bst_node **);
-static struct bst_node *alloc_node(void);
 
 /* Returns:
  *   0           No error
@@ -44,22 +43,23 @@ static struct bst_node *alloc_node(void);
 int
 bst_padd(struct bst *bst, union bst_val key, union bst_val data, int bal) {
 	struct bst_node *n, *c, *gc, *t;
-	switch (srch_node(bst, key, &n)) {
-	case NODE_FOUND:
+	int i;
+	if ((i = srch_node(bst, key, &n)) == NODE_FOUND) {
 		fprintf(stderr, "bst_add: Key does already exist\n");
 		return BST_EEXIST;
+	}
+	c = malloc(sizeof(struct bst_node));
+	c->left = c->right = NULL;
+	c->bf = 0;
+	switch (i) {
 	case INSERT_LEFT:
-		c = alloc_node();
 		n->left = c;
 		break;
 	case INSERT_RIGHT:
-		c = alloc_node();
 		n->right = c;
 		break;
 	default:
-		c = alloc_node();
 		bst->root = c;
-		break;
 	}
 	c->parent = n;
 	c->key = key;
@@ -379,12 +379,4 @@ srch_node(struct bst *bst, union bst_val key, struct bst_node **node) {
 end:
 	*node = n;
 	return retval;
-}
-
-static struct bst_node *
-alloc_node(void) {
-	struct bst_node *n = malloc(sizeof(struct bst_node));
-	n->left = n->right = NULL;
-	n->bf = 0;
-	return n;
 }

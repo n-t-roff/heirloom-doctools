@@ -1,3 +1,11 @@
+Release 160308
+==============
+
+2016-03-08
+    refer:  Bug introduced in commit
+    89b1284c1de8071f3d7bb3a308cb080b8e2f311b fixed.  (Reported by
+    Anthony J. Bentley (@OpenBSD))
+
 Release 160217
 ==============
 
