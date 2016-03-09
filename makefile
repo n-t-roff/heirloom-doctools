@@ -32,6 +32,14 @@ SUBDIRS = \
 
 MAKEFILES = $(SUBDIRS:=/Makefile)
 
+TESTDIRS = \
+	doc/fonts \
+	doc/just \
+	doc/quickstart \
+	doc/troff \
+	test
+
+.PHONY:	test
 .SUFFIXES: .mk
 .mk:
 	cat cfg.mk $< >$@
@@ -53,6 +61,12 @@ mrproper: clean
 		(cd "$$i" && $(MAKE) $@) || exit; \
 	done
 	rm -f $(MAKEFILES)
+
+test:
+	for i in $(TESTDIRS); do \
+		(cd $$i && $(MAKE) $@) || exit 1; \
+	done
+	@printf "\n*** TEST FINISHED SUCCESSFUL ***\n"
 
 PKGROOT = /var/tmp/heirloom-devtools
 PKGTEMP = /var/tmp

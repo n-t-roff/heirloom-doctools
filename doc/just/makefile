@@ -4,7 +4,7 @@ CRYPT = -sOwnerPassword="`dd if=/dev/random bs=12 count=1 2>/dev/null | \
 	md5sum | awk '{ print $$1 }'` " -dEncryptionR=3 \
 	-dKeyLength=128 -dPermissions=-300
 
-.SUFFIXES: .tr .ps .pdf
+.SUFFIXES: .tr .ps .pdf .more
 
 .tr.ps:
 	rm -f $@; trap "rm -f $$$$.ps" 0 2 3; \
@@ -12,6 +12,9 @@ CRYPT = -sOwnerPassword="`dd if=/dev/random bs=12 count=1 2>/dev/null | \
 
 .ps.pdf:
 	gs -sOutputFile=$@ $(DISTFLAGS) -f $<
+
+.tr.more:
+	tbl -Tlocale $< | nroff -Tlocale | col -x > $@
 
 all: doc.ps
 
@@ -28,8 +31,21 @@ odd.ps: book.ps
 even.ps: book.ps
 	psselect -e book.ps $@
 
+test:
+	[ -e doc.more ] && mv doc.more doc.more.orig
+	make doc.more
+	diff -d doc.more.orig doc.more
+	mv doc.more.orig doc.more
+	[ -e doc.ps ] && mv doc.ps doc.ps.orig
+	make doc.ps
+	rm fonts.tmac
+	sed '/CreationDate/d' doc.ps >doc.ps.sed
+	diff -d doc.ps.orig doc.ps.sed
+	rm doc.ps.sed
+	mv doc.ps.orig doc.ps
+
 clean:
-	rm -f book.ps book.pdf doc.ps doc.pdf print.ps \
+	rm -f book.ps book.pdf doc.ps doc.pdf print.ps doc.more \
 		odd.ps odd.pdf even.ps even.pdf core log *~ \
 		fonts.tmac
 

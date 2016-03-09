@@ -4,7 +4,7 @@
 .warn
 .hylang en_US
 .lc_ctype en_US.UTF-8
-.so fonts.tmac
+.if t .so fonts.tmac
 .ie r AGaramondPro \{\
 .	\" Use Adobe Garamond Pro font
 .	fp 1 R AGaramondPro-Regular otf
