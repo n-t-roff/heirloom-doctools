@@ -3,8 +3,10 @@
 *.o
 Makefile
 y.tab.*
+cfg.mk
 checknr/checknr
 col/col
+config.log
 eqn/checkeq.d/checkeq
 mpm/pm
 picpack/picpack
