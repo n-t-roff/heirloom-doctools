@@ -33,7 +33,7 @@ test:
 	mv doc.more.orig doc.more
 	[ -e doc.ps ] && mv doc.ps doc.ps.orig
 	make doc.ps
-	sed '/CreationDate/d' doc.ps >doc.ps.sed
+	sed 's/.CreationDate.*/%/' doc.ps >doc.ps.sed
 	diff -d doc.ps.orig doc.ps.sed
 	rm doc.ps.sed doc.ps
 	mv doc.ps.orig doc.ps

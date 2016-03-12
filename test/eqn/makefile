@@ -8,7 +8,7 @@ test:
 	mv eqn.more.orig eqn.more
 	mv eqn.ps eqn.ps.orig
 	make eqn.ps
-	sed '/CreationDate/d' eqn.ps > eqn.ps.sed
+	sed 's/.CreationDate.*/%/' eqn.ps > eqn.ps.sed
 	diff eqn.ps.sed eqn.ps.orig
 	rm eqn.ps eqn.ps.sed
 	mv eqn.ps.orig eqn.ps

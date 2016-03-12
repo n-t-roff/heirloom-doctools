@@ -26,7 +26,7 @@ test:
 	[ -e doc.ps ] && mv doc.ps doc.ps.orig
 	make doc.ps
 	rm fonts.tmac
-	sed '/CreationDate/d' doc.ps >doc.ps.sed
+	sed 's/.CreationDate.*/%/' doc.ps >doc.ps.sed
 	diff -d doc.ps.orig doc.ps.sed
 	rm doc.ps.sed
 	mv doc.ps.orig doc.ps
