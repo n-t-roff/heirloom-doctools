@@ -182,6 +182,14 @@
 .	nr )I \\n[)I.def]
 .	nr )R 0
 .	if n .na
+.	if t .if !\\*[Toc] \{\
+.		nr Toc 1
+.		SH CONTENTS
+.		nr Toc +1
+.		nf
+.		so \\*[Toc]
+.		fi
+.	\}
 ..
 .	\" section heading
 .de SH
@@ -189,12 +197,27 @@
 .	}X 0
 .	nr )E 2
 .	lds T \&\\$1
+.	lds A \\$1
 .	shift
 .	while \\n(.$ \{\
 .		as T " \|\\$1
+.		as A " \\$1
 .		shift
 .	\}
-.	nop \\*T
+.	ie \\n[Toc] \{\
+\XPDFMark: BookmarkClosed 0 \\*A\A\\*A\\*T
+.		if \\n[Toc]>1 \{\
+.			ie \\*(.Thtml \{\
+.				tm Toc:\T\\*A\\*T\T
+.			\}
+.			el \{\
+.				lnr Tab \\n(.l-\\n(.i
+.				tm Toc:.ta \\n[Tab]uR
+.				tm Toc:\T\\*A\\*T\T\a\\n%
+.			\}
+.		\}
+.	\}
+.	el \\*T
 .	\" HP-UX compatibility macros
 .	if \\$1NAME \{\
 .		if !\\*()H \{\
@@ -281,12 +304,26 @@
 .	nr )E 2
 .	if \\n(.$ \{\
 .		lds T \&\\$1
+.		lds A \\$1
 .		shift
 .		while \\n(.$ \{\
 .			as T " \|\\$1
+.			as A " \\$1
 .			shift
 .		\}
-.		nop \\*T
+.		ie \\n[Toc] \{\
+\XPDFMark: BookmarkClosed 1 \\*A\A\\*A\\*T
+.			ie \\*(.Thtml \{\
+.				tm Toc:.ta 3n
+.				tm Toc:\t\T\\*A\\*T\T
+.			\}
+.			el \{\
+.				lnr Tab \\n(.l-\\n(.i
+.				tm Toc:.ta 3n \\n[Tab]uR
+.				tm Toc:\t\T\\*A\\*T\T\a\\n%
+.			\}
+.		\}
+.		el \\*T
 .		br
 .	\}
 ..
