@@ -414,6 +414,7 @@
 ..
 .de Ss
 .	if !\\n(aC \{\
+.		ds Ss.A
 .		sp
 .		if !\\n(cR .ne 2
 .		ie n .ti -2
@@ -430,16 +431,34 @@
 .	as b1 \&\\*(sH
 .	if \\n(aC>\\n(aP \{\
 .		nr aP \\n(aP+1
-.		if \\n(aP>1 .as b1 " \|
+.		if \\n(aP>1 \{\
+.			as b1 " \|
+.			as Ss.A " \|
+.		\}
 .		ie \\n[C\\n(aP]=1 .\\*[A\\n(aP]
 .		el \{\
 .			as b1 \\*[A\\n(aP]
+.			as Ss.A \\*[A\\n(aP]
 .		\}
 .	\}
 .	ie \\n(aC>\\n(aP .Ss
 .	el \{\
 .		as b1 \&\fR\s10
-.		aZ
+.		ie \\n[Toc] \{\
+\XPDFMark: BookmarkClosed 1 \\*[Ss.A]\A\\*[Ss.A]\\*(b1
+.			ie \\*(.Thtml \{\
+.				tm Toc:.ta 3n
+.				tm Toc:\t\T\\*[Ss.A]\\*[Ss.A]\T
+.			\}
+.			el \{\
+.				lnr Tab \\n(.l-\\n(.i
+.				tm Toc:.ta 3n \\n[Tab]uR
+.				tm Toc:\t\T\\*[Ss.A]\\*[Ss.A]\T\a\\n%
+.			\}
+.		\}
+.		el \\*(b1
+.		ds b1
+.		aY
 .		ta T .5i
 .		if !\\n(cR .ne 2
 .		br

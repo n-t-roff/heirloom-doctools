@@ -94,7 +94,6 @@
 .		nr aN 0
 .		nr oT 0
 .		nr Sh.a 1
-.		ds Sh.title \\$1
 .		ad
 .		ie \\$1NAME .hK
 .		el .ie \\$1SYNOPSIS \{\
@@ -133,16 +132,36 @@
 .		\}
 .		fV
 .	\}
+.	lds T
+.	lds A
 .	while \\n(aC&(\\n(aC>\\n(aP) \{\
 .		nr aP +1
 .		ie \\n[C\\n(aP]=1 \{\
-.			\"as b1 \\*(sV
 .			\\*[A\\n(aP]
 .		\}
-.		el .as b1 \\*[A\\n(aP]\\*(sV
+.		el \{\
+.			as b1 \\*[A\\n(aP]\\*(sV
+.			as T \\*[A\\n(aP]\\*(sV
+.			ie \\n(aP=1 .ds A \\*[A\\n(aP]
+.			el .as A " \\*[A\\n(aP]
+.		\}
 .	\}
 .	if !\\*(b1 \{\
-.		nop \\*(b1\&\fR\s10\&
+.		as b1 \&\fR\s10\&
+.		ie \\n[Toc] \{\
+\XPDFMark: BookmarkClosed 0 \\*A\A\\*A\\*(b1
+.			if \\n[Toc]>1 \{\
+.				ie \\*(.Thtml \{\
+.					tm Toc:\T\\*A\\*T\T
+.				\}
+.				el \{\
+.					lnr Tab \\n(.l-\\n(.i-\\n(Tiu
+.					tm Toc:.ta \\n[Tab]uR
+.					tm Toc:\T\\*A\\*T\T\a\\n%
+.				\}
+.			\}
+.		\}
+.		el \\*(b1
 .		ds b1
 .		aY
 .	\}

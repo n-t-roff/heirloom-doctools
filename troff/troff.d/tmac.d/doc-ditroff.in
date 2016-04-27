@@ -133,6 +133,16 @@
 .	nr % 1
 .	nr gX 0
 .	em lM
+.	if !\\*[Toc] \{\
+.		nr Toc 1
+.		Sh CONTENTS
+.		nr Toc +1
+.		nf
+.		so \\*[Toc]
+.		fi
+.		nr Sh.a 1
+.		ad
+.	\}
 ..
 .\" NS Ql macro - Quoted literal define
 .de Ql

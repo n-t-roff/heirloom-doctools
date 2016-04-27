@@ -1,3 +1,11 @@
+2016-04-27
+    -mdoc: Table of contents with hyperlinks and PDF bookmarks
+    added.
+
+2016-03-28
+    -man: Table of contents with hyperlinks and PDF bookmarks ad-
+    ded.
+
 2016-03-15
     eqn bug fixed which had caused crash for DWB neqn test (has
     same code).
