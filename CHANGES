@@ -1,3 +1,7 @@
+2016-08-20
+    dpost generates valid PostScript when using fonts
+    with spaces in the glyph names.
+
 2016-04-27
     -mdoc: Table of contents with hyperlinks and PDF bookmarks
     added.

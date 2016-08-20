@@ -29,6 +29,7 @@
 #include <stdio.h>
 #include <sys/types.h>
 #include <sys/stat.h>
+#include <ctype.h>
 #include <fcntl.h>
 #include <unistd.h>
 #include <stdlib.h>
@@ -2510,6 +2511,18 @@ GID2SID(int gid)
 	return getSID(gid2sid[gid]);
 }
 
+int
+fprintenc(FILE *fd, const char *enc)
+{
+	const char *cp;
+	for (cp = enc; *cp && !isspace(*cp); cp++);
+	if (*cp) {
+		return fprintf(fd, "(%s) cvn", enc);
+	} else {
+		return fprintf(fd, "/%s", enc);
+	}
+}
+
 #ifndef	DPOST
 static int	ScriptList;
 static int	FeatureList;
@@ -3488,9 +3501,10 @@ otft42(char *font, char *path, char *_contents, size_t _size, FILE *fp)
 		fprintf(fp, "/CharStrings %d dict dup begin\n", nc);
 		for (i = 0; i < nc; i++) {
 			if ((cp = GID2SID(i)) != NULL &&
-					(i == 0 || strcmp(cp, ".notdef")))
-				fprintf(fp, "/%s %d def\n", cp, i);
-			else
+					(i == 0 || strcmp(cp, ".notdef"))) {
+				fprintenc(fp, cp);
+				fprintf(fp, " %d def\n", i);
+			} else
 				fprintf(fp, "/index0x%02X %d def\n", i, i);
 		}
 		fprintf(fp, "end readonly def\n");
