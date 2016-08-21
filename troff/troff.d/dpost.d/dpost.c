@@ -3170,7 +3170,7 @@ printencvector(struct afmtab *a)
 		k < a->nchars &&
 		a->nametab[k] != NULL) {
 	    encmap[s - 128 + 32] = j;
-	    col += fprintf(gf, "/%s", a->nametab[k]);
+	    col += fprintenc(gf, a->nametab[k]);
 	    printencsep(&col);
 	    s++;
 	} else {
@@ -3183,7 +3183,7 @@ printencvector(struct afmtab *a)
     for (i = 1; i < a->nchars + 128 - 32 + nchtab && i < 256 - 32; i++) {
 	if (i < 128 - 32 && (k = a->fitab[i]) != 0 && k < a->nchars &&
 		a->nametab[k] != NULL) {
-	    col += fprintf(gf, "/%s", a->nametab[k]);
+	    col += fprintenc(gf, a->nametab[k]);
 	    printencsep(&col);
 	} else {
 	    while (s < a->nchars + 128 - 32 + nchtab &&
@@ -3195,7 +3195,7 @@ printencvector(struct afmtab *a)
 			k < a->nchars &&
 			a->nametab[k] != NULL) {
 		encmap[s - 128 + 32] = i + 32;
-		col += fprintf(gf, "/%s", a->nametab[k]);
+		col += fprintenc(gf, a->nametab[k]);
 		printencsep(&col);
 		s++;
 	    } else {
@@ -3219,7 +3219,7 @@ printencvector(struct afmtab *a)
 		    k < a->nchars &&
 		    a->nametab[k] != NULL) {
 	        encmap[s - 128 + 32] = i | n << 8;
-	        col += fprintf(gf, "/%s", a->nametab[k]);
+	        col += fprintenc(gf, a->nametab[k]);
 	        printencsep(&col);
 	        s++;
 	    } else {

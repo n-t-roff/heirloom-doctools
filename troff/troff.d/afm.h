@@ -139,6 +139,7 @@ extern	char	*afmdecodepath(const char *);
 #include <stdio.h>
 extern	int	otfcff(const char *, char *, size_t, size_t *, size_t *);
 extern	int	otft42(char *, char *, char *, size_t, FILE *);
+extern	int	fprintenc(FILE *, const char *);
 #endif
 
 extern struct dev	dev;
