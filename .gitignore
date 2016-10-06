@@ -6,6 +6,7 @@ y.tab.*
 cfg.mk
 checknr/checknr
 col/col
+compat.h
 config.log
 eqn/checkeq.d/checkeq
 mpm/pm

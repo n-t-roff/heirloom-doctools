@@ -24,7 +24,8 @@ install: all
 			rm -f $$i; ln -s H $$i || exit; \
 		done && \
 		rm -f GI; ln -s HI GI
-	cd devpost/charlib && for i in ?? ??.map BRACKETS_NOTE README OLD_LH*; \
+	cd devpost/charlib && for i in ?? ??.map BRACKETS_NOTE README OLD_LH* \
+	    LH_uc; \
 	do \
 		$(INSTALL) -c -m 644 $$i $(ROOT)$(FNTDIR)/devpost/charlib \
 			|| exit; \

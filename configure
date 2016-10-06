@@ -25,6 +25,7 @@ MAKE=
 DEFS=
 LIB_LEX=
 LIB_CURSES=
+cat /dev/null > compat.h
 
 while [ $# -gt 0 ]; do
 	case $1 in
@@ -73,7 +74,7 @@ test_result () {
 }
 
 gen_mk () {
-	rm -f $OUTMK
+	[ $# -eq 0 ] && rm -f $OUTMK
 	[ -n "$LEX" ] && echo "LEX=$LEX" >> $OUTMK
 	[ -n "$FLOAT_STORE" ] && echo "FLOAT_STORE=$FLOAT_STORE" >> $OUTMK
 	[ -n "$DEFS" ] && echo "DEFINES=$DEFS" >> $OUTMK
@@ -82,7 +83,10 @@ gen_mk () {
 	[ -n "$LIBDIR_CURSES" ] && echo "LIBDIR_CURSES=$LIBDIR_CURSES" \
 	    >> $OUTMK
 	[ -n "$LIB_CURSES" ] && echo "LIB_CURSES=$LIB_CURSES" >> $OUTMK
+	[ -n "$LIB_AVLBST" ] && echo "LIB_AVLBST=$LIB_AVLBST" >> $OUTMK
 	[ -n "$LIB_LEX" ] && echo "LIB_LEX=$LIB_LEX" >> $OUTMK
+	[ -n "$__CDBG" ] && echo "__CDBG=$__CDBG" >> $OUTMK
+	[ -n "$__SAN" ] && echo "__SAN=$__SAN" >> $OUTMK
 	cat $INMK >> $OUTMK || exit 1
 }
 check_make () {
@@ -150,7 +154,17 @@ main(int argc, char **argv) {
 }
 EOT
 	compile
-	test_result && DEFS="$DEFS -DHAVE_STRLCPY"
+	if test_result; then
+		DEFS="$DEFS -DHAVE_STRLCPY"
+	else
+		H=compat.h
+		grep -q '<sys/types\.h>' $H 2>/dev/null || cat <<EOT >>$H
+#include <sys/types.h>
+EOT
+		cat <<EOT >>$H
+size_t strlcpy(char *, const char *, size_t);
+EOT
+	fi
 }
 check_strlcat () {
 	check_for "strlcat(3)"
@@ -167,7 +181,17 @@ main(int argc, char **argv) {
 }
 EOT
 	compile
-	test_result && DEFS="$DEFS -DHAVE_STRLCAT"
+	if test_result; then
+		DEFS="$DEFS -DHAVE_STRLCAT"
+	else
+		H=compat.h
+		grep -q '<sys/types\.h>' $H 2>/dev/null || cat <<EOT >>$H
+#include <sys/types.h>
+EOT
+		cat <<EOT >>$H
+size_t strlcat(char *, const char *, size_t);
+EOT
+	fi
 }
 check_wcslcpy () {
 	check_for "wcslcpy(3)"
@@ -186,6 +210,7 @@ EOT
 	compile
 	test_result && DEFS="$DEFS -DHAVE_WCSLCPY"
 }
+	[ ! -s compat.h ] && rm compat.h
 OUTMK=cfg.mk
 INMK=mk.config
 CFG=config

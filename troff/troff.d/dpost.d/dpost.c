@@ -4251,6 +4251,7 @@ charlib (
 
     char	*name;			/* name of the character */
     char	tname[10];		/* in case it's a single ASCII character */
+    char        *filename;              /* real file name */
 
 
 /*
@@ -4280,9 +4281,19 @@ charlib (
 	name = tname;
     } else name = &chname[chtab[lastc - 128]];
 
+    /*
+     * This is just a kludge of course.  But since only one file exists which
+     * needs a name mapping, no more general method had been implemented.
+     */
+
+    if (*name == 'L' && name[1] == 'H' && !name[2])
+    	filename = "LH_uc";
+    else
+    	filename = name;
+
     if ( downloaded[lastc] == 0 )  {
 	snprintf(temp, sizeof temp, "%s/dev%s/charlib/%s",
-	    fontdir, realdev, name);
+	    fontdir, realdev, filename);
 	if ( access(temp, 04) == 0 && doglobal(temp) == TRUE )  {
 	    downloaded[lastc] = 1;
 	    t_sf(0);

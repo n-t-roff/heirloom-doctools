@@ -55,7 +55,7 @@ makefiles: $(MAKEFILES)
 	done
 
 mrproper: clean
-	rm -f cfg.mk config.log
+	rm -f cfg.mk config.log compat.h
 	+ for i in $(SUBDIRS); \
 	do \
 		(cd "$$i" && $(MAKE) $@) || exit; \
