@@ -277,7 +277,7 @@ extern	int	ctoi(register char *);
 extern	void	mesg(int);
 extern	void	errprint(const char *, ...);
 #define	fdprintf	xxfdprintf
-extern	void	fdprintf(int, char *, ...);
+extern	void	fdprintf(int, const char *, ...);
 extern	char	*roff_sprintf(char *, size_t, char *, ...);
 extern	int	control(register int, register int);
 extern	int	getrq2(void);
@@ -316,7 +316,7 @@ extern	int	issame(tchar, tchar);
 extern	int	pchar(register tchar);
 extern	void	pchar1(register tchar);
 extern	void	outascii(tchar);
-extern	void	oputs(register char *);
+extern	void	oputs(register const char *);
 extern	void	flusho(void);
 extern	void	caseoutput(void);
 extern	void	done(int);

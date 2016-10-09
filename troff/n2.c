@@ -333,7 +333,7 @@ oput(i)
 */
 
 void
-oputs(register char *i)
+oputs(register const char *i)
 {
 	while (*i != 0)
 		oput(*i++&0377);
