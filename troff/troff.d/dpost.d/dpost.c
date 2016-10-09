@@ -292,15 +292,15 @@
 #endif
 
 
-char		*progname;
-static char	*prologue = DPOST;	/* the basic PostScript prologue */
-char		*colorfile = COLOR;	/* things needed for color support */
-char		*drawfile = DRAW;	/* and drawing */
-static char	*cutmarksfile = CUTMARKS;
-static char	*formfile = FORMFILE;	/* stuff for multiple pages per sheet */
-char		*baselinefile = BASELINE;
+char			*progname;
+static const char	*prologue = DPOST;	/* the basic PostScript prologue */
+const char		*colorfile = COLOR;	/* things needed for color support */
+const char		*drawfile = DRAW;	/* and drawing */
+static const char	*cutmarksfile = CUTMARKS;
+static const char	*formfile = FORMFILE;	/* stuff for multiple pages per sheet */
+const char		*baselinefile = BASELINE;
 
-static char	*fontdir = FONTDIR;	/* binary device directories found here */
+static const char	*fontdir = FONTDIR;	/* binary device directories found here */
 static char	*hostfontdir = NULL;	/* host resident font directory */
 
 static int	formsperpage = 1;	/* page images on each piece of paper */
@@ -360,7 +360,7 @@ static int		afmcount = 0;
 
 #define	devname	troff_devname
 static char		devname[20] = "";	/* job is formatted for this printer */
-static char		*realdev = DEVNAME;	/* a good description of target printer */
+static const char		*realdev = DEVNAME;	/* a good description of target printer */
 
 
 /*
@@ -771,7 +771,7 @@ main(int agc, char *agv[])
 }   /* End of main */
 
 /*****************************************************************************/
-int
+static int
 putint(int n, FILE *fp)
 {
     char	buf[20];
@@ -801,7 +801,7 @@ putint(int n, FILE *fp)
     return c;
 }
 
-int
+static int
 putstring1(const char *sp, int n, FILE *fp)
 {
 /*
@@ -815,7 +815,7 @@ putstring1(const char *sp, int n, FILE *fp)
     return n + 2;
 }
 
-int
+static int
 putstring(const char *sp, int n, FILE *fp)
 {
     int	c = 0, m;
@@ -865,7 +865,7 @@ init_signals(void)
 
 /*****************************************************************************/
 static char *
-pdfdate(time_t *tp, char *buf, size_t size)
+pdfdate(time_t *tp, char *buf, size_t sz)
 {
     struct tm	*tmptr;
     int	tzdiff, tzdiff_hour, tzdiff_min;
@@ -877,7 +877,7 @@ pdfdate(time_t *tp, char *buf, size_t size)
     tmptr = localtime(tp);
     if (tmptr->tm_isdst > 0)
 	tzdiff_hour++;
-    snprintf(buf, size, "(D:%04d%02d%02d%02d%02d%02d%+03d'%02d')",
+    snprintf(buf, sz, "(D:%04d%02d%02d%02d%02d%02d%+03d'%02d')",
 	tmptr->tm_year + 1900,
 	tmptr->tm_mon + 1, tmptr->tm_mday,
 	tmptr->tm_hour, tmptr->tm_min, tmptr->tm_sec,
@@ -1651,7 +1651,7 @@ devcntrl(
 
 
     char	str[4096], *buf, str1[4096];
-    int		c, n, size;
+    int		c, n, sz;
 
 
 /*
@@ -1665,7 +1665,7 @@ devcntrl(
  */
 
 
-    buf = malloc(size = 4096);
+    buf = malloc(sz = 4096);
     sget(str, sizeof str, fp);		/* get the control function name */
 
     switch ( str[0] )  {		/* only the first character counts */
@@ -1707,7 +1707,7 @@ devcntrl(
 	case 'f':			/* load font in a position */
 		fscanf(fp, "%d", &n);
 		sget(str, sizeof str, fp);
-		fgets(buf, size, fp);	/* in case there's a filename */
+		fgets(buf, sz, fp);	/* in case there's a filename */
 		ungetc('\n', fp);	/* fgets() goes too far */
 		str1[0] = '\0';		/* in case there's nothing to come in */
 		c = 0;
@@ -1747,15 +1747,15 @@ devcntrl(
 		    ungetc(c, fp);
 		n = 0;
 		for (;;) {
-		    fgets(&buf[n], size - n, fp);
+		    fgets(&buf[n], sz - n, fp);
 		    if ((c = getc(fp)) != '+') {
 			ungetc(c, fp);
 			break;
 		    }
 		    while (buf[n])
 			n++;
-		    if (size - n < 4096)
-			buf = realloc(buf, size += 4096);
+		    if (sz - n < 4096)
+			buf = realloc(buf, sz += 4096);
 		    lineno++;
 		}
 		if ( strcmp(str, "PI") == 0 || strcmp(str, "PictureInclusion") == 0 )
@@ -2165,7 +2165,7 @@ fontprint (
 /*****************************************************************************/
 
 
-char *
+const char *
 mapfont (
     char *name			/* troff wanted this font */
 )
@@ -2433,13 +2433,13 @@ static struct supplylist {
 } *supplylist;
 
 void
-t_supply(char *font)		/* supply a font */
+t_supply(char *fnt)		/* supply a font */
 {
     struct supplylist	*sp;
     char	*np, *file, *type = NULL, c;
 
-    while (*font == ' ' || *font == '\t')
-	font++;
+    while (*fnt == ' ' || *fnt == '\t')
+	fnt++;
     for (np = font; *np && *np != ' ' && *np != '\t' && *np != '\n'; np++);
     if (*np == '\0' || *np == '\n')
 	return;
@@ -2459,10 +2459,10 @@ t_supply(char *font)		/* supply a font */
 	*np = '\0';
     }
     for (sp = supplylist; sp; sp = sp->next)
-	if (strcmp(sp->font, font) == 0)
+	if (strcmp(sp->font, fnt) == 0)
 	    return;
     sp = calloc(1, sizeof *sp);
-    sp->font = strdup(font);
+    sp->font = strdup(fnt);
     sp->file = afmdecodepath(file);
     sp->type = type && *type ? strdup(type) : NULL;
     sp->next = supplylist;
@@ -2483,11 +2483,11 @@ static const char ps_truetypefont[] = "%!PS-TrueTypeFont";
 static const char hex[] = "0123456789abcdef";
 
 static void
-supplypfb(char *font, char *path, FILE *fp)
+supplypfb(char *fnt, char *path, FILE *fp)
 {
     char	buf[30];
-    long	length;
-    int	i, c = EOF, n, type = 0, lastc = EOF;
+    size_t	i, n, length;
+    int		c = EOF, type = 0, lastch = EOF;
 
     if (fread(buf, 1, 6, fp) != 6)
 	error(FATAL, "no data in %s", path);
@@ -2508,10 +2508,10 @@ supplypfb(char *font, char *path, FILE *fp)
 	   length--;
     }
     if (sfcount++ == 0)
-        fprintf(sf, "%%%%DocumentSuppliedResources: font %s\n", font);
+        fprintf(sf, "%%%%DocumentSuppliedResources: font %s\n", fnt);
     else
-        fprintf(sf, "%%%%+ font %s\n", font);
-    fprintf(rf, "%%%%BeginResource: font %s\n", font);
+        fprintf(sf, "%%%%+ font %s\n", fnt);
+    fprintf(rf, "%%%%BeginResource: font %s\n", fnt);
     for (;;) {
     	switch (type) {
     	case 1:
@@ -2524,13 +2524,13 @@ supplypfb(char *font, char *path, FILE *fp)
     			    else
 	    		        length--;
 			    putc('\n', rf);
-			    lastc = '\n';
+			    lastch = '\n';
 			    break;
 		    case 0:
 		   	    continue;
 		    default:
 			    putc(c, rf);
-			    lastc = c;
+			    lastch = c;
 		    }
 	    	}
 	    	if (c == EOF)
@@ -2546,12 +2546,12 @@ supplypfb(char *font, char *path, FILE *fp)
 			putc(hex[buf[i]&017], rf);
 		    }
 	    	    putc('\n', rf);
-		    lastc = '\n';
+		    lastch = '\n';
 		    length -= n;
 	    	}
 	    	break;
     	case 3:
-		if (lastc != '\n')
+		if (lastch != '\n')
 		    putc('\n', rf);
     		fprintf(rf, "%%%%EndResource\n");
 		fclose(fp);
@@ -2569,24 +2569,23 @@ supplypfb(char *font, char *path, FILE *fp)
 }
 
 static void
-supplyotf(char *font, char *path, FILE *fp)
+supplyotf(char *fnt, char *path, FILE *fp)
 {
     static int	cffcount;
     struct stat	st;
     char	*contents;
-    size_t	size, offset, length;
-    int	i;
+    size_t	sz, offset, length, i;
     int	fsType;
     const char StartData[] = " StartData ";
 
     if (fstat(fileno(fp), &st) < 0)
 	error(FATAL, "cannot stat %s", path);
-    size = st.st_size;
-    contents = malloc(size);
-    if (fread(contents, 1, size, fp) != size)
+    sz = st.st_size;
+    contents = malloc(sz);
+    if (fread(contents, 1, sz, fp) != sz)
 	error(FATAL, "cannot read %s", path);
     fclose(fp);
-    if ((fsType = otfcff(path, contents, size, &offset, &length)) < 0) {
+    if ((fsType = otfcff(path, contents, sz, &offset, &length)) < 0) {
 	free(contents);
 	return;
     }
@@ -2602,19 +2601,19 @@ supplyotf(char *font, char *path, FILE *fp)
 	needresource("procset FontSetInit 0 0");
     }
     if (sfcount++ == 0)
-        fprintf(sf, "%%%%DocumentSuppliedResources: font %s\n", font);
+        fprintf(sf, "%%%%DocumentSuppliedResources: font %s\n", fnt);
     else
-        fprintf(sf, "%%%%+ font %s\n", font);
-    fprintf(rf, "%%%%BeginResource: font %s\n", font);
+        fprintf(sf, "%%%%+ font %s\n", fnt);
+    fprintf(rf, "%%%%BeginResource: font %s\n", fnt);
     fprintf(rf, "/FontSetInit /ProcSet findresource begin\n");
     if (encoding == 5) {
 	fprintf(rf, "%%%%BeginData: %ld Binary Bytes\n",
-		(long)(length + 13 + strlen(font) + 12));
-	fprintf(rf, "/%s %12ld StartData ", font, (long)length);
+		(long)(length + 13 + strlen(fnt) + 12));
+	fprintf(rf, "/%s %12ld StartData ", fnt, (long)length);
 	fwrite(&contents[offset], 1, length, rf);
 	fprintf(rf, "\n%%%%EndData\n");
     } else {
-	fprintf(rf, "/%s %ld ", font, (long)length);
+	fprintf(rf, "/%s %ld ", fnt, (long)length);
 	fprintf(rf, "currentfile /ASCIIHexDecode filter cvx exec\n");
 	for (i = 0; StartData[i]; i++) {
 	    putc(hex[(StartData[i]&0360)>>4], rf);
@@ -2635,35 +2634,35 @@ supplyotf(char *font, char *path, FILE *fp)
 }
 
 static void
-supplyttf(char *font, char *path, FILE *fp)
+supplyttf(char *fnt, char *path, FILE *fp)
 {
     struct stat	st;
     char	*contents;
-    size_t	size;
+    size_t	sz;
 
     if (fstat(fileno(fp), &st) < 0)
 	error(FATAL, "cannot stat %s", path);
-    size = st.st_size;
-    contents = malloc(size);
-    if (fread(contents, 1, size, fp) != size)
+    sz = st.st_size;
+    contents = malloc(sz);
+    if (fread(contents, 1, sz, fp) != sz)
 	error(FATAL, "cannot read %s", path);
     fclose(fp);
     if (sfcount++ == 0)
-	fprintf(sf, "%%%%DocumentSuppliedResources: font %s\n", font);
+	fprintf(sf, "%%%%DocumentSuppliedResources: font %s\n", fnt);
     else
-	fprintf(sf, "%%%%+ font %s\n", font);
-    fprintf(rf, "%%%%BeginResource: font %s\n", font);
-    otft42(font, path, contents, size, rf);
+	fprintf(sf, "%%%%+ font %s\n", fnt);
+    fprintf(rf, "%%%%BeginResource: font %s\n", fnt);
+    otft42(fnt, path, contents, sz, rf);
     fprintf(rf, "%%%%EndResource\n");
     free(contents);
     LanguageLevel = MAX(LanguageLevel, 2);
 }
 
 static void
-supply1(char *font, char *file, char *type)
+supply1(char *fnt, char *file, char *type)
 {
     FILE *fp;
-    char line[4096], c;
+    char linebuf[4096], c;
 
     if (strchr(file, '/') == 0) {
     	snprintf(temp, sizeof temp, "%s/dev%s/%s.%s",
@@ -2679,48 +2678,48 @@ supply1(char *font, char *file, char *type)
 		c == 0 || c == 't' ? "ttf" : "anything";
     }
     if (strcmp(type, "pfb") == 0) {
-	supplypfb(font, file, fp);
+	supplypfb(fnt, file, fp);
 	return;
     }
     if (strcmp(type, "otf") == 0) {
-	supplyotf(font, file, fp);
+	supplyotf(fnt, file, fp);
 	return;
     }
     if (strcmp(type, "ttf") == 0) {
-	supplyttf(font, file, fp);
+	supplyttf(fnt, file, fp);
 	return;
     }
-    if (fgets(line, sizeof line, fp) == NULL)
+    if (fgets(linebuf, sizeof linebuf, fp) == NULL)
         error(FATAL, "missing data in %s", file);
-    if (strncmp(line, ps_adobe_font_, strlen(ps_adobe_font_)) &&
-	    strncmp(line, ps_truetypefont, strlen(ps_truetypefont)))
+    if (strncmp(linebuf, ps_adobe_font_, strlen(ps_adobe_font_)) &&
+	    strncmp(linebuf, ps_truetypefont, strlen(ps_truetypefont)))
 	error(FATAL, "file %s does not start with \"%s\" or \"%s\"",
 			    file, ps_adobe_font_, ps_truetypefont);
     if (sfcount++ == 0)
-        fprintf(sf, "%%%%DocumentSuppliedResources: font %s\n", font);
+        fprintf(sf, "%%%%DocumentSuppliedResources: font %s\n", fnt);
     else
-        fprintf(sf, "%%%%+ font %s\n", font);
-    fprintf(rf, "%%%%BeginResource: font %s\n", font);
-    while (fgets(line, sizeof line, fp) != NULL)
-	fputs(line, rf);
+        fprintf(sf, "%%%%+ font %s\n", fnt);
+    fprintf(rf, "%%%%BeginResource: font %s\n", fnt);
+    while (fgets(linebuf, sizeof linebuf, fp) != NULL)
+	fputs(linebuf, rf);
     fclose(fp);
     fprintf(rf, "%%%%EndResource\n");
 }
 
 static void
-t_dosupply(const char *font)
+t_dosupply(const char *fnt)
 {
     struct supplylist	*sp;
 
     for (sp = supplylist; sp; sp = sp->next)
-	if (strcmp(sp->font, font) == 0) {
+	if (strcmp(sp->font, fnt) == 0) {
 	    if (sp->done == 0) {
 		supply1(sp->font, sp->file, sp->type);
 		sp->done = 1;
 	    }
 	    return;
 	}
-    needresource("font %s", font);
+    needresource("font %s", fnt);
 }
 
 /*****************************************************************************/
@@ -3388,7 +3387,7 @@ t_slant (
 
 void
 t_reset (
-    int c			/* pause or restart */
+    int c __unused	/* pause or restart */
 )
 
 
@@ -4321,7 +4320,7 @@ charlib (
 
 int 
 doglobal (
-    char *name			/* copy this to the output - globally */
+    const char *name			/* copy this to the output - globally */
 )
 
 
@@ -4599,7 +4598,7 @@ orderbookmarks(void)
 
     int	counts[MAXBOOKMARKLEVEL+1];
     int	refs[MAXBOOKMARKLEVEL+1];
-    int	i, j, k, t;
+    size_t	i, j, k, t;
     int	lvl = 0;
 
 /*

@@ -39,6 +39,9 @@
  */
 
 
+#ifndef __unused
+#define __unused __attribute__((unused))
+#endif
 extern const char	creator[];
 
 
@@ -95,7 +98,7 @@ void loadfont(int, char *, char *, int, int);
 void loadspecial(void);
 void loaddefault(void);
 void fontprint(int);
-char *mapfont(char *);
+const char *mapfont(char *);
 void getdevmap(void);
 char *mapdevfont(char *);
 void reset(void);
@@ -130,7 +133,7 @@ void endline(void);
 void addchar(int);
 void addoctal(int);
 void charlib(int);
-int doglobal(char *);
+int doglobal(const char *);
 void documentfont(const char *);
 void documentfonts(void);
 void redirect(int);
@@ -150,10 +153,11 @@ void drawtext(char *);
 void settext(char *);
 /* glob.c */
 /* misc.c */
-void error(int, char *, ...);
+void interrupt(int);
+void error(int, const char *, ...);
 void out_list(char *);
 int in_olist(int);
-int cat(char *, FILE *);
+int cat(const char *, FILE *);
 int str_convert(char **, int);
 char *tempname(const char *);
 int psskip(size_t, FILE *);
@@ -170,5 +174,5 @@ void ps_include(const char *, FILE *, FILE *, int, int, int, int,
 /* request.c */
 void saverequest(char *);
 void writerequest(int, FILE *);
-void dumprequest(char *, char *, FILE *);
+void dumprequest(char *, const char *, FILE *);
 /* tempnam.c */
