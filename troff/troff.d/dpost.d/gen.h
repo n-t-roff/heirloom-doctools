@@ -39,6 +39,9 @@
  */
 
 
+#ifndef __unused
+#define __unused __attribute__((unused))
+#endif
 extern const char	creator[];
 
 

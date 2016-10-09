@@ -284,11 +284,7 @@ str_convert (
 
 
 void interrupt(
-
-
-    int		sig)			/* signal that we caught */
-
-
+    int		sig __unused)			/* signal that we caught */
 {
 
 

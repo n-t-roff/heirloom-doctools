@@ -3388,7 +3388,7 @@ t_slant (
 
 void
 t_reset (
-    int c			/* pause or restart */
+    int c __unused	/* pause or restart */
 )
 
 
