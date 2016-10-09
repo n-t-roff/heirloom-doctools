@@ -226,7 +226,7 @@ const struct names Snames[] = {
 /*
  * These names are only used with the S1 font.
  */
-const struct names S1names[] = {
+static const struct names S1names[] = {
 	{ "ru",	"underscore" },
 	{ 0,	0 }
 };

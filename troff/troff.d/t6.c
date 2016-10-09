@@ -1974,7 +1974,7 @@ tchar xlss(void)
 struct afmtab **afmtab;
 int nafm;
 
-char *
+static char *
 onefont(char *prefix, char *file, char *type)
 {
 	char	*path, *fp, *tp;
@@ -2193,7 +2193,7 @@ done:	afmtab = realloc(afmtab, (nafm+1) * sizeof *afmtab);
 	return 1;
 }
 
-int
+static int
 tracknum(void)
 {
 	skip(1);

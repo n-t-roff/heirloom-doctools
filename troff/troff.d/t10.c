@@ -89,7 +89,7 @@ int	Hor;
 int	Vert;
 int	Unitwidth;
 int	nfonts;
-int	nsizes;
+static int	nsizes;
 int	nchtab;
 int	lettrack;
 float	horscale;
