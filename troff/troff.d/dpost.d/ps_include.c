@@ -60,7 +60,7 @@ static size_t	bufsize;
 typedef struct {long start, end;} Section;
 
 static void copy(FILE *, FILE *, Section *);
-static char *_has(const char *, const char *);
+static char *_has(char *, const char *);
 static void addfonts(char *);
 
 /*****************************************************************************/
@@ -324,7 +324,7 @@ copy(FILE *fin, FILE *fout, Section *s)
 }
 
 static char *
-_has(const char *buffer, const char *word)
+_has(char *buffer, const char *word)
 {
 	int	n;
 
@@ -335,7 +335,7 @@ _has(const char *buffer, const char *word)
 			buffer[n] == '\n' || buffer[n] == 0) {
 		while (buffer[n] == ' ' || buffer[n] == '\t')
 			n++;
-		return (char *)&buffer[n];
+		return &buffer[n];
 	}
 	return NULL;
 }
