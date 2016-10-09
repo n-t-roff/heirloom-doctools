@@ -107,26 +107,26 @@ static struct table {
 	int	in_sfnts;
 	uint32_t	checksum;
 } tables[] = {
-	{ "CFF ",	&pos_CFF,	0 },
-	{ "cmap",	&pos_cmap,	0 },
-	{ "cvt ",	&pos_cvt,	1 },
-	{ "fpgm",	&pos_fpgm,	1 },
-	{ "GPOS",	&pos_GPOS,	0 },
-	{ "GSUB",	&pos_GSUB,	0 },
-	{ "head",	&pos_head,	2 },
-	{ "hhea",	&pos_hhea,	1 },
-	{ "hmtx",	&pos_hmtx,	1 },
-	{ "kern",	&pos_kern,	0 },
-	{ "loca",	&pos_loca,	1 },
-	{ "maxp",	&pos_maxp,	1 },
-	{ "name",	&pos_name,	0 },
-	{ "OS/2",	&pos_OS_2,	0 },
-	{ "post",	&pos_post,	0 },
-	{ "prep",	&pos_prep,	1 },
-	{ "vhea",	&pos_vhea,	1 },
-	{ "vmtx",	&pos_vmtx,	1 },
-	{ "glyf",	&pos_glyf,	3 },	/* holds glyph data */
-	{ NULL,		NULL,		0 }
+	{ "CFF ",	&pos_CFF,	0,	0 },
+	{ "cmap",	&pos_cmap,	0,	0 },
+	{ "cvt ",	&pos_cvt,	1,	0 },
+	{ "fpgm",	&pos_fpgm,	1,	0 },
+	{ "GPOS",	&pos_GPOS,	0,	0 },
+	{ "GSUB",	&pos_GSUB,	0,	0 },
+	{ "head",	&pos_head,	2,	0 },
+	{ "hhea",	&pos_hhea,	1,	0 },
+	{ "hmtx",	&pos_hmtx,	1,	0 },
+	{ "kern",	&pos_kern,	0,	0 },
+	{ "loca",	&pos_loca,	1,	0 },
+	{ "maxp",	&pos_maxp,	1,	0 },
+	{ "name",	&pos_name,	0,	0 },
+	{ "OS/2",	&pos_OS_2,	0,	0 },
+	{ "post",	&pos_post,	0,	0 },
+	{ "prep",	&pos_prep,	1,	0 },
+	{ "vhea",	&pos_vhea,	1,	0 },
+	{ "vmtx",	&pos_vmtx,	1,	0 },
+	{ "glyf",	&pos_glyf,	3,	0 },	/* holds glyph data */
+	{ NULL,		NULL,		0,	0 }
 };
 
 static unsigned short	*gid2sid;
