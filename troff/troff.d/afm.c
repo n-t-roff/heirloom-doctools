@@ -659,7 +659,7 @@ asciiequiv(int code __unused, const char *psc, enum spec s)
 }
 
 static char *
-thisword(const char *text, const char *wrd)
+thisword(char *text, const char *wrd)
 {
 	while (*text == *wrd)
 		text++, wrd++;
@@ -669,7 +669,7 @@ thisword(const char *text, const char *wrd)
 			*text == '\r') {
 		while (*text != 0 && (*text == ' ' || *text == '\t'))
 			text++;
-		return (char *)text;
+		return text;
 	}
 	return NULL;
 }
