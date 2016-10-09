@@ -57,7 +57,7 @@
 #include "asciitype.h"
 
 
-static int	nolist = 0;		/* number of specified ranges */
+static size_t	nolist = 0;		/* number of specified ranges */
 static int	olist[512];		/* processing range pairs */
 
 
@@ -176,7 +176,7 @@ in_olist (
 {
 
 
-    int		i;			/* just a loop index */
+    size_t		i;			/* just a loop index */
 
 
 /*
@@ -375,7 +375,8 @@ char *psgetline(char **line, size_t *linesize, size_t *llen, FILE *fp)
 int
 sget(char *buf, size_t size, FILE *fp)
 {
-    int	c, n = 0;
+    int	c;
+    size_t n = 0;
 
     do
 	c = getc(fp);

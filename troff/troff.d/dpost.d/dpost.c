@@ -2486,8 +2486,8 @@ static void
 supplypfb(char *fnt, char *path, FILE *fp)
 {
     char	buf[30];
-    long	length;
-    int	i, c = EOF, n, type = 0, lastch = EOF;
+    size_t	i, n, length;
+    int		c = EOF, type = 0, lastch = EOF;
 
     if (fread(buf, 1, 6, fp) != 6)
 	error(FATAL, "no data in %s", path);
@@ -2574,8 +2574,7 @@ supplyotf(char *fnt, char *path, FILE *fp)
     static int	cffcount;
     struct stat	st;
     char	*contents;
-    size_t	sz, offset, length;
-    int	i;
+    size_t	sz, offset, length, i;
     int	fsType;
     const char StartData[] = " StartData ";
 
@@ -4599,7 +4598,7 @@ orderbookmarks(void)
 
     int	counts[MAXBOOKMARKLEVEL+1];
     int	refs[MAXBOOKMARKLEVEL+1];
-    int	i, j, k, t;
+    size_t	i, j, k, t;
     int	lvl = 0;
 
 /*

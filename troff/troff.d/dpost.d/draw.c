@@ -349,7 +349,7 @@ drawspline(
 
 
     int		x[100], y[100];
-    int		i, N;
+    size_t	i, N;
 
 
 /*
