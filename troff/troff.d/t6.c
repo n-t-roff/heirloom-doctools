@@ -713,7 +713,7 @@ postchar(const char *temp, int *fp)
 	return 0;
 }
 
-const struct amap {
+static const struct amap {
 	const char *alias;
 	const char *trname;
 } amap[] = {
@@ -755,7 +755,7 @@ setch(int delim) {
 	for (ap = amap; ap->alias; ap++)
 		if (!strcmp(ap->alias, temp)) {
 			size_t l;
-			char *s = ap->trname;
+			const char *s = ap->trname;
 			if ((l = strlen(s) + 1) > NC) {
 				fprintf(stderr, "%s %i: strlen(%s)+1 > %d\n",
 				    __FILE__, __LINE__, s, NC);
