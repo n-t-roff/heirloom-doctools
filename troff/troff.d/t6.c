@@ -248,7 +248,7 @@ getcw(register int i)
 		goto g1;
 	}
 	if ((j = fitab[xfont][i]) == 0) {	/* it's not on current font */
-		int ii, jj, t;
+		int ii, jj, _t;
 		/* search through search list of xfont
 		 * to see what font it ought to be on.
 		 * first searches explicit fallbacks, then
@@ -259,8 +259,8 @@ getcw(register int i)
 			for (jj = 0; fallbacktab[xfont][jj] != 0; jj++) {
 				if ((ii = findft(fallbacktab[xfont][jj],0)) < 0)
 					continue;
-				t = ftrans(ii, i + 32) - 32;
-				j = fitab[ii][t];
+				_t = ftrans(ii, i + 32) - 32;
+				j = fitab[ii][_t];
 				if (j != 0) {
 					xfont = ii;
 					goto found;
@@ -271,8 +271,8 @@ getcw(register int i)
 			for (ii=smnt, jj=0; jj < nfonts; jj++, ii=ii % nfonts + 1) {
 				if (fontbase[ii] == NULL)
 					continue;
-				t = ftrans(ii, i + 32) - 32;
-				j = fitab[ii][t];
+				_t = ftrans(ii, i + 32) - 32;
+				j = fitab[ii][_t];
 				if (j != 0) {
 					/*
 					 * troff traditionally relies on the
@@ -288,8 +288,8 @@ getcw(register int i)
 				found:	p = fontab[ii];
 					k = *(p + j);
 					if (afmtab &&
-					    (t=fontbase[ii]->afmpos-1)>=0) {
-						a = afmtab[t];
+					    (_t=fontbase[ii]->afmpos-1)>=0) {
+						a = afmtab[_t];
 						if (a->bbtab[j]) {
 							lastrst = a->bbtab[j][3];
 							lastrsb = a->bbtab[j][1];
@@ -459,20 +459,20 @@ getdescender(void)
 }
 
 int
-kernadjust(tchar c, tchar d)
+kernadjust(tchar c, tchar e)
 {
 	lastkern = 0;
-	if (!kern || ismot(c) || ismot(d) || html)
+	if (!kern || ismot(c) || ismot(e) || html)
 		return 0;
 	if (!isdi(c)) {
 		c = trtab[cbits(c)] | (c & SFMASK);
 		c = ftrans(fbits(c), cbits(c)) | (c & SFMASK);
 	}
-	if (!isdi(d)) {
-		d = trtab[cbits(d)] | (d & SFMASK);
-		d = ftrans(fbits(d), cbits(d)) | (d & SFMASK);
+	if (!isdi(e)) {
+		e = trtab[cbits(e)] | (e & SFMASK);
+		e = ftrans(fbits(e), cbits(e)) | (e & SFMASK);
 	}
-	return getkw(c, d);
+	return getkw(c, e);
 }
 
 #define	kprime		1021
@@ -486,17 +486,17 @@ static struct knode {
 } **ktable;
 
 static void
-kadd(tchar c, tchar d, int n)
+kadd(tchar c, tchar e, int n)
 {
 	struct knode	*kn;
 	int	h;
 
 	if (ktable == NULL)
 		ktable = calloc(kprime, sizeof *ktable);
-	h = khash(c, d);
+	h = khash(c, e);
 	kn = calloc(1, sizeof *kn);
 	kn->c = c;
-	kn->d = d;
+	kn->d = e;
 	kn->n = n;
 	kn->next = ktable[h];
 	ktable[h] = kn;
@@ -554,22 +554,22 @@ found:
 }
 
 static struct knode *
-klook(tchar c, tchar d)
+klook(tchar c, tchar e)
 {
 	struct knode	*kp;
 	int	h;
 
 	c = findchar(c);
-	d = findchar(d);
-	h = khash(c, d);
+	e = findchar(e);
+	h = khash(c, e);
 	for (kp = ktable[h]; kp; kp = kp->next)
-		if (kp->c == c && kp->d == d)
+		if (kp->c == c && kp->d == e)
 			break;
 	return kp && kp->n != INT_MAX ? kp : NULL;
 }
 
 int
-getkw(tchar c, tchar d)
+getkw(tchar c, tchar e)
 {
 	struct knode	*kp;
 	struct afmtab	*a;
@@ -578,27 +578,27 @@ getkw(tchar c, tchar d)
 
 	if (isxfunc(c, CHAR))
 		c = charout[sbits(c)].ch;
-	if (isxfunc(d, CHAR))
-		d = charout[sbits(d)].ch;
+	if (isxfunc(e, CHAR))
+		e = charout[sbits(e)].ch;
 	lastkern = 0;
-	if (!kern || iszbit(c) || iszbit(d) || ismot(c) || ismot(d))
+	if (!kern || iszbit(c) || iszbit(e) || ismot(c) || ismot(e))
 		return 0;
-	if (sbits(c) != sbits(d))
+	if (sbits(c) != sbits(e))
 		return 0;
 	f = fbits(c);
-	g = fbits(d);
+	g = fbits(e);
 	if ((s = sbits(c)) == 0) {
 		s = xpts;
 		if (f == 0)
 			f = xfont;
 	}
 	i = cbits(c);
-	j = cbits(d);
+	j = cbits(e);
 	if (i == SLANT || j == SLANT || i == XFUNC || j == XFUNC || cstab[f])
 		return 0;
 	k = 0;
 	if (i >= 32 && j >= 32) {
-		if (ktable != NULL && (kp = klook(c, d)) != NULL)
+		if (ktable != NULL && (kp = klook(c, e)) != NULL)
 			k = kp->n;
 		else if ((n = (fontbase[f]->afmpos)-1) >= 0 &&
 				n == (fontbase[g]->afmpos)-1 &&
@@ -616,8 +616,8 @@ getkw(tchar c, tchar d)
 		}
 		if (j>32 && kernafter != NULL && kernafter[fbits(c)] != NULL)
 			k += kernafter[fbits(c)][i];
-		if (i>32 && kernbefore != NULL && kernbefore[fbits(d)] != NULL)
-			k += kernbefore[fbits(d)][j];
+		if (i>32 && kernbefore != NULL && kernbefore[fbits(e)] != NULL)
+			k += kernbefore[fbits(e)][j];
 	}
 	if (k != 0) {
 		k = (k * u2pts(s) + (Unitwidth / 2)) / Unitwidth;
@@ -726,14 +726,14 @@ tchar
 setch(int delim) {
 	register int j;
 	char	temp[NC];
-	tchar	c, d[2] = {0, 0};
+	tchar	c, e[2] = {0, 0};
 	int	f;
 	size_t	n;
 	const struct amap *ap;
 
 	n = 0;
 	if (delim == 'C')
-		d[0] = getach();
+		e[0] = getach();
 	do {
 		c = getach();
 		if (c == 0 && n < 2)
@@ -742,7 +742,7 @@ setch(int delim) {
 			temp[n-1] = 0;
 			break;
 		}
-		if ((delim == '[' && c == ']') || (delim == 'C' && c == d[0])) {
+		if ((delim == '[' && c == ']') || (delim == 'C' && c == e[0])) {
 			temp[n] = 0;
 			break;
 		}
@@ -768,8 +768,8 @@ setch(int delim) {
 		nodelim(']');
 		return ' ';
 	}
-	if (delim == 'C' && c != d[0]) {
-		nodelim(d[0]);
+	if (delim == 'C' && c != e[0]) {
+		nodelim(e[0]);
 		return ' ';
 	}
 	c = 0;
@@ -816,7 +816,7 @@ setch(int delim) {
 			c = 0;
 	}
 	if (c == 0 && warn & WARN_CHAR)
-		errprint("missing glyph \\%c%s%s%s%s", delim, d, temp, d,
+		errprint("missing glyph \\%c%s%s%s%s", delim, e, temp, e,
 				delim == '[' ? "]" : "");
 	if (c == 0 && !tryglf)
 		c = ' ';
