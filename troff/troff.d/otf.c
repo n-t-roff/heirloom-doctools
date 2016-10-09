@@ -1902,7 +1902,7 @@ otfalloc(int _nc)
 static void
 get_CFF(void)
 {
-	long	o;
+	size_t	o;
 	char	buf[4];
 
 	if (pos_CFF < 0)
@@ -1952,9 +1952,9 @@ get_ttf_post_1_0(int o __unused)
 static void
 get_ttf_post_2_0(int o)
 {
-	int	numberOfGlyphs;
-	int	numberNewGlyphs;
-	int	i, j, n;
+	size_t	numberOfGlyphs;
+	size_t	numberNewGlyphs;
+	size_t	i, j, n;
 	char	*cp, *sp;
 
 	numberOfGlyphs = pbe16(&contents[o+32]);
@@ -1995,8 +1995,8 @@ get_ttf_post_2_0(int o)
 static void
 get_ttf_post_2_5(int o)
 {
-	int	numberOfGlyphs;
-	int	i, offset;
+	size_t	numberOfGlyphs, i;
+	int	offset;
 
 	numberOfGlyphs = pbe16(&contents[o+32]);
 	if (34+numberOfGlyphs > table_directories[pos_post].length)
@@ -2109,7 +2109,8 @@ get_ms_unicode_cmap4(int o, int addchar)
 	int	idDelta;
 	int	idRangeOffset;
 	/* int	glyphIdArray; */
-	int	c, e, i, d, r, s, gid, x;
+	int	c, e, i, d, r, s, gid;
+	size_t	x;
 
 	/* length = */ pbe16(&contents[o+2]);
 	segCount = pbe16(&contents[o+6]) / 2;
@@ -2186,11 +2187,11 @@ get_ms_unicode_cmap(int o, int addchar)
 static int
 get_cmap(int addchar)
 {
-	int	nTables;
+	size_t	nTables, i;
 	int	platformID;
 	int	encodingID;
 	int	offset;
-	int	i, o;
+	int	o;
 	int	want_tbl;
 	int	gotit = 0;
 

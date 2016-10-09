@@ -727,7 +727,8 @@ setch(int delim) {
 	register int j;
 	char	temp[NC];
 	tchar	c, d[2] = {0, 0};
-	int	f, n;
+	int	f;
+	size_t	n;
 	const struct amap *ap;
 
 	n = 0;
@@ -780,7 +781,6 @@ setch(int delim) {
 			    && isxdigit((unsigned)temp[2])
 			    && isxdigit((unsigned)temp[3])
 			    && isxdigit((unsigned)temp[4])) {
-				int n;
 				n = strtol(temp + 1, NULL, 16);
 				if (n)
 					c = setuc0(n);
@@ -1270,7 +1270,8 @@ tchar getlg(tchar i)
 {
 	tchar j, k, pb[NC];
 	struct lgtab *lp;
-	int c, f, n, lgn;
+	int c, f;
+	size_t n, lgn;
 
 	f = fbits(i);
 	if (lgtab[f] == NULL)	/* font lacks ligatures */
@@ -1504,7 +1505,8 @@ getflig(int f, int mode)
 {
 	int	delete, allnum;
 	tchar	from[NC], to;
-	int	c, i, j;
+	int	c;
+	size_t	i, j;
 	char	number[NC];
 
 	if (skip(0))
@@ -1637,7 +1639,8 @@ casefps(void)
 		{ SPEC_NONE,	NULL }
 	};
 	char	name[NC];
-	int	c = 0, i;
+	int	c = 0;
+	size_t	i;
 	enum spec	s = SPEC_NONE;
 
 	if (skip(1))
@@ -2380,7 +2383,8 @@ setpapersize(int setmedia)
 		{ NULL,		   0,	   0 }
 	};
 	int	c;
-	int	x = 0, y = 0, n;
+	int	x = 0, y = 0;
+	size_t	n;
 	char	buf[NC];
 
 	lgf++;
@@ -2666,7 +2670,8 @@ static int
 getfeature(struct afmtab *a, int f)
 {
 	char	name[NC];
-	int	ch1, ch2, c, i, j, minus;
+	int	ch1, ch2, c, j, minus;
+	size_t	i;
 	struct feature	*fp;
 
 	if (skip(0))

@@ -503,7 +503,7 @@ nextprime(int n)
 		268435399, 536870909, 1073741789, 2147483647
 	};
 	int	mprime = 7;
-	int	i;
+	size_t	i;
 
 	for (i = 0; i < sizeof primes / sizeof *primes; i++)
 		if ((mprime = primes[i]) >= (n < 65536 ? n*4 :
@@ -534,7 +534,7 @@ struct namecache *
 afmnamelook(struct afmtab *a, const char *name)
 {
 	struct namecache	*np;
-	unsigned	h, c, n = 0;
+	int	h, c, n = 0;
 
 	h = pjw(name) % a->nameprime;
 	np = &a->namecache[c = h];
