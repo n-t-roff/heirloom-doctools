@@ -2186,7 +2186,7 @@ get_ms_unicode_cmap(int o, int addchar)
 static int
 get_cmap(int addchar)
 {
-	int	numTables;
+	int	nTables;
 	int	platformID;
 	int	encodingID;
 	int	offset;
@@ -2205,8 +2205,8 @@ get_cmap(int addchar)
 			error("can only handle version 0 cmap tables");
 		return gotit;
 	}
-	numTables = pbe16(&contents[o+2]);
-	if (4 + 8*numTables > table_directories[pos_cmap].length) {
+	nTables = pbe16(&contents[o+2]);
+	if (4 + 8*nTables > table_directories[pos_cmap].length) {
 		if (addchar)
 			error("cmap table too small for values inside");
 		return gotit;
@@ -2214,7 +2214,7 @@ get_cmap(int addchar)
 	if (addchar)
 		otfalloc(numGlyphs);
 	want_tbl = -1;
-	for (i = 0; i < numTables; i++) {
+	for (i = 0; i < nTables; i++) {
 		platformID = pbe16(&contents[o+4+8*i]);
 		encodingID = pbe16(&contents[o+4+8*i+2]);
 		if ((platformID == 3 && encodingID == 10) ||
@@ -3406,30 +3406,30 @@ static void
 build_sfnts(FILE *fp)
 {
 	int	i, o, n;
-	unsigned short	numTables;
+	unsigned short	nTables;
 	unsigned short	searchRange;
 	unsigned short	entrySelector;
 	unsigned short	rangeShift;
 	uint32_t	ccs;
 
-	numTables = 0;
+	nTables = 0;
 	for (i = 0; tables[i].name; i++)
 		if (tables[i].in_sfnts && *tables[i].pos >= 0)
-			numTables++;
+			nTables++;
 	entrySelector = 0;
-	for (searchRange = 1; searchRange*2 < numTables; searchRange *= 2)
+	for (searchRange = 1; searchRange*2 < nTables; searchRange *= 2)
 		entrySelector++;
 	searchRange *= 16;
-	rangeShift = numTables * 16 - searchRange;
+	rangeShift = nTables * 16 - searchRange;
 	fprintf(fp, "<%08X%04hX%04hX%04hX%04hX\n", 0x00010000,
-			numTables, searchRange, entrySelector, rangeShift);
-	ccs = 0x00010000 + (numTables<<16) + searchRange +
+			nTables, searchRange, entrySelector, rangeShift);
+	ccs = 0x00010000 + (nTables<<16) + searchRange +
 		(entrySelector<<16) + rangeShift;
-	o = 12 + numTables * 16;
+	o = 12 + nTables * 16;
 	for (i = 0; tables[i].name; i++)
 		if (tables[i].in_sfnts && *tables[i].pos >= 0)
 			sfnts1(&tables[i], &o, &ccs, fp);
-	o = 12 + numTables * 16;
+	o = 12 + nTables * 16;
 	n = 0;
 	for (i = 0; tables[i].name; i++) {
 		if (tables[i].in_sfnts && *tables[i].pos >= 0) {

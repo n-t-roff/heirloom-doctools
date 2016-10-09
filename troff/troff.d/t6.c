@@ -2499,7 +2499,7 @@ casekernpair(void)
 {
 	int	savfont = font, savfont1 = font1;
 	int	f, g, i, j, n;
-	tchar	c, d, *cp = NULL, *dp = NULL;
+	tchar	c, e, *cp = NULL, *dp = NULL;
 	int	a = 0, b = 0;
 
 	lgf++;
@@ -2555,12 +2555,12 @@ casekernpair(void)
 			if (c == UNPAD)
 				c = ' ';
 			setfbits(c, f);
-			if ((d = cbits(dp[j])) == 0)
+			if ((e = cbits(dp[j])) == 0)
 				continue;
-			if (d == UNPAD)
-				d = ' ';
-			setfbits(d, g);
-			kadd(c, d, n);
+			if (e == UNPAD)
+				e = ' ';
+			setfbits(e, g);
+			kadd(c, e, n);
 		}
 done:
 	free(cp);
@@ -2948,9 +2948,9 @@ _setlink(struct ref **rstart, int oncode, int offcode, int *cnt)
 {
 	struct ref	*rp;
 	char	*np;
-	int	sv;
+	int	_sv;
 
-	sv = linkin;
+	_sv = linkin;
 	if ((linkin = !linkin)) {
 		if ((np = getref()) != NULL) {
 			rp = calloc(1, sizeof *rp);
@@ -2965,7 +2965,7 @@ _setlink(struct ref **rstart, int oncode, int offcode, int *cnt)
 			return mkxfunc(oncode, 0);
 		}
 	} else
-		return mkxfunc(offcode, sv > 0 ? sv : 0);
+		return mkxfunc(offcode, _sv > 0 ? _sv : 0);
 }
 
 tchar
