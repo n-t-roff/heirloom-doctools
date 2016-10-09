@@ -292,15 +292,15 @@
 #endif
 
 
-char		*progname;
-static char	*prologue = DPOST;	/* the basic PostScript prologue */
-char		*colorfile = COLOR;	/* things needed for color support */
-char		*drawfile = DRAW;	/* and drawing */
-static char	*cutmarksfile = CUTMARKS;
-static char	*formfile = FORMFILE;	/* stuff for multiple pages per sheet */
-char		*baselinefile = BASELINE;
+char			*progname;
+static const char	*prologue = DPOST;	/* the basic PostScript prologue */
+const char		*colorfile = COLOR;	/* things needed for color support */
+const char		*drawfile = DRAW;	/* and drawing */
+static const char	*cutmarksfile = CUTMARKS;
+static const char	*formfile = FORMFILE;	/* stuff for multiple pages per sheet */
+const char		*baselinefile = BASELINE;
 
-static char	*fontdir = FONTDIR;	/* binary device directories found here */
+static const char	*fontdir = FONTDIR;	/* binary device directories found here */
 static char	*hostfontdir = NULL;	/* host resident font directory */
 
 static int	formsperpage = 1;	/* page images on each piece of paper */
@@ -360,7 +360,7 @@ static int		afmcount = 0;
 
 #define	devname	troff_devname
 static char		devname[20] = "";	/* job is formatted for this printer */
-static char		*realdev = DEVNAME;	/* a good description of target printer */
+static const char		*realdev = DEVNAME;	/* a good description of target printer */
 
 
 /*
@@ -771,7 +771,7 @@ main(int agc, char *agv[])
 }   /* End of main */
 
 /*****************************************************************************/
-int
+static int
 putint(int n, FILE *fp)
 {
     char	buf[20];
@@ -801,7 +801,7 @@ putint(int n, FILE *fp)
     return c;
 }
 
-int
+static int
 putstring1(const char *sp, int n, FILE *fp)
 {
 /*
@@ -815,7 +815,7 @@ putstring1(const char *sp, int n, FILE *fp)
     return n + 2;
 }
 
-int
+static int
 putstring(const char *sp, int n, FILE *fp)
 {
     int	c = 0, m;
