@@ -62,7 +62,7 @@ static int	olist[512];		/* processing range pairs */
 
 
 void
-error(int kind, char *mesg, ...)
+error(int kind, const char *mesg, ...)
 {
 
 
@@ -202,9 +202,9 @@ in_olist (
 /*****************************************************************************/
 
 
-int 
+int
 cat (
-    char *file,			/* copy this file to out */
+    const char *file,			/* copy this file to out */
     FILE *out
 )
 

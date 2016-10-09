@@ -2165,7 +2165,7 @@ fontprint (
 /*****************************************************************************/
 
 
-char *
+const char *
 mapfont (
     char *name			/* troff wanted this font */
 )
@@ -4321,7 +4321,7 @@ charlib (
 
 int 
 doglobal (
-    char *name			/* copy this to the output - globally */
+    const char *name			/* copy this to the output - globally */
 )
 
 
