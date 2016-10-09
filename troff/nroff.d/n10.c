@@ -462,7 +462,7 @@ specnames(void)
 
 
 int 
-findch(char *s) {
+findch(const char *s) {
 	struct bst_node *n;
 	if (bst_srch(&chnames, (union bst_val)(void *)s, &n))
 		return 0;
