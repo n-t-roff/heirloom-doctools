@@ -48,7 +48,7 @@ static	void	addkernpair(struct afmtab *, char *_line);
 /*
  * This table maps troff special characters to PostScript names.
  */
-const struct names {
+static const struct names {
 	const char	*trname;
 	const char	*psname;
 } names[] = {
@@ -85,7 +85,7 @@ const struct names {
 /*
  * Names for Symbol fonts only.
  */
-const struct names greeknames[] = {
+static const struct names greeknames[] = {
 	{ "*A",	"Alpha" },
 	{ "*B",	"Beta" },
 	{ "*C",	"Xi" },
@@ -137,7 +137,7 @@ const struct names greeknames[] = {
 	{ 0,	0 }
 };
 
-const struct names mathnames[] = {
+static const struct names mathnames[] = {
 	{ "!=",	"notequal" },
 	{ "**",	"asteriskmath" },
 	{ "+-",	"plusminus" },
@@ -191,7 +191,7 @@ const struct names mathnames[] = {
 	{ 0,	0 },
 };
 
-const struct names largenames[] = {
+static const struct names largenames[] = {
 	{ "bv",	"braceex" },
 	{ "lb",	"braceleftbt" },
 	{ "lc",	"bracketlefttp" },
@@ -207,7 +207,7 @@ const struct names largenames[] = {
 	{ 0,	0 }
 };
 
-const struct names punctnames[] = {
+static const struct names punctnames[] = {
 	{ "or",	"bar" },
 	{ "\\-","endash" },
 	{ "aa","acute" },
@@ -220,7 +220,7 @@ const struct names punctnames[] = {
 /*
  * These names are only used with the S font.
  */
-const struct names Snames[] = {
+static const struct names Snames[] = {
 	{ "br",	"parenleftex" },
 	{ "ul",	"underscore" },
 	{ "vr",	"bracketleftex" },
