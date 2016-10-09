@@ -92,7 +92,7 @@ int	**ftrtab;
 struct lgtab	**lgtab;
 int	***lgrevtab;
 struct tracktab	*tracktab;
-int	sbold = 0;
+static int	sbold = 0;
 int	kern = 0;
 struct box	mediasize, bleedat, trimat, cropat;
 int	psmaxcode;
@@ -100,7 +100,7 @@ struct ref	*anchors, *links, *ulinks;
 static int	_minflg;
 int	lastrst;
 int	lastrsb;
-int	spacewidth;
+static int	spacewidth;
 
 static void	kernsingle(int **);
 static int	_ps2cc(const char *name, int create);
@@ -714,8 +714,8 @@ postchar(const char *temp, int *fp)
 }
 
 const struct amap {
-	char *alias;
-	char *trname;
+	const char *alias;
+	const char *trname;
 } amap[] = {
 	{ "lq", "``" },
 	{ "rq", "''" },
@@ -2337,7 +2337,7 @@ static void
 setpapersize(int setmedia)
 {
 	const struct {
-		char	*name;
+		const char	*name;
 		int	width;
 		int	heigth;
 	} papersizes[] = {

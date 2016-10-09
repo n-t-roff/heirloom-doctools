@@ -621,7 +621,7 @@ static char	pfbuf[NTM];
 static char	*pfbp = pfbuf;
 
 void
-fdprintf(int fd, char *fmt, ...)
+fdprintf(int fd, const char *fmt, ...)
 {
 	va_list	ap;
 

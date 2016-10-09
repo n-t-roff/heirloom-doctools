@@ -3437,7 +3437,7 @@ build_sfnts(FILE *fp)
 int
 otft42(char *font, char *path, char *_contents, size_t _size, FILE *fp)
 {
-	char	*cp;
+	const char	*cp;
 	int	ok = 0;
 	int	i;
 

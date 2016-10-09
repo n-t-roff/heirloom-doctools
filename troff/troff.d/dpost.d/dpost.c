@@ -1913,7 +1913,7 @@ fontinit(void)
 void
 loadfont (
     int n,			/* load this font position */
-    char *s,			/* with the file for this font */
+    const char *s,		/* with the file for this font */
     char *s1,			/* taken from here - possibly */
     int forcespecial,		/* this is definitively a special font */
     int spec			/* map specification */
@@ -2098,7 +2098,7 @@ loadspecial(void)
 
 
 /*****************************************************************************/
-char *defaultFonts[] =
+static const char *defaultFonts[] =
 	{ "R", "I", "B", "BI", "CW", "H", "HB", "HX", "S1", "S", NULL };
 
 void
@@ -4250,7 +4250,7 @@ charlib (
 
     char	*name;			/* name of the character */
     char	tname[10];		/* in case it's a single ASCII character */
-    char        *filename;              /* real file name */
+    const char	*filename;              /* real file name */
 
 
 /*

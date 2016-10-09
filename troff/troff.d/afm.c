@@ -45,8 +45,8 @@ static	void	addkernpair(struct afmtab *, char *_line);
  * This table maps troff special characters to PostScript names.
  */
 const struct names {
-	char	*trname;
-	char	*psname;
+	const char	*trname;
+	const char	*psname;
 } names[] = {
 	{ "hy",	"hyphen" },
 	{ "ct",	"cent" },
