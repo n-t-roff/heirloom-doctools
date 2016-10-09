@@ -102,7 +102,7 @@ error(int kind, const char *mesg, ...)
 
 /*****************************************************************************/
 /* for the AFM handling functions from troff */
-void
+static void
 verrprint(char *fmt, va_list ap)
 {
     fprintf(stderr, "%s: ", prog_name);

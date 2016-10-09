@@ -153,6 +153,7 @@ void drawtext(char *);
 void settext(char *);
 /* glob.c */
 /* misc.c */
+void interrupt(int);
 void error(int, const char *, ...);
 void out_list(char *);
 int in_olist(int);
