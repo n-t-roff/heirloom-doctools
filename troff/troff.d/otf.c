@@ -41,6 +41,10 @@
 #include "dev.h"
 #include "afm.h"
 
+#ifndef __unused
+#define	__unused __attribute__((unused))
+#endif
+
 extern	struct dev	dev;
 extern	char		*chname;
 extern	short		*chtab;
@@ -1936,7 +1940,7 @@ get_CFF(void)
 
 /*ARGSUSED*/
 static void
-get_ttf_post_1_0(int o)
+get_ttf_post_1_0(int o __unused)
 {
 	int	i;
 
@@ -2055,8 +2059,14 @@ addunimap(int gid, int c)
 }
 #endif	/* !DPOST && !DUMP */
 
+#if defined(DPOST) || defined(DUMP)
+#define __actual_use __unused
+#else
+#define __actual_use
+#endif
+
 static void
-addunitab(int c, int u)
+addunitab(int c __actual_use, int u __actual_use)
 {
 #if !defined (DPOST) && !defined (DUMP)
 	if (c >= a->nunitab) {
@@ -2221,7 +2231,7 @@ get_cmap(int addchar)
 }
 
 static void
-get_ttf_post_3_0(int o)
+get_ttf_post_3_0(int o __unused)
 {
 	int	i, n;
 	int	gotit;
@@ -3294,7 +3304,7 @@ CalcTableChecksum(uint32_t sum, const char *cp, int length)
 }
 
 static void
-sfnts1(struct table *tp, int *offset, uint32_t *ccs, FILE *fp)
+sfnts1(struct table *tp, int *offset, uint32_t *ccs, FILE *fp __unused)
 {
 	int	o, length;
 

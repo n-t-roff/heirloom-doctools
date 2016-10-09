@@ -31,6 +31,10 @@
 #include "dev.h"
 #include "afm.h"
 
+#ifndef __unused
+#define	__unused __attribute__((unused))
+#endif
+
 extern	char		*chname;
 extern	short		*chtab;
 extern	int		nchtab;
@@ -632,7 +636,7 @@ afmremap(struct afmtab *a)
 
 #ifndef	DUMP
 static int
-asciiequiv(int code, const char *psc, enum spec s)
+asciiequiv(int code __unused, const char *psc, enum spec s)
 {
 	int	i;
 
