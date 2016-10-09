@@ -293,19 +293,19 @@
 
 
 char		*progname;
-char		*prologue = DPOST;	/* the basic PostScript prologue */
+static char	*prologue = DPOST;	/* the basic PostScript prologue */
 char		*colorfile = COLOR;	/* things needed for color support */
 char		*drawfile = DRAW;	/* and drawing */
-char		*cutmarksfile = CUTMARKS;
-char		*formfile = FORMFILE;	/* stuff for multiple pages per sheet */
+static char	*cutmarksfile = CUTMARKS;
+static char	*formfile = FORMFILE;	/* stuff for multiple pages per sheet */
 char		*baselinefile = BASELINE;
 
-char		*fontdir = FONTDIR;	/* binary device directories found here */
-char		*hostfontdir = NULL;	/* host resident font directory */
+static char	*fontdir = FONTDIR;	/* binary device directories found here */
+static char	*hostfontdir = NULL;	/* host resident font directory */
 
-int		formsperpage = 1;	/* page images on each piece of paper */
-int		copies = 1;		/* and this many copies of each sheet */
-int		picflag = ON;		/* enable/disable picture inclusion */
+static int	formsperpage = 1;	/* page images on each piece of paper */
+static int	copies = 1;		/* and this many copies of each sheet */
+int	picflag = ON;		/* enable/disable picture inclusion */
 
 
 /*
@@ -325,7 +325,7 @@ int		picflag = ON;		/* enable/disable picture inclusion */
 int		encoding = DFLTENCODING;
 int		realencoding = DFLTENCODING;
 int		maxencoding = MAXENCODING;
-int		eflag;
+static int	eflag;
 
 int		LanguageLevel;	/* PostScript output language level */
 static int	Binary;		/* PostScript output contains binary data */
@@ -341,10 +341,10 @@ static int	Binary;		/* PostScript output contains binary data */
  */
 
 
-char		seenfonts[MAXINTERNAL+1];
-int		docfonts = 0;
-struct afmtab	**afmfonts;
-int		afmcount = 0;
+static char		seenfonts[MAXINTERNAL+1];
+static int		docfonts = 0;
+static struct afmtab	**afmfonts;
+static int		afmcount = 0;
 
 /*
  *
@@ -359,8 +359,8 @@ int		afmcount = 0;
 
 
 #define	devname	troff_devname
-char		devname[20] = "";	/* job is formatted for this printer */
-char		*realdev = DEVNAME;	/* a good description of target printer */
+static char		devname[20] = "";	/* job is formatted for this printer */
+static char		*realdev = DEVNAME;	/* a good description of target printer */
 
 
 /*
@@ -373,12 +373,12 @@ char		*realdev = DEVNAME;	/* a good description of target printer */
 
 struct dev	dev;			/* DESC starts this way */
 struct Font	**fontbase;		/* FONT files begin this way */
-int		*pstab;			/* list of available sizes */
-int		nsizes = 1;		/* and the number of sizes in that list */
-int		smnt;			/* index of first special font */
+static int	*pstab;			/* list of available sizes */
+static int	nsizes = 1;		/* and the number of sizes in that list */
+static int	smnt;			/* index of first special font */
 int		nchtab;			/* number of special character names */
-int		fsize;			/* max size of a font files in bytes */
-int		unitwidth;		/* set to dev.unitwidth */
+static int	fsize;			/* max size of a font files in bytes */
+static int	unitwidth;		/* set to dev.unitwidth */
 char		*chname;		/* special character strings */
 short		*chtab;			/* used to locate character names */
 unsigned short	**fitab;		/* locates char info on each font */
@@ -402,7 +402,7 @@ char		**kerntab;		/* for makefont() */
  */
 
 
-char		*downloaded;		/* nonzero means it's been downloaded */
+static char	*downloaded;		/* nonzero means it's been downloaded */
 
 
 /*
@@ -416,22 +416,22 @@ char		*downloaded;		/* nonzero means it's been downloaded */
 int		nfonts = 0;		/* number of font positions */
 int		size = 1;		/* current size - internal value */
 #define	FRACTSIZE	-23		/* if size == FRACTSIZE then ... */
-float		fractsize = 0;		/* fractional point size */
-int		font = 0;		/* font position we're using now */
-int		subfont = 0;		/* extra encoding vector */
+static float	fractsize = 0;		/* fractional point size */
+static int	font = 0;		/* font position we're using now */
+static int	subfont = 0;		/* extra encoding vector */
 int		hpos = 0;		/* where troff wants to be - horizontally */
 int		vpos = 0;		/* same but vertically */
-float		lastw = 0;		/* width of the last input character */
-int		track = 0;		/* tracking hint from troff */
-int		lasttrack = 0;		/* previous tracking hint */
-int		tracked;		/* records need to flush track */
-int		lastc = 0;		/* and its name (or index) */
+static float	lastw = 0;		/* width of the last input character */
+static int	track = 0;		/* tracking hint from troff */
+static int	lasttrack = 0;		/* previous tracking hint */
+static int	tracked;		/* records need to flush track */
+static int	lastc = 0;		/* and its name (or index) */
 
 int		res;			/* resolution assumed in input file */
-float		widthfac = 1.0;		/* for emulation = res/dev.res */
-float		horscale = 1.0;		/* horizontal font scaling */
-float		lasthorscale = 1.0;	/* last horizontal font scaling */
-int		wordspace = 0;		/* w command was last */
+static float	widthfac = 1.0;		/* for emulation = res/dev.res */
+static float	horscale = 1.0;		/* horizontal font scaling */
+static float	lasthorscale = 1.0;	/* last horizontal font scaling */
+static int	wordspace = 0;		/* w command was last */
 
 
 /*
@@ -443,13 +443,13 @@ int		wordspace = 0;		/* w command was last */
  */
 
 
-int		lastsize = -1;		/* last internal size we used */
-float		lastfractsize = -1;	/* last fractional size */
-int		lastfont = -1;		/* last font we told printer about */
-int		lastsubfont = -1;	/* last extra encoding vector */
-float		lastx = -1;		/* printer's current position */
-int		lasty = -1;
-int		savey = -1;
+static int	lastsize = -1;		/* last internal size we used */
+static float	lastfractsize = -1;	/* last fractional size */
+static int	lastfont = -1;		/* last font we told printer about */
+static int	lastsubfont = -1;	/* last extra encoding vector */
+static float	lastx = -1;		/* printer's current position */
+static int	lasty = -1;
+static int	savey = -1;
 int		lastend;		/* where last character on this line was */
 
 
@@ -466,7 +466,7 @@ int		lastend;		/* where last character on this line was */
  */
 
 
-struct  {
+static struct  {
 
 	struct afmtab	*afm;		/* AFM data, if any */
 	char	*name;			/* name of the font loaded here */
@@ -493,9 +493,9 @@ struct  {
  */
 
 
-int		gotspecial = FALSE;
-int		gotregular = FALSE;
-int		seenpage = FALSE;
+static int		gotspecial = FALSE;
+static int		gotregular = FALSE;
+static int		seenpage = FALSE;
 
 
 /*
@@ -511,10 +511,10 @@ int		seenpage = FALSE;
  */
 
 
-float		pointslop = SLOP;	/* horizontal error in points */
-int		Sflag;			/* unless -S gives explicit slop */
-int		slop;			/* and machine units */
-int		rvslop;			/* to extend box in reverse video mode */
+static float		pointslop = SLOP;	/* horizontal error in points */
+static int		Sflag;			/* unless -S gives explicit slop */
+static int		slop;			/* and machine units */
+static int		rvslop;			/* to extend box in reverse video mode */
 
 
 /*
@@ -530,11 +530,11 @@ int		rvslop;			/* to extend box in reverse video mode */
  */
 
 
-int		textcount = 0;		/* strings accumulated so far */
-int		stringstart = 0;	/* where the next one starts */
-int		laststrstart = INT_MIN;	/* save for optimization */
-int		spacecount = 0;		/* spaces seen so far on current line */
-int		charcount = 0;		/* characters on current line */
+static int		textcount = 0;		/* strings accumulated so far */
+static int		stringstart = 0;	/* where the next one starts */
+static int		laststrstart = INT_MIN;	/* save for optimization */
+static int		spacecount = 0;		/* spaces seen so far on current line */
+static int		charcount = 0;		/* characters on current line */
 
 
 /*
@@ -547,9 +547,9 @@ int		charcount = 0;		/* characters on current line */
  */
 
 
-char		strings[STRINGSPACE];
-char		*strptr;
-Line		line[MAXSTACK+3];
+static char		strings[STRINGSPACE];
+static char		*strptr;
+static Line		line[MAXSTACK+3];
 
 
 /*
@@ -572,8 +572,8 @@ Line		line[MAXSTACK+3];
  */
 
 
-Devfontmap	*devfontmap = NULL;	/* device level */
-Fontmap		fontmap[] = FONTMAP;	/* and general mapping tables - emulation */
+static Devfontmap	*devfontmap = NULL;	/* device level */
+static Fontmap		fontmap[] = FONTMAP;	/* and general mapping tables - emulation */
 
 
 /*
@@ -642,16 +642,16 @@ int		printed = 0;		/* charge for this many pages */
  */
 
 
-FILE		*tf = NULL;		/* PostScript output goes here */
-FILE		*gf = NULL;		/* global data goes here */
-FILE		*rf = NULL;		/* resource data goes here */
-FILE		*sf = NULL;		/* supplied resource comments go here */
-FILE		*nf = NULL;		/* needed resource comments go here */
-FILE		*pf = NULL;		/* elements of _custompagesetup */
-int		sfcount;		/* count of supplied resources */
-int		nfcount;		/* count of needed resources */
-int		ostdout;		/* old standard output */
-FILE		*fp_acct = NULL;	/* accounting stuff written here */
+FILE	*tf = NULL;		/* PostScript output goes here */
+FILE	*gf = NULL;		/* global data goes here */
+FILE	*rf = NULL;		/* resource data goes here */
+FILE	*sf = NULL;		/* supplied resource comments go here */
+FILE	*nf = NULL;		/* needed resource comments go here */
+FILE	*pf = NULL;		/* elements of _custompagesetup */
+static int	sfcount;		/* count of supplied resources */
+static int	nfcount;		/* count of needed resources */
+static int	ostdout;		/* old standard output */
+static FILE	*fp_acct = NULL;	/* accounting stuff written here */
 
 
 /*
@@ -664,7 +664,7 @@ FILE		*fp_acct = NULL;	/* accounting stuff written here */
  */
 
 
-char		temp[4096];
+static char	temp[4096];
 
 /*****************************************************************************/
 
