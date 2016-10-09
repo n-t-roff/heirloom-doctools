@@ -125,7 +125,7 @@ static int wlen;
 static int rflag;
 static int halflen;
 static wchar_t *strtbufp, *endbufp;
-static char *empty = "";
+static const char *empty = "";
 
 static char *infile;
 static FILE *inptr /*= stdin*/;
@@ -236,7 +236,7 @@ main(int argc,char **argv)
 	int pid;
 	wchar_t *pend;
 
-	char *xfile;
+	const char *xfile;
 	FILE *xptr;
 
 	setlocale(LC_CTYPE, "");
