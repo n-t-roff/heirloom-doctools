@@ -164,7 +164,7 @@ char *trimnl(char *);
 /* refer5.c */
 void putsig(int, char **, int, char *, char *, int);
 char *fpar(int, char **, char *, size_t, int, int, int);
-void putkey(int, char **, int, char *);
+void putkey(int, char **, int, const char *);
 void tokeytab(const char *, int);
 int keylet(char *, int);
 void mycpy(char *, const char *);

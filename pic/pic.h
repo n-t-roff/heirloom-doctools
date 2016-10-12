@@ -187,7 +187,7 @@ void	copyfile(char *);
 void	copydef(struct symtab *);
 void	definition(const char *);
 void	freesymtab(struct symtab *);
-void	setfval(char *s, double f);
+void	setfval(const char *s, double f);
 struct symtab *copythru(const char *);
 #ifdef	FLEX_SCANNER
 int	xxinput(void);

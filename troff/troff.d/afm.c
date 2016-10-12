@@ -992,8 +992,8 @@ afmget(struct afmtab *a, char *contents, size_t size)
  * troff and dpost need it in combination with AFM support.
  */
 void
-makefont(int nf, char *devfontab, char *devkerntab, char *devcodetab,
-		char *devfitab, int nw)
+makefont(int nf, const char *devfontab, const char *devkerntab,
+    const char *devcodetab, const char *devfitab, int nw)
 {
 	int	i;
 

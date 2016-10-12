@@ -824,7 +824,7 @@ ptfont(void)
 }
 
 void
-ptfpcmd(int f, char *s, char *path, int flags)
+ptfpcmd(int f, const char *s, char *path, int flags)
 {
 	if (ascii)
 		return;

@@ -77,9 +77,9 @@ openinfile(void)
 }
 
 void
-pbstr(register char *str)
+pbstr(register const char *str)
 {
-	register char *p;
+	register const char *p;
 
 	p = str;
 	while (*p++);
@@ -94,6 +94,7 @@ int
 yylex(void) {
 	register int c;
 	tbl *tp;
+	extern tbl *keytbl[], *deftbl[];
 
   beg:
 	while ((c=gtc())==' ' || c=='\n')

@@ -1926,7 +1926,7 @@ loadfont (
     char	*fpout = NULL;		/* for reading *s file */
     int		fin;			/* for reading *s.afm file */
     int		nw;			/* number of width table entries */
-    char	*p;
+    const char	*p;
     char	*path;
     size_t	l;
 
@@ -2167,7 +2167,7 @@ fontprint (
 
 const char *
 mapfont (
-    char *name			/* troff wanted this font */
+    const char *name			/* troff wanted this font */
 )
 
 
