@@ -147,7 +147,7 @@ char *strsave(char *);
 void include(void);
 void delim(void);
 /* lookup.c */
-tbl *lookup(tbl **, char *, char *);
+tbl *lookup(tbl **, const char *, const char *);
 void init_tbl(void);
 /* mark.c */
 void mark(int);
@@ -161,7 +161,7 @@ void move(int, int, int);
 void boverb(int, int);
 /* paren.c */
 void paren(int, int, int);
-void brack(int, char *, char *, char *);
+void brack(int, const char *, const char *, const char *);
 /* pile.c */
 void lpile(int, int, int);
 /* shift.c */

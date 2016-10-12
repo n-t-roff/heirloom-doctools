@@ -94,7 +94,7 @@ void account(void);
 void conv(register FILE *);
 void devcntrl(FILE *);
 void fontinit(void);
-void loadfont(int, char *, char *, int, int);
+void loadfont(int, const char *, char *, int, int);
 void loadspecial(void);
 void loaddefault(void);
 void fontprint(int);
