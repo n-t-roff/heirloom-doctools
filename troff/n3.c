@@ -96,7 +96,7 @@ static void	caseindex(void);
 static void	caseasciify(void);
 static void	caseunformat(int);
 static int	getls(int, int *, int);
-static void	addcon(int, char *, void(*)(int));
+static void	addcon(int, const char *, void(*)(int));
 
 static const struct {
 	const char	*n;
@@ -2353,7 +2353,7 @@ makerq(const char *name)
 }
 
 static void
-addcon(int _t, char *rs, void(*f)(int))
+addcon(int _t, const char *rs, void(*f)(int))
 {
 	int	n = hadn;
 

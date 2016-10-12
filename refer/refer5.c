@@ -240,7 +240,7 @@ fpar (int nf, char **flds, char *out, size_t outsiz __unused, int c, int seq,
 }
 
 void
-putkey(int nf, char **flds, int nref, char *_keystr)
+putkey(int nf, char **flds, int nref, const char *_keystr)
 {
 	char t1[50], *sf;
 	int ctype, i, count;

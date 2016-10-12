@@ -843,7 +843,8 @@ findft(register int i, int required)
 {
 	register int k;
 	int nk;
-	char	*mn, *mp;
+	const char	*mn;
+	char *mp;
 
 	if ((k = i - '0') >= 0 && k <= nfonts && k < smnt && fontbase[k])
 		return(k);
@@ -1666,7 +1667,8 @@ casefps(void)
 int
 setfp(int pos, int f, char *truename)	/* mount font f at position pos[0...nfonts] */
 {
-	char longname[4096], *shortname, *ap;
+	char longname[4096], *ap;
+	const char *shortname;
 	char *fpout;
 	int i, nw;
 

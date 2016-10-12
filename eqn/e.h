@@ -92,8 +92,8 @@ extern int	markline;	/* 1 if this EQ/EN contains mark or lineup */
 extern char	*progname;
 
 typedef struct s_tbl {
-	char	*name;
-	char	*defn;
+	const char	*name;
+	const char	*defn;
 	struct s_tbl *next;
 } tbl;
 extern  char    *spaceval;  /* use in place of normal \x (for pic) */
@@ -137,7 +137,7 @@ void error(int, const char *, ...);
 /* lex.c */
 int gtc(void);
 int openinfile(void);
-void pbstr(register char *);
+void pbstr(register const char *);
 int yylex(void);
 int getstr(char *, register int);
 int cstr(char *, int, int);

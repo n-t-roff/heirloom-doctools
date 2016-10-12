@@ -98,7 +98,7 @@ void loadfont(int, const char *, char *, int, int);
 void loadspecial(void);
 void loaddefault(void);
 void fontprint(int);
-const char *mapfont(char *);
+const char *mapfont(const char *);
 void getdevmap(void);
 char *mapdevfont(char *);
 void reset(void);
