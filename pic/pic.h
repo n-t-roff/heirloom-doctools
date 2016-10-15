@@ -247,7 +247,6 @@ void	ellipse(double, double, double, double);
 void	arc(double, double, double, double, double, double);
 void	dot(void);
 void	arrow(double, double, double, double, double, double, double, int);
-char	*fgetline(char **, size_t *, size_t *, FILE *);
 
 struct pushstack {
 	double	p_x;
