@@ -609,33 +609,3 @@ void shell_exec(void)	/* do it */
 	else
 		system(shellbuf);
 }
-
-#define	LSIZE	128
-
-char *fgetline(char **line, size_t *linesize, size_t *llen, FILE *fp)
-{
-	int c;
-	size_t n = 0;
-
-	if (*line == NULL || *linesize < LSIZE + n + 1)
-		*line = realloc(*line, *linesize = LSIZE + n + 1);
-	for (;;) {
-		if (n >= *linesize - LSIZE / 2)
-			*line = realloc(*line, *linesize += LSIZE);
-		c = getc(fp);
-		if (c != EOF) {
-			(*line)[n++] = c;
-			(*line)[n] = '\0';
-			if (c == '\n')
-				break;
-		} else {
-			if (n > 0)
-				break;
-			else
-				return NULL;
-		}
-	}
-	if (llen)
-		*llen = n;
-	return *line;
-}
