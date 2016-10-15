@@ -1600,14 +1600,9 @@ casefp(int spec)
 				goto bad;
 			setfp(i, j, 0);
 		} else {		/* 3rd argument = filename */
-			size_t l;
-			l = strlen(nextf) + 1;
-			file = malloc(l);
-			n_strcpy(file, nextf, l);
+			file = strdup(nextf);
 			if (!skip(0) && getname()) {
-				l = strlen(nextf) + 1;
-				supply = malloc(l);
-				n_strcpy(supply, nextf, l);
+				supply = strdup(nextf);
 			} else
 				supply = NULL;
 			if (loadafm(i?i:-1, j, file, supply, 0, spec) == 0) {
@@ -2014,9 +2009,7 @@ getfontpath(char *file, char *type)
 	size_t	l;
 
 	if ((troffonts = getenv("TROFFONTS")) != NULL) {
-		l = strlen(troffonts) + 1;
-		tp = malloc(l);
-		n_strcpy(tp, troffonts, l);
+		tp = strdup(troffonts);
 		troffonts = tp;
 		do {
 			for (tq = tp; *tq && *tq != ':'; tq++);
@@ -2096,9 +2089,7 @@ loadafm(int nf, int rq, char *file, char *supply, int required, enum spec spec)
 			break;
 		}
 	a->path = path;
-	l = strlen(file) + 1;
-	a->file = malloc(l);
-	n_strcpy(a->file, file, l);
+	a->file = strdup(file);
 	a->spec = spec;
 	a->rq = rq;
 	a->Font.namefont[0] = rq&0377;

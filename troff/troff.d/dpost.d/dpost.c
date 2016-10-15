@@ -1991,9 +1991,7 @@ loadfont (
 	    goto fail;
 	}
 	close(fin);
-	l = strlen(path) + 1;
-	a->path = malloc(l);
-	n_strcpy(a->path, path, l);
+	a->path = strdup(path);
 	if (path != temp)
 	    free(path);
 	a->file = s;

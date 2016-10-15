@@ -162,10 +162,7 @@ main(int argc, char **argv)
 	signal(SIGPIPE, catch);
 	signal(SIGTERM, kcatch);
 	oargv = argv;
-	s = "<standard input>";
-	l = strlen(s) + 1;
-	cfname[0] = malloc(l);
-	n_strcpy(cfname[0], s, l);
+	cfname[0] = strdup("<standard input>");
 	init0();
 #ifdef EUC
 	localize();
@@ -1534,8 +1531,6 @@ int
 nextfile(void)
 {
 	register char	*p;
-	const char *s;
-	size_t l;
 
 n0:
 	if (ifile)
@@ -1556,10 +1551,7 @@ n0:
 		nfo++;
 		numtab[CD].val = ifile = stdi = mflg = 0;
 		free(cfname[ifi]);
-		s = "<standard input>";
-		l = strlen(s) + 1;
-		cfname[ifi] = malloc(l);
-		n_strcpy(cfname[ifi], s, l);
+		cfname[ifi] = strdup("<standard input>");
 		ioff = 0;
 		return(0);
 	}
@@ -1569,19 +1561,14 @@ n1:
 	if (p[0] == '-' && p[1] == 0) {
 		ifile = 0;
 		free(cfname[ifi]);
-		s = "<standard input>";
-		l = strlen(s) + 1;
-		cfname[ifi] = malloc(l);
-		n_strcpy(cfname[ifi], s, l);
+		cfname[ifi] = strdup("<standard input>");
 	} else if ((ifile = open(p, O_RDONLY)) < 0) {
 		errprint("cannot open file %s", p);
 		nfo -= mflg;
 		done(02);
 	} else {
 		free(cfname[ifi]);
-		l = strlen(p) + 1;
-		cfname[ifi] = malloc(l);
-		n_strcpy(cfname[ifi], p, l);
+		cfname[ifi] = strdup(p);
 	}
 	nfo++;
 	ioff = 0;
