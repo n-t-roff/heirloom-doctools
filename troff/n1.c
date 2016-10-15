@@ -110,10 +110,6 @@ wchar_t	twc = 0;
 static unsigned char escoff[126-31];
 
 static void	initg(void);
-static void	printlong(long, int);
-static void	printn(long, long);
-static char	*sprintlong(char *s, long, int);
-static char	*sprintn(char *s, long n, int b);
 static tchar	setyon(void);
 static void	_setenv(void);
 static tchar	setZ(void);
@@ -604,156 +600,20 @@ errprint(const char *s, ...)	/* error message printer */
 	va_end(ap);
 }
 
-static void
-printlong(long i, int fmt)
-{
-	switch (fmt) {
-	case 'd':
-		if (i < 0) {
-			putchar('-');
-			i = -i;
-		}
-		/*FALLTHRU*/
-	case 'u':
-		printn(i, 10);
-		break;
-	case 'o':
-		printn(i, 8);
-		break;
-	case 'x':
-		printn(i, 16);
-		break;
-	}
-}
-
-/*
- * Print an unsigned integer in base b.
- */
-static void printn(register long n, register long b)
-{
-	register long	a;
-
-	if (n < 0) {	/* shouldn't happen */
-		putchar('-');
-		n = -n;
-	}
-	if ((a = n / b))
-		printn(a, b);
-	putchar("0123456789ABCDEF"[(int)(n%b)]);
-}
-
-/* scaled down version of library roff_sprintf */
-/* same limits as fdprintf */
 /* returns pointer to \0 that ends the string */
 
 /* VARARGS2 */
 char *roff_sprintf(char *str, size_t size, const char *fmt, ...)
 {
-	register int c;
-	char	*s;
-	long i;
+	int ret;
 	va_list ap;
-	char *buf = str;
 
 	va_start(ap, fmt);
-loop:
-	while ((c = *fmt++) != '%') {
-		if (c == '\0') {
-			*str = 0;
-			va_end(ap);
-			return str;
-		}
-		*str++ = c;
-	}
-	c = *fmt++;
-	if (c == 'd' || c == 'u' || c == 'o' || c == 'x') {
-		i = va_arg(ap, int);
-		str = sprintlong(str, i, c);
-	} else if (c == 'c') {
-		if (c > 0177 || c < 040)
-			*str++ = '\\';
-		*str++ = va_arg(ap, int) & 0177;
-	} else if (c == 's') {
-		s = va_arg(ap, char *);
-		while ((c = *s++))
-			*str++ = c;
-	} else if (c == 'D') {
-		str = sprintn(str, va_arg(ap, long), 10);
-	} else if (c == 'O') {
-		str = sprintn(str, va_arg(ap, unsigned) , 8);
-	} else if (c == 'e' || c == 'E' ||
-			c == 'f' || c == 'F' ||
-			c == 'g' || c == 'G') {
-		char	_fmt[] = "%%";
-		_fmt[1] = c;
-		str += snprintf(str, size - (str - buf), _fmt, va_arg(ap,
-		    double));
-	} else if (c == 'p') {
-		i = (intptr_t)va_arg(ap, void *);
-		*str++ = '0';
-		*str++ = 'x';
-		str = sprintlong(str, i, 'x');
-	} else if (c == 'l') {
-		c = *fmt++;
-		if (c == 'd' || c == 'u' || c == 'o' || c == 'x') {
-			i = va_arg(ap, long);
-			printlong(i, c);
-		} else if (c == 'c') {
-			i = va_arg(ap, int);
-			if (i & ~0177) {
-#ifdef	EUC
-				int	n;
-				n = wctomb(str, i);
-				if (n > 0)
-					str += n;
-#endif	/* EUC */
-			} else
-				*str++ = i;
-		}
-	}
-	goto loop;
+	ret = vsnprintf(str, size, fmt, ap);
+	va_end(ap);
+
+	return (str + ret);
 }
-
-static char *
-sprintlong(char *s, long i, int fmt)
-{
-	switch (fmt) {
-	case 'd':
-		if (i < 0) {
-			*s++ = '-';
-			i = -i;
-		}
-		/*FALLTHRU*/
-	case 'u':
-		s = sprintn(s, i, 10);
-		break;
-	case 'o':
-		s = sprintn(s, i, 8);
-		break;
-	case 'x':
-		s = sprintn(s, i, 16);
-		break;
-	}
-	return s;
-}
-
-/*
- * Print an unsigned integer in base b.
- */
-static char *sprintn(register char *s, register long n, int b)
-{
-	register long	a;
-
-	if (n < 0) {	/* shouldn't happen */
-		*s++ = '-';
-		n = -n;
-	}
-	if ((a = n / b))
-		s = sprintn(s, a, b);
-	*s++ = "0123456789ABCDEF"[(int)(n%b)];
-	return s;
-}
-
 
 int
 control(register int a, register int b)
