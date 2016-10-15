@@ -894,9 +894,7 @@ afmget(struct afmtab *a, char *contents, size_t size)
 		cp = a->file;
 	else
 		cp++;
-	l = strlen(cp) + 1;
-	a->base = malloc(l);
-	n_strcpy(a->base, cp, l);
+	a->base = strdup(cp);
 	if ((cp = strrchr(a->base, '.')) != NULL)
 		*cp = '\0';
 	if (dev.allpunct)
