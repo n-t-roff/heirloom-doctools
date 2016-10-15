@@ -39,9 +39,9 @@ static void	print(enum show, const char *, ...);
 
 #define	DUMP
 #include <stdio.h>
+#include <unistd.h>
 #include "otf.c"
 #include "afm.c"
-#include "dpost.d/getopt.c"
 
 #include <libgen.h>
 
