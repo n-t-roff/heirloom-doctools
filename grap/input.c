@@ -18,11 +18,6 @@
 #include "grap.h"
 #include "y.tab.h"
 
-#if defined (__GLIBC__) && defined (_IO_getc_unlocked)
-#undef	getc
-#define	getc(f)	_IO_getc_unlocked(f)
-#endif
-
 Infile	infile[10];
 Infile	*curfile = infile;
 

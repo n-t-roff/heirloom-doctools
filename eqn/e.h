@@ -29,11 +29,6 @@
 #include <inttypes.h>
 #include "global.h"
 
-#if defined (__GLIBC__) && defined (_IO_getc_unlocked)
-#undef	getc
-#define	getc(f)	_IO_getc_unlocked(f)
-#endif
-
 #define	FATAL	1
 #define	ROM	'1'
 #ifndef NEQN
@@ -125,7 +120,6 @@ int eqn(int, char **);
 int getline(char **, size_t *);
 void do_inline(void);
 void putout(int);
-float max(float, float);
 int oalloc(void);
 void ofree(int);
 void setps(float);

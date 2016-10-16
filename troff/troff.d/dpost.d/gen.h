@@ -39,9 +39,6 @@
  */
 
 
-#ifndef __unused
-#define __unused __attribute__((unused))
-#endif
 extern const char	creator[];
 
 
@@ -64,20 +61,6 @@ extern const char	creator[];
 #define PI		3.141592654
 #endif
 
-
-/*
- *
- * A few simple macros.
- *
- */
-
-
-#define ABS(A)		((A) >= 0 ? (A) : -(A))
-#undef	MIN
-#define MIN(A, B)	((A) < (B) ? (A) : (B))
-#undef	MAX
-#define MAX(A, B)	((A) > (B) ? (A) : (B))
- 
 /* color.c */
 void getcolor(void);
 void newcolor(char *);

@@ -562,18 +562,6 @@ addpicfile(char *name)
 }   /* End of addpicfile */
 
 
-/*****************************************************************************/
-
-static void *
-srealloc(void *p, size_t size)
-{
-	if ((p = realloc(p, size)) == NULL) {
-		write(2, "Can't malloc\n", 13);
-		_exit(0177);
-	}
-	return p;
-}
-
 /*	from OpenSolaris "misc.c	1.6	05/06/08 SMI"	*/
 /*	Copyright (c) 1984, 1986, 1987, 1988, 1989 AT&T	*/
 /*	  All Rights Reserved  	*/

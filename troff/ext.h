@@ -52,10 +52,6 @@
 
 #include <sys/types.h>
 
-#ifndef __unused
-#define __unused __attribute__((unused))
-#endif
-
 extern	char	**argp;
 extern	char	*chname;
 extern	char	*eibuf;
@@ -446,8 +442,6 @@ extern	void	casehylen(void);
 extern	void	casehypp(void);
 extern	void	casepshape(void);
 extern	void	caselpfx(void);
-extern	int	max(int, int);
-extern	int	min(int, int);
 extern	void	casece(void);
 extern	void	caserj(void);
 extern	void	casebrnl(void);
