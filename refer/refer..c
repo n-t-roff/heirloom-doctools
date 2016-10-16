@@ -43,10 +43,6 @@
 #define NSERCH 20
 #define MXSIG 200		/* max bytes in aggregate signal */
 
-#ifndef __unused
-#define __unused __attribute__((unused))
-#endif
-
 extern FILE *in;
 extern int endpush, sort, labels, keywant, bare;
 extern int biblio, science, postpunct;

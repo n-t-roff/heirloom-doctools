@@ -15,9 +15,6 @@
 #include <string.h>
 #include "pic.h"
 
-#ifndef __unused
-#define __unused __attribute__((unused))
-#endif
 extern int dbg;
 
 static const char	*textshift = "\\v'.2m'";	/* move text this far down */

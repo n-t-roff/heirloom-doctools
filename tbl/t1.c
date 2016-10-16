@@ -50,10 +50,6 @@ extern FILE *_f[];
 
 # define ever (;;)
 
-#ifndef __unused
-#define __unused __attribute__((unused))
-#endif
-
 # ifndef gcos
 static void badsig(int);
 # endif

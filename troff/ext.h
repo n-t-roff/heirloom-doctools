@@ -52,10 +52,6 @@
 
 #include <sys/types.h>
 
-#ifndef __unused
-#define __unused __attribute__((unused))
-#endif
-
 extern	char	**argp;
 extern	char	*chname;
 extern	char	*eibuf;

@@ -71,10 +71,6 @@ static int	maxdots	= 32000;	/* maximum number of dots in an object */
 #define	min(x,y)	((x) < (y) ? (x) : (y))
 #define	arcmove(x,y)	{ hgoto(x); vmot(-vpos-(y)); }
 
-#ifndef __unused
-#define __unused __attribute__((unused))
-#endif
-
 extern void setsize(int);
 extern void vgoto(int);
 extern int t_size(int);
