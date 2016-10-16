@@ -26,6 +26,7 @@
 # include <string.h>
 # include "t..c"
 # include <inttypes.h>
+# include <global.h>
 
 static int morelines(int);
 

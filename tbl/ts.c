@@ -56,12 +56,7 @@ letter(int ch)
 	return(0);
 }
 
-int 
-max(int a, int b)
-{
-return( a>b ? a : b);
-}
-void 
+void
 tcopy(char *s, char *t)
 {
 	while ((*s++ = *t++));

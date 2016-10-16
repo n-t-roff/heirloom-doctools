@@ -2388,7 +2388,7 @@ t_init(void)
 	if (eflag == 0)
 	    realencoding = encoding = dev.encoding;
 	if (encoding == 5) {
-	    LanguageLevel = MAX(LanguageLevel, 2);
+	    LanguageLevel = max(LanguageLevel, 2);
 	    Binary++;
 	}
 	slop = pointslop * res / POINTS + .5;
@@ -2628,7 +2628,7 @@ supplyotf(char *fnt, char *path, FILE *fp)
     }
     fprintf(rf, "%%%%EndResource\n");
     free(contents);
-    LanguageLevel = MAX(LanguageLevel, 3);
+    LanguageLevel = max(LanguageLevel, 3);
 }
 
 static void
@@ -2653,7 +2653,7 @@ supplyttf(char *fnt, char *path, FILE *fp)
     otft42(fnt, path, contents, sz, rf);
     fprintf(rf, "%%%%EndResource\n");
     free(contents);
-    LanguageLevel = MAX(LanguageLevel, 2);
+    LanguageLevel = max(LanguageLevel, 2);
 }
 
 static void

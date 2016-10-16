@@ -194,11 +194,9 @@ int ineqn(char *, char *);
 int prefix(const char *, const char *);
 int cprefix(const char *, const char *);
 int letter(int);
-int max(int, int);
 void tcopy(char *, char *);
 /* tt.c */
 int ctype(int, int);
-int min(int, int);
 int fspan(int, int);
 int lspan(int, int);
 int ctspan(int, int);

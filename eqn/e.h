@@ -125,7 +125,6 @@ int eqn(int, char **);
 int getline(char **, size_t *);
 void do_inline(void);
 void putout(int);
-float max(float, float);
 int oalloc(void);
 void ofree(int);
 void setps(float);

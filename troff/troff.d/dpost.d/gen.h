@@ -73,10 +73,6 @@ extern const char	creator[];
 
 
 #define ABS(A)		((A) >= 0 ? (A) : -(A))
-#undef	MIN
-#define MIN(A, B)	((A) < (B) ? (A) : (B))
-#undef	MAX
-#define MAX(A, B)	((A) > (B) ? (A) : (B))
  
 /* color.c */
 void getcolor(void);
