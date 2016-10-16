@@ -22,3 +22,16 @@
 
 #undef __unused
 #define __unused __attribute__((unused))
+
+#ifdef	__GLIBC__
+#ifdef	_IO_getc_unlocked
+#undef	getc
+#define	getc(f)		_IO_getc_unlocked(f)
+#endif
+#ifdef	_IO_putc_unlocked
+#undef	putc
+#undef	putchar
+#define	putc(c, f)	_IO_putc_unlocked(c, f)
+#define	putchar(c)	_IO_putc_unlocked(c, stdout)
+#endif
+#endif

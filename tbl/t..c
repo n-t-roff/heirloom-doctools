@@ -26,11 +26,7 @@
 # include <stdio.h>
 # include <ctype.h>
 # include <inttypes.h>
-
-# if defined (__GLIBC__) && defined (_IO_getc_unlocked)
-# undef getc
-# define getc(f) _IO_getc_unlocked(f)
-# endif
+# include "global.h"
 
 # define MAXCHS 2000
 # define MAXSTR 1024

@@ -281,17 +281,6 @@
 #include	"afm.h"
 #include	"fontmap.h"
 
-
-#if defined (__GLIBC__) && defined (_IO_getc_unlocked)
-#undef	getc
-#define	getc(f)		_IO_getc_unlocked(f)
-#endif
-#if defined (__GLIBC__) && defined (_IO_putc_unlocked)
-#undef	putc
-#define	putc(c, f)	_IO_putc_unlocked(c, f)
-#endif
-
-
 char			*progname;
 static const char	*prologue = DPOST;	/* the basic PostScript prologue */
 const char		*colorfile = COLOR;	/* things needed for color support */
