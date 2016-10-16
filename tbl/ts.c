@@ -56,23 +56,14 @@ cprefix(const char *ctl, const char *line)
 	return !c;
 }
 
-int 
+int
 letter(int ch)
-	{
+{
 	if (ch >= 'a' && ch <= 'z')
 		return(1);
 	if (ch >= 'A' && ch <= 'Z')
 		return(1);
 	return(0);
-	}
-int 
-numb(char *str)
-{
-	/* convert to integer */
-	int k;
-	for (k=0; *str >= '0' && *str <= '9'; str++)
-		k = k*10 + *str - '0';
-	return(k);
 }
 
 int 

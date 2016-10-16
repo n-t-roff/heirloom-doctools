@@ -295,7 +295,7 @@ readspec(void)
 			while (isdigit(*snp++ = c = get1char()))
 				;
 			un1getc(c);
-			sep[icol-1] = max(sep[icol-1], numb(sn));
+			sep[icol-1] = max(sep[icol-1], strtol(sn, NULL, 10));
 			continue;
 		case '|':
 			lefline[nclin][icol]++;
