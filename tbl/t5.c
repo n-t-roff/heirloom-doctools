@@ -93,7 +93,7 @@ gettbl(void)
 			table[nlin][icol].col = cstore;
 			table[nlin][icol].rcol=0;
 			ch=1;
-			if (match(cstore, "T{")) { /* text follows */
+			if (strcmp(cstore, "T{") == 0) { /* text follows */
 				/* get_text was originally gettext and was renamed */
 				if ((table[nlin][icol].col =
 				    get_text(cstore, nlin, icol,
@@ -214,13 +214,15 @@ vspand(int ir, int ij, int ifform)
 	if (fullbot[ir]) return(0);
 	return(vspen(table[ir][ij].col));
 }
-int 
+
+int
 vspen(char *s)
 {
 	if (s==0) return(0);
 	if (!point((intptr_t)s)) return(0);
-	return(match(s, SPAN));
+	return(strcmp(s, SPAN) == 0);
 }
+
 static int
 morelines(int n)
 {

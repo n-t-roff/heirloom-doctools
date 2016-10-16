@@ -191,7 +191,6 @@ int up1(int);
 char *maknew(char *);
 int ineqn(char *, char *);
 /* ts.c */
-int match(const char *, const char *);
 int prefix(const char *, const char *);
 int cprefix(const char *, const char *);
 int letter(int);
