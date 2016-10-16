@@ -67,18 +67,14 @@ letter(int ch)
 	}
 int 
 numb(char *str)
-	{
+{
 	/* convert to integer */
 	int k;
 	for (k=0; *str >= '0' && *str <= '9'; str++)
 		k = k*10 + *str - '0';
 	return(k);
-	}
-int 
-digit(int x)
-	{
-	return(x>= '0' && x<= '9');
-	}
+}
+
 int 
 max(int a, int b)
 {

@@ -196,7 +196,6 @@ int prefix(const char *, const char *);
 int cprefix(const char *, const char *);
 int letter(int);
 int numb(char *);
-int digit(int);
 int max(int, int);
 void tcopy(char *, char *);
 /* tt.c */
