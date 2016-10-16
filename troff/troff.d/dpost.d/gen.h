@@ -64,16 +64,6 @@ extern const char	creator[];
 #define PI		3.141592654
 #endif
 
-
-/*
- *
- * A few simple macros.
- *
- */
-
-
-#define ABS(A)		((A) >= 0 ? (A) : -(A))
- 
 /* color.c */
 void getcolor(void);
 void newcolor(char *);

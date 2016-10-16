@@ -3711,7 +3711,7 @@ oprep(int stext)
     if (stext) {
         starttext();
 
-        if ( ABS(hpos - lastx) > slop )
+        if ( abs(hpos - lastx) > slop )
 	    endstring();
     }
     wordspace = 0;
