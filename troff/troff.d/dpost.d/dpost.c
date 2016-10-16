@@ -1257,14 +1257,6 @@ setpaths (
 
 /*****************************************************************************/
 
-static int
-prefix(const char *str, const char *pfx)
-{
-    while (*pfx && *str == *pfx)
-	str++, pfx++;
-    return *str == 0;
-}
-
 static void
 setmarks(char *str)
 {

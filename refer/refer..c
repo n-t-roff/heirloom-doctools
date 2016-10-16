@@ -86,7 +86,6 @@ extern char *sinput, *soutput, *tagout;
 /* deliv2.c */
 int hash(const char *);
 void err(const char *, ...);
-int prefix(const char *, const char *);
 const char *mindex(const char *, int);
 void *zalloc(int, int);
 /* glue1.c */

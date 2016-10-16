@@ -18,4 +18,5 @@
 
 #define min(x,y) ((x) < (y) ? (x) : (y))
 #define max(x,y) ((x) > (y) ? (x) : (y))
+#define prefix(str, pfx) (strncmp(pfx, str, strlen(pfx)) == 0)
 

@@ -25,14 +25,6 @@
 
  /* ts.c: minor string processing subroutines */
 
-int 
-prefix(const char *small, const char *big) {
-	int c;
-	while ((c= *small++) == *big++)
-		if (c==0) return(1);
-	return(c==0);
-}
-
 /* returns: 1 for match, 0 else */
 int
 cprefix(const char *ctl, const char *line)
