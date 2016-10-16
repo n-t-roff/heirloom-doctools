@@ -27,11 +27,6 @@ extern void	WARNING(const char *, ...);
 
 #define	eq(s,t)	(strcmp(s,t) == 0)
 
-inline int	max(int x, int y)	{ return x > y ? x : y; }
-inline int	min(int x, int y)	{ return x > y ? y : x; }
-// already defined in stdlib.h:
-//inline int	abs(int x)		{ return (x >= 0) ? x : -x; }
-
 extern int	dbg;
 
 extern int	pn, userpn;		// actual and user-defined page numbers
