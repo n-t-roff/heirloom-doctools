@@ -74,7 +74,7 @@ corout(char *_in, char *out, const char *rprog, char *arg, int outlen)
 	return 0;
 }
 
-# define ALEN 50
+# define ALEN 100
 
 int
 callhunt(char *_in, char *out, char *arg, int outlen)
