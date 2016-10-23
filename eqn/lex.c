@@ -299,7 +299,7 @@ include(void) {
 void
 delim(void) {
 	yyval.token = eqnreg = 0;
-	if (cstr(token, 0, SSIZE) || token[0] & 0200 || token[1] & 0200)
+	if (cstr(token, 0, SSIZE))
 		error(FATAL, "Bizarre delimiters at %.20s", token);
 	lefteq = token[0];
 	righteq = token[1];
