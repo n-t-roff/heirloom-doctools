@@ -276,6 +276,8 @@ extern	void	cvtime(void);
 extern	int	ctoi(register char *);
 extern	void	mesg(int);
 extern	void	errprint(const char *, ...);
+#define	fdprintf	xxfdprintf
+extern	void	fdprintf(int, const char *, ...);
 extern	char	*roff_sprintf(char *, size_t, const char *, ...);
 extern	int	control(register int, register int);
 extern	int	getrq2(void);
