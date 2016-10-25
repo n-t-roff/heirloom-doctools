@@ -20,6 +20,9 @@
 #include "global.h"
 #include "y.tab.h"
 
+static void onintr(int n);
+static void fpecatch(int n);
+
 int	dbg	= 0;
 
 #define GRAPDEFINES LIBDIR "/grap.defines"
@@ -49,8 +52,6 @@ extern void getdata(void);
 int
 main(int argc, char *argv[])
 {
-	extern void onintr(int), fpecatch(int);
-
 	if (signal(SIGINT, SIG_IGN) != SIG_IGN)
 		signal(SIGINT, onintr);
 	signal(SIGFPE, fpecatch);
@@ -103,14 +104,14 @@ main(int argc, char *argv[])
 }
 
 /*ARGSUSED*/
-void onintr(int n __unused)
+static void onintr(int n __unused)
 {
 	if (!dbg)
 		unlink(tempfile);
 	exit(1);
 }
 
-void fpecatch(int n)
+static void fpecatch(int n)
 {
 	WARNING("floating point exception");
 	onintr(n);

@@ -81,7 +81,7 @@ extern double	u2pts(int);
 extern void	ptinit(void);
 extern void	specnames(void);
 extern int	findch(register const char *);
-extern void	ptout(register tchar);
+void	ptout(register tchar);
 extern tchar	*ptout0(tchar *, tchar *);
 extern void	ptps(void);
 extern void	ptfont(void);

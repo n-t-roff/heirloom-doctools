@@ -237,10 +237,3 @@ WS	[ \t]
 <str>.		{ CADD; }
 
 %%
-
-#ifdef	FLEX_SCANNER
-void xxcruft(void)
-{
-	unput(0);
-}
-#endif	/* FLEX_SCANNER */

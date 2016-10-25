@@ -13,6 +13,7 @@ extern void	specnames(void);
 extern int	findch(register const char *);
 extern void	twdone(void);
 extern void	ptout1(void);
+void ptout(tchar);
 extern char	*plot(char *);
 extern void	move(void);
 extern void	ptlead(void);

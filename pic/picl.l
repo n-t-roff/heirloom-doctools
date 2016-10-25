@@ -12,6 +12,7 @@
 
 /*	Sccsid @(#)picl.l	1.9 (gritter) 8/6/06	*/
 %}
+%option noyywrap
 %Start A str def xsc br thru sh
 %e 1700
 %k 150
@@ -47,7 +48,6 @@ extern	struct	symtab	symtab[];
 
 int	yyback(int *, int);
 int	yylook(void);
-int	yywrap(void);
 
 #define	CADD	cbuf[clen++]=yytext[0]; \
 		if (clen>=CBUFLEN-1) { WARNING("string too long", cbuf); BEGIN A; }
