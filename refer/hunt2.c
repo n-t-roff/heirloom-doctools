@@ -119,7 +119,7 @@ doquery(long *hpt, int nhash, FILE *fb, int nitem, char **qitem, unsigned *mptr)
 		}
 		else
 		{
-			if (master.a[i] == -1) break;
+			if (master.a[i] == (unsigned int)-1) break;
 		}
 	}
 	nf= i;

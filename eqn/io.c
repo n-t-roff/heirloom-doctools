@@ -25,6 +25,7 @@
 #include <stdarg.h>
 #include <stdlib.h>
 #include <libgen.h>
+#include "global.h"
 
 static char	*in;	/* input buffer */
 static size_t	insize;	/* input buffer size */
@@ -283,7 +284,7 @@ setfile(int argc, char **argv) {
 }
 
 void
-yyerror(char *unused) {;}
+yyerror(char *unused __unused) {;}
 
 void
 init(void) {

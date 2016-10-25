@@ -171,20 +171,22 @@ main(int argc, char **argv)
 }
 
 void
-afmaddchar(struct afmtab *a, int C, int tp, int cl, int WX, int B[4], char *N,
-		enum spec s, int gid)
+afmaddchar(struct afmtab *a __unused, int C __unused, int tp __unused,
+		int cl __unused, int WX, int B[4] __unused, char *N,
+		enum spec s __unused, int gid __unused)
 {
 	if (N)
 		print(SHOW_CHARS, "char %s width %d", N, _unitconv(WX));
 }
 
 void
-afmalloc(struct afmtab *a, int n)
+afmalloc(struct afmtab *a __unused, int n __unused)
 {
 }
 
 void
-afmaddkernpair(struct afmtab *a, int ch1, int ch2, int k)
+afmaddkernpair(struct afmtab *a __unused, int ch1 __unused, int ch2 __unused,
+		int k __unused)
 {
 }
 

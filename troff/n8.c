@@ -122,7 +122,7 @@ hyphen(tchar *wp)
 		i = _wdstart = wdstart;
 		_wdend = wdend;
 		do {
-			if (cbits(*i) == '-' || cbits(*i) == EMDASH ||
+			if (cbits(*i) == '-' || cbits(*i) == (size_t)EMDASH ||
 					i == _wdend) {
 				while (wdstart <= i && (punct(*wdstart) ||
 						(cbits(*wdstart) >= '0' &&

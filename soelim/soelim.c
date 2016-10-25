@@ -70,7 +70,7 @@ main(int argc, char **argv)
 
 int process(char *file)
 {
-	register int n;
+	size_t n;
 	register int c;
 	static char *fname = NULL;
 	static size_t fnsize = 0;

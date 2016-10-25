@@ -1,4 +1,4 @@
-FLAGS =
+FLAGS = -I../../include
 
 .c.o:
 	$(CC) $(_CFLAGS) $(FLAGS) -c $<

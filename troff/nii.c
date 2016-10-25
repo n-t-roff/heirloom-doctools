@@ -46,6 +46,8 @@
  * contributors.
  */
 
+#include <sys/types.h>
+
 #include "tdef.h"
 #ifdef NROFF
 #include "tw.h"

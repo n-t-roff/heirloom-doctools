@@ -63,7 +63,7 @@ unsigned short	unitsPerEm;
 static short	xMin, yMin, xMax, yMax;
 static short	indexToLocFormat;
 static struct afmtab	*a;
-static int	nc;
+static unsigned long	nc;
 static int	fsType;
 static int	WeightClass;
 static int	isFixedPitch;
@@ -1663,7 +1663,8 @@ get_offset_table(void)
 static void
 get_table_directories(void)
 {
-	int	i, j, o;
+	int	i, j;
+	size_t	o;
 	char	buf[16];
 
 	free(table_directories);
@@ -1750,7 +1751,7 @@ get_bb(int gid, int B[4])
 }
 
 static void
-onechar(int gid, int sid)
+onechar(unsigned long gid, int sid)
 {
 	long	o;
 	int	w, tp;
@@ -1814,7 +1815,7 @@ static void
 get_CFF_Charset(void)
 {
 	int	d = 0;
-	int	gid, i, j, first, nLeft;
+	unsigned long	gid, i, j, first, nLeft;
 
 	d = get_CFF_Top_DICT_Entry(15);
 	if (d == 0) {
@@ -2084,7 +2085,7 @@ addunitab(int c __actual_use, int u __actual_use)
 static char	*got_gid;
 
 static void
-got_mapping(int c, int gid, int addchar)
+got_mapping(int c, unsigned long gid, int addchar)
 {
 	if (gid < nc) {
 		if (addchar) {
@@ -2515,9 +2516,9 @@ get_OS_2(void)
 }
 
 static char *
-GID2SID(int gid)
+GID2SID(unsigned long gid)
 {
-	if (gid < 0 || gid >= nc)
+	if (gid >= nc)
 		return NULL;
 	return getSID(gid2sid[gid]);
 }
@@ -2569,18 +2570,18 @@ open_cov(int o)
 	}
 }
 
-static int
+static unsigned long
 get_cov(struct cov *cp)
 {
 	int	Start, End;
 
 	switch (cp->CoverageFormat) {
 	default:
-		return -1;
+		return (unsigned long)-1;
 	case 1:
 		if (cp->cnt < cp->GlyphCount)
 			return pbe16(&contents[cp->offset+4+2*cp->cnt++]);
-		return -1;
+		return (unsigned long)-1;
 	case 2:
 		while (cp->cnt < cp->RangeCount) {
 			Start = pbe16(&contents[cp->offset+4+6*cp->cnt]);
@@ -2594,7 +2595,7 @@ get_cov(struct cov *cp)
 				cp->gid = Start;
 			return cp->gid++;
 		}
-		return -1;
+		return (unsigned long)-1;
 	}
 }
 
@@ -2727,7 +2728,7 @@ static void
 kerninit(void)
 {
 	char	*cp;
-	int	i;
+	unsigned long	i;
 
 	got_kern = 0;
 	nametable = calloc(nc, sizeof *nametable);
@@ -2739,7 +2740,7 @@ kerninit(void)
 #define	GID2name(gid)	((gid) < 0 || (gid) >= nc ? NULL : nametable[gid])
 
 static inline void
-kernpair(int first, int second, int x)
+kernpair(unsigned long first, unsigned long second, int x)
 {
 	struct namecache	*np1, *np2;
 
@@ -2767,7 +2768,7 @@ kernfinish(void)
 #endif	/* !DUMP */
 
 static void
-get_PairValueRecord(int first, int ValueFormat1, int ValueFormat2, int o)
+get_PairValueRecord(int first, int ValueFormat1, int ValueFormat2 __unused, int o)
 {
 	int	second;
 	int	x;
@@ -2868,7 +2869,7 @@ get_PairPosFormat2(int o)
 }
 
 static void
-get_GPOS_kern1(int _t, int o, const char *_name)
+get_GPOS_kern1(int _t __unused, int o, const char *_name __unused)
 {
 	int	PosFormat;
 
@@ -2881,7 +2882,7 @@ get_GPOS_kern1(int _t, int o, const char *_name)
 }
 
 static void
-get_GPOS_kern2(int _t, int o, const char *_name)
+get_GPOS_kern2(int _t __unused, int o, const char *_name __unused)
 {
 	int	PosFormat;
 
@@ -2897,9 +2898,9 @@ static void
 get_Ligature(int first, int o)
 {
 	int	LigGlyph;
-	int	CompCount;
+	unsigned int	CompCount;
 	int	Component[16];
-	int	i;
+	unsigned int	i;
 	char	*gn;
 
 	LigGlyph = pbe16(&contents[o]);
@@ -2969,7 +2970,7 @@ get_LigatureSet(int first, int o)
 }
 
 static void
-get_LigatureSubstFormat1(int _t, int o, const char *_name)
+get_LigatureSubstFormat1(int _t __unused, int o, const char *_name __unused)
 {
 	struct cov	*cp;
 	int	Coverage;
@@ -3056,9 +3057,9 @@ get_SingleSubstitutionFormat1(int o, const char *name)
 {
 	struct feature	*fp;
 	struct cov	*cp;
-	int	c, d;
+	unsigned long	c, d;
 	int	Coverage;
-	int	DeltaGlyphID;
+	unsigned long	DeltaGlyphID;
 
 	if (pbe16(&contents[o]) != 1)
 		return;
@@ -3067,7 +3068,7 @@ get_SingleSubstitutionFormat1(int o, const char *name)
 		return;
 	DeltaGlyphID = pbe16(&contents[o+4]);
 	fp = add_feature(name);
-	while ((c = get_cov(cp)) >= 0)
+	while ((c = get_cov(cp)) != (unsigned long)-1)
 		if ((d = c + DeltaGlyphID) < nc)
 			add_substitution_pair(fp, c, d);
 	free_cov(cp);
@@ -3224,7 +3225,7 @@ get_kern_subtable(int o)
 static void
 get_kern(void)
 {
-	long	o;
+	unsigned long	o;
 	int	nTables;
 	int	i, length;
 
@@ -3450,7 +3451,7 @@ otft42(char *font, char *path, char *_contents, size_t _size, FILE *fp)
 {
 	const char	*cp;
 	int	ok = 0;
-	int	i;
+	unsigned long	i;
 
 	(void) &ok;
 	a = NULL;
@@ -3509,14 +3510,14 @@ otft42(char *font, char *path, char *_contents, size_t _size, FILE *fp)
 			}
 			fprintf(fp, "end readonly def\n");
 		}
-		fprintf(fp, "/CharStrings %d dict dup begin\n", nc);
+		fprintf(fp, "/CharStrings %lu dict dup begin\n", nc);
 		for (i = 0; i < nc; i++) {
 			if ((cp = GID2SID(i)) != NULL &&
 					(i == 0 || strcmp(cp, ".notdef"))) {
 				fprintenc(fp, cp);
-				fprintf(fp, " %d def\n", i);
+				fprintf(fp, " %lu def\n", i);
 			} else
-				fprintf(fp, "/index0x%02X %d def\n", i, i);
+				fprintf(fp, "/index0x%02lX %lu def\n", i, i);
 		}
 		fprintf(fp, "end readonly def\n");
 		fprintf(fp, "/sfnts[");

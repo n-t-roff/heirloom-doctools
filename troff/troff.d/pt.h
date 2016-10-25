@@ -7,7 +7,7 @@
 /* t6.c */
 extern int	width(register tchar);
 extern void	zapwcache(int);
-extern int	getcw(register int);
+extern int	getcw(size_t);
 extern int	abscw(int);
 extern int	onfont(tchar);
 extern int	getascender(void);

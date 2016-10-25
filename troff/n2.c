@@ -240,6 +240,8 @@ outtp(tchar i)
 	else
 #endif	/* EUC */
 		fdprintf(ptid, "%c", j);
+#else
+	(void)i;
 #endif
 }
 
