@@ -2419,7 +2419,7 @@ t_supply(char *fnt)		/* supply a font */
 
     while (*fnt == ' ' || *fnt == '\t')
 	fnt++;
-    for (np = font; *np && *np != ' ' && *np != '\t' && *np != '\n'; np++);
+    for (np = fnt; *np && *np != ' ' && *np != '\t' && *np != '\n'; np++);
     if (*np == '\0' || *np == '\n')
 	return;
     *np = '\0';
