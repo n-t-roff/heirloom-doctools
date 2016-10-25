@@ -17,6 +17,7 @@
 #include <string.h>
 #include <unistd.h>
 #include "grap.h"
+#include "global.h"
 #include "y.tab.h"
 
 int	dbg	= 0;
@@ -102,7 +103,7 @@ main(int argc, char *argv[])
 }
 
 /*ARGSUSED*/
-void onintr(int n)
+void onintr(int n __unused)
 {
 	if (!dbg)
 		unlink(tempfile);
