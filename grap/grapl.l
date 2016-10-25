@@ -12,6 +12,7 @@
 
 /*	Sccsid @(#)grapl.l	1.4 (gritter) 11/22/05	*/
 %}
+%option nounput
 %Start A str def thru sh
 
 %{

@@ -13,6 +13,7 @@
 /*	Sccsid @(#)picl.l	1.9 (gritter) 8/6/06	*/
 %}
 %option noyywrap
+%option nounput
 %Start A str def xsc br thru sh
 %e 1700
 %k 150

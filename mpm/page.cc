@@ -147,22 +147,6 @@ static void justify(stream *scratch, int wantht)
 		}
 }
 
-// If r were added to s, would the height of the composed result be at most maxht?
-static int wouldfit(range *r, stream *s, int maxht)
-{
-	if (r->rawht() + s->rawht() <= maxht)
-		return 1;		// the conservative test succeeded
-	stream scratch;			// local playground for costly test
-	for (stream cd = *s; cd.more(); cd.advance())
-		scratch.append(cd.current());
-	scratch.append(r);
-	movefloats(&scratch, ((double) scratch.rawht())/maxht);
-	trimspace(&scratch);
-	int retval = scratch.height() <= maxht;
-	scratch.freeall();
-	return retval;
-}
-
 // If s1 were added to s, would the height of the composed result be at most maxht?
 // The computational structure is similar to that above.
 static int wouldfit(stream *s1, stream *s, int maxht)
