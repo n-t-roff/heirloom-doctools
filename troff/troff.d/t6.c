@@ -2067,7 +2067,6 @@ loadafm(int nf, int rq, char *file, char *supply, int required, enum spec spec)
 	struct afmtab	*a;
 	int	i, have = 0;
 	struct namecache	*np;
-	size_t	l;
 
 	zapwcache(0);
 	if (nf < 0)

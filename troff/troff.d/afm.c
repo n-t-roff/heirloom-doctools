@@ -888,7 +888,6 @@ afmget(struct afmtab *a, char *contents, size_t size)
 	char	*cp, *th, *tp;
 	int	n = 0;
 	enum spec	s;
-	size_t	l;
 
 	if ((cp = strrchr(a->file, '/')) == NULL)
 		cp = a->file;

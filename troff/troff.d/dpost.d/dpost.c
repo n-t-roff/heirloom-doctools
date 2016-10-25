@@ -1909,7 +1909,6 @@ loadfont (
     int		nw;			/* number of width table entries */
     const char	*p;
     char	*path;
-    size_t	l;
 
 
 /*

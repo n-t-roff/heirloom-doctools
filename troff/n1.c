@@ -140,7 +140,6 @@ main(int argc, char **argv)
 	register char	*p;
 	register int j;
 	char	**oargv;
-	const char *s;
 	size_t l;
 
 	setlocale(LC_CTYPE, "");
