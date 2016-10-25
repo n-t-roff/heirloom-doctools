@@ -19,7 +19,7 @@ install:
 	done
 
 clean:
-		rm -rf $(BIN) $(OBJS)
+		rm -rf $(BIN) $(OBJS) $(FONTS)
 
 mrproper:	clean
 
