@@ -46,6 +46,8 @@
  * contributors.
  */
 
+#include <sys/types.h>
+
 #include "tdef.h"
 #include "ext.h"
 
@@ -102,7 +104,7 @@ int	oldbits = -1;
 #endif
 int	init = 1;
 int	fc = IMP;	/* field character */
-int	eschar = '\\';
+unsigned int	eschar = '\\';
 int	ecs = '\\';
 #ifdef	NROFF
 int	pl = 11*INCH;

@@ -455,7 +455,7 @@ r:
 void
 nofill(void)
 {
-	register int j;
+	size_t j;
 	register tchar i, nexti;
 	int k, oev;
 
@@ -909,7 +909,7 @@ e1:
 static int
 maybreak(tchar c, int dv)
 {
-	int	i, k = cbits(c);
+	size_t	i, k = cbits(c);
 
 	if (c & BLBIT)
 		return 1;
@@ -919,7 +919,7 @@ maybreak(tchar c, int dv)
 	case IMP:
 		return 0;
 	case 0:
-		return (!gemu || dv) && (k == '-' || k == EMDASH);
+		return (!gemu || dv) && (k == '-' || k == (size_t)EMDASH);
 	default:
 		for (i = 0; breakch[i] && i < NSENT; i++)
 			if (breakch[i] == k)
@@ -931,7 +931,7 @@ maybreak(tchar c, int dv)
 static int
 nhychar(tchar c)
 {
-	int	i, k = cbits(c);
+	size_t	i, k = cbits(c);
 
 	switch (nhych[0]) {
 	case IMP:
@@ -939,7 +939,7 @@ nhychar(tchar c)
 	case 0:
 		if (hyext)
 			return 0;
-		return k == '-' || k == EMDASH;
+		return k == '-' || k == (size_t)EMDASH;
 	default:
 		for (i = 0; nhych[i] && i < NSENT; i++)
 			if (nhych[i] == k)
@@ -1227,7 +1227,7 @@ setnel(void)
 int
 getword(int x)
 {
-	register int j, k = 0, w;
+	size_t j, k = 0, w;
 	register tchar i = 0, *wp, nexti, gotspc = 0, _t;
 	int noword, n, inword = 0;
 	int lastsp = ' ';
@@ -1432,10 +1432,10 @@ g1:		nexti = GETCH();
 		collectmb(i);
 #endif /* EUC && NROFF && ZWDELIMS */
 	{
-		static int sentchar[] =
+		static size_t sentchar[] =
 			{ '.', '?', '!', ':', 0 }; /* sentence terminators */
-		int	*sp, *tp;
-		static int transchar[] =
+		size_t	*sp, *tp;
+		static size_t transchar[] =
 			{ '"', '\'', ')', ']', '*', 0, 0 };
 		transchar[5] = DAGGER;
 		if ((j != '\n' && j != ' ' && (!padj || j != STRETCH)) ||

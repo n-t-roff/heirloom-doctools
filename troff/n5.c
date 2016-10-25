@@ -875,7 +875,7 @@ loop:	for (i = 0; i < NTM - 5 - mb_cur_max; ) {
 			j = ':';
 		else if (istrans(c))
 			j = ')';
-		else if (j >= 0 && j < sizeof tmtab && tmtab[j])
+		else if (j >= 0 && j < (int)sizeof tmtab && tmtab[j])
 			j = tmtab[j];
 		else if (j == ACUTE)
 			j = '\'';
@@ -2271,9 +2271,9 @@ casemc(void)
 
 
 static void
-propchar(int *tp)
+propchar(size_t *tp)
 {
-	int	c, *tpp;
+	size_t	c, *tpp;
 	tchar	i;
 
 	if (skip(0)) {

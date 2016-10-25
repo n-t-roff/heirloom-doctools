@@ -74,7 +74,7 @@ static struct	contab **mhash;	/* size must be 128 == the 0177 on line above */
 #define	blisti(i)	(((i)-ENV_BLK*BLK) / BLK)
 static filep	*blist;
 static int	nblist;
-static int	pagech = '%';
+static size_t	pagech = '%';
 static int	strflg;
 
 static tchar *wbuf;
@@ -523,7 +523,7 @@ de1:
 
 
 static struct contab *
-findmn1(struct contab **hashp, register int i, int als)
+findmn1(struct contab **hashp, size_t i, int als)
 {
 	register struct contab *p;
 
@@ -1864,7 +1864,8 @@ caseindex(void)
 {
 	int	i, j, n, N;
 	struct contab	*contp;
-	int	*sp = NULL, as = 0, ns = 0, *np;
+	size_t	*sp = NULL;
+	int	as = 0, ns = 0, *np;
 	tchar	c;
 	filep	savip;
 	struct numtab	*numtp;
@@ -2125,7 +2126,7 @@ casepm(void)
 		tcnt++;
 		if (contab[i].als == 0 && (j = (filep) contab[i].mx) != 0) {
 			k = 1;
-			while ((j = blist[blisti(j)]) != (unsigned) ~0) {
+			while ((j = blist[blisti(j)]) != (int) ~0) {
 				k++; 
 			}
 			cnt++;

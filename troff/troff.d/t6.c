@@ -108,7 +108,7 @@ static int	_ps2cc(const char *name, int create);
 int
 width(register tchar j)
 {
-	register int i, k;
+	size_t i, k;
 
 	_minflg = minflg;
 	minflg = minspc = 0;
@@ -128,7 +128,7 @@ width(register tchar j)
 		return(k);
 	}
 	i = cbits(j);
-	if (html && i >= NCHARS)
+	if (html && i >= (size_t)NCHARS)
 		i = ' ';
 	if (i < ' ') {
 		if (i == '\b')
@@ -207,7 +207,7 @@ zapwcache(int s)
 }
 
 int
-getcw(register int i)
+getcw(size_t i)
 {
 	register int	k;
 	register int	*p;
@@ -404,7 +404,7 @@ abscw(int n)	/* return index of abs char n in fontab[], etc. */
 int
 onfont(tchar c)
 {
-	int	k = cbits(c);
+	size_t	k = cbits(c);
 	int	f = fbits(c);
 
 	if (k <= ' ')
@@ -519,7 +519,8 @@ kzap(int f)
 static tchar
 findchar(tchar c)
 {
-	int	f, i;
+	int	f;
+	size_t	i;
 
 	f = fbits(c);
 	c = cbits(c);
@@ -573,7 +574,8 @@ getkw(tchar c, tchar e)
 {
 	struct knode	*kp;
 	struct afmtab	*a;
-	int	f, g, i, j, k, n, s, I, J;
+	int	f, g, i, j, k, n, s;
+	size_t I, J;
 	double	z;
 
 	if (isxfunc(c, CHAR))
@@ -724,7 +726,7 @@ static const struct amap {
 
 tchar
 setch(int delim) {
-	register int j;
+	size_t j;
 	char	temp[NC];
 	tchar	c, e[2] = {0, 0};
 	int	f;
@@ -831,7 +833,7 @@ tchar setabs(void)		/* set absolute char from \C'...' */
 	n = 0;
 	n = inumb(&n);
 	getch();
-	if (nonumb || n + nchtab + 128 >= NCHARS)
+	if (nonumb || n + nchtab + 128 >= (size_t)NCHARS)
 		return 0;
 	return n + nchtab + 128;
 }
@@ -2251,7 +2253,8 @@ void
 casehidechar(void)
 {
 	int	savfont = font, savfont1 = font1;
-	int	i, j;
+	int	j;
+	size_t	i;
 	tchar	k;
 
 	if (skip(1))
@@ -2870,7 +2873,7 @@ tr2un(tchar i, int f)
 		a = afmtab[n];
 		if (a->unitab && i < a->nunitab && a->unitab[i])
 			return a->unitab[i];
-		if (i - 32 >= nchtab + 128)
+		if ((size_t)i - 32 >= nchtab + 128)
 			i -= nchtab + 128;
 		if ((n = a->fitab[i - 32]) < a->nchars &&
 				a->nametab[n] != NULL)

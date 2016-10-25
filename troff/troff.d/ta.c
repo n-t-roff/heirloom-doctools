@@ -112,7 +112,7 @@ x ...\n	device control functions:
 #define	NFONT	10
 
 int	output	= 0;	/* do we do output at all? */
-int	nolist	= 0;	/* output page list if > 0 */
+size_t	nolist	= 0;	/* output page list if > 0 */
 int	olist[20];	/* pairs of page numbers */
 
 int	erase	= 1;
@@ -243,7 +243,8 @@ main(int argc, char **argv)
 void
 outlist(char *s)	/* process list of page numbers to be printed */
 {
-	int n1, n2, i;
+	int n1, n2;
+	size_t i;
 
 	nolist = 0;
 	while (*s && nolist < sizeof olist/sizeof *olist - 1) {
@@ -279,7 +280,7 @@ outlist(char *s)	/* process list of page numbers to be printed */
 int
 in_olist(int n)	/* is n in olist? */
 {
-	int i;
+	size_t i;
 
 	if (nolist == 0)
 		return(1);	/* everything is included */
@@ -870,7 +871,8 @@ char *spectab[] ={
 static int
 sget(char *buf, size_t size, FILE *fp)
 {
-	int	c, n = 0;
+	int	c;
+	size_t	n = 0;
 
 	do
 		c = getc(fp);
