@@ -49,8 +49,10 @@ main(int argc, char **argv) {
 	char *b, *b0;
 	ssize_t s;
 	progname = argv[0];
-	if (argc != 2) return usage();
+	if (argc < 2 || argc > 3) return usage();
 	fontname = argv[1];
+	if (argc == 3)
+		charfile = argv[2];
 	s = read_file(&b0);
 	b = b0;
 	if (!(i = find_font(&b, &s))) {
@@ -189,7 +191,7 @@ next_line(char **b, ssize_t *s) {
 static int
 usage(void) {
 	fprintf(stderr,
-"Usage: ./%s <font_name> >> <font_name>\n"
+"Usage: ./%s <font_name> [charsetfile] >> <font_name>\n"
 	    , progname);
 	return EXIT_FAILURE;
 }

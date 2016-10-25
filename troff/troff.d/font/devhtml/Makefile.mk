@@ -2,7 +2,12 @@ BIN=		makefont
 OBJS=		$(BIN).o
 FONTS=		R I B BI C CW CR CI CB H HI HB S
 
-all:		$(BIN)
+.SUFFIXES:	.in
+.in: ${BIN}
+	cat $< > $@
+	./${BIN} $@ >> $@
+
+all:		$(BIN) ${FONTS}
 
 install:
 	d=$(ROOT)$(FNTDIR)/devhtml; test -d $$d || mkdir $$d; \
@@ -11,7 +16,6 @@ install:
 	sed '1,2d;s/[[:space:]].*//' charset >> $$d/DESC; \
 	for i in $(FONTS); do \
 		install -m 644 $$i $$d/; \
-		./$(BIN) $$i >> $$d/$$i; \
 	done
 
 clean:
