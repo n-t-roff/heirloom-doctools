@@ -72,22 +72,22 @@ char	*obufp = obuf;
 int	NN;
 struct numtab *numtab;
 const struct numtab initnumtab[] = {
-	{ PAIR('%', 0) },
-	{ PAIR('n', 'l') },
-	{ PAIR('y', 'r') },
-	{ PAIR('h', 'p') },
-	{ PAIR('c', 't') },
-	{ PAIR('d', 'n') },
-	{ PAIR('m', 'o') },
-	{ PAIR('d', 'y') },
-	{ PAIR('d', 'w') },
-	{ PAIR('l', 'n') },
-	{ PAIR('d', 'l') },
-	{ PAIR('s', 't') },
-	{ PAIR('s', 'b') },
-	{ PAIR('c', '.') },
-	{ PAIR('$', '$') },
-	{ 0 }
+	{ PAIR('%', 0), 0, 0, 0, NULL, 0, 0, 0, 0, 0 },
+	{ PAIR('n', 'l'), 0, 0, 0, NULL, 0, 0, 0, 0, 0  },
+	{ PAIR('y', 'r'), 0, 0, 0, NULL, 0, 0, 0, 0, 0  },
+	{ PAIR('h', 'p'), 0, 0, 0, NULL, 0, 0, 0, 0, 0  },
+	{ PAIR('c', 't'), 0, 0, 0, NULL, 0, 0, 0, 0, 0  },
+	{ PAIR('d', 'n'), 0, 0, 0, NULL, 0, 0, 0, 0, 0  },
+	{ PAIR('m', 'o'), 0, 0, 0, NULL, 0, 0, 0, 0, 0  },
+	{ PAIR('d', 'y'), 0, 0, 0, NULL, 0, 0, 0, 0, 0  },
+	{ PAIR('d', 'w'), 0, 0, 0, NULL, 0, 0, 0, 0, 0  },
+	{ PAIR('l', 'n'), 0, 0, 0, NULL, 0, 0, 0, 0, 0  },
+	{ PAIR('d', 'l'), 0, 0, 0, NULL, 0, 0, 0, 0, 0  },
+	{ PAIR('s', 't'), 0, 0, 0, NULL, 0, 0, 0, 0, 0  },
+	{ PAIR('s', 'b'), 0, 0, 0, NULL, 0, 0, 0, 0, 0  },
+	{ PAIR('c', '.'), 0, 0, 0, NULL, 0, 0, 0, 0, 0  },
+	{ PAIR('$', '$'), 0, 0, 0, NULL, 0, 0, 0, 0, 0  },
+	{ 0, 0, 0, 0, NULL, 0, 0, 0, 0, 0  }
 };
 
 
@@ -140,7 +140,7 @@ enum warn	warn = WARN_FONT;
 
 int	NM;
 struct contab *contab;
-#define	C(a,b)	{a, 0, (void(*)(int))b, 0}
+#define	C(a,b)	{a, 0, (void(*)(int))b, 0, 0, 0, 0}
 const struct contab initcontab[] = {
 	C(PAIR('d', 's'), caseds),
 	C(PAIR('a', 's'), caseas),
