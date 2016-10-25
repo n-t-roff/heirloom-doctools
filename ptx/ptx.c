@@ -156,7 +156,8 @@ GETC(FILE *fp)
 {
 	char	mb[MB_LEN_MAX+1];
 	wchar_t	wc;
-	int	c, i, n;
+	int	c, i;
+	size_t n;
 	mbstate_t	state;
 
 	if (peekc != WEOF) {
