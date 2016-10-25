@@ -189,7 +189,7 @@ bad:	if ((c = getc(fp)) == EOF)
 }
 
 static void
-UNGETC(int c, FILE *fp)
+UNGETC(int c, FILE *fp __unused)
 {
 	peekc = c;
 }
