@@ -427,7 +427,7 @@ prop(int i)
 
 /* ARGSUSED */
 static void
-chkcmd(char *line, char *mac)
+chkcmd(char *line __unused, char *mac)
 {
 	int i;
 
