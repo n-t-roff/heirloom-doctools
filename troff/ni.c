@@ -100,7 +100,7 @@ char	**mfiles;
 int	nmfi = 0;
 int	NMF;
 #ifndef NROFF
-int	oldbits = -1;
+unsigned int	oldbits = (unsigned int)-1;
 #endif
 int	init = 1;
 int	fc = IMP;	/* field character */

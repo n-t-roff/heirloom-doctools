@@ -159,7 +159,7 @@ extern	int	noscale;
 extern	int	npn;
 extern	int	npnflg;
 extern	int	nx;
-extern	int	oldbits;
+extern	unsigned int	oldbits;
 extern	struct contab	*oldmn;
 extern	int	*olt;
 extern	int	over;

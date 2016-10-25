@@ -1663,7 +1663,8 @@ get_offset_table(void)
 static void
 get_table_directories(void)
 {
-	int	i, j, o;
+	int	i, j;
+	size_t	o;
 	char	buf[16];
 
 	free(table_directories);
@@ -2897,9 +2898,9 @@ static void
 get_Ligature(int first, int o)
 {
 	int	LigGlyph;
-	int	CompCount;
+	unsigned int	CompCount;
 	int	Component[16];
-	int	i;
+	unsigned int	i;
 	char	*gn;
 
 	LigGlyph = pbe16(&contents[o]);
@@ -3224,7 +3225,7 @@ get_kern_subtable(int o)
 static void
 get_kern(void)
 {
-	long	o;
+	unsigned long	o;
 	int	nTables;
 	int	i, length;
 

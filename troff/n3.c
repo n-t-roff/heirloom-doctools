@@ -2058,7 +2058,7 @@ static struct map {
 	struct map	*link;
 	int	n;
 } *map[128];
-static char	**had;
+static const char	**had;
 static int	hadn;
 static int	alcd;
 
