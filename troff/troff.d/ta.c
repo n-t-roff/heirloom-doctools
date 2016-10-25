@@ -464,17 +464,17 @@ fileinit(void)	/* read in font and code files, etc. */
 }
 
 void
-fontprint(int i)	/* debugging print of font i (0,...) */
+fontprint(int i __unused)	/* debugging print of font i (0,...) */
 {
 }
 
 void
-loadcode(int n, int nw)	/* load codetab on position n (0...); #chars is nw */
+loadcode(int n __unused, int nw __unused)	/* load codetab on position n (0...); #chars is nw */
 {
 }
 
 void
-loadfont(int n, char *s)	/* load font info for font s on position n (1...) */
+loadfont(int n __unused, char *s __unused)	/* load font info for font s on position n (1...) */
 {
 }
 
@@ -518,7 +518,7 @@ int	drawdot	= '.';	/* draw with this character */
 int	drawsize = 1;	/* shrink by this factor when drawing */
 
 void
-t_init(int reinit)	/* initialize device */
+t_init(int reinit __unused)	/* initialize device */
 {
 	fflush(stdout);
 	hpos = vpos = 0;
@@ -686,13 +686,13 @@ t_newline(void)	/* do whatever for the end of a line */
 }
 
 int
-t_size(int n)	/* convert integer to internal size number*/
+t_size(int n __unused)	/* convert integer to internal size number*/
 {
 	return 0;
 }
 
 int
-t_font(char *s)	/* convert string to internal font number */
+t_font(char *s __unused)	/* convert string to internal font number */
 {
 	return 0;
 }
@@ -807,17 +807,17 @@ put1(int c)	/* output char c */
 }
 
 void
-setsize(double n)	/* set point size to n (internal) */
+setsize(double n __unused)	/* set point size to n (internal) */
 {
 }
 
 void
-t_fp(int n, char *s)	/* font position n now contains font s */
+t_fp(int n __unused, char *s __unused)	/* font position n now contains font s */
 {
 }
 
 void
-setfont(int n)	/* set font to n */
+setfont(int n __unused)	/* set font to n */
 {
 }
 

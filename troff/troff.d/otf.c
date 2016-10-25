@@ -2767,7 +2767,7 @@ kernfinish(void)
 #endif	/* !DUMP */
 
 static void
-get_PairValueRecord(int first, int ValueFormat1, int ValueFormat2, int o)
+get_PairValueRecord(int first, int ValueFormat1, int ValueFormat2 __unused, int o)
 {
 	int	second;
 	int	x;
@@ -2868,7 +2868,7 @@ get_PairPosFormat2(int o)
 }
 
 static void
-get_GPOS_kern1(int _t, int o, const char *_name)
+get_GPOS_kern1(int _t __unused, int o, const char *_name __unused)
 {
 	int	PosFormat;
 
@@ -2881,7 +2881,7 @@ get_GPOS_kern1(int _t, int o, const char *_name)
 }
 
 static void
-get_GPOS_kern2(int _t, int o, const char *_name)
+get_GPOS_kern2(int _t __unused, int o, const char *_name __unused)
 {
 	int	PosFormat;
 
@@ -2969,7 +2969,7 @@ get_LigatureSet(int first, int o)
 }
 
 static void
-get_LigatureSubstFormat1(int _t, int o, const char *_name)
+get_LigatureSubstFormat1(int _t __unused, int o, const char *_name __unused)
 {
 	struct cov	*cp;
 	int	Coverage;

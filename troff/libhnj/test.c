@@ -1,9 +1,10 @@
 #include "hyphen.h"
 #include <stdio.h>
 #include <string.h>
+#include "global.h"
 
 int
-main(int argc, char **argv)
+main(int argc __unused, char **argv)
 {
 	HyphenDict	*hd;
 	char	buf[512], hbuf[512];
