@@ -13,12 +13,12 @@ FLAGS = -DNROFF -DUSG $(EUC) -I. -I.. -I../../include -DMACDIR='"$(MACDIR)"' \
 	-I$(BST)
 
 .c.o:
-	$(CC) $(CFLAGS) $(WARN) $(CPPFLAGS) $(FLAGS) -c $<
+	$(CC) $(_CFLAGS) $(FLAGS) -c $<
 
 all: nroff
 
 nroff: $(OBJ) $(LIBHNJ)/libhnj.a
-	$(CC) $(CFLAGS) $(LDFLAGS) $(OBJ) -L$(LIBHNJ) -lhnj $(LIBS) -o nroff
+	$(CC) $(_CFLAGS) $(_LDFLAGS) $(OBJ) -L$(LIBHNJ) -lhnj $(LIBS) -o nroff
 
 install:
 	$(INSTALL) -c nroff $(ROOT)$(BINDIR)/nroff

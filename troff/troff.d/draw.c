@@ -49,6 +49,7 @@
 #include	<stdio.h>
 #include	<stdlib.h>
 #include	<math.h>
+#include	"global.h"
 #define	PI	3.141592654
 #define	hmot(n)		hpos += n
 #define	hgoto(n)	hpos = n
