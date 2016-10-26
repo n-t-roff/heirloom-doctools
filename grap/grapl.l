@@ -12,6 +12,7 @@
 
 /*	Sccsid @(#)grapl.l	1.4 (gritter) 11/22/05	*/
 %}
+%option nounput
 %Start A str def thru sh
 
 %{
@@ -237,10 +238,3 @@ WS	[ \t]
 <str>.		{ CADD; }
 
 %%
-
-#ifdef	FLEX_SCANNER
-void xxcruft(void)
-{
-	unput(0);
-}
-#endif	/* FLEX_SCANNER */

@@ -33,6 +33,7 @@
 #include <string.h>
 #include "main.h"
 #include "bst.h"
+#include "lib.h"
 
 void * /* pointer to \0 terminated file contents */
 file2ram(char *p, /* path to file */

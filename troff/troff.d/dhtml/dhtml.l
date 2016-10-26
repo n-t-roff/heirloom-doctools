@@ -32,6 +32,8 @@
 #include "main.h"
 static int i0;
 %}
+%option nounput
+%option noinput
 %x X FONT_NUM FONT_NAM T X_X LINK ULINK ANCHOR
 WS  [ ]
 NWS [^ \n]

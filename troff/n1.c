@@ -110,11 +110,9 @@ wchar_t	twc = 0;
 static unsigned char escoff[126-31];
 
 static void	initg(void);
-static void	printlong(long, int);
-static void	printn(long, long);
-static char	*sprintlong(char *s, long, int);
-static char	*sprintn(char *s, long n, int b);
 #ifndef	NROFF
+static void	printn(long, long);
+static void	printlong(long, int);
 #define	vfdprintf	xxvfdprintf
 static void	vfdprintf(int fd, const char *fmt, va_list ap);
 #endif
@@ -739,7 +737,6 @@ loop:
 	}
 	goto loop;
 }
-#endif	/* !NROFF */
 
 
 static void
@@ -779,6 +776,7 @@ static void printn(register long n, register long b)
 		printn(a, b);
 	putchar("0123456789ABCDEF"[(int)(n%b)]);
 }
+#endif	/* !NROFF */
 
 /* returns pointer to \0 that ends the string */
 

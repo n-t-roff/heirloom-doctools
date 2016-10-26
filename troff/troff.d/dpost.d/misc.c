@@ -57,6 +57,7 @@
 #include "path.h"
 #include "asciitype.h"
 
+void errprint(char *fmt, ...);
 
 static size_t	nolist = 0;		/* number of specified ranges */
 static int	olist[512];		/* processing range pairs */

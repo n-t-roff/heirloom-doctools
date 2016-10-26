@@ -17,6 +17,10 @@
 #include <string.h>
 #include <stdlib.h>
 
+int STRNCMP(register char *s1, register char *s2, register int len);
+char * expmatch ( register char *s, register char *re, register char *mstring);
+char *convexp( char *re);
+
 typedef int	boolean;
 #define TRUE	1
 #define FALSE	0

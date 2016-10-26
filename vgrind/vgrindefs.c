@@ -40,6 +40,11 @@
  * doesn't, and because living w/o it is not hard.
  */
 
+int tgetent(char *bp, char *name, char *file);
+int tgetnum(char *id);
+int tgetflag(char *id);
+char * tgetstr(char *id, char **area);
+
 static	char *tbuf;
 static	char *filename;
 static	int hopcount;	/* detect infinite loops in termcap, init 0 */

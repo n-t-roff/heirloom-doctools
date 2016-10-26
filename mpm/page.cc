@@ -147,25 +147,9 @@ static void justify(stream *scratch, int wantht)
 		}
 }
 
-// If r were added to s, would the height of the composed result be at most maxht?
-int wouldfit(range *r, stream *s, int maxht)
-{
-	if (r->rawht() + s->rawht() <= maxht)
-		return 1;		// the conservative test succeeded
-	stream scratch;			// local playground for costly test
-	for (stream cd = *s; cd.more(); cd.advance())
-		scratch.append(cd.current());
-	scratch.append(r);
-	movefloats(&scratch, ((double) scratch.rawht())/maxht);
-	trimspace(&scratch);
-	int retval = scratch.height() <= maxht;
-	scratch.freeall();
-	return retval;
-}
-
 // If s1 were added to s, would the height of the composed result be at most maxht?
 // The computational structure is similar to that above.
-int wouldfit(stream *s1, stream *s, int maxht)
+static int wouldfit(stream *s1, stream *s, int maxht)
 {
 	if (s1->rawht() + s->rawht() <= maxht)
 		return 1;
@@ -316,7 +300,7 @@ void multicol::dump()
 }
 
 // From the head of queue qp, peel off a piece whose raw height is at most space.
-int peeloff(stream *qp, int space)
+static int peeloff(stream *qp, int space)
 {
 	stream *s1 = qp->current()->children();
 	if (!(s1 && s1->more() && s1->current()->height() <= space))

@@ -492,8 +492,6 @@ void eprint(void)	/* try to print context around error */
 	ep = ebuf;
 }
 
-void yywrap(void) {}
-
 static char	*newfile = 0;		/* filename for file copy */
 char	*untilstr = 0;		/* string that terminates a thru */
 int	thru	= 0;		/* 1 if copying thru macro */

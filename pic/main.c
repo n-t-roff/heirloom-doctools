@@ -17,6 +17,7 @@
 #include	"pic.h"
 #include	"y.tab.h"
 
+static void reset(void);
 extern const char	version[];
 
 obj	**objlist = 0;		/* store the elements here */
@@ -208,7 +209,7 @@ void getdata(void)
 	char *p, *buf = NULL, *buf1 = NULL;
 	size_t size = 0;
 	int ln;
-	void reset(void), openpl(char *), closepl(char *);
+	void openpl(char *), closepl(char *);
 	int yyparse(void);
 
 	curfile->lineno = 0;
@@ -281,7 +282,7 @@ void getdata(void)
 	free(buf1);
 }
 
-void reset(void)
+static void reset(void)
 {
 	obj *op;
 	int i;

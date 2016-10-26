@@ -73,6 +73,8 @@
 #include "troff.h"
 #include "fontmap.h"
 
+int ps2cc(const char *name);
+
 /* fitab[f][c] is 0 if c is not on font f */
 	/* if it's non-zero, c is in fontab[f] at position
 	 * fitab[f][c].
