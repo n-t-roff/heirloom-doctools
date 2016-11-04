@@ -8,7 +8,7 @@ YFLAGS = -d
 .c.o:
 	$(CC) $(_CFLAGS) $(FLAGS) -c $<
 
-all: grap.c grapl.c grap
+all: grap.c grapl.c grap grap.1
 
 grap: $(OBJ)
 	$(CC) $(_CFLAGS) $(_LDFLAGS) $(OBJ) $(LIBS) -lm -o grap
@@ -23,9 +23,12 @@ install:
 	$(INSTALL) -c -m 644 grap.1 $(ROOT)$(MANDIR)/man1/grap.1
 
 clean:
-	rm -f $(OBJ) grapl.c grap.c y.tab.h grap core log *~
+	rm -f $(OBJ) grapl.c grap.c y.tab.h grap core log *~ grap.1
 
 mrproper: clean
+
+grap.1: grap.1.in
+	sed 's"/usr/ucblib/"$(ROOT)$(LIBDIR)/"' grap.1.in > $@
 
 coord.o: coord.c grap.h y.tab.h
 for.o: for.c grap.h y.tab.h
