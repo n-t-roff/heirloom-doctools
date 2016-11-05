@@ -17,7 +17,8 @@ FLAGS =	-DMACDIR='"$(MACDIR)"' -DREFDIR='"$(REFDIR)"' $(EUC) $(DEFINES) \
 .c.o:
 	$(CC) $(_CFLAGS) $(FLAGS) -c $<
 
-all: refer addbib lookbib sortbib roffbib indxbib mkey inv hunt papers/runinv
+all: refer addbib lookbib sortbib roffbib indxbib mkey inv hunt papers/runinv \
+    lookbib.1 refer.1 roffbib.1
 	cd papers && PATH=..:$$PATH sh runinv
 
 refer: $(ROBJ)
@@ -89,9 +90,18 @@ clean:
 	rm -f $(ROBJ) refer $(AOBJ) addbib $(LOBJ) lookbib \
 		$(SOBJ) sortbib roffbib indxbib $(MOBJ) mkey \
 		$(IOBJ) inv $(HOBJ) hunt papers/runinv core log *~ \
-		papers/Ind.i?
+		papers/Ind.i? lookbib.1 refer.1 roffbib.1
 
 mrproper: clean
+
+lookbib.1: lookbib.1.in
+	sed 's"/usr/ucblib/reftools/"$(ROOT)$(REFDIR)/"' lookbib.1.in > $@
+
+refer.1: refer.1.in
+	sed 's"/usr/ucblib/reftools/"$(ROOT)$(REFDIR)/"' refer.1.in > $@
+
+roffbib.1: roffbib.1.in
+	sed 's"/usr/ucblib/doctools/tmac/"$(ROOT)$(MACDIR)/"' roffbib.1.in > $@
 
 addbib.o: addbib.c
 deliv2.o: deliv2.c refer..c
