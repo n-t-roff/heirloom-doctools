@@ -15,7 +15,7 @@ FLAGS = -DNROFF -DUSG $(EUC) -I. -I.. -I../../include -DMACDIR='"$(MACDIR)"' \
 .c.o:
 	$(CC) $(_CFLAGS) $(FLAGS) -c $<
 
-all: nroff
+all: nroff nroff.1
 
 nroff: $(OBJ) $(LIBHNJ)/libhnj.a
 	$(CC) $(_CFLAGS) $(_LDFLAGS) $(OBJ) -L$(LIBHNJ) -lhnj $(LIBS) -o nroff
@@ -26,9 +26,14 @@ install:
 	$(INSTALL) -c -m 644 nroff.1 $(ROOT)$(MANDIR)/man1/nroff.1
 
 clean:
-	rm -f $(OBJ) nroff core log *~
+	rm -f $(OBJ) nroff core log *~ nroff.1
 
 mrproper: clean
+
+nroff.1: nroff.1.in
+	sed -e 's"/usr/ucblib/doctools/tmac/"$(ROOT)$(MACDIR)/"' \
+	    -e 's"/usr/ucblib/doctools/nterm/"$(ROOT)$(TABDIR)/"' \
+	    nroff.1.in > $@
 
 draw.o: ../tdef.h ../ext.h
 n10.o: n10.c ../tdef.h ../ext.h tw.h pt.h
