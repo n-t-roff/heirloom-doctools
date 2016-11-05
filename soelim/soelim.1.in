@@ -54,10 +54,10 @@ it allows the placement of individual tables
 in separate files to be run as a part of a large document.
 .PP
 Note that inclusion can be suppressed by using
-`\'' instead of `\.', i.e.
+\(oq\(aq\(cq instead of \(oq.\(cq, i.e.
 .PP
 .DT
-	\'so /usr/ucblib/doctools/tmac/s
+	\(aqso /usr/ucblib/doctools/tmac/s
 .PP
 A sample usage of
 .I soelim
