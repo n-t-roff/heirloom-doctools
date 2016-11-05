@@ -10,7 +10,7 @@ FLAGS = -I. -I.. -DFNTDIR='"$(FNTDIR)"' -DPSTDIR='"$(PSTDIR)"' $(EUC) \
 .c.o:
 	$(CC) $(_CFLAGS) $(FLAGS) -c $<
 
-all: dpost
+all: dpost dpost.1
 
 dpost: $(OBJ)
 	$(CC) $(_CFLAGS) $(_LDFLAGS) $(OBJ) $(LIBS) -o dpost
@@ -22,9 +22,15 @@ install:
 	$(INSTALL) -c -m 644 dpost.1 $(ROOT)$(MANDIR)/man1/dpost.1
 
 clean:
-	rm -f $(OBJ) dpost core log *~
+	rm -f $(OBJ) dpost core log *~ dpost.1
 
 mrproper: clean
+
+dpost.1: dpost.1.in
+	sed -e 's"/usr/ucblib/doctools/font/devpost/postscript/"$(ROOT)$(PSTDIR)/"' \
+	    -e 's"/usr/ucblib/doctools/font"$(ROOT)$(FNTDIR)"' \
+	    -e 's"/usr/lib/lp/postscript/"$(ROOT)$(PSTDIR)/"' \
+	    -e 's"/usr/ucblib/doctools/tmac/"$(ROOT)$(MACDIR)/"' dpost.1.in > $@
 
 color.o: color.c gen.h ext.h
 dpost.o: dpost.c comments.h gen.h path.h ext.h ../dev.h dpost.h ../afm.h \
