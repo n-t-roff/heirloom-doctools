@@ -12,7 +12,7 @@ FLAGS = -DUSG $(EUC) -I. -I.. -I../../include -DMACDIR='"$(MACDIR)"' \
 .c.o:
 	$(CC) $(_CFLAGS) $(FLAGS) -c $<
 
-all: troff ta otfdump
+all: troff ta otfdump troff.1
 
 troff: $(OBJ) $(LIBHNJ)/libhnj.a
 	$(CC) $(_CFLAGS) $(_LDFLAGS) $(OBJ) -L$(LIBHNJ) -lhnj $(LIBS) -o troff
@@ -35,9 +35,14 @@ install:
 
 clean:
 	rm -f $(OBJ) draw.o ta.o troff ta otfdump otfdump.o otfdump_vs.o \
-		core log *~
+		core log *~ troff.1
 
 mrproper: clean
+
+troff.1: troff.1.in
+	sed -e 's"/usr/ucblib/doctools/font/"$(ROOT)$(FNTDIR)/"' \
+	    -e 's"/usr/ucblib/doctools/tmac/"$(ROOT)$(MACDIR)/"' \
+	    troff.1.in > $@
 
 draw.o: draw.c
 makedev.o: makedev.c dev.h

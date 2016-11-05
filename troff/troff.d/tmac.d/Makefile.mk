@@ -24,9 +24,14 @@ install: all $(ROOT)$(MACDIR) $(ROOT)$(MANDIR)/man7
 	done
 
 clean:
-	rm -f andoc bib doc e g m s pm an doc-ditroff
+	rm -f andoc bib doc e g m s pm an doc-ditroff mcolor.7
 
 mrproper: clean
+
+mcolor.7: mcolor.7.in
+	sed -e 's"/usr/ucblib/doctools/font/devpost/postscript"$(ROOT)$(PSTDIR)"' \
+	    -e 's"/usr/ucblib/doctools/tmac"$(ROOT)$(MACDIR)"' \
+	    mcolor.7.in > $@
 
 $(ROOT)$(MACDIR) $(ROOT)$(MANDIR)/man7:
 	mkdir -p $@
