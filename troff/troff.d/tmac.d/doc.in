@@ -141,9 +141,9 @@
 .		\}
 .		el \{\
 .			as b1 \\*[A\\n(aP]\\*(sV
-.			as T \\*[A\\n(aP]\\*(sV
-.			ie \\n(aP=1 .ds A \\*[A\\n(aP]
-.			el .as A " \\*[A\\n(aP]
+.			as T  \\*[A\\n(aP]\\*(sV
+.			ie \\n(aP=1 .ds A   \\*[A\\n(aP]
+.			el          .as A " \\*[A\\n(aP]
 .		\}
 .	\}
 .	if !\\*(b1 \{\

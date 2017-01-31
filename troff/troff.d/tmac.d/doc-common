@@ -414,6 +414,7 @@
 ..
 .de Ss
 .	if !\\n(aC \{\
+.		ds Ss.T
 .		ds Ss.A
 .		sp
 .		if !\\n(cR .ne 2
@@ -432,12 +433,14 @@
 .	if \\n(aC>\\n(aP \{\
 .		nr aP \\n(aP+1
 .		if \\n(aP>1 \{\
-.			as b1 " \|
-.			as Ss.A " \|
+.			as b1   " \|
+.			as Ss.T " \|
+.			as Ss.A " \"
 .		\}
 .		ie \\n[C\\n(aP]=1 .\\*[A\\n(aP]
 .		el \{\
-.			as b1 \\*[A\\n(aP]
+.			as b1   \\*[A\\n(aP]
+.			as Ss.T \\*[A\\n(aP]
 .			as Ss.A \\*[A\\n(aP]
 .		\}
 .	\}
@@ -448,12 +451,12 @@
 \XPDFMark: BookmarkClosed 1 \\*[Ss.A]\A\\*[Ss.A]\\*(b1
 .			ie \\*(.Thtml \{\
 .				tm Toc:.ta 3n
-.				tm Toc:\t\T\\*[Ss.A]\\*[Ss.A]\T
+.				tm Toc:\t\T\\*[Ss.A]\\*[Ss.T]\T
 .			\}
 .			el \{\
 .				lnr Tab \\n(.l-\\n(.i
 .				tm Toc:.ta 3n \\n[Tab]uR
-.				tm Toc:\t\T\\*[Ss.A]\\*[Ss.A]\T\a\\n%
+.				tm Toc:\t\T\\*[Ss.A]\\*[Ss.T]\T\a\\n%
 .			\}
 .		\}
 .		el \\*(b1

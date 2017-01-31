@@ -38,9 +38,13 @@ while [ $# -gt 0 ]; do
 done
 
 check_for () {
-	[ -e $LOG ] && echo >>$LOG
+	[ -e $LOG ] && cat <<EOT >>$LOG
+
+================================================================================
+
+EOT
 	A="Checking for $1 ... "
-	echo "$A" >>$LOG
+	printf "$A\n\n" >>$LOG
 	[ -z "$SFLAG" ] && printf "$A"
 }
 
@@ -113,6 +117,53 @@ all:
 EOT
 	bmake -f $TMPMK >> $LOG 2>&1
 	test_result && MAKE=bmake
+}
+check_Sanitizer () {
+	check_for "CC Sanitizer"
+
+	__CDBG="-g -O0 -fno-omit-frame-pointer -fno-optimize-sibling-calls"
+	__CDBG="$__CDBG -Wall"
+	__CDBG="$__CDBG -Wextra"
+	__CDBG="$__CDBG -Wsign-compare"
+	__CDBG="$__CDBG -Wcast-align"
+	__CDBG="$__CDBG -Wcast-qual"
+	__CDBG="$__CDBG -Wmissing-prototypes"
+	__CDBG="$__CDBG -Wunused-parameter"
+	__CDBG="$__CDBG -Wunused-function"
+	__CDBG="$__CDBG -Wshadow"
+	__CLDBG="-fno-common -fsanitize=address -fsanitize=undefined"
+	#__CLDBG="$__CLDBG -fsanitize-address-use-after-scope"
+
+	[ -n "$CC" ] || CC=cc
+	VER=`$CC --version`
+	if echo $VER | grep -iq gcc || echo $VER | grep -iq 'Free Software Foundation'; then
+		printf "(gcc) "
+		#__CLDBG="$__CDBG -fprofile-arcs -ftest-coverage"
+		__CLDBG="$__CLDBG -fsanitize=float-divide-by-zero"
+		__CLDBG="$__CLDBG -fsanitize=float-cast-overflow"
+	elif echo $VER | grep -q clang; then
+		printf "(clang) "
+		__CDBG="$__CDBG -Wincompatible-pointer-types-discards-qualifiers"
+		__CDBG="$__CDBG -Wmissing-variable-declarations"
+		__CLDBG="$__CLDBG -fsanitize=unsigned-integer-overflow"
+	else
+		echo "Unknown compiler"
+		return
+	fi
+
+	cat <<EOT >$TMPC
+int
+main() {
+	return 0;
+}
+EOT
+	gen_mk
+	cat <<EOT >>$OUTMK
+$TMPNAM: ${TMPNAM}.o
+	\$(CC) \$(__CDBG) \$(__CLDBG) -o \$@ ${TMPNAM}.o
+EOT
+	compile
+	test_result || __CLDBG=
 }
 check_lex () {
 	check_for '$(LEX)'
