@@ -24,13 +24,17 @@ TROFFFLAGS = -mgchar
 
 all: doc.ps
 
-test:
+test: test_more test_ps
+
+test_more:
 	[ -e doc.more ] && mv doc.more doc.more.orig
 	make doc.more
 	sed '/dotlessj/d' doc.more >doc.more.sed
 	diff -d doc.more.orig doc.more.sed
 	rm doc.more.sed doc.more
 	mv doc.more.orig doc.more
+
+test_ps:
 	[ -e doc.ps ] && mv doc.ps doc.ps.orig
 	make doc.ps
 	sed 's/.CreationDate.*/%/' doc.ps >doc.ps.sed

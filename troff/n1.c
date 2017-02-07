@@ -1698,6 +1698,33 @@ getach(void)
 }
 
 
+int
+getxch(void)
+{
+	register tchar i, k;
+	register int j;
+
+	lgf++;
+	k = i = getch();
+	while (isxfunc(i, CHAR))
+		i = charout[sbits(i)].ch;
+	j = cbits(i);
+	if (ismot(i) || (j == XFUNC && fbits(i)) || j == ' ' || j == '\n' ||
+			j & 0200) {
+		if (!ismot(i) && j >= 0200)
+			illseq(j, NULL, -3);
+		else if (WARN_INPUT) {
+			if (ismot(i) && !isadjmot(i))
+				errprint("motion terminates name");
+			else if (j == XFUNC && fbits(i))
+				errprint("illegal character terminates name");
+		}
+	}
+	lgf--;
+	return k;
+}
+
+
 void
 casenx(void)
 {

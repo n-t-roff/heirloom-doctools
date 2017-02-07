@@ -292,6 +292,7 @@ extern	int	nextfile(void);
 extern	int	popf(void);
 extern	void	flushi(void);
 extern	int	getach(void);
+extern	int	getxch(void);
 extern	int	rgetach(void);
 extern	void	casenx(void);
 extern	int	getname(void);

@@ -1288,7 +1288,7 @@ Font and Character Size Control
 .bt
 \T'lc_ctype'\fB&lc_ctype\T\fI|name\fR	ignored	\(en	Set the \s-1LC_CTYPE\s+1 locale.
 .b1
-\T'ps'\fB&ps\T\fI\|\(+-N\fR	10\|point	previous	E,T,\fBp\fR	Point size; also\T \T'e_s'\fB\es\fI\(+-N\fR.
+\T'ps'\fB&ps\T\fI\|\(+-N\fR	10\|point	previous	E,T,\fBp\fR	Point size; also \T'e_s'\fB\es\fI\(+-N\fR\T.
 .b1
 \T'fzoom'\fB&fzoom\T\fI|F|Z\fR	1	ignored	P,T	Zoom font \fIF\fR by factor \fIZ\fR.
 .b1

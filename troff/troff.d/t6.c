@@ -2905,11 +2905,11 @@ getref(void)
 	int	a = 0, i, c, delim;
 	char	*np = NULL;
 
-	if ((delim = getach()) != 0) {
+	if ((delim = getxch()) != 0) {
 		for (i = 0; ; i++) {
 			if (i + 1 >= a)
 				np = realloc(np, a += 32);
-			if ((c = getach()) == 0) {
+			if ((c = getxch()) == 0) {
 				if (cbits(ch) == ' ') {
 					ch = 0;
 					c = ' ';

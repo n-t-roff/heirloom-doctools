@@ -558,7 +558,7 @@ ate  language  for the generation of PDF documents.  The _H_e_i_r_l_o_o_
           manently to _N.
           2222....  FFFFoooonnnntttt aaaannnndddd CCCChhhhaaaarrrraaaacccctttteeeerrrr SSSSiiiizzzzeeee CCCCoooonnnnttttrrrroooollll
           ....llllcccc____ccccttttyyyyppppeeee _n_a_m_e  ignored –    Set the LC_CTYPE locale.
-          ....ppppssss±_N   10point previous     E,T,ppppPoint size; also ’e_s’\\\\ssss±_N.
+          ....ppppssss±_N   10point previous     E,T,ppppPoint size; also \\\\ssss±_N.
           ....ffffzzzzoooooooommmm _F _Z      1       ignoredP,TZoom font _F by factor _Z.
           ....ssssssss _N [_M]       12/36m  ignoredE,TSpace‐character  size  set   to
           _N/36em; sentence space _M/36em.
