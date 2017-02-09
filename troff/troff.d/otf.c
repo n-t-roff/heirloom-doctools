@@ -2472,7 +2472,7 @@ get_OS_2(void)
 	if (pos_OS_2 < 0)
 		goto dfl;
 	o = table_directories[pos_OS_2].offset;
-	if (pbe16(&contents[o]) > 0x0003)
+	if (pbe16(&contents[o]) > 0x0005)
 		goto dfl;
 	if (table_directories[pos_OS_2].length >= 6)
 		WeightClass = pbe16(&contents[o+4]);
@@ -2495,6 +2495,7 @@ get_OS_2(void)
 			a->xheight = _unitconv(pbe16(&contents[o + 88]));
 			a->capheight = _unitconv(pbe16(&contents[o + 90]));
 		}
+
 	} else {
 	dfl:	if (a) {
 			a->xheight = 500;
