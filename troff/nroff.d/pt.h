@@ -83,3 +83,25 @@ extern void	casedummy(void);
 #define	getascender()		0
 #define	getdescender()		0
 #define	getfzoom()		0
+
+/* typo additions - rwf */
+#define	caseadjlapenalty	casedummy
+#define caseadjpenalty	casedummy
+// #define	caseelpchar	casedummy
+#define	caseelppen	casedummy
+#define	caseexhyp	casedummy
+#define caselastlinestretch	casedummy
+#define	caseletcalc	casedummy
+#define	caseletpen	casedummy
+#define	caseletshp	casedummy
+#define	caseletspc	casedummy
+#define	caseletstren	casedummy
+#define	caseletthresh	casedummy
+#define caselinepenalty	casedummy
+#define caselooseness	casedummy
+#define caseoverrunpenalty	casedummy
+#define casewrdspc	casedummy
+#define casewscalc	casedummy
+#define casewsmark	casedummy
+#define casewsmin	casedummy
+#define casewswarn	casedummy

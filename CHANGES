@@ -1,3 +1,22 @@
+2017-02-20
+    Add new requests for paragraph composition and letter adjustment.
+    Revert change from 2016-09-07.
+
+2017-02-08
+    troff.d/otf.c : change revision test for OS/2 table to allow
+    the use of vertical metrics from table versions 4 and 5.
+    Some fonts released since about 2006 use these table versions.
+    troff does not use any data newer than version 2, and the table
+    versions are backward compatible.
+
+2017-02-08
+    grap/print.c : increase buffer size to allow grap to run with
+    longer path names.  Buffer size was set to 50 characters, which
+    is too small to contain a grap command that is being built plus
+    the path name and file name.
+
+-----
+
 2016-09-07
     Escapes \A and \T had unnecessary restrictions regarding the
     allowed character set.  This let to problems when e.g. gen-

@@ -36,6 +36,8 @@
  * Sccsid @(#)n7.c	1.181 (gritter) 6/19/11
  *
  * Portions Copyright (c) 2014, 2015 Carsten Kunze
+ *
+ * Portions Copyright (c) 2017 Roy Fisher
  */
 
 /*
@@ -50,6 +52,7 @@
 
 #include <stddef.h>
 #include <stdlib.h>
+#include <stdio.h>
 #include <limits.h>
 #include "tdef.h"
 #ifdef NROFF
@@ -98,6 +101,7 @@ static void	setrhang(void);
 static void	letshrink(void);
 static int	letgrow(void);
 static int	lspcomp(int);
+static int	let_spclen(void) ;
 #else	/* NROFF */
 #define	nroff		1
 #define	lastrst		0
@@ -410,7 +414,7 @@ adj:
 	if (ad) {
 		setrhang();
 		if (admod == 0 && lspcur == 0 && lshcur == 0 &&
-				nel < 0 && lspnc)
+				(letcalc == 0 ? nel < 0 : 1)  && lspnc)
 			letshrink();
 	jst:	if (nwd == 1)
 			adsp = nel; 
@@ -418,14 +422,65 @@ adj:
 			adsp = nel / (nwd - 1);
 		adsp = (adsp / HOR) * HOR;
 		if (admod == 0 && lspcur == 0 && lshcur == 0 &&
-				adsp > letsps - sps)
+				adsp > (letcalc == 0 ? letsps - sps : 0))
 			if (letgrow())
 				goto jst;
 		adrem = nel - adsp*(nwd-1);
 		if (admod == 0 && nwd == 1 && warn & WARN_BREAK)
 			errprint("can't break line");
-		else if (admod == 0 && spreadwarn && adsp >= spreadlimit)
-			errprint("spreadlimit exceeded, %gm", (double)adsp/EM);
+		else
+			{
+			if (admod == 0 && spreadwarn && adsp >= spreadlimit)
+				errprint("spreadlimit exceeded, %gm", (double)adsp/EM);
+//
+#ifndef NROFF
+			if ((wsmark || wswarn) && admod == 0)
+				{
+				double	adratiom ;
+				int	warnflag, adjspc ;
+
+				adjspc = let_spclen() ;
+				if (minsps > 0)
+					{
+					adratiom = (double) (adsp + minsps) * (nwd - 1) / adjspc ;
+//					adratiom = (double) (adsp + minsps) / sps ;
+					}
+				else
+					{
+					adratiom = (double) (adsp + sps) * (nwd - 1) / adjspc ;
+//					adratiom = (double) (adsp + sps) / sps ;
+					}
+				warnflag = (wswarn && (adratiom <= wswarnlwr || adratiom >= wswarnupr)) ;
+				if (warnflag || wsmark)
+					{
+					if      (adratiom <  0.0833) ic = 'f' ;
+					else if (adratiom <  0.1667) ic = 'e' ;
+					else if (adratiom <  0.2500) ic = 'd' ;
+					else if (adratiom <  0.3333) ic = 'c' ;
+					else if (adratiom <  0.4167) ic = 'b' ;
+					else if (adratiom <  0.5000) ic = 'a' ;
+					else if (adratiom <  0.5833) ic = '0' ;
+					else if (adratiom <  0.6667) ic = '1' ;
+					else if (adratiom <  0.7500) ic = '2' ;
+					else if (adratiom <  0.8333) ic = '3' ;
+					else if (adratiom <  0.9167) ic = '4' ;
+					else if (adratiom <= 1.1250) ic = '5' ;
+					else if (adratiom <= 1.2500) ic = '6' ;
+					else if (adratiom <= 1.3750) ic = '7' ;
+					else if (adratiom <= 1.5000) ic = '8' ;
+					else if (adratiom <= 1.6250) ic = '9' ;
+					else if (adratiom <= 1.7500) ic = 'A' ;
+					else if (adratiom <= 1.8750) ic = 'B' ;
+					else if (adratiom <= 2.0000) ic = 'C' ;
+					else                         ic = 'X' ;
+//
+					if (wswarn == 2 && warnflag)
+						fprintf (stderr, "wswarn: wordspace bin %c ratio %f on page %ld\n",
+								(int) ic, adratiom, realpage) ;
+					}
+				}
+#endif //NROFF
+			}
 	}
 	brflg = 1;
 tb:
@@ -1691,7 +1746,7 @@ setrhang(void)
 }
 
 static void
-letshrink(void)
+letshrink_gr(void)
 {
 	int	diff, nsp, lshdiff;
 
@@ -1720,7 +1775,7 @@ letshrink(void)
 }
 
 static int
-letgrow(void)
+letgrow_gr(void)
 {
 	int	diff, n, nsp, lshdiff;
 
@@ -1752,6 +1807,422 @@ letgrow(void)
 		lspcur = 0;
 	return lspcomp(lshdiff);
 }
+
+
+static int
+let_spclen(void)
+{
+	int	i, s = 0 ;
+	tchar	c;
+
+	for (i = 0 ; i < nc ; i++)
+		{
+		if (!ismot(c = line[i]))
+			{
+			if (!isxfunc(c, FLDMARK) && (cbits(c) == ' ' || cbits(c) == STRETCH))
+				s += width(c) ;
+			}
+		}
+	return s ;
+}
+
+
+static void
+letshrink_rf(void)
+{
+	int	nsp,
+		diff,
+		lshdiff,
+		lspunits, lshunits,
+		x ;
+
+	double	lspprop, lshprop,
+		ladunits,
+		s,
+		u,
+		xz,
+		z,
+		spcunits,
+		charlen, charprop ;
+
+	nsp = nwd == 1 ? nwd : nwd - 1;
+	if (nwd > 1)
+		s = let_spclen() ;
+	else
+		s = sps ;
+	diff = nel ;
+	if (minsps && ad && !admod)
+		diff -= (int)(s - s * (double) minsps / sps) ;
+	if (diff >= 0)
+		return ;
+/*
+ *	diff is negative, but lsplow, lshlow, lspmin, and lshmin are positive.
+ *	If the sign of diff is flipped, the code will be essentially identical
+ *	to that of letgrow_rf(), except for using the shrink variables.  The
+ *	results are flipped back later on.
+ */
+	diff = -diff ;
+	u = lsplow + lshlow ;
+	lspprop = lshprop = 0.0 ;
+	if (u >= 1.0)
+		{
+		if (lsplow >= 1)
+			lspprop = lsplow / u ;
+		if (lshlow >= 1)
+			lshprop = lshlow / u ;
+		}
+	switch (letcalc)
+	{
+	case 2:
+	case 4:
+	case 21:
+	case 22:
+		xz = (1.0 - letthreshlwr) * s ;
+		if (diff > xz)
+			ladunits = diff - xz ;
+		else
+			ladunits = 0 ;
+		if (letcalc == 4)
+			ladunits *= u / (u + nsp * lsplow / lspnc +  s * lshmin / LAFACT) ;
+		break ;
+	case 1:
+		xz = (1.0 - wslwr + 0.01) * s ;
+		if (diff > xz)
+			ladunits = diff - xz ;
+		else
+			ladunits = 0 ;
+		break ;
+	case 3:
+	case 31:
+	case 32:
+		xz = (1.0 - letthreshlwr) * s ;
+		spcunits = (1.0 - wslwr) * s ;
+		if (xz < diff && diff < spcunits)
+			ladunits = (diff - xz) / (spcunits - xz) * u ;
+		else if (diff <= xz)
+			ladunits = 0 ;
+		else
+			ladunits = u ;
+		break ;
+	}
+	if (letstren > 0.0)
+		ladunits *= letstren ;
+	else
+		{
+		x = ll - un + rhang ;
+		charlen = x - s - diff ;
+		charprop = charlen / (charlen + s) ;
+		ladunits *= charprop ;
+		}
+	if (ladunits > u)
+		ladunits = u ;
+	if (ladunits > diff)
+		ladunits = diff ;
+	if (ladunits < 0)
+		ladunits = 0 ;
+	switch (letcalc)
+	{
+	case 1:
+	case 2:
+	case 3:
+	case 4:
+		lspunits = ladunits * lspprop ;
+		lshunits = ladunits * lshprop ;
+		break ;
+	case 21:
+	case 31:
+		if (ladunits <= lsplow)
+			{
+			lspunits = ladunits ;
+			lshunits = 0 ;
+			}
+		else
+			{
+			lspunits = lsplow ;
+			z = ladunits - lspunits ;
+			if (z <= lshlow)
+				lshunits = z ;
+			else
+				lshunits = lshlow ;
+			}
+		break ;
+	case 22:
+	case 32:
+		if (ladunits <= lshlow)
+			{
+			lshunits = ladunits ;
+			lspunits = 0 ;
+			}
+		else
+			{
+			lshunits = lshlow ;
+			z = ladunits - lshunits ;
+			if (z <= lsplow)
+				lspunits = z ;
+			else
+				lspunits = lsplow ;
+			}
+		break ;
+	default:
+		lspunits = 0 ;
+		lshunits = 0 ;
+	}
+	if (lspunits > lsplow)
+		lspunits = lsplow ;
+	else if (lspunits < 0)
+		lspunits = 0 ;
+	if (lshunits > lshlow)
+		lshunits = lshlow ;
+	else if (lshunits < 0)
+		lshunits = 0 ;
+/*
+ *	Flip the signs because of -diff.
+ */
+	lshunits = -lshunits ;
+	lspunits = -lspunits ;
+/*
+ *	Apply the glyph scaling, taking LAFACT into account.
+ *	lshcur, lshdiff, and lspcur are ints.
+ */
+	if (lshwid)
+		{
+		lshcur = (double) lshunits / lshwid * LAFACT ;
+		lshdiff = (double) lshcur / LAFACT * lshwid ;
+		nel -= lshdiff ;
+		ne += lshdiff ;
+		}
+	else
+		lshdiff = 0 ;
+	if (lsplow)
+		lspcur = (double) lspunits * lspmin / lsplow ;
+	else
+		lspcur = 0 ;
+	ne += lspcomp(lshdiff) ;
+}
+
+
+static int
+letgrow_rf(void)
+{
+	int	diff,
+		nsp,
+		lshdiff,
+		lspunits,
+		lshunits ;
+
+	double	lspprop, lshprop,
+		ladunits,
+		s, u, xz, z,
+		maxspc,
+		charlen,
+		charprop ;
+
+	nsp = nwd == 1 ? nwd : nwd - 1;
+	if ((lspnc <= nsp || lsphigh <= 0) && lshhigh <= 0)
+		return 0;
+	if (nwd > 1)
+		s = let_spclen() ;
+	else
+		s = sps ;
+	diff = nel ;
+	if (minsps && ad && !admod)
+		diff -= (int)(s - s * (double) minsps / sps) ;
+	u = lsphigh + lshhigh ;
+	lspprop = lshprop = 0.0 ;
+	if (u >= 1.0)
+		{
+		if (lsphigh)
+			lspprop = lsphigh / u ;
+		if (lshhigh)
+			lshprop = lshhigh / u ;
+		}
+	switch (letcalc)
+	{
+	case 2:
+	case 4:
+	case 21:
+	case 22:
+		xz = (letthreshupr - 1.0) * s ;
+		if (diff > xz)
+			ladunits = diff - xz ;
+		else
+			ladunits = 0.0 ;
+		if (letcalc == 4)
+			ladunits *= u / (u + nsp * lsphigh / lspnc + s * lshmax / LAFACT) ;
+		break ;
+	case 1:
+		xz = (wsupr - 1.0 - 0.01) * s ;
+		if (diff > xz)
+			ladunits = diff - xz ;
+		else
+			ladunits = 0.0 ;
+		break ;
+	case 3:
+	case 31:
+	case 32:
+		xz = (letthreshupr - 1.0) * s ;
+		maxspc = (wsupr - 1.0) * s ;
+		if (xz < diff && diff < maxspc)
+			ladunits = (diff - xz) / (maxspc - xz) * u ;
+		else if (diff <= xz)
+			ladunits = 0.0 ;
+		else
+			ladunits = u ;
+		break ;
+	default:
+		ladunits = 0 ;
+	}
+	if (letstren > 0.0)
+		ladunits *= letstren ;
+	else
+		{
+		z = ll - un + rhang ;
+		charlen = z - s - diff ;
+		charprop = charlen / (charlen + s) ;
+		ladunits *= charprop ;
+		}
+	if (ladunits > u)
+		ladunits = u ;
+	if (ladunits > diff)
+		ladunits = diff ;
+	if (ladunits < 0)
+		ladunits = 0 ;
+	switch (letcalc)
+	{
+	case 1:
+	case 2:
+	case 3:
+	case 4:
+		lspunits = ladunits * lspprop ;
+		lshunits = ladunits * lshprop ;
+		break ;
+	case 21:
+	case 31:
+		if (ladunits <= lsphigh)
+			{
+			lspunits = ladunits ;
+			lshunits = 0 ;
+			}
+		else
+			{
+			lspunits = lsphigh ;
+			z = ladunits - lspunits ;
+			if (z <= lshhigh)
+				lshunits = z ;
+			else
+				lshunits = lshhigh ;
+			}
+		break ;
+	case 22:
+	case 32:
+		if (ladunits <= lshhigh)
+			{
+			lshunits = ladunits ;
+			lspunits = 0 ;
+			}
+		else
+			{
+			lshunits = lshhigh ;
+			z = ladunits - lshunits ;
+			if (z <= lsphigh)
+				lspunits = z ;
+			else
+				lspunits = lsphigh ;
+			}
+		break ;
+	default:
+		lspunits = 0 ;
+		lshunits = 0 ;
+	}
+	if (lspunits > lsphigh)
+		lspunits = lsphigh ;
+	else if (lspunits < 0)
+		lspunits = 0 ;
+	if (lshunits > lshhigh)
+		lshunits = lshhigh ;
+	else if (lshunits < 0)
+		lshunits = 0 ;
+/*
+ *	We need to account for the granularity of lshcur caused by LAFACT, or
+ *	the outer code goes into a loop and iteratively changes the line length
+ *	until it becomes satisfied.
+ *	So:
+ *	1. Calculate lshcur as an integer value taking LAFACT into account.
+ *	2. Calculate lshdiff from lshcur taking LAFACT into account.
+ *		lshdiff = (int) (approx.) (int) (approx.) lshunits.
+ *	lshdiff, lshcur, nel, and ne are ints.
+ */
+	if (lshwid)
+		{
+		lshcur = (double) lshunits / lshwid * LAFACT ;
+		lshdiff = (double) lshcur / LAFACT * lshwid ;
+		nel -= lshdiff ;
+		ne -= lshdiff ;
+		}
+	else
+		lshcur = lshdiff = 0 ;
+	if (lsphigh)
+		lspcur = (double) lspunits * lspmax / lsphigh ;
+	else
+		lspcur = 0 ;
+	return lspcomp(lshdiff) ;
+}
+
+
+static void
+letshrink(void)
+{
+	switch (letcalc)
+	{
+	case 0 :
+		letshrink_gr() ;
+		break ;
+	case 1 :
+	case 2 :
+	case 3 :
+	case 4 :
+	case 21:
+	case 22:
+	case 31:
+	case 32:
+		letshrink_rf() ;
+		break ;
+	default:
+		if (nel < 0 && lspnc)
+			letshrink_gr() ;
+		break ;
+	}
+}
+
+
+static int
+letgrow(void)
+{
+	int	x = 0 ;
+
+	switch (letcalc)
+	{
+	case 0 :
+		x = letgrow_gr() ;
+		break ;
+	case 1 :
+	case 2 :
+	case 3 :
+	case 4 :
+	case 21:
+	case 22:
+	case 31:
+	case 32:
+		x = letgrow_rf() ;
+		break ;
+	default :
+		if (adsp > letsps - sps)
+			x = letgrow_gr() ;
+		break ;
+	}
+	return x ;
+}
+
 
 static int
 lspcomp(int idiff)
@@ -1788,16 +2259,16 @@ lspcomp(int idiff)
 static double
 penalty(int k, int s, int h, int h2, int h3)
 {
-	double	t, d;
+	double	t, b;
 
 	t = nel - k;
 	t = t >= 0 ? t * 5 / 3 : -t;
 	if (ad && !admod) {
-		d = s;
+		b = s;
 		if (k - s && (letsps || lshmin || lshmax))
-			d += (double)(k - s) / 100;
-		if (d)
-			t /= d;
+			b += (double)(k - s) / 100;
+		if (b)
+			t /= b;
 	} else
 		t /= nel / 10;
 	if (h && hypp)
@@ -1812,6 +2283,8 @@ penalty(int k, int s, int h, int h2, int h3)
 	return t;
 }
 
+
+#ifdef NROFF
 static void
 parcomp(int start)
 {
@@ -1935,6 +2408,788 @@ parcomp(int start)
 	free(_brcnt);
 	free(prevbreak);
 }
+#endif // NROFF
+
+
+#ifndef NROFF
+static double
+penalty_rf(int k, int s, int h, int h2, int h3, int llshmin, int llshmax,
+	int llspmin, int llspmax, int linespaces, int linechars,
+	double *rtnrj, double *rtnladrj)
+{
+	double	t,
+		arrj,
+		ladrj = 0.0,
+		p1, p2, p3,
+		adunits,
+		adratio,
+		ladpenalty = 0.0 ;
+	int	basecalc, badcurve ;
+
+	adunits = nel - k ;
+	if (ad && !admod)
+		{
+		if (s > 0)
+			adratio = adunits / (double) s ;
+		else
+			{
+			t = arrj = ladrj = INFPENALTY ;
+			goto penalty_rf_Rtn ;
+			}
+		if (adratio > 0.0)
+			arrj = adratio / (wsupr - 1.0) ;
+		else if (adratio < 0.0)
+			arrj = adratio / (1.0 - wslwr) ;
+		else
+			arrj = 0.0 ;
+		}
+	else
+		{
+		adratio = adunits / (double) nel ;
+		arrj = adratio / (1.0 - wslwr) ;
+		}
+	t = arrj >= 0.0 ? arrj : -arrj ;
+	ladrj = ladpenalty = 0.0 ;
+	if (letsps && letpen >= 1 && letcalc > 0 && s > 0 && ad && !admod && adunits)
+		{
+		double	charlen,
+			ladratio = 0.0,
+			ladunits = 0.0,
+			larrj,
+			u, z ;
+
+		charlen = k - s ;
+		if (adratio > 0.0 && ((u = llshmax + llspmax) > 0))
+			{
+			switch (letcalc)
+			{
+			case 2:
+			case 4:
+			case 21:
+			case 22:
+				if (letthreshupr > 1.0)
+					{
+					z = (letthreshupr - 1.0) * s ;
+					if (adunits > z)
+						ladunits = adunits - z ;
+					}
+				else
+					ladunits = adunits ;
+				if (letcalc == 4)
+					ladunits *= u / (u +  linespaces * llspmax / linechars +  s * lshmax / LAFACT) ;
+				break ;
+			case 1 :
+				if (adratio > wsupr - 0.01 - 1.0)
+					{
+					z = (wsupr - 0.01 - 1.0) * s ;
+					if (adunits > z)
+						ladunits = adunits - z ;
+					}
+				else
+					ladunits = 0.0 ;
+				break ;
+			case 3 :
+			case 31:
+			case 32:
+				if (arrj >= 1.0)
+					ladunits = u ;
+				else if (1.0 + adratio > letthreshupr)
+					{
+					z = (1.0 + adratio - letthreshupr) / (wsupr - letthreshupr) ;
+					ladunits = z * u ;
+					}
+				else
+					ladunits = 0.0 ;
+				break ;
+
+			default :
+				ladunits = 0.0 ;
+			}
+			if (ladunits)
+				{
+				if (letstren > 0.0)
+					ladunits = ladunits * letstren ;
+				else
+					ladunits = ladunits * charlen / (double) k ;
+				if (ladunits > u)
+					ladunits = u ;
+				if (ladunits > adunits)
+					ladunits = adunits ;
+				ladunits = (int) ladunits ;
+				if (ladunits < 0.0)
+					ladunits = 0.0 ;
+				if (letpen > 1 && letupr > 0.0)
+					{
+					ladrj = ladunits / charlen / letupr ;
+					ladpenalty = ladrj * ladrj * letpen / 100.0 ;
+					}
+				else
+					ladrj = ladpenalty = 0.0 ;
+//				This penalty keeps the letter adjustment from running away
+//				if the user has requested a very large amount of it.
+//				If the user doesn't want that to happen, setting letpen > 1 should prevent it.
+//				However, a small built-in bias toward less letter adjustment may prove useful.
+//				ladpenalty += ladunits / ((s > 0 ? s : 1.0) * (wsupr - 1.0) + 1.0) * 0.1 ;
+				}
+			ladratio = (adunits - ladunits) / (s > 0 ? s : 1.0) ;
+			larrj = ladratio / (wsupr - 1.0) ;
+			}
+		else if (adratio < 0.0 && ((u = llshmin + llspmin) > 0))
+			{
+			u = -u ;
+			switch (letcalc)
+			{
+			case 2:
+			case 4:
+			case 21:
+			case 22:
+				if (letthreshlwr < 1.0)
+					{
+					z = (letthreshlwr - 1.0) * s ;
+					if (adunits < z)
+						ladunits = adunits - z ;
+					}
+				else
+					ladunits = adunits ;
+				if (letcalc == 4)
+					ladunits *= u / (u -  linespaces * llspmin / linechars -  s * lshmin / LAFACT) ;
+				break ;
+			case 1 :
+				z = (wslwr + 0.01 - 1.0) ;
+				if (adratio < z)
+					{
+					z *= s ;
+					if (adunits < z)
+						ladunits = adunits - z ;
+					}
+				else
+					ladunits = 0.0 ;
+				break ;
+			case 3:
+			case 31:
+			case 32:
+				if (arrj <= -1.0)
+					ladunits = u ;
+				else if (1.0 + adratio < letthreshlwr)
+					{
+					z = 1.0 + adratio - letthreshlwr ;
+					z /= (wslwr - letthreshlwr) ;
+					ladunits = z * u ;
+					}
+				break ;
+			default :
+				ladunits = 0.0 ;
+			}
+			if (ladunits)
+				{
+				if (letstren > 0.0)
+					ladunits = ladunits * letstren ;
+				else
+					ladunits = ladunits * charlen / k ;
+				if (ladunits < u)
+					ladunits = u ;
+				if (ladunits < adunits)
+					ladunits = adunits ;
+				ladunits = (int) ladunits ;
+				if (ladunits > 0.0)
+					ladunits = 0.0 ;
+				if (letpen > 1 && letlwr > 0.0)
+					{
+					ladrj = ladunits / charlen / letlwr ;
+					ladpenalty = ladrj * ladrj * letpen / 100.0 ;
+					if (ladpenalty < 0.0)			// need this if using odd order penalty calc
+						ladpenalty = -ladpenalty ;
+					if (ladrj > 0.0)
+						ladrj = -ladrj ;
+					}
+				else
+					ladrj = ladpenalty = 0.0 ;
+//				ladpenalty += -ladunits / ((s > 0 ? s : 1.0) * (1.0 - wslwr) + 1.0) * 0.1 ;
+				}
+			ladratio = (adunits - ladunits) / (s > 0 ? s : 1.0) ;
+			larrj = ladratio / (1.0 - wslwr) ;
+			}
+		else
+			{
+			ladratio = adratio ;
+			larrj = arrj ;
+			}
+		adratio = ladratio ;
+		arrj = larrj ;
+		t = arrj < 0.0 ? -arrj : arrj ;
+	}
+	p1 = p2 = p3 = 0.0 ;
+	if (h && hypp)
+		p1 = hypp ;
+	if (h2 && hypp2)
+		p2 = hypp2 ;
+	if (h3 && hypp3)
+		p3 = hypp3 ;
+	if (wscalc >= 0 && wscalc <= 7)
+		basecalc = badcurve = wscalc ;
+	else if (wscalc >= 22 && wscalc <= 46)
+		{
+		basecalc = wscalc / 10 ;
+		badcurve = wscalc % 10 ;
+		if (badcurve < basecalc)
+			badcurve = basecalc ;
+		else if (badcurve > 6)
+			badcurve = 6 ;
+		}
+	else
+		basecalc = badcurve = 6 ;
+	switch (basecalc)
+	{
+	case 0:
+	case 1:
+		t += p1 + p2 + p3 ;
+		t = t * t * t ;
+		break ;
+	case 2:
+	case 3:
+	case 4:
+		{
+		int	i, j ;
+		double	p ;
+		j = t <= 1.0 ? basecalc : badcurve ;
+		p = t ;
+		for (i = 2 ; i <= j ; i++)
+			p = p * t ;
+		t = p ;
+		}
+		break ;
+	case 7:
+	 	t = 1.0 + 100.0 * (t * t * t + p1 / 2.0)  ;
+	 	t = t * t ;
+	 	t = t / 10000.0 ;
+	 	t += (p2 + p3) / 2.0 ;
+		break ;
+	case 5 :
+	case 6 :
+	default:
+		t = t * t * t ;
+		t *= t ;
+		break ;
+	}
+	if (basecalc > 1 && basecalc != 7)
+		t += (p1 + p2 + p3) / 2.0 ;
+	t += ladpenalty ;
+	if (wsmin > 0.0)
+		{
+		if (ad && !admod)
+			{
+			if (1.0 + adratio < wsmin)
+				t += MAXPENALTY ;
+			}
+		else if (1.0 - adratio < wsmin)
+			t += MAXPENALTY ;
+		}
+penalty_rf_Rtn:
+	*rtnrj = arrj ;
+	*rtnladrj = ladrj ;
+	return t;
+}
+
+
+static void
+addletadj (tchar c, int *llshmin, int *llshmax, int *llspmin, int *llspmax)
+{
+	width(c) ;
+	*llshmin += getlsh(c, rawwidth) * lshmin / LAFACT ;
+	*llshmax += getlsh(c, rawwidth) * lshmax / LAFACT ;
+	*llspmin += getlsp(c) * lspmin / LAFACT ;
+	*llspmax += getlsp(c) * lspmin / LAFACT ;
+}
+
+
+static void
+subletadj (tchar c, int *llshmin, int *llshmax, int *llspmin, int *llspmax)
+{
+	width(c) ;
+	*llshmin -= getlsh(c, rawwidth) * lshmin / LAFACT ;
+	*llshmax -= getlsh(c, rawwidth) * lshmax / LAFACT ;
+	*llspmin -= getlsp(c) * lspmin / LAFACT ;
+	*llspmax -= getlsp(c) * lspmin / LAFACT ;
+}
+
+
+static void
+subletspc (tchar c, int *llspmin, int *llspmax)
+{
+	*llspmin -= getlsp(c) * lspmin / LAFACT ;
+	*llspmax -= getlsp(c) * lspmin / LAFACT ;
+}
+
+
+static void
+addletshpraw (int wid, int *llshmin, int *llshmax)
+{
+	*llshmin += wid * lshmin / LAFACT ;
+	*llshmax += wid * lshmax / LAFACT ;
+}
+
+
+static void
+parcomp(int start)
+{
+	double	*cost, *_cost;
+	long double	t;
+	int	*prevbreak, *hypc, *_hypc, *brcnt, *_brcnt;
+	int	i, j, k, m, h, v, s;
+
+	double	rjay, *rjays, *_rjays,
+		lrj, *lrjays, *_lrjays,
+		xdbl, ydbl ;
+	int	lsx = 0,
+		lsxmax = 31,
+		*lsprevbreak, *_lsprevbreak = NULL,
+		*lsbrcnt, *_lsbrcnt = NULL ;
+	double	*lscost, *_lscost = NULL ;
+
+	int	*wordlength, *_wordlength,
+		*wordlshmin, *_wordlshmin,
+		*wordlshmax, *_wordlshmax,
+		*wordlspmin, *_wordlspmin,
+		*wordlspmax, *_wordlspmax,
+		linelshmin, linelshmax,
+		linelspmin, linelspmax,
+		linenchars, linespaces ;
+
+	_cost = malloc((pgsize + 1) * sizeof *_cost);
+	cost = &_cost[1];
+	_hypc = calloc(pgsize + 1, sizeof *_hypc);
+	hypc = &_hypc[1];
+	_brcnt = calloc(pgsize + 1, sizeof *_brcnt);
+	brcnt = &_brcnt[1];
+	prevbreak = calloc(pgsize, sizeof *prevbreak);
+//
+	_rjays = malloc((pgsize + 1) * sizeof *_rjays) ;
+	rjays = &_rjays[1] ;
+	_lrjays = malloc((pgsize + 1) * sizeof *_lrjays) ;
+	lrjays = &_lrjays[1] ;
+	_wordlength = malloc((pgwords + 1) * sizeof *_wordlength) ;
+	wordlength = &_wordlength[1] ;
+	_wordlshmin = malloc((pgwords + 1) * sizeof *_wordlshmin) ;
+	wordlshmin = &_wordlshmin[1] ;
+	_wordlshmax = malloc((pgwords + 1) * sizeof *_wordlshmax) ;
+	wordlshmax = &_wordlshmax[1] ;
+	_wordlspmin = malloc((pgwords + 1) * sizeof *_wordlspmin) ;
+	wordlspmin = &_wordlspmin[1] ;
+	_wordlspmax = malloc((pgwords + 1) * sizeof *_wordlspmax) ;
+	wordlspmax = &_wordlspmax[1] ;
+//
+	if (_cost == NULL || _hypc == NULL || _brcnt == NULL || prevbreak == NULL
+	|| _rjays == NULL || _lrjays == NULL || _wordlength == NULL
+	|| _wordlshmin == NULL || _wordlshmax == NULL || _wordlspmin == NULL
+	|| _wordlspmax == NULL)
+		{
+		errprint ("cannot allocate memory in parcomp") ;
+		done (02) ;
+		}
+//
+	if (looseness != 0)
+		{
+		static int	mesgpage = -1 ;
+
+		_lsprevbreak = malloc((lsxmax + 1) * sizeof *_lsprevbreak) ;
+		_lsbrcnt = malloc((lsxmax + 1) * sizeof *_lsbrcnt) ;
+		_lscost = malloc((lsxmax + 1) * sizeof *_lscost) ;
+		lsprevbreak = &_lsprevbreak[0] ;
+		lsbrcnt = &_lsbrcnt[0] ;
+		lscost = &_lscost[0] ;
+		if (_lsprevbreak == NULL || _lsbrcnt == NULL || _lscost == NULL)
+			{
+			looseness = 0 ;
+			lsxmax = -1 ;
+			if (realpage > mesgpage)
+				{
+				errprint ("looseness cannot allocate memory on page %d", realpage) ;
+				mesgpage = realpage ;
+				}
+			}
+		}
+	for (i = start ; i < pgwords ; i++)
+		{
+		int	z ;
+		tchar	c ;
+
+		wordlshmin[i] = 0 ;
+		wordlshmax[i] = 0 ;
+		wordlspmin[i] = 0 ;
+		wordlspmax[i] = 0 ;
+		wordlength[i] = 0 ;
+		for (z = pgwordp[i] ; z < pgwordp[i+1] ; z++)
+			{
+			c = para[z] ;
+			addletadj (c, &wordlshmin[i], &wordlshmax[i], &wordlspmin[i], &wordlspmax[i]) ;
+			wordlength[i]++ ;
+			}
+		}
+	for (i = -1; i < start; i++)
+		cost[i] = 0;
+	for (i = start; i < pgwords; i++)
+		cost[i] = HUGE_VAL;
+	for (i = start; i < pgwords; i++) {
+		if (pshapes) {
+			j = brcnt[i-1];
+			if (j < pshapes)
+				nel = pgll[j] - pgin[j];
+			else
+				nel = pgll[pshapes-1] - pgin[pshapes-1];
+		} else if (un != in) {
+			nel = ll;
+			nel -= i > start ? in : un;
+		}
+		k = pgwordw[i] + pglgsw[i];
+		m = pglsphc[i] + pglgsh[i];
+		s = 0;
+		linelshmin = wordlshmin[i] ;
+		linelshmax = wordlshmax[i] ;
+		linelspmin = wordlspmin[i] ;
+		linelspmax = wordlspmax[i] ;
+		linenchars = wordlength[i] ;
+		linespaces = 0 ;
+		if (pglgsc[i] > 0)
+			{
+			subletadj (para[pgwordp[i]], &linelshmin, &linelshmax, &linelspmin, &linelspmax) ;
+			addletadj (pglgsc[i], &linelshmin, &linelshmax, &linelspmin, &linelspmax) ;
+			}
+		for (j = i; j < pgwords; j++) {
+			if (j > i) {
+				k += pgspacw[j] + pgwordw[j];
+				m += pgadspc[j] + pglsphc[j];
+				s += pgspacw[j];
+				linelshmin += wordlshmin[j] ;
+				linelshmax += wordlshmax[j] ;
+				linelspmin += wordlspmin[j] ;
+				linelspmax += wordlspmax[j] ;
+				linenchars += wordlength[j] ;
+				if (pgspacw[j])
+					linespaces++ ;
+			}
+			v = k + pghyphw[j] + pglgew[j];
+			if (v - m - pglgeh[j] <= nel)
+				{
+				if (wscalc == 0)
+					{
+					if (!spread && j == pgwords - 1 && pgpenal[j] == 0)
+						t = 0.0 ;
+					else
+						t = penalty(v, s,
+							pghyphw[j],
+							pghyphw[j] && hypc[i-1],
+							pghyphw[j] && j >= pglastw) ;
+					rjay = lrj = 0.0 ;
+					}
+				else
+					{
+					if (!spread && j == pgwords - 1 && pgpenal[j] == 0 && v < nel)
+						t = rjay = lrj = 0.0 ;
+					else
+						{
+						int	dlshmin = 0, dlshmax = 0,
+							dlspmin = 0, dlspmax = 0,
+							dlinechars = 0 ;
+//
+						if (pglgew[j])
+							{
+							dlinechars++ ;
+							addletadj (pglgec[j], &dlshmin, &dlshmax, &dlspmin, &dlspmax) ;
+							}
+						if (pghyphw[j])
+							{
+							dlinechars++ ;
+							addletshpraw (pghyphw[j], &dlshmin, &dlshmax) ;
+							}
+						else
+							subletspc (para[j]-1, &dlspmin, &dlspmax) ;
+//
+						t = penalty_rf(v, s,
+							pghyphw[j],
+							pghyphw[j] && hypc[i-1],
+							pghyphw[j] && j >= pglastw,
+							linelshmin + dlshmin,
+							linelshmax + dlshmax,
+							linelspmin + dlspmin,
+							linelspmax + dlspmax,
+							linespaces,
+							linenchars + dlinechars,
+							&rjay,
+							&lrj);
+						}
+					}
+//
+				t += pgpenal[j];
+				t += cost[i-1];
+/*
+ *	------------ Begin additional penalties, features, etc. ----------------
+ */
+//				Heirloom mode cannot support the adjacent line features
+				if (wscalc == 0)
+					goto parcompSkipAdj ;
+				if (j == pgwords - 1 && rjay > 0.0 && !spread && v < nel)
+					rjay = 0.0 ;
+				if (adjpenalty != 0.0 && adjthreshold > 0.0)
+					{
+					int	cfc, pfc, afc ;
+					double	prevrj ;
+//
+					if (adjthreshupr > 1.0 && adjthreshold < 1.0)
+						{
+						if (rjay >= 0.0)
+							cfc = rjay / ((adjthreshupr - 1.0) / (wsupr - 1.0)) ;
+						else
+							cfc = rjay / ((1.0 - adjthreshold) / (1.0 - wslwr)) ;
+						}
+					else
+						cfc  = rjay / adjthreshold ;
+					cfc = cfc > 10 ? 10 : cfc ;
+					if (cfc != 0 || wscalc == 5 || j == pgwords - 1)
+						{
+						if (brcnt[i-1] == 0)
+							prevrj = 0.0 ;
+						else
+							prevrj = rjays[i-1] ;
+						if (adjthreshupr > 1.0 && adjthreshold < 1.0)
+							{
+							if (prevrj >= 0.0)
+								pfc = prevrj / ((adjthreshupr - 1.0) / (wsupr - 1.0)) ;
+							else
+								pfc = prevrj / ((1.0 - adjthreshold) / (1.0 - wslwr)) ;
+							}
+						else
+							pfc  = prevrj / adjthreshold ;
+						pfc = pfc > 10 ? 10 : pfc ;
+						afc = abs(cfc - pfc) ;
+						if (afc > 1)
+							t += adjpenalty ;
+						else if (brcnt[i-1] == 0 && afc == 1 && wscalc != 5)
+							t += adjpenalty / 2.0 ;
+						}
+					}
+//
+				if (letpen > 1 && adjlapenalty > 0.0 && adjlathreshold > 0.0 && brcnt[i-1] > 0)
+					{
+					if ((lrj > 0.0 && lrjays[i-1] < 0.0)
+					||  (lrj < 0.0 && lrjays[i-1] > 0.0))
+						{
+						xdbl = lrj / adjlathreshold ;
+						xdbl = xdbl * xdbl * xdbl ;
+						xdbl *= xdbl ;			// x^6 ; 10^6=1e6 (MAXPENALTY)
+//						xdbl *= xdbl ;			// x^12; 3.16^12=1e6
+						ydbl = lrjays[i-1] / adjlathreshold ;
+						ydbl = ydbl * ydbl * ydbl ;
+						ydbl *= ydbl ;
+//						ydbl *= ydbl ;
+						t += adjlapenalty * (xdbl + ydbl) / 2.0 ;
+						}
+					}
+parcompSkipAdj:
+				if (elppen)
+					{
+					static int	dflt_elpchar[] = 
+								{ '.', ',', ';', ':', '!', '?', '\'', '\"', ')', ']', '}', 0 } ;
+					int	x ;
+					tchar	c ;
+					int	*ep ;	// s/b a tchar *, but propchar() wants an int *
+
+					if (j < pgwords - 1)
+						{
+						if (*elpchar && elpchar[0] != IMP)
+							ep = elpchar ;
+						else
+							ep = dflt_elpchar ;
+						c = cbits(para[pgwordp[j+1]-1]) ;
+						for (x = 0; ep[x] && x < NSENT ; x++)
+							if (c == ep[x])
+								{
+								t += elppen ;
+								break ;
+								}
+						}
+					}
+				t += linepenalty ;
+				if (exhyp && cbits(para[pgwordp[j+1]-1]) == '-')
+					t += exhyp ;
+				if (j == pgwords - 1 && overrunpenalty > 0.0)
+					{
+					if (v < overrunmin)
+						t += MAXPENALTY ;
+					else
+						{
+						double	lastlineratio = (double) v / nel ;
+
+						if (lastlineratio < overrunthreshold)
+							{
+							xdbl = lastlineratio / overrunthreshold ;
+							xdbl = xdbl < 0.001 ? 0.001 : xdbl ;
+							t += overrunpenalty * 0.5 / xdbl ;
+							}
+						}
+					}
+				if (looseness != 0 && j == pgwords - 1 && lsxmax > 0)
+					{
+					if (lsx > lsxmax && lsxmax < 225)
+						{
+						int	*_newlsprevbreak, *_newlsbrcnt ;
+						double	*_newlscost ;
+
+						lsxmax += 32 ;
+						_newlsprevbreak = realloc(_lsprevbreak, (lsxmax + 1) * sizeof *_lsprevbreak) ;
+						_newlsbrcnt = realloc(_lsbrcnt, (lsxmax + 1) * sizeof *_lsbrcnt) ;
+						_newlscost = realloc(_lscost, (lsxmax + 1) * sizeof *_lscost) ;
+						if (_newlsprevbreak == NULL || _newlsbrcnt == NULL || _newlscost == NULL)
+							{
+							errprint ("looseness cannot increase node count to %d", lsxmax) ;
+							lsxmax = -1 ;	// we can use what we have, just don't add any more
+							}
+						if (_newlsprevbreak != NULL)
+							{
+							_lsprevbreak = _newlsprevbreak ;
+							lsprevbreak = &_lsprevbreak[0] ;
+							}
+						if (_newlsbrcnt != NULL)
+							{
+							_lsbrcnt = _newlsbrcnt ;
+							lsbrcnt = &_lsbrcnt[0] ;
+							}
+						if (_newlscost != NULL)
+							{
+							_lscost = _newlscost ;
+							lscost = &_lscost[0] ;
+							}
+						}
+					if (lsx <= lsxmax)
+						{
+						lscost[lsx] = t ;
+						lsprevbreak[lsx] = i ;
+						lsbrcnt[lsx] = 1 + brcnt[i-1] ;
+						lsx++ ;
+						}
+					else if (lsxmax > 0)
+						{
+						errprint ("looseness maximum nodes exceeded, using first %d", lsx) ;
+						lsxmax = -1 ;
+						}
+					
+					}
+
+				/*fprintf(stderr, "%c%c%c%c to %c%c%c%c "
+				                 "t=%g cost[%d]=%g "
+						 "brcnt=%d oldbrcnt=%d\n",
+						(char)para[pgwordp[i]],
+						(char)para[pgwordp[i]+1],
+						(char)para[pgwordp[i]+2],
+						(char)para[pgwordp[i]+3],
+						(char)para[pgwordp[j+1]-4],
+						(char)para[pgwordp[j+1]-3],
+						(char)para[pgwordp[j+1]-2],
+						(char)para[pgwordp[j+1]-1],
+						t, j, cost[j],
+						1 + brcnt[i-1],
+						brcnt[j]
+					);*/
+
+				if ((double)t <= cost[j]) {
+					if (pghyphw[j])
+						h = hypc[i-1] + 1;
+					else
+						h = 0;
+					/*
+					 * This is not completely
+					 * correct: It might be
+					 * preferable to disallow
+					 * an earlier hyphenation
+					 * point. But it seems
+					 * good enough.
+					 */
+					if (hlm < 0 || h <= hlm) {
+						hypc[j] = h;
+						cost[j] = t;
+						prevbreak[j] = i;
+						brcnt[j] = 1 + brcnt[i-1];
+						rjays[j] = rjay ;
+						lrjays[j] = lrj ;
+					}
+				}
+			} else {
+				if (j == i) {
+					t = 1 + cost[i-1];
+					cost[j] = t;
+					prevbreak[j] = i;
+					brcnt[j] = 1 + brcnt[i-1];
+				}
+				break;
+			}
+		}
+	}
+//
+	/*for (i = 0; i < pgwords; i++)
+		fprintf(stderr, "cost[%d] = %g %c%c%c%c to %c%c%c%c\n",
+				i, cost[i],
+				(char)para[pgwordp[prevbreak[i]]],
+				(char)para[pgwordp[prevbreak[i]]+1],
+				(char)para[pgwordp[prevbreak[i]]+2],
+				(char)para[pgwordp[prevbreak[i]]+3],
+				(char)para[pgwordp[i]],
+				(char)para[pgwordp[i]+1],
+				(char)para[pgwordp[i]+2],
+				(char)para[pgwordp[i]+3]
+			);*/
+//
+	if (looseness != 0)
+		{
+		int	curlooseness = 0,
+			newprevbreak = -1,
+			optlinecount = brcnt[pgwords-1],
+			lsdiff, z ;
+		double	bestcost = HUGE_VAL ;
+
+		for (z = 0 ; z < lsx ; z++)
+			{
+			lsdiff = lsbrcnt[z] - optlinecount ;
+			if ((lsdiff == curlooseness && lscost[z] < bestcost)
+			|| (looseness <= lsdiff && lsdiff < curlooseness)
+			|| (looseness >= lsdiff && lsdiff > curlooseness))
+				{
+				newprevbreak = lsprevbreak[z] ;
+				bestcost = lscost[z] ;
+				curlooseness = lsdiff ;
+				}
+			}
+		if (newprevbreak >= 0)
+			prevbreak[pgwords - 1] = newprevbreak ;
+		looseness = 0 ;
+		}
+/*
+ * 	------------------ end of additional features ------------------------
+ */
+	pglines = 0;
+	memset(&pgopt[pglnout], 0, (pgsize - pglnout) * sizeof *pgopt);
+	i = j = pgwords - 1;
+	do {
+		pglines++;
+		j = prevbreak[j];
+		pgopt[i--] = j--;
+	} while (j >= start && i >= pglnout);
+	memmove(&pgopt[pglnout+1], &pgopt[i+2], pglines * sizeof *pgopt);
+	pgopt[pglnout] = start;
+	free(_cost);
+	free(_hypc);
+	free(_brcnt);
+	free(prevbreak);
+	free(_rjays) ;
+	free(_lrjays) ;
+	free(_lsprevbreak) ;
+	free(_lsbrcnt) ;
+	free(_lscost) ;
+	free(_wordlength) ;
+	free(_wordlshmin) ;
+	free(_wordlshmax) ;
+	free(_wordlspmin) ;
+	free(_wordlspmax) ;
+}
+#endif // !NROFF
 
 void
 growpgsize(void)
@@ -2302,7 +3557,7 @@ parpr(struct s *s)
 		nwd += stretches;
 		nw++;
 	}
-	pbreak((nel - adspc < 0 && nwd > 1) || _spread, 1, s);
+	pbreak((nel - adspc < (lastlinestretch ? EM / 2 : 0) && nwd > 1) || _spread, 1, s);
 	if (pgflags[pgwords] & PG_NEWIN)
 		savin = pgwdin[pgwords];
 	if (pgflags[pgwords] & PG_NEWLL)

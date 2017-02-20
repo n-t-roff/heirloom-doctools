@@ -41,6 +41,10 @@
  */
 
 /*
+ * Portions Copyright (c) 2017 Roy Fisher
+ */
+
+/*
  * University Copyright- Copyright (c) 1982, 1986, 1988
  * The Regents of the University of California
  * All Rights Reserved
@@ -2534,3 +2538,10 @@ echo_on (void)			/*restore ECHO after .rd in "-q" mode*/
 
 }
 #endif	/* NROFF */
+
+
+void
+caseelpchar(void)
+{
+	propchar(elpchar) ;
+}

@@ -173,7 +173,7 @@
 
 #define	isxfunc(c, x)	(cbits(c) == XFUNC && fbits(c) == (x))
 
-#define	LAFACT	1000	/* letter adjustment float-to-int conversion factor */
+#define	LAFACT	10000	/* letter adjustment float-to-int conversion factor */
 
 #define	HYPHEN	c_hyphen
 #define	EMDASH	c_emdash	/* \(em */

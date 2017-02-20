@@ -41,6 +41,10 @@
  */
 
 /*
+ * Portions Copyright (c) 2017 Roy Fisher
+ */
+
+/*
  * University Copyright- Copyright (c) 1982, 1986, 1988
  * The Regents of the University of California
  * All Rights Reserved
@@ -2903,11 +2907,11 @@ getref(void)
 	int	a = 0, i, c, delim;
 	char	*np = NULL;
 
-	if ((delim = getch()) != 0) {
+	if ((delim = getach()) != 0) {
 		for (i = 0; ; i++) {
 			if (i + 1 >= a)
 				np = realloc(np, a += 32);
-			if ((c = getch()) == 0) {
+			if ((c = getach()) == 0) {
 				if (cbits(ch) == ' ') {
 					ch = 0;
 					c = ' ';
@@ -3029,4 +3033,500 @@ int
 ps2cc(const char *name)
 {
 	return _ps2cc(name, 1);
+}
+
+
+void
+casewswarn(void)
+{
+	int	i ;
+	float	n ;
+
+	if (skip(0))
+		wswarn = 1 ;
+	else
+		{
+		i = hatoi() ;
+		if (!nonumb)
+			{
+			if (i <= 0)
+				wswarn = 0 ;
+			else if (i == 1)
+				wswarn = 1 ;
+			else
+				wswarn = 2 ;
+			}
+		if (!skip(0))
+			{
+			n = atof() ;
+			if (!nonumb && n > 0.0 && n <= 100.0)
+				wswarnlwr = n / 100.0 ;
+			}
+		if (!skip(0))
+			{
+			n = atof() ;
+			if (!nonumb && n >= wswarnlwr && n >= 100.0)
+				wswarnupr = n / 100.0 ;
+			}
+		}
+}
+
+
+void
+casewsmark(void)
+{
+	int	n ;
+
+	if (skip(0))
+		wsmark = 1;
+	else
+		{
+		n = hatoi();
+		if (!nonumb && (n == 0 || n == 1))
+			wsmark = n ;
+		}
+}
+
+
+void
+casewrdspc(void)
+{
+	float	lowin, highin;
+
+	if (skip(0))
+		{
+		lowin  = -1.0 ;
+		highin = -1.0 ;
+		}
+	else
+		{
+		lowin = atof() ;
+		if (!nonumb)
+			lowin /= 100.0 ;
+		else
+			lowin = -1.0 ;
+
+		if (skip(1))
+			highin = -1.0 ;
+		else
+			{
+			highin = atof() ;
+			if (!nonumb)
+				highin /= 100.0 ;
+			else
+				highin = -1.0 ;
+			}
+		}
+	if (lowin >= 0.08 && lowin <= 0.99 && highin >= 1.01 && highin <= 5.00)
+		{
+		wslwr = lowin ;
+		wsupr = highin ;
+		}
+}
+
+
+void
+casewsmin(void)
+{
+	double	n ;
+
+	noscale = 1 ;
+	if (!skip(0))
+		{
+		n = atof() ;
+		if (!nonumb && n >= 0.0)
+			wsmin = n / 100.0 ;
+		}
+	else
+		wsmin = 0 ;
+	noscale = 0 ;
+}
+
+
+void
+casewscalc(void)
+{
+	int	n ;
+
+	if (!skip(0))
+		{
+		dfact = 1 ;
+		noscale = 1 ;
+		n = hatoi() ;
+		if (!nonumb && (n >= 0))
+			wscalc = n ;
+		if (wscalc == 0)	// Heirloom mode
+			{
+			wslwr = 0.08 ;
+			wsupr = 1.6 ;
+			wsmin = 0.0 ;
+			hypp  = 0.0 ;
+			hypp2 = 0.0 ;
+			hypp3 = 0.0 ;
+			linepenalty = 0.0 ;
+			adjpenalty = 0.0 ;
+			adjthreshold = 0.5 ;
+			adjthreshupr = 0.0 ;
+			overrunpenalty = 0.0 ;
+			overrunthreshold = 0.25 ;
+			overrunmin = 0 ;
+			lastlinestretch = 0 ;
+			elppen = 0.0 ;
+			exhyp = 0.0 ;
+			}
+		if (wscalc == 5)	// tex mode
+			{
+			wslwr = 0.667 ;
+			wsupr = 1.5 ;
+			wsmin = 0.0 ;
+			linepenalty = 0.01 ;
+			adjpenalty = 1.0 ;
+			adjthreshold = 0.5 ;
+			adjthreshupr = 0.0 ;
+			hypp  = 0.25 ;
+			hypp2 = 1.0 ;
+			hypp3 = 0.7 ;
+			overrunpenalty = 0.0 ;
+			overrunthreshold = 0.25 ;
+			overrunmin = 0 ;
+			lastlinestretch = 1 ;
+			elppen = 0.0 ;
+			exhyp = 0.0 ;
+			}
+
+		noscale = 0 ;
+		}
+}
+
+
+void
+caselastlinestretch(void)
+{
+	noscale = 1 ;
+	dfact = 1 ;
+	if (skip(0))
+		lastlinestretch = 1;
+	else
+		if (!nonumb)
+			lastlinestretch = hatoi();
+	if (lastlinestretch > 0)
+		lastlinestretch = 1 ;
+	else
+		lastlinestretch = 0 ;
+ 	noscale = 0 ;
+}
+
+
+void
+caseoverrunpenalty(void)
+{
+	float	n ;
+	int	m ;
+
+	if (skip(0))
+		{
+		overrunpenalty = 0.0 ;
+		overrunthreshold = 0.25 ;
+		overrunmin = 0 ;
+		}
+	else
+		{
+		n = atof() ;
+		if (!nonumb)
+			overrunpenalty = n / 100.0 ;
+		if (!skip(0))
+			{
+			n = atof() ;
+			if (!nonumb && n >= 1.0 && n <= 100.0)
+				overrunthreshold = n / 100.0 ;
+			}
+		if (!skip(0))
+			{
+			dfact = EM ;
+			m = max(hnumb(&m), 0) ;
+			overrunmin = m ;
+			dfact = 1 ;
+			}
+		}
+}
+
+
+void
+caselinepenalty(void)
+{
+	float	n ;
+
+	if (skip(0))
+		linepenalty = 0.0 ;
+	else
+		{
+		n = atof() ;
+		if (!nonumb)
+			linepenalty = n / 100.0 ;
+		}
+}
+
+
+void
+caselooseness(void)
+{
+	int	n ;
+
+	if (skip(0))
+		looseness = 0;
+	else
+		{
+		n = hatoi() ;
+		if (!nonumb)
+			{
+			if (n < -3)
+				n = -3 ;
+			else if (n > 3)
+				n = 3 ;
+			looseness = n ;
+			}
+		}
+}
+
+
+void
+caseelppen(void)
+{
+	float	n ;
+
+	if (skip(0))
+		elppen = 0.0 ;
+	else
+		{
+		n = atof() ;
+		if (!nonumb)
+			elppen = n / 100.0 ;
+		}
+}
+
+
+void
+caseadjpenalty(void)
+{
+	float	n ;
+
+	if (!skip(0))
+		{
+		n = atof() ;
+		if (!nonumb)
+			adjpenalty = n / 100.0 ;
+		if (!skip(0))
+			{
+			n = atof() ;
+			if (!nonumb && n >= 0.1)
+				adjthreshold = n / 100.0 ;
+			if (!skip(0))
+				{
+				n = atof() ;
+				if (!nonumb)
+					{
+					if (n > 1.0)
+						adjthreshupr = n / 100.0 ;
+					else
+						adjthreshupr = 0.0 ;
+					}
+				}
+			else
+				adjthreshupr = 0.0 ;
+			}
+		}
+}
+
+
+void
+caseadjlapenalty(void)
+{
+	float	n ;
+
+	if (!skip(0))
+		{
+		n = atof() ;
+		if (!nonumb)
+			adjlapenalty = n / 100.0 ;
+
+		if (!skip(0))
+			{
+			n = atof() ;
+			if (!nonumb && n > 0.0)
+				adjlathreshold = n / 100.0 ;
+			}
+		}
+}
+
+
+void
+caseletcalc(void)
+{
+	int	n ;
+
+	noscale = 1 ;
+	if (!skip(0))
+		{
+		n = hatoi() ;
+		if (!nonumb && ((n >= 0 && n <= 4) || n == 21 || n == 22 || n == 31 || n == 32))
+			letcalc = n ;
+		}
+	noscale = 0 ;
+}
+
+
+void
+caseletstren(void)
+{
+	float	s ;
+
+	noscale = 1 ;
+	if (!skip(0))
+		{
+		s = atof() ;
+		if (!nonumb)
+			{
+			if (s < 0.0)
+				s = 0.0 ;
+			letstren = s / 100.0 ;
+			}
+		}
+	else
+		letstren = 1.0 ;
+	noscale = 0 ;
+}
+
+
+void
+caseletthresh(void)
+{
+	float	n ;
+
+	noscale = 1 ;
+	if (!skip(0))
+		{
+		n = atof() ;
+		if (!nonumb)
+			{
+			if (n < 1.0)
+				n = 1.0 ;
+			if (n > 100.0)
+				n = 100.0 ;
+			letthreshlwr = n / 100.0 ;
+			}
+		if (!skip(0))
+			{
+			n = atof() ;
+			if (!nonumb)
+				{
+				if (n < 100.0)
+					n = 100.0 ;
+				if (n > 200.0)
+					n = 200.0 ;
+				letthreshupr = n / 100.0 ;
+				}
+			}
+		}
+	noscale = 0 ;
+}
+
+
+void
+caseletpen(void)
+{
+	int	n ;
+	float	p ;
+
+	noscale = 1 ;
+	if (!skip(0))
+		{
+		n = hatoi() ;
+		if (!nonumb)
+			{
+			if (n < 0)
+				n = 0 ;
+			letpen = n ;
+			}
+		if (!skip(0))
+			{
+			p = atof() ;
+			if (!nonumb)
+				letlwr = p / 100.0 ;
+			}
+		if (!skip(0))
+			{
+			p = atof() ;
+			if (!nonumb)
+				letupr = p / 100.0 ;
+			}
+		}
+	noscale = 0 ;
+}
+
+
+void
+caseexhyp(void)
+{
+	float	n ;
+
+	if (skip(0))
+		exhyp = 0 ;
+	else
+		{
+		n = atof() ;
+		if (!nonumb)
+			exhyp = n / 100.0 ;
+		}
+}
+
+
+void
+caseletspc(void)
+{
+	int	n ;
+
+	dfact = LAFACT / 100 ;
+	noscale = 0 ;
+	if (skip(1))
+		goto ret ;
+//	lower
+	n = hatoi() ;
+	if (!nonumb && n > 0)
+		lspmin = LAFACT - n;
+//	upper
+	if (!skip(0))
+		{
+		dfact = LAFACT / 100;
+		n = hatoi();
+		if (!nonumb && n > 0)
+			lspmax = n - LAFACT;
+		}
+ret:
+	dfact = 1 ;
+}
+
+
+void
+caseletshp(void)
+{
+	int	n ;
+
+	dfact = LAFACT / 100 ;
+	noscale = 0 ;
+	if (skip(1))
+		goto ret ;
+//	shrink
+	n = hatoi() ;
+	if (!nonumb && n > 0)
+		lshmin = LAFACT - n;
+//	stretch
+	if (!skip(0))
+		{
+		dfact = LAFACT / 100 ;
+		n = hatoi();
+		if (!nonumb && n > 0)
+			lshmax = n - LAFACT;
+		}
+ret:
+	dfact = 1 ;
 }

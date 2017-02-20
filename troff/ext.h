@@ -41,6 +41,10 @@
  */
 
 /*
+ * Portions Copyright (c) 2017 Roy Fisher
+ */
+
+/*
  * University Copyright- Copyright (c) 1982, 1986, 1988
  * The Regents of the University of California
  * All Rights Reserved
@@ -598,3 +602,36 @@ extern	void	morechars(int);
 extern	void	caseutf8conv(void);
 extern	int	addch(char *);
 #endif
+/*
+ * Typo additions - rwf
+ */
+extern	double	adjlapenalty ;
+extern	double	adjlathreshold ;
+extern	double	adjpenalty ;
+extern	double	adjthreshold ;
+extern	double	adjthreshupr ;
+extern	void	caseelpchar(void) ;
+extern	int	elpchar[NSENT] ;
+extern	double	elppen ;
+extern	double	exhyp ;
+extern	int	lastlinestretch ;
+extern	int	letcalc ;
+extern	int	letpen ;
+extern	double	letlwr ;
+extern	double	letstren ;
+extern	double	letthreshlwr ;
+extern	double	letthreshupr ;
+extern	double	letupr ;
+extern	double	linepenalty ;
+extern	int	looseness ;
+extern	int	overrunmin ;
+extern	double	overrunpenalty ;
+extern	double	overrunthreshold ;
+extern	int	wscalc ;
+extern	double	wslwr ;
+extern	int	wsmark ;
+extern	double	wsmin ;
+extern	double	wsupr ;
+extern	int	wswarn ;
+extern	double	wswarnlwr ;
+extern	double	wswarnupr ;
