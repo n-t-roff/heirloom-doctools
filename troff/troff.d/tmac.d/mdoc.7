@@ -4006,7 +4006,16 @@ followed by the file name, then the contents of
 It is neither callable nor parsed.
 .
 .It Li .Lk
-To be written.
+Format hyperlink.
+.Pp
+.Dl Usage: .Lk Ar uri Op Ar name
+.Pp
+.Bl -tag -width 12n
+.It Li .Lk http://www.foo.org \(dqThe Foo Project\(dq
+.Lk http://www.foo.org "The foo project"
+.It Li .Lk http://www.foo.org
+.Lk http://www.foo.org
+.El
 .
 .It Li .Me
 Exact usage unknown.

@@ -267,18 +267,18 @@
 .\"
 .\" NS aZ macro - print buffer (pB) and clean up arg vectors (aY)
 .de aZ
-.pB
-.aY
+.	pB
+.	aY
 ..
 .\" NS aY macro - clean up arg vector
 .de aY
-.rm C0 C1 C2 C3 C4 C5 C6 C7 C8 C9
-.rm A0 A1 A2 A3 A4 A5 A6 A7 A8 A9
-.rm S1 S2 S3 S4 S5 S6 S7 S8 S9
-.nr aC 0
-.nr __aI_ini_aC 0
-.nr aP 0
-.rm mN __inline_mN
+.	rm C0 C1 C2 C3 C4 C5 C6 C7 C8 C9
+.	rm A0 A1 A2 A3 A4 A5 A6 A7 A8 A9
+.	rm S1 S2 S3 S4 S5 S6 S7 S8 S9
+.	nr aC 0
+.	nr __aI_ini_aC 0
+.	nr aP 0
+.	rm mN __inline_mN
 ..
 .\" NS pB macro - test for end of vector (eol) (print b1 buffer or divert)
 .de pB
@@ -4060,7 +4060,11 @@ File:
 .\" NS Lk macro
 .de Lk
 .	if !\\n(aC \{\
-.		ie !\\n(.$ .tm Usage: .Lk <URL> (#\\n(.c)
+.		ds Lk.c
+.		ds Lk.d
+.		ds Lk.s
+.		ds Lk.t
+.		ie !\\n(.$ .tm Usage: .Lk <URL> [<name>] (#\\n(.c)
 .		el \{\
 .			ds mN Lk
 .			nr fV \\n(.$
@@ -4074,10 +4078,13 @@ File:
 .	\}
 .	if \\n(aC>\\n(aP \{\
 .		nr aP \\n(aP+1
-.		ie \\n[C\\n(aP]>2 \{\
-.			as b1 \\*[Lk.t]
-.			ds Lk.t
-.			nR
+.		ie \\n[C\\n(aP]=3 \{\" closing
+.			as Lk.c \\*[A\\n(aP]
+.			Lk
+.		\}
+.		el .ie \\n[C\\n(aP]=4 \{\" opening
+.			as b1 \\*[A\\n(aP]
+.			Lk
 .		\}
 .		el .ie \\n[C\\n(aP]=1 \{\
 .			as b1 \\*[Lk.t]
@@ -4089,13 +4096,18 @@ File:
 .		\}
 .		el \{\
 .			ie \\*[Lk.t] .ds Lk.t \fB\\*[A\\n(aP]\fP
-.			el .ds Lk.t \fI\\*[A\\n(aP]\fP: \\*[Lk.t]
+.			el \{\
+.				as Lk.d \\*[Lk.s]\fI\\*[A\\n(aP]\fP
+.				ds Lk.s \\*[S\\n(aP]
+.			\}
 .			Lk
 .		\}
 .	\}
-.	as b1 \\*[Lk.t]
-.	ds Lk.t
-.	aZ
+.	if \\n(aC \{\
+.		if !\\*[Lk.d] .as b1 \\*[Lk.d]: \&
+.		as b1 \\*[Lk.t]\\*[Lk.c]
+.		aZ
+.	\}
 ..
 .de saveState
 .	ie     \\n(fV .lnr _i_ \\n(fV
