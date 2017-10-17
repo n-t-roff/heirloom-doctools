@@ -2883,7 +2883,8 @@ parcomp(int start)
 					}
 				else
 					{
-					if (!spread && j == pgwords - 1 && pgpenal[j] == 0 && v < nel)
+					if (!spread && j == pgwords - 1 && pgpenal[j] == 0
+					&& (v < nel - (lastlinestretch ? EM / 2 : 0)))
 						t = rjay = lrj = 0.0 ;
 					else
 						{
