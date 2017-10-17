@@ -464,11 +464,17 @@ sl:
 		} else if (strcmp(&name[1], "hylen") == 0) {
 			i = hylen;
 		} else if (strcmp(&name[1], "hypp") == 0) {
-			i = hypp;
+			i = fl = hypp / PENALSCALE ;
+			if (i != fl)
+				goto flt;
 		} else if (strcmp(&name[1], "hypp2") == 0) {
-			i = hypp2;
+			i = fl = hypp2 / PENALSCALE ;
+			if (i != fl)
+				goto flt;
 		} else if (strcmp(&name[1], "hypp3") == 0) {
-			i = hypp3;
+			i = fl = hypp3 / PENALSCALE ;
+			if (i != fl)
+				goto flt;
 		} else if (strcmp(&name[1], "padj") == 0) {
 			i = padj;
 		} else if (strcmp(&name[1], "ev") == 0) {
