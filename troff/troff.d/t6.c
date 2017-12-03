@@ -3202,13 +3202,18 @@ casewscalc(void)
 void
 caselastlinestretch(void)
 {
+	int n ;
+
 	noscale = 1 ;
 	dfact = 1 ;
 	if (skip(0))
-		lastlinestretch = 1;
+		lastlinestretch = 1 ;
 	else
+		{
+		n = hatoi() ;
 		if (!nonumb)
-			lastlinestretch = hatoi();
+			lastlinestretch = n ;
+		}
 	if (lastlinestretch > 0)
 		lastlinestretch = 1 ;
 	else

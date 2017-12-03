@@ -1,3 +1,13 @@
+2017-12-02
+    Fix oversimplified cleanup for caselastlinestretch.
+
+2017-10-17
+    Calculate penalty for last line of paragraph if it is justified by
+    .lastlinestretch.
+
+2017-10-17
+    Return correct value from read-only registers .hypp, .hypp2, .hypp3.
+
 2017-02-20
     Add new requests for paragraph composition and letter adjustment.
     Revert change from 2016-09-07.
