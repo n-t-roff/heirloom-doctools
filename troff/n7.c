@@ -1875,8 +1875,6 @@ letshrink_rf(void)
 	{
 	case 2:
 	case 4:
-	case 21:
-	case 22:
 		xz = (1.0 - letthreshlwr) * s ;
 		if (diff > xz)
 			ladunits = diff - xz ;
@@ -1893,8 +1891,6 @@ letshrink_rf(void)
 			ladunits = 0 ;
 		break ;
 	case 3:
-	case 31:
-	case 32:
 		xz = (1.0 - letthreshlwr) * s ;
 		spcunits = (1.0 - wslwr) * s ;
 		if (xz < diff && diff < spcunits)
@@ -1928,40 +1924,6 @@ letshrink_rf(void)
 	case 4:
 		lspunits = ladunits * lspprop ;
 		lshunits = ladunits * lshprop ;
-		break ;
-	case 21:
-	case 31:
-		if (ladunits <= lsplow)
-			{
-			lspunits = ladunits ;
-			lshunits = 0 ;
-			}
-		else
-			{
-			lspunits = lsplow ;
-			z = ladunits - lspunits ;
-			if (z <= lshlow)
-				lshunits = z ;
-			else
-				lshunits = lshlow ;
-			}
-		break ;
-	case 22:
-	case 32:
-		if (ladunits <= lshlow)
-			{
-			lshunits = ladunits ;
-			lspunits = 0 ;
-			}
-		else
-			{
-			lshunits = lshlow ;
-			z = ladunits - lshunits ;
-			if (z <= lsplow)
-				lspunits = z ;
-			else
-				lspunits = lsplow ;
-			}
 		break ;
 	default:
 		lspunits = 0 ;
@@ -2040,8 +2002,6 @@ letgrow_rf(void)
 	{
 	case 2:
 	case 4:
-	case 21:
-	case 22:
 		xz = (letthreshupr - 1.0) * s ;
 		if (diff > xz)
 			ladunits = diff - xz ;
@@ -2058,8 +2018,6 @@ letgrow_rf(void)
 			ladunits = 0.0 ;
 		break ;
 	case 3:
-	case 31:
-	case 32:
 		xz = (letthreshupr - 1.0) * s ;
 		maxspc = (wsupr - 1.0) * s ;
 		if (xz < diff && diff < maxspc)
@@ -2095,40 +2053,6 @@ letgrow_rf(void)
 	case 4:
 		lspunits = ladunits * lspprop ;
 		lshunits = ladunits * lshprop ;
-		break ;
-	case 21:
-	case 31:
-		if (ladunits <= lsphigh)
-			{
-			lspunits = ladunits ;
-			lshunits = 0 ;
-			}
-		else
-			{
-			lspunits = lsphigh ;
-			z = ladunits - lspunits ;
-			if (z <= lshhigh)
-				lshunits = z ;
-			else
-				lshunits = lshhigh ;
-			}
-		break ;
-	case 22:
-	case 32:
-		if (ladunits <= lshhigh)
-			{
-			lshunits = ladunits ;
-			lspunits = 0 ;
-			}
-		else
-			{
-			lshunits = lshhigh ;
-			z = ladunits - lshunits ;
-			if (z <= lsphigh)
-				lspunits = z ;
-			else
-				lspunits = lsphigh ;
-			}
 		break ;
 	default:
 		lspunits = 0 ;
@@ -2465,8 +2389,6 @@ penalty_rf(int k, int s, int h, int h2, int h3, int llshmin, int llshmax,
 			{
 			case 2:
 			case 4:
-			case 21:
-			case 22:
 				if (letthreshupr > 1.0)
 					{
 					z = (letthreshupr - 1.0) * s ;
@@ -2489,8 +2411,6 @@ penalty_rf(int k, int s, int h, int h2, int h3, int llshmin, int llshmax,
 					ladunits = 0.0 ;
 				break ;
 			case 3 :
-			case 31:
-			case 32:
 				if (arrj >= 1.0)
 					ladunits = u ;
 				else if (1.0 + adratio > letthreshupr)
@@ -2541,8 +2461,6 @@ penalty_rf(int k, int s, int h, int h2, int h3, int llshmin, int llshmax,
 			{
 			case 2:
 			case 4:
-			case 21:
-			case 22:
 				if (letthreshlwr < 1.0)
 					{
 					z = (letthreshlwr - 1.0) * s ;
@@ -2566,8 +2484,6 @@ penalty_rf(int k, int s, int h, int h2, int h3, int llshmin, int llshmax,
 					ladunits = 0.0 ;
 				break ;
 			case 3:
-			case 31:
-			case 32:
 				if (arrj <= -1.0)
 					ladunits = u ;
 				else if (1.0 + adratio < letthreshlwr)

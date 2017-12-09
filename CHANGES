@@ -1,4 +1,8 @@
 2017-12-09
+    letcalc: Delete two-phase modes (21, 31, etc.) because of disappointing
+    performance.
+
+2017-12-09
     adjacent line penalty: add an incremental penalty for class deltas > 1.
     This further penalizes adjacent lines that are more than one class
     apart.

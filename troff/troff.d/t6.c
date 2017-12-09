@@ -3379,7 +3379,7 @@ caseletcalc(void)
 	if (!skip(0))
 		{
 		n = hatoi() ;
-		if (!nonumb && ((n >= 0 && n <= 4) || n == 21 || n == 22 || n == 31 || n == 32))
+		if (!nonumb && n >= 0 && n <= 4)
 			letcalc = n ;
 		}
 	noscale = 0 ;
