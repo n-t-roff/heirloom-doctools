@@ -3153,8 +3153,15 @@ casewscalc(void)
 		dfact = 1 ;
 		noscale = 1 ;
 		n = hatoi() ;
-		if (!nonumb && (n >= 0))
-			wscalc = n ;
+		if (!nonumb)
+			{
+			if (n < 0)
+				wscalc = 0 ;
+			else if (n > 99)
+				wscalc = 99 ;
+			else
+				wscalc = n ;
+			}
 		if (wscalc == 0)	// Heirloom mode
 			{
 			wslwr = 0.08 ;
@@ -3174,7 +3181,7 @@ casewscalc(void)
 			elppen = 0.0 ;
 			exhyp = 0.0 ;
 			}
-		if (wscalc == 5)	// tex mode
+		if (wscalc == 10 || wscalc == 11)	// tex modes
 			{
 			wslwr = 0.667 ;
 			wsupr = 1.5 ;
@@ -3193,7 +3200,6 @@ casewscalc(void)
 			elppen = 0.0 ;
 			exhyp = 0.0 ;
 			}
-
 		noscale = 0 ;
 		}
 }

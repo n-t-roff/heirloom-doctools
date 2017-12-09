@@ -2618,61 +2618,102 @@ penalty_rf(int k, int s, int h, int h2, int h3, int llshmin, int llshmax,
 		arrj = larrj ;
 		t = arrj < 0.0 ? -arrj : arrj ;
 	}
+/*
+ *	Assign hyphenation penalties as applicable.  The values stored in
+ *	hypp(n) are the user inputs / 50, but that is two times the normal
+ *	basis for penalties with the new calculations (the normal basis is
+ *	the user input / 100).  So they are divided by 2 here to cover the
+ *	new calculations, and returned to input / 50 if needed for the Heirloom
+ *	calculation.
+ */
 	p1 = p2 = p3 = 0.0 ;
 	if (h && hypp)
-		p1 = hypp ;
+		p1 = hypp / 2.0 ;
 	if (h2 && hypp2)
-		p2 = hypp2 ;
+		p2 = hypp2 / 2.0 ;
 	if (h3 && hypp3)
-		p3 = hypp3 ;
-	if (wscalc >= 0 && wscalc <= 7)
-		basecalc = badcurve = wscalc ;
-	else if (wscalc >= 22 && wscalc <= 46)
+		p3 = hypp3 / 2.0 ;
+/*
+ *	Calculate the word space penalty taking the hyphenation penalties into
+ *	account.  Note: The calculations use t as the basis instead of r ;
+ *	at this point t = |r|.
+ */
+	/*
+	 * Heirloom penalty calculation, identical to method 0.  It is available
+	 * here so as to allow the use of the new features and letter adjustment
+	 * capabilities (method 0 should never execute here).
+	 * The hypenation penalties strongly interact with the word space
+	 * portion of the penalty and force the curve into a narrow
+	 * 'V' shape that strongly tries to avoid hyphenation.
+	 */
+	if (wscalc <= 1)
 		{
-		basecalc = wscalc / 10 ;
-		badcurve = wscalc % 10 ;
-		if (badcurve < basecalc)
-			badcurve = basecalc ;
-		else if (badcurve > 6)
-			badcurve = 6 ;
-		}
-	else
-		basecalc = badcurve = 6 ;
-	switch (basecalc)
-	{
-	case 0:
-	case 1:
-		t += p1 + p2 + p3 ;
+		t += (p1 + p2 + p3) * 2.0 ;
 		t = t * t * t ;
-		break ;
-	case 2:
-	case 3:
-	case 4:
-		{
-		int	i, j ;
-		double	p ;
-		j = t <= 1.0 ? basecalc : badcurve ;
-		p = t ;
-		for (i = 2 ; i <= j ; i++)
-			p = p * t ;
-		t = p ;
 		}
-		break ;
-	case 7:
-	 	t = 1.0 + 100.0 * (t * t * t + p1 / 2.0)  ;
+	/*
+	 * User-defined curves.  The range is from t^2 to t^9.  With two digits,
+	 * different curves for "good" word spaces and "bad" word spaces can be
+	 * defined.  These curves are "pure" and do not have any built-in
+	 * interactions with other penalty elements.
+	 */
+	else if ((wscalc >= 2 && wscalc <= 9) || (wscalc >= 22 && wscalc <= 99))
+		{
+		int	i, curvepwr ;
+		double	p ;
+		if (wscalc <= 9)
+			curvepwr = wscalc ;
+		else
+			{
+			if (t <= 1.0)
+				curvepwr = wscalc / 10 ;
+			else
+				curvepwr = wscalc % 10 ;
+			if (curvepwr < 2)
+				curvepwr = 2 ;
+			}
+		p = t ;
+		for (i = 2 ; i <= curvepwr ; i++)
+			p = p * t ;
+		t = p + p1 + p2 + p3 ;
+		}
+	/*
+	 * TeX82, but not incorporating the line penalty interaction or the
+	 * scaling and range limiting for TeX's integer arithmetic.  Some
+	 * differences in the results can possibly occur due to this and to the
+	 * use of doubles.  If full TeX compatibility is necessary, one would
+	 * need to use TeX, anyway, because troff just doesn't work the same way.
+	 */
+	else if (wscalc == 10)
+		{
+	 	t = 1.0 + 100.0 * t * t * t ;
 	 	t = t * t ;
 	 	t = t / 10000.0 ;
-	 	t += (p2 + p3) / 2.0 ;
-		break ;
-	case 5 :
-	case 6 :
-	default:
-		t = t * t * t ;
-		t *= t ;
-		break ;
-	}
-	if (basecalc > 1 && basecalc != 7)
-		t += (p1 + p2 + p3) / 2.0 ;
+		t += p1 + p2 + p3 ;
+		}
+	/*
+	 * Calculation from the Knuth-Plass paper.  This has an interaction
+	 * between the word spaces and the line's hypenation penalty that causes
+	 * the shape of the penalty curve to become narrower as the hyphenation
+	 * penalty is increased.  The 1.0 term is a fixed line penalty per
+	 * the paper; the user-specified line penalty is added externally as
+	 * with the other methods.
+	 */
+	else if (wscalc == 11)
+		{
+	 	t = 1.0 + 100.0 * (t * t * t + p1) ;
+	 	t = t * t ;
+	 	t = t / 10000.0 ;
+	 	t += p2 + p3 ;
+		}
+	/*
+	 * A bad user input results in a quadratic curve.
+	 */
+	else
+		{
+		t = t * t + p1 + p2 + p3 ;
+		}
+//
 	t += ladpenalty ;
 	if (wsmin > 0.0)
 		{
@@ -2925,11 +2966,23 @@ parcomp(int start)
 /*
  *	------------ Begin additional penalties, features, etc. ----------------
  */
-//				Heirloom mode cannot support the adjacent line features
+/*				Heirloom mode cannot support the adjacent line
+ *				features, so we'll just jump over them instead
+ *				of wasting a good indent level.
+ */
 				if (wscalc == 0)
 					goto parcompSkipAdj ;
+/*
+ *				If the last line is not full, assign rj = 0.
+ *				penalty_rf() always returns an rj for the
+ *				last line as if it were justified, which is not
+ *				appropriate in this case.
+ */
 				if (j == pgwords - 1 && rjay > 0.0 && !spread && v < nel)
 					rjay = 0.0 ;
+/*
+ *				Adjacent line incompatibility penalty.
+ */
 				if (adjpenalty != 0.0 && adjthreshold > 0.0)
 					{
 					int	cfc, pfc, afc ;
@@ -2945,7 +2998,7 @@ parcomp(int start)
 					else
 						cfc  = rjay / adjthreshold ;
 					cfc = cfc > 10 ? 10 : cfc ;
-					if (cfc != 0 || wscalc == 5 || j == pgwords - 1)
+					if (cfc != 0 || wscalc == 10 || j == pgwords - 1)
 						{
 						if (brcnt[i-1] == 0)
 							prevrj = 0.0 ;
@@ -2964,7 +3017,7 @@ parcomp(int start)
 						afc = abs(cfc - pfc) ;
 						if (afc > 1)
 							t += adjpenalty ;
-						else if (brcnt[i-1] == 0 && afc == 1 && wscalc != 5)
+						else if (brcnt[i-1] == 0 && afc == 1 && wscalc != 10)
 							t += adjpenalty / 2.0 ;
 						}
 					}
