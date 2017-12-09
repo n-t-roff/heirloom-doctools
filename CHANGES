@@ -1,3 +1,14 @@
+2017-12-09
+    adjacent line penalty: add an incremental penalty for class deltas > 1.
+    This further penalizes adjacent lines that are more than one class
+    apart.
+
+2017-12-09
+    wscalc: Change numbering for TeX and KP-81 modes, and add new curves.
+    TeX mode changed from 5 to 10, KP-81 from 7 to 11.  Modes 2 through 9
+    now reflect the curve's order.  Modes 12 through 19 are reserved for
+    additional presets.
+
 2017-12-02
     Fix oversimplified cleanup for caselastlinestretch.
 

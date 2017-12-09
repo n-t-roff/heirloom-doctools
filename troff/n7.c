@@ -3016,7 +3016,7 @@ parcomp(int start)
 						pfc = pfc > 10 ? 10 : pfc ;
 						afc = abs(cfc - pfc) ;
 						if (afc > 1)
-							t += adjpenalty ;
+							t += adjpenalty * (afc - 1) ;
 						else if (brcnt[i-1] == 0 && afc == 1 && wscalc != 10)
 							t += adjpenalty / 2.0 ;
 						}
