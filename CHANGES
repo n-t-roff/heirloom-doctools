@@ -1,3 +1,10 @@
+2017-12-10
+    TeX modes: Incorporate line penalty interaction and update defaults for
+    .wscalc 10 and 11.  Defaults are from The TeX Book (10) and the Knuth-Plass
+    paper (11) where different.  The current line hyphenation penalty in TeX82
+    mode (10) now takes on the TeX meaning, e.g., it is squared in the penalty
+    calculations.
+
 2017-12-09
     letcalc: Delete two-phase modes (21, 31, etc.) because of disappointing
     performance.

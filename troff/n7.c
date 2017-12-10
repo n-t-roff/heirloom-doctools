@@ -2573,7 +2573,7 @@ penalty_rf(int k, int s, int h, int h2, int h3, int llshmin, int llshmax,
 	 * defined.  These curves are "pure" and do not have any built-in
 	 * interactions with other penalty elements.
 	 */
-	else if ((wscalc >= 2 && wscalc <= 9) || (wscalc >= 22 && wscalc <= 99))
+	else if ((wscalc >= 2 && wscalc <= 9) || (wscalc >= 20 && wscalc <= 99))
 		{
 		int	i, curvepwr ;
 		double	p ;
@@ -2594,32 +2594,30 @@ penalty_rf(int k, int s, int h, int h2, int h3, int llshmin, int llshmax,
 		t = p + p1 + p2 + p3 ;
 		}
 	/*
-	 * TeX82, but not incorporating the line penalty interaction or the
-	 * scaling and range limiting for TeX's integer arithmetic.  Some
-	 * differences in the results can possibly occur due to this and to the
-	 * use of doubles.  If full TeX compatibility is necessary, one would
-	 * need to use TeX, anyway, because troff just doesn't work the same way.
+	 * TeX82, but not incorporating the scaling and range limiting for
+	 * TeX's integer arithmetic.  Occasional differences in the results can
+	 * possibly occur due to this and to the use of doubles.  If full TeX
+	 * compatibility is necessary, one would need to use TeX anyway,
+	 * because troff just doesn't work the same way.
 	 */
 	else if (wscalc == 10)
 		{
-	 	t = 1.0 + 100.0 * t * t * t ;
+	 	t = linepenalty + t * t * t ;
 	 	t = t * t ;
-	 	t = t / 10000.0 ;
-		t += p1 + p2 + p3 ;
+		t += p1 * p1 + p2 + p3 ;
 		}
 	/*
-	 * Calculation from the Knuth-Plass paper.  This has an interaction
-	 * between the word spaces and the line's hypenation penalty that causes
-	 * the shape of the penalty curve to become narrower as the hyphenation
-	 * penalty is increased.  The 1.0 term is a fixed line penalty per
-	 * the paper; the user-specified line penalty is added externally as
-	 * with the other methods.
+	 * Calculation from the Knuth-Plass paper.  This has a second-order
+	 * interaction between the word spaces and the line's hypenation penalty
+	 * that causes the shape of the penalty curve to become narrower as the
+	 * hyphenation penalty is increased.  In the paper, the line penalty is
+	 * a constant value and is not adjustable by the user; the (converted)
+	 * value used in the paper is the default for wscalc 11.
 	 */
 	else if (wscalc == 11)
 		{
-	 	t = 1.0 + 100.0 * (t * t * t + p1) ;
+	 	t = linepenalty + t * t * t + p1 ;
 	 	t = t * t ;
-	 	t = t / 10000.0 ;
 	 	t += p2 + p3 ;
 		}
 	/*
@@ -2889,13 +2887,25 @@ parcomp(int start)
 				if (wscalc == 0)
 					goto parcompSkipAdj ;
 /*
- *				If the last line is not full, assign rj = 0.
- *				penalty_rf() always returns an rj for the
- *				last line as if it were justified, which is not
- *				appropriate in this case.
+ *				If the last line is not full measure:
+ *				1. Assign rjay = 0.
+ *				   penalty_rf() always returns an r for the
+ *				   last line as if it were justified, which is
+ *				   not appropriate in this case.
+ *				2. If using a TeX mode, add the line penalty.
+ *				   The TeX modes have a second-order interaction
+ *				   between the line penalty and badness in their
+ *				   penalty calculations; the line penalty is
+ *				   already included in t if the last line is
+ *				   full measure.  Non-TeX modes are added
+ *				   farther down, after the jump.
  */
 				if (j == pgwords - 1 && rjay > 0.0 && !spread && v < nel)
+					{
 					rjay = 0.0 ;
+					if (wscalc == 10 || wscalc == 11)
+						t += linepenalty * linepenalty ;
+					}
 /*
  *				Adjacent line incompatibility penalty.
  */
@@ -2961,7 +2971,7 @@ parcompSkipAdj:
 								{ '.', ',', ';', ':', '!', '?', '\'', '\"', ')', ']', '}', 0 } ;
 					int	x ;
 					tchar	c ;
-					int	*ep ;	// s/b a tchar *, but propchar() wants an int *
+					int	*ep ;	// propchar() wants an int *
 
 					if (j < pgwords - 1)
 						{
@@ -2978,9 +2988,19 @@ parcompSkipAdj:
 								}
 						}
 					}
-				t += linepenalty ;
+/*
+ *				In non-TeX modes just add the line penalty to each line:
+ */
+				if (wscalc != 10 && wscalc != 11)
+					t += linepenalty ;
+/*
+ *				explicit hyphen penalty
+ */
 				if (exhyp && cbits(para[pgwordp[j+1]-1]) == '-')
 					t += exhyp ;
+/*
+ *				overrun (short last line) penalty
+ */
 				if (j == pgwords - 1 && overrunpenalty > 0.0)
 					{
 					if (v < overrunmin)

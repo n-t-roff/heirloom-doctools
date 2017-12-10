@@ -3162,9 +3162,15 @@ casewscalc(void)
 			else
 				wscalc = n ;
 			}
-		if (wscalc == 0)	// Heirloom mode
+/*
+ *		Heirloom defaults.  wslwr and wsupr are not used with .wscalc 0;
+ *		they are set in case the user switches to a different mode later.
+ *		The Heirloom equivalent for wslwr is zero, but zero is not a
+ *		a valid choice with any of the new modes.
+ */
+		if (wscalc == 0)
 			{
-			wslwr = 0.08 ;
+			wslwr = 0.084 ;
 			wsupr = 1.6 ;
 			wsmin = 0.0 ;
 			hypp  = 0.0 ;
@@ -3181,24 +3187,40 @@ casewscalc(void)
 			elppen = 0.0 ;
 			exhyp = 0.0 ;
 			}
-		if (wscalc == 10 || wscalc == 11)	// tex modes
+/*
+ *		TeX82 (10) and Knuth-Plass (11) defaults.  All values are from
+ *		The TeX Book unless otherwise noted.  Values have been converted
+ *		from the TeX scale to the Heirloom internal scale.
+ */
+		if (wscalc == 10 || wscalc == 11)
 			{
 			wslwr = 0.667 ;
 			wsupr = 1.5 ;
 			wsmin = 0.0 ;
-			linepenalty = 0.01 ;
 			adjpenalty = 1.0 ;
 			adjthreshold = 0.5 ;
 			adjthreshupr = 0.0 ;
-			hypp  = 0.25 ;
-			hypp2 = 1.0 ;
-			hypp3 = 0.7 ;
+			exhyp = 0.25 ;
+			if (wscalc == 10)
+				{
+				hypp  = 0.50 ;
+				hypp2 = 1.00 ;
+				hypp3 = 0.50 ;
+				linepenalty = 0.10 ;
+				}
+			else
+				{
+				hypp  = 0.50 ;		// KP81
+				hypp2 = 0.30 ;		// KP81
+				hypp3 = 0.50 ;
+				linepenalty = 0.01 ;	// KP81
+				}
+
 			overrunpenalty = 0.0 ;
 			overrunthreshold = 0.25 ;
 			overrunmin = 0 ;
-			lastlinestretch = 1 ;
+			lastlinestretch = 0 ;
 			elppen = 0.0 ;
-			exhyp = 0.0 ;
 			}
 		noscale = 0 ;
 		}
