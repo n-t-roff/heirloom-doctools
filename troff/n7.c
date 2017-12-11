@@ -2621,6 +2621,17 @@ penalty_rf(int k, int s, int h, int h2, int h3, int llshmin, int llshmax,
 	 	t += p2 + p3 ;
 		}
 	/*
+	 * Adapted TeX82 calculation.  This does not have the line penalty
+	 * interaction and it applies all penalties in the same strength as
+	 * the standard methods.
+	 */
+	else if (wscalc == 12)
+		{
+	 	t = 0.10 + t * t * t ;
+	 	t = t * t ;
+		t += p1 + p2 + p3 - 0.01 ;
+		}
+	/*
 	 * A bad user input results in a quadratic curve.
 	 */
 	else

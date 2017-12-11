@@ -1,3 +1,8 @@
+2017-12-11
+    wscalc: Add adapted TeX82 mode as preset 12.
+    Eliminates line penalty interactions, all penalties are to the same scale.
+    The default settings are equivalent to .wscalc 10.
+
 2017-12-10
     TeX modes: Incorporate line penalty interaction and update defaults for
     .wscalc 10 and 11.  Defaults are from The TeX Book (10) and the Knuth-Plass

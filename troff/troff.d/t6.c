@@ -3188,11 +3188,12 @@ casewscalc(void)
 			exhyp = 0.0 ;
 			}
 /*
- *		TeX82 (10) and Knuth-Plass (11) defaults.  All values are from
- *		The TeX Book unless otherwise noted.  Values have been converted
- *		from the TeX scale to the Heirloom internal scale.
+ *		TeX82 (10), Knuth-Plass (11), and adapted TeX82 (12) defaults.
+ *		All values are from, or adapted from, The TeX Book unless
+ *		otherwise noted.  Values have been converted from the TeX scale
+ *		to the internal scale.
  */
-		if (wscalc == 10 || wscalc == 11)
+		if (wscalc == 10 || wscalc == 11 || wscalc == 12)
 			{
 			wslwr = 0.667 ;
 			wsupr = 1.5 ;
@@ -3208,14 +3209,20 @@ casewscalc(void)
 				hypp3 = 0.50 ;
 				linepenalty = 0.10 ;
 				}
-			else
+			else if (wscalc == 11)
 				{
 				hypp  = 0.50 ;		// KP81
 				hypp2 = 0.30 ;		// KP81
 				hypp3 = 0.50 ;
 				linepenalty = 0.01 ;	// KP81
 				}
-
+			else
+				{
+				hypp  = 0.25 ;
+				hypp2 = 1.00 ;
+				hypp3 = 0.50 ;
+				linepenalty = 0.01 ;
+				}
 			overrunpenalty = 0.0 ;
 			overrunthreshold = 0.25 ;
 			overrunmin = 0 ;
