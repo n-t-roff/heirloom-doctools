@@ -3192,6 +3192,12 @@ casewscalc(void)
  *		All values are from, or adapted from, The TeX Book unless
  *		otherwise noted.  Values have been converted from the TeX scale
  *		to the internal scale.
+ *
+ *		NB: The hypp hyphenation penalties need to be twice the desired
+ *		values because they are divided by PENALSCALE (50) instead of 100
+ *		when the arguments are read in casehypp().
+ *		For wscalc 12, hypp appears to be half of wscalc 10's hypp,
+ *		but it is actually squared.
  */
 		if (wscalc == 10 || wscalc == 11 || wscalc == 12)
 			{
@@ -3204,23 +3210,23 @@ casewscalc(void)
 			exhyp = 0.25 ;
 			if (wscalc == 10)
 				{
-				hypp  = 0.50 ;
-				hypp2 = 1.00 ;
-				hypp3 = 0.50 ;
+				hypp  = 1.00 ;
+				hypp2 = 2.00 ;
+				hypp3 = 1.00 ;
 				linepenalty = 0.10 ;
 				}
 			else if (wscalc == 11)
 				{
-				hypp  = 0.50 ;		// KP81
-				hypp2 = 0.30 ;		// KP81
-				hypp3 = 0.50 ;
+				hypp  = 1.00 ;		// KP81
+				hypp2 = 0.60 ;		// KP81
+				hypp3 = 1.00 ;
 				linepenalty = 0.01 ;	// KP81
 				}
 			else
 				{
-				hypp  = 0.25 ;
-				hypp2 = 1.00 ;
-				hypp3 = 0.50 ;
+				hypp  = 0.50 ;
+				hypp2 = 2.00 ;
+				hypp3 = 1.00 ;
 				linepenalty = 0.01 ;
 				}
 			overrunpenalty = 0.0 ;

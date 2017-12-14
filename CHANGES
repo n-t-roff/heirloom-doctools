@@ -1,3 +1,6 @@
+2017-12-14
+    Fix default hyphenation penalties for TeX-like presets .wscalc 10, 11, 12.
+
 2017-12-11
     wscalc: Add adapted TeX82 mode as preset 12.
     Eliminates line penalty interactions, all penalties are to the same scale.
