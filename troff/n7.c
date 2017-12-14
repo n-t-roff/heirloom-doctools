@@ -3024,7 +3024,7 @@ parcompSkipAdj:
 							{
 							xdbl = lastlineratio / overrunthreshold ;
 							xdbl = xdbl < 0.001 ? 0.001 : xdbl ;
-							t += overrunpenalty * 0.5 / xdbl ;
+							t += overrunpenalty / xdbl ;
 							}
 						}
 					}

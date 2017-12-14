@@ -1,4 +1,8 @@
 2017-12-14
+    Overrunpenalty: penalty is now referenced to the threshold line length.
+    The new effective value is two times the previous value.
+
+2017-12-14
     Fix default hyphenation penalties for TeX-like presets .wscalc 10, 11, 12.
 
 2017-12-11
