@@ -3497,13 +3497,13 @@ caseletpen(void)
 			{
 			p = atof() ;
 			if (!nonumb)
-				letlwr = p / 100.0 ;
+				letpenlwr = p / 100.0 ;
 			}
 		if (!skip(0))
 			{
 			p = atof() ;
 			if (!nonumb)
-				letupr = p / 100.0 ;
+				letpenupr = p / 100.0 ;
 			}
 		}
 	noscale = 0 ;

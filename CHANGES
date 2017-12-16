@@ -1,3 +1,6 @@
+2017-12-16
+    Change letlwr to letpenlwr and letupr to letpenupr to reflect request name.
+
 2017-12-14
     Overrunpenalty: penalty is now referenced to the threshold line length.
     The new effective value is two times the previous value.

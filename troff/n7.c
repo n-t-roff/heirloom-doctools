@@ -2438,9 +2438,9 @@ penalty_rf(int k, int s, int h, int h2, int h3, int llshmin, int llshmax,
 				ladunits = (int) ladunits ;
 				if (ladunits < 0.0)
 					ladunits = 0.0 ;
-				if (letpen > 1 && letupr > 0.0)
+				if (letpen > 1 && letpenupr > 0.0)
 					{
-					ladrj = ladunits / charlen / letupr ;
+					ladrj = ladunits / charlen / letpenupr ;
 					ladpenalty = ladrj * ladrj * letpen / 100.0 ;
 					}
 				else
@@ -2509,9 +2509,9 @@ penalty_rf(int k, int s, int h, int h2, int h3, int llshmin, int llshmax,
 				ladunits = (int) ladunits ;
 				if (ladunits > 0.0)
 					ladunits = 0.0 ;
-				if (letpen > 1 && letlwr > 0.0)
+				if (letpen > 1 && letpenlwr > 0.0)
 					{
-					ladrj = ladunits / charlen / letlwr ;
+					ladrj = ladunits / charlen / letpenlwr ;
 					ladpenalty = ladrj * ladrj * letpen / 100.0 ;
 					if (ladpenalty < 0.0)			// need this if using odd order penalty calc
 						ladpenalty = -ladpenalty ;

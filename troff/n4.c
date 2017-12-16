@@ -580,12 +580,12 @@ sl:
 			i = letcalc ;
 		} else if (strcmp(&name[1], "letpen") == 0) {
 			i = letpen ;
-		} else if (strcmp(&name[1], "letlwr") == 0) {
-			i = fl = letlwr * 100.0 ;
+		} else if (strcmp(&name[1], "letpenlwr") == 0) {
+			i = fl = letpenlwr * 100.0 ;
 			if (i != fl)
 				goto flt;
-		} else if (strcmp(&name[1], "letupr") == 0) {
-			i = fl = letupr * 100.0 ;
+		} else if (strcmp(&name[1], "letpenupr") == 0) {
+			i = fl = letpenupr * 100.0 ;
 			if (i != fl)
 				goto flt ;
 		} else if (strcmp(&name[1], "letstren") == 0) {
