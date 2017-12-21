@@ -2935,7 +2935,7 @@ parcomp(int start)
 					else
 						cfc  = rjay / adjthreshold ;
 					cfc = cfc > 10 ? 10 : cfc ;
-					if (cfc != 0 || wscalc == 10 || j == pgwords - 1)
+					if (cfc != 0 || j == pgwords - 1 || wscalc == 10 || wscalc == 11)
 						{
 						if (brcnt[i-1] == 0)
 							prevrj = 0.0 ;
@@ -2952,10 +2952,18 @@ parcomp(int start)
 							pfc  = prevrj / adjthreshold ;
 						pfc = pfc > 10 ? 10 : pfc ;
 						afc = abs(cfc - pfc) ;
-						if (afc > 1)
-							t += adjpenalty * (afc - 1) ;
-						else if (brcnt[i-1] == 0 && afc == 1 && wscalc != 10)
-							t += adjpenalty / 2.0 ;
+						if (wscalc == 10 || wscalc == 11)
+							{
+							if (afc > 1)
+								t += adjpenalty ;
+							}
+						else
+							{
+							if (afc > 1)
+								t += adjpenalty * (afc - 1) ;
+							else if (brcnt[i-1] == 0 && afc == 1)
+								t += adjpenalty / 2.0 ;
+							}
 						}
 					}
 //

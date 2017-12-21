@@ -1,3 +1,7 @@
+2017-12-21
+    Modify adjpenalty to simplify TeX mode operation and recognize only one
+    fitness class difference.
+
 2017-12-16
     Change letlwr to letpenlwr and letupr to letpenupr to reflect request name.
 
