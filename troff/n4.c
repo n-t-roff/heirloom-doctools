@@ -475,6 +475,10 @@ sl:
 			i = fl = hypp3 / PENALSCALE ;
 			if (i != fl)
 				goto flt;
+		} else if (strcmp(&name[1], "hypp4") == 0) {
+			i = fl = hypp4 / PENALSCALE ;
+			if (i != fl)
+				goto flt;
 		} else if (strcmp(&name[1], "padj") == 0) {
 			i = padj;
 		} else if (strcmp(&name[1], "ev") == 0) {

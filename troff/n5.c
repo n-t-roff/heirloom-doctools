@@ -331,23 +331,30 @@ casehypp(void)
 	float	t;
 
 	if (skip(0))
-		hypp = hypp2 = hypp3 = 0;
+		hypp = hypp2 = hypp3 = hypp4 = 0;
 	else {
 		t = atop();
 		if (!nonumb)
 			hypp = t;
 		if (skip(0))
-			hypp2 = hypp3 = 0;
+			hypp2 = hypp3 = hypp4 = 0;
 		else {
 			t = atop();
 			if (!nonumb)
 				hypp2 = t;
 			if (skip(0))
-				hypp3 = 0;
+				hypp3 = hypp4 = 0;
 			else {
 				t = atop();
 				if (!nonumb)
 					hypp3 = t;
+				if (skip(0))
+					hypp4 = 0;
+				else {
+					t = atop();
+					if (!nonumb)
+						hypp4 = t;
+				}
 			}
 		}
 	}

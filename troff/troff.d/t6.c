@@ -3176,6 +3176,7 @@ casewscalc(void)
 			hypp  = 0.0 ;
 			hypp2 = 0.0 ;
 			hypp3 = 0.0 ;
+			hypp4 = 0.0 ;
 			linepenalty = 0.0 ;
 			adjpenalty = 0.0 ;
 			adjthreshold = 0.5 ;
@@ -3193,11 +3194,12 @@ casewscalc(void)
  *		otherwise noted.  Values have been converted from the TeX scale
  *		to the internal scale.
  *
- *		NB: The hypp hyphenation penalties need to be twice the desired
- *		values because they are divided by PENALSCALE (50) instead of 100
- *		when the arguments are read in casehypp().
- *		For wscalc 12, hypp appears to be half of wscalc 10's hypp,
- *		but it is actually squared.
+ *		The hypp hyphenation penalties are converted with PENALSCALE
+ *		because that's the way they are read in by casehypp() and kept in
+ *		the existing code.  Currently PENALSCALE divides the input by 50.
+ *		For wscalc 12, hypp appears to be half of hypp for wscalc 10,
+ *		but it is actually squared.  TeX squares hypp (but not hypp2 or
+ *		hypp3), wscalc 12 does not.
  */
 		if (wscalc == 10 || wscalc == 11 || wscalc == 12)
 			{
@@ -3210,23 +3212,26 @@ casewscalc(void)
 			exhyp = 0.25 ;
 			if (wscalc == 10)
 				{
-				hypp  = 1.00 ;
-				hypp2 = 2.00 ;
-				hypp3 = 1.00 ;
+				hypp  =  50.0 * PENALSCALE ;
+				hypp2 = 100.0 * PENALSCALE ;
+				hypp3 =   0.0 ;
+				hypp4 =  50.0 * PENALSCALE ;
 				linepenalty = 0.10 ;
 				}
 			else if (wscalc == 11)
 				{
-				hypp  = 1.00 ;		// KP81
-				hypp2 = 0.60 ;		// KP81
-				hypp3 = 1.00 ;
-				linepenalty = 0.01 ;	// KP81
+				hypp  =  50.0 * PENALSCALE ;
+				hypp2 =  30.0 * PENALSCALE ;
+				hypp3 =   0.0 ;
+				hypp4 =  50.0 * PENALSCALE ;
+				linepenalty = 0.01 ;
 				}
 			else
 				{
-				hypp  = 0.50 ;
-				hypp2 = 2.00 ;
-				hypp3 = 1.00 ;
+				hypp  =  25.0 * PENALSCALE ;
+				hypp2 = 100.0 * PENALSCALE ;
+				hypp3 =   0.0 ;
+				hypp4 =  50.0 * PENALSCALE ;
 				linepenalty = 0.01 ;
 				}
 			overrunpenalty = 0.0 ;

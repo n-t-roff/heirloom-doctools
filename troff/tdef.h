@@ -670,6 +670,7 @@ struct inlev {
 #define	hypp	env._hypp
 #define	hypp2	env._hypp2
 #define	hypp3	env._hypp3
+#define	hypp4	env._hypp4
 #define	un1	env._un1
 #define	tabc	env._tabc
 #define	dotc	env._dotc
@@ -844,6 +845,7 @@ extern struct env {
 	float	_hypp;
 	float	_hypp2;
 	float	_hypp3;
+	float	_hypp4;
 	int	_un1;
 	int	_tabc;
 	int	_dotc;

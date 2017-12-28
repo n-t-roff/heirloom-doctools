@@ -302,6 +302,7 @@ struct	env env = {
 /* float hypp	 */	0,
 /* float hypp2	 */	0,
 /* float hypp3	 */	0,
+/* float hypp4	 */	0,
 /* int	un1	 */	-1,
 /* int	tabc	 */	0,
 /* int	dotc	 */	'.',

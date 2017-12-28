@@ -1,3 +1,6 @@
+2017-12-28
+    Add hypp4 to discourage hyphenating the next-to-last line of a paragraph.
+
 2017-12-21
     Modify adjpenalty to simplify TeX mode operation and recognize only one
     fitness class difference.

@@ -2337,14 +2337,14 @@ parcomp(int start)
 
 #ifndef NROFF
 static double
-penalty_rf(int k, int s, int h, int h2, int h3, int llshmin, int llshmax,
+penalty_rf(int k, int s, int h1, int h2, int h3, int h4, int llshmin, int llshmax,
 	int llspmin, int llspmax, int linespaces, int linechars,
 	double *rtnrj, double *rtnladrj)
 {
 	double	t,
 		arrj,
 		ladrj = 0.0,
-		p1, p2, p3,
+		p1, p2, p3, p4,
 		adunits,
 		adratio,
 		ladpenalty = 0.0 ;
@@ -2536,19 +2536,23 @@ penalty_rf(int k, int s, int h, int h2, int h3, int llshmin, int llshmax,
 	}
 /*
  *	Assign hyphenation penalties as applicable.  The values stored in
- *	hypp(n) are the user inputs / 50, but that is two times the normal
- *	basis for penalties with the new calculations (the normal basis is
- *	the user input / 100).  So they are divided by 2 here to cover the
- *	new calculations, and returned to input / 50 if needed for the Heirloom
- *	calculation.
+ *	hypp(n) are the user inputs / 50 (inputs * PENALSCALE), but that is
+ *	two times the penalty scale for the new calculations (user input / 100).
+ *	So, the PENALSCALE conversion is reversed for the new calculations and
+ *	the penalties rescaled to the user input / 100.
+ *	If the Heirloom calculation is used, the penalties are reverted to the
+ *	user input / 50 except for p4, which is always the user input / 100.
+ *	h3 (last word) takes precedence over h4 (penultimate line).
  */
-	p1 = p2 = p3 = 0.0 ;
-	if (h && hypp)
-		p1 = hypp / 2.0 ;
+	p1 = p2 = p3 = p4 = 0.0 ;
+	if (h1 && hypp)
+		p1 = hypp / PENALSCALE / 100.0 ;
 	if (h2 && hypp2)
-		p2 = hypp2 / 2.0 ;
+		p2 = hypp2 / PENALSCALE / 100.0 ;
 	if (h3 && hypp3)
-		p3 = hypp3 / 2.0 ;
+		p3 = hypp3 / PENALSCALE / 100.0 ;
+	else if (h4 && hypp4)
+		p4 = hypp4 / PENALSCALE / 100.0 ;
 /*
  *	Calculate the word space penalty taking the hyphenation penalties into
  *	account.  Note: The calculations use t as the basis instead of r ;
@@ -2564,8 +2568,8 @@ penalty_rf(int k, int s, int h, int h2, int h3, int llshmin, int llshmax,
 	 */
 	if (wscalc <= 1)
 		{
-		t += (p1 + p2 + p3) * 2.0 ;
-		t = t * t * t ;
+		t += (p1 + p2 + p3) * 100.0 * PENALSCALE ;
+		t = t * t * t + p4 ;
 		}
 	/*
 	 * User-defined curves.  The range is from t^2 to t^9.  With two digits,
@@ -2591,7 +2595,7 @@ penalty_rf(int k, int s, int h, int h2, int h3, int llshmin, int llshmax,
 		p = t ;
 		for (i = 2 ; i <= curvepwr ; i++)
 			p = p * t ;
-		t = p + p1 + p2 + p3 ;
+		t = p + p1 + p2 + p3 + p4 ;
 		}
 	/*
 	 * TeX82, but not incorporating the scaling and range limiting for
@@ -2604,39 +2608,39 @@ penalty_rf(int k, int s, int h, int h2, int h3, int llshmin, int llshmax,
 		{
 	 	t = linepenalty + t * t * t ;
 	 	t = t * t ;
-		t += p1 * p1 + p2 + p3 ;
+		t += p1 * p1 + p2 + p3 + p4 ;
 		}
 	/*
 	 * Calculation from the Knuth-Plass paper.  This has a second-order
 	 * interaction between the word spaces and the line's hypenation penalty
 	 * that causes the shape of the penalty curve to become narrower as the
 	 * hyphenation penalty is increased.  In the paper, the line penalty is
-	 * a constant value and is not adjustable by the user; the (converted)
-	 * value used in the paper is the default for wscalc 11.
+	 * a constant value and is not user adjustable; the (converted) value
+	 * used in the paper is the default for wscalc 11.
 	 */
 	else if (wscalc == 11)
 		{
 	 	t = linepenalty + t * t * t + p1 ;
 	 	t = t * t ;
-	 	t += p2 + p3 ;
+	 	t += p2 + p3 + p4 ;
 		}
 	/*
-	 * Adapted TeX82 calculation.  This does not have the line penalty
-	 * interaction and it applies all penalties in the same strength as
-	 * the standard methods.
+	 * Adapted TeX default curve.  This keeps the modified base area of 10
+	 * but does not have the line penalty interaction, and the hyphenation
+	 * penalties are all to the same scale.
 	 */
 	else if (wscalc == 12)
 		{
 	 	t = 0.10 + t * t * t ;
-	 	t = t * t ;
-		t += p1 + p2 + p3 - 0.01 ;
+	 	t = t * t - 0.01 ;
+		t += p1 + p2 + p3 + p4 ;
 		}
 	/*
 	 * A bad user input results in a quadratic curve.
 	 */
 	else
 		{
-		t = t * t + p1 + p2 + p3 ;
+		t = t * t + p1 + p2 + p3 + p4 ;
 		}
 //
 	t += ladpenalty ;
@@ -2851,7 +2855,10 @@ parcomp(int start)
 					{
 					if (!spread && j == pgwords - 1 && pgpenal[j] == 0
 					&& (v < nel - (lastlinestretch ? EM / 2 : 0)))
+						{
 						t = rjay = lrj = 0.0 ;
+						t += hypc[i-1] * hypp4 / PENALSCALE / 100.0 ;
+						}
 					else
 						{
 						int	dlshmin = 0, dlshmax = 0,
@@ -2875,6 +2882,7 @@ parcomp(int start)
 							pghyphw[j],
 							pghyphw[j] && hypc[i-1],
 							pghyphw[j] && j >= pglastw,
+							j == pgwords - 1 && hypc[i-1],
 							linelshmin + dlshmin,
 							linelshmax + dlshmax,
 							linelspmin + dlspmin,
