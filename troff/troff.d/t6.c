@@ -3187,6 +3187,7 @@ casewscalc(void)
 			lastlinestretch = 0 ;
 			elppen = 0.0 ;
 			exhyp = 0.0 ;
+			letcalc = 0 ;
 			}
 /*
  *		TeX82 (10), Knuth-Plass (11), and adapted TeX82 (12) defaults.
