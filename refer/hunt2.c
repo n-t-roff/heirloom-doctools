@@ -280,13 +280,15 @@ doquery(long *hpt, int nhash, FILE *fb, int nitem, char **qitem, unsigned *mptr)
 long
 getl(FILE *fb)
 {
-	return(getw(fb));
+	long ll;
+	fread(&ll, sizeof(ll), 1, fb);
+	return ll;
 }
 
 void
 putl(long ll, FILE *f)
 {
-	putw(ll, f);
+	fwrite(&ll, sizeof(ll), 1, f);
 }
 
 int
