@@ -31,10 +31,12 @@
 int
 hash (const char *s)
 {
-	int c, n;
+	unsigned int c, n;
+	int r;
 	for(n=0; (c= *s); s++)
-		n += (c*n+ (c << (unsigned)n%4));
-	return(n>0 ? n : -n);
+		n += (c*n+ (c << n%4));
+	r = (int)n;
+	return(r>0 ? r : -r);
 }
 
 void
