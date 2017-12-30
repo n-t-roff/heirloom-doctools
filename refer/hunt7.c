@@ -74,7 +74,7 @@ findline(char *_in, char **out, int outlen, long _indexdate)
 	fprintf(stderr, "lp %ld llen %ld\n",lp, llen);
 # endif
 # ifdef D1
-	fprintf(stderr, "fa now %o, p %o in %o %s\n",fa, p,in,_in);
+	fprintf(stderr, "fa now %o, p %o %s\n",fa, p,_in);
 # endif
 	if (nofil)
 	{
