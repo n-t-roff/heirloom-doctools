@@ -2105,10 +2105,6 @@ letshrink(void)
 	case 2 :
 	case 3 :
 	case 4 :
-	case 21:
-	case 22:
-	case 31:
-	case 32:
 		letshrink_rf() ;
 		break ;
 	default:
@@ -2133,10 +2129,6 @@ letgrow(void)
 	case 2 :
 	case 3 :
 	case 4 :
-	case 21:
-	case 22:
-	case 31:
-	case 32:
 		x = letgrow_rf() ;
 		break ;
 	default :
