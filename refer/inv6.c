@@ -92,11 +92,13 @@ whash(FILE *ft, FILE *fa, FILE *fb, int nhash, int _iflong, long *ptotct, int *p
 void
 putl(long ll, FILE *f)
 {
-	putw(ll, f);
+	fwrite(&ll, sizeof(ll), 1, f);
 }
 
 long
 getl(FILE *f)
 {
-	return(getw(f));
+	long ll;
+	fread(&ll, sizeof(ll), 1, f);
+	return ll;
 }
