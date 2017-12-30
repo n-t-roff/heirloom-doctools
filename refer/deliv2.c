@@ -62,10 +62,10 @@ mindex(const char *s, int c)
 void *
 zalloc(int m,int n)
 {
-	void *
 # if D1
 	fprintf(stderr, "calling calloc for %d*%d bytes\n",m,n);
 # endif
+	void *
 	t = calloc(m,n);
 # if D1
 	fprintf(stderr, "calloc returned %p\n", t);

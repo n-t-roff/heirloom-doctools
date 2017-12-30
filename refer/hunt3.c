@@ -32,10 +32,10 @@ getq(char **v)
 	static int eof = 0;
 	extern char *sinput;
 	char *p;
-	int c, n = 0, las = 0;
+	int c, n = 0, las = 0, use_sinput = (sinput!=NULL);
 	if (eof) return(-1);
 	p = buff;
-	while ( (c = (sinput ? *sinput++ : getchar()) ) > 0)
+	while ( (c = (use_sinput ? *sinput++ : getchar()) ) > 0)
 	{
 		if (c== '\n')
 			break;
@@ -60,7 +60,7 @@ getq(char **v)
 	if (p > buff + BSIZ)
 		fprintf(stderr, "query long than %d characters\n", BSIZ);
 	assert(p < buff + BSIZ);
-	if (sinput==0 && c<= 0) eof=1;
+	if (use_sinput || c<=0) eof=1;
 # if D1
 	fprintf(stderr, "no. keys %d\n",n);
 	for(c=0; c<n; c++)
