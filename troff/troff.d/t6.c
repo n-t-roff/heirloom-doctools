@@ -3117,7 +3117,7 @@ casewrdspc(void)
 				highin = -1.0 ;
 			}
 		}
-	if (lowin >= 0.08 && lowin <= 0.99 && highin >= 1.01 && highin <= 5.00)
+	if (lowin >= 0.00 && lowin <= 0.99 && highin >= 1.01 && highin <= 5.00)
 		{
 		wslwr = lowin ;
 		wsupr = highin ;

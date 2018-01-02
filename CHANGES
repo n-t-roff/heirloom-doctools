@@ -1,3 +1,6 @@
+2018-01-02
+    Allow lower wordspace range to be 0.
+
 2017-12-29
     When setting Heirloom mode with .wscalc 0, also set letter adjustment
     method to Heirloom's (.letcalc 0).  .letcalc can be changed later
