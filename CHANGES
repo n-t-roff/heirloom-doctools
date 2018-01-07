@@ -1,4 +1,7 @@
 2018-01-07
+    More code cleanup for letshrink_rf(), letgrow_rf(), and penalty_rf().
+
+2018-01-07
     Simplify memory use for looseness.
 
 2018-01-02

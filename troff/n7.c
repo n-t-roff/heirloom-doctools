@@ -1830,20 +1830,21 @@ let_spclen(void)
 static void
 letshrink_rf(void)
 {
-	int	nsp,
-		diff,
+	int	diff,
+		nsp,
 		lshdiff,
-		lspunits, lshunits,
-		x ;
+		lshunits,
+		lspunits ;
 
-	double	lspprop, lshprop,
+	double	charlen,
+		charprop,
 		ladunits,
+		lshprop,
+		lspprop,
+		maxspcunits,
 		s,
 		u,
-		xz,
-		z,
-		spcunits,
-		charlen, charprop ;
+		xz ;
 
 	nsp = nwd == 1 ? nwd : nwd - 1;
 	if (nwd > 1)
@@ -1866,9 +1867,9 @@ letshrink_rf(void)
 	lspprop = lshprop = 0.0 ;
 	if (u >= 1.0)
 		{
-		if (lsplow >= 1)
+		if (lsplow)
 			lspprop = lsplow / u ;
-		if (lshlow >= 1)
+		if (lshlow)
 			lshprop = lshlow / u ;
 		}
 	switch (letcalc)
@@ -1892,21 +1893,22 @@ letshrink_rf(void)
 		break ;
 	case 3:
 		xz = (1.0 - letthreshlwr) * s ;
-		spcunits = (1.0 - wslwr) * s ;
-		if (xz < diff && diff < spcunits)
-			ladunits = (diff - xz) / (spcunits - xz) * u ;
+		maxspcunits = (1.0 - wslwr) * s ;
+		if (xz < diff && diff < maxspcunits)
+			ladunits = (diff - xz) / (maxspcunits - xz) * u ;
 		else if (diff <= xz)
 			ladunits = 0 ;
 		else
 			ladunits = u ;
 		break ;
+	default:
+		ladunits = 0 ;
 	}
 	if (letstren > 0.0)
 		ladunits *= letstren ;
 	else
 		{
-		x = ll - un + rhang ;
-		charlen = x - s - diff ;
+		charlen = ll - un + rhang - s - diff ;
 		charprop = charlen / (charlen + s) ;
 		ladunits *= charprop ;
 		}
@@ -1916,19 +1918,8 @@ letshrink_rf(void)
 		ladunits = diff ;
 	if (ladunits < 0)
 		ladunits = 0 ;
-	switch (letcalc)
-	{
-	case 1:
-	case 2:
-	case 3:
-	case 4:
-		lspunits = ladunits * lspprop ;
-		lshunits = ladunits * lshprop ;
-		break ;
-	default:
-		lspunits = 0 ;
-		lshunits = 0 ;
-	}
+	lspunits = ladunits * lspprop ;
+	lshunits = ladunits * lshprop ;
 	if (lspunits > lsplow)
 		lspunits = lsplow ;
 	else if (lspunits < 0)
@@ -1969,15 +1960,16 @@ letgrow_rf(void)
 	int	diff,
 		nsp,
 		lshdiff,
-		lspunits,
-		lshunits ;
+		lshunits,
+		lspunits ;
 
-	double	lspprop, lshprop,
+	double	charlen,
+		charprop,
 		ladunits,
-		s, u, xz, z,
-		maxspc,
-		charlen,
-		charprop ;
+		lshprop,
+		lspprop,
+		maxspcunits,
+		s, u, xz ;
 
 	nsp = nwd == 1 ? nwd : nwd - 1;
 	if ((lspnc <= nsp || lsphigh <= 0) && lshhigh <= 0)
@@ -2006,7 +1998,7 @@ letgrow_rf(void)
 		if (diff > xz)
 			ladunits = diff - xz ;
 		else
-			ladunits = 0.0 ;
+			ladunits = 0 ;
 		if (letcalc == 4)
 			ladunits *= u / (u + nsp * lsphigh / lspnc + s * lshmax / LAFACT) ;
 		break ;
@@ -2015,15 +2007,15 @@ letgrow_rf(void)
 		if (diff > xz)
 			ladunits = diff - xz ;
 		else
-			ladunits = 0.0 ;
+			ladunits = 0 ;
 		break ;
 	case 3:
 		xz = (letthreshupr - 1.0) * s ;
-		maxspc = (wsupr - 1.0) * s ;
-		if (xz < diff && diff < maxspc)
-			ladunits = (diff - xz) / (maxspc - xz) * u ;
+		maxspcunits = (wsupr - 1.0) * s ;
+		if (xz < diff && diff < maxspcunits)
+			ladunits = (diff - xz) / (maxspcunits - xz) * u ;
 		else if (diff <= xz)
-			ladunits = 0.0 ;
+			ladunits = 0 ;
 		else
 			ladunits = u ;
 		break ;
@@ -2034,8 +2026,7 @@ letgrow_rf(void)
 		ladunits *= letstren ;
 	else
 		{
-		z = ll - un + rhang ;
-		charlen = z - s - diff ;
+		charlen = ll - un + rhang - s - diff ;
 		charprop = charlen / (charlen + s) ;
 		ladunits *= charprop ;
 		}
@@ -2045,19 +2036,8 @@ letgrow_rf(void)
 		ladunits = diff ;
 	if (ladunits < 0)
 		ladunits = 0 ;
-	switch (letcalc)
-	{
-	case 1:
-	case 2:
-	case 3:
-	case 4:
-		lspunits = ladunits * lspprop ;
-		lshunits = ladunits * lshprop ;
-		break ;
-	default:
-		lspunits = 0 ;
-		lshunits = 0 ;
-	}
+	lspunits = ladunits * lspprop ;
+	lshunits = ladunits * lshprop ;
 	if (lspunits > lsphigh)
 		lspunits = lsphigh ;
 	else if (lspunits < 0)
@@ -2340,7 +2320,6 @@ penalty_rf(int k, int s, int h1, int h2, int h3, int h4, int llshmin, int llshma
 		adunits,
 		adratio,
 		ladpenalty = 0.0 ;
-	int	basecalc, badcurve ;
 
 	adunits = nel - k ;
 	if (ad && !admod)
