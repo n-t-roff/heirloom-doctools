@@ -1,3 +1,6 @@
+2018-01-07
+    Simplify memory use for looseness.
+
 2018-01-02
     Allow lower wordspace range to be 0.
 

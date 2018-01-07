@@ -2702,8 +2702,9 @@ parcomp(int start)
 	double	rjay, *rjays, *_rjays,
 		lrj, *lrjays, *_lrjays,
 		xdbl, ydbl ;
+
 	int	lsx = 0,
-		lsxmax = 31,
+		lsxmax = 250,
 		*lsprevbreak, *_lsprevbreak = NULL,
 		*lsbrcnt, *_lsbrcnt = NULL ;
 	double	*lscost, *_lscost = NULL ;
@@ -2756,16 +2757,15 @@ parcomp(int start)
 		_lsprevbreak = malloc((lsxmax + 1) * sizeof *_lsprevbreak) ;
 		_lsbrcnt = malloc((lsxmax + 1) * sizeof *_lsbrcnt) ;
 		_lscost = malloc((lsxmax + 1) * sizeof *_lscost) ;
-		lsprevbreak = &_lsprevbreak[0] ;
-		lsbrcnt = &_lsbrcnt[0] ;
-		lscost = &_lscost[0] ;
+		lsprevbreak = &_lsprevbreak[1] ;
+		lsbrcnt = &_lsbrcnt[1] ;
+		lscost = &_lscost[1] ;
 		if (_lsprevbreak == NULL || _lsbrcnt == NULL || _lscost == NULL)
 			{
 			looseness = 0 ;
-			lsxmax = -1 ;
 			if (realpage > mesgpage)
 				{
-				errprint ("looseness cannot allocate memory on page %d", realpage) ;
+				errprint ("cannot allocate memory for looseness on page %d", realpage) ;
 				mesgpage = realpage ;
 				}
 			}
@@ -3036,51 +3036,23 @@ parcompSkipAdj:
 							}
 						}
 					}
+/*
+ *				Add looseness nodes.
+ */
 				if (looseness != 0 && j == pgwords - 1 && lsxmax > 0)
 					{
-					if (lsx > lsxmax && lsxmax < 225)
+					if (lsx < lsxmax)
 						{
-						int	*_newlsprevbreak, *_newlsbrcnt ;
-						double	*_newlscost ;
-
-						lsxmax += 32 ;
-						_newlsprevbreak = realloc(_lsprevbreak, (lsxmax + 1) * sizeof *_lsprevbreak) ;
-						_newlsbrcnt = realloc(_lsbrcnt, (lsxmax + 1) * sizeof *_lsbrcnt) ;
-						_newlscost = realloc(_lscost, (lsxmax + 1) * sizeof *_lscost) ;
-						if (_newlsprevbreak == NULL || _newlsbrcnt == NULL || _newlscost == NULL)
-							{
-							errprint ("looseness cannot increase node count to %d", lsxmax) ;
-							lsxmax = -1 ;	// we can use what we have, just don't add any more
-							}
-						if (_newlsprevbreak != NULL)
-							{
-							_lsprevbreak = _newlsprevbreak ;
-							lsprevbreak = &_lsprevbreak[0] ;
-							}
-						if (_newlsbrcnt != NULL)
-							{
-							_lsbrcnt = _newlsbrcnt ;
-							lsbrcnt = &_lsbrcnt[0] ;
-							}
-						if (_newlscost != NULL)
-							{
-							_lscost = _newlscost ;
-							lscost = &_lscost[0] ;
-							}
-						}
-					if (lsx <= lsxmax)
-						{
+						lsx++ ;
 						lscost[lsx] = t ;
 						lsprevbreak[lsx] = i ;
 						lsbrcnt[lsx] = 1 + brcnt[i-1] ;
-						lsx++ ;
 						}
 					else if (lsxmax > 0)
 						{
-						errprint ("looseness maximum nodes exceeded, using first %d", lsx) ;
+						errprint ("maximum looseness nodes exceeded, using first %d", lsx) ;
 						lsxmax = -1 ;
 						}
-					
 					}
 
 				/*fprintf(stderr, "%c%c%c%c to %c%c%c%c "
@@ -3154,7 +3126,7 @@ parcompSkipAdj:
 			lsdiff, z ;
 		double	bestcost = HUGE_VAL ;
 
-		for (z = 0 ; z < lsx ; z++)
+		for (z = 1 ; z <= lsx ; z++)
 			{
 			lsdiff = lsbrcnt[z] - optlinecount ;
 			if ((lsdiff == curlooseness && lscost[z] < bestcost)
