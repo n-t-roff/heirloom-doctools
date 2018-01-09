@@ -1,3 +1,7 @@
+2018-01-08
+    Use correct reference to get the last character on the line when
+    offsetting letterspacing.
+
 2018-01-07
     More code cleanup for letshrink_rf(), letgrow_rf(), and penalty_rf().
 

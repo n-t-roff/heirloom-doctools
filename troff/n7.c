@@ -2847,7 +2847,7 @@ parcomp(int start)
 							addletshpraw (pghyphw[j], &dlshmin, &dlshmax) ;
 							}
 						else
-							subletspc (para[j]-1, &dlspmin, &dlspmax) ;
+							subletspc (para[pgwordp[j+1]-1], &dlspmin, &dlspmax) ;
 //
 						t = penalty_rf(v, s,
 							pghyphw[j],
