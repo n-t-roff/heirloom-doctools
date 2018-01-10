@@ -332,7 +332,7 @@
 .ie \\$1no .ID \\$2
 .el .DS I \\$1
 .nr PQ \\n(.f
-.ft L
+.ft H
 .ps -\\n(dP
 .vs -\\n(dV
 .nr @ \\w'x'u*8
@@ -800,11 +800,11 @@
 ..
 .	\" L - listing font
 .de L
-\%\&\\$3\fL\\$1\fP\&\\$2
+\%\&\\$3\fH\\$1\fP\&\\$2
 ..
 .	\" LB - bold listing font
 .de LB
-\%\&\\$3\f(LB\\$1\fP\&\\$2
+\%\&\\$3\f(HB\\$1\fP\&\\$2
 ..
 .	\" UL - underline in troff
 .de UL
