@@ -1,4 +1,7 @@
 2018-01-08
+    Add .rhanglevel to take .rhang into account when breaking lines.
+
+2018-01-08
     Use correct reference to get the last character on the line when
     offsetting letterspacing.
 

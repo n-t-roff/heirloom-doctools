@@ -620,6 +620,8 @@ sl:
 			i = fl = overrunthreshold * 100.0 ;
 			if (i != fl)
 				goto flt;
+		} else if (strcmp(&name[1], "rhanglevel") == 0) {
+			i = rhanglevel ;
 		} else if (strcmp(&name[1], "wsupr") == 0) {
 			i = fl = wsupr * 100.0 ;
 			if (i != fl)

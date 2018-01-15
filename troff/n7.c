@@ -2310,7 +2310,7 @@ parcomp(int start)
 #ifndef NROFF
 static double
 penalty_rf(int k, int s, int h1, int h2, int h3, int h4, int llshmin, int llshmax,
-	int llspmin, int llspmax, int linespaces, int linechars,
+	int llspmin, int llspmax, int linespaces, int linechars, int rhangunits,
 	double *rtnrj, double *rtnladrj)
 {
 	double	t,
@@ -2321,7 +2321,10 @@ penalty_rf(int k, int s, int h1, int h2, int h3, int h4, int llshmin, int llshma
 		adratio,
 		ladpenalty = 0.0 ;
 
-	adunits = nel - k ;
+	int	adjustednel ;
+
+	adjustednel = nel + rhangunits ;
+	adunits = adjustednel - k ;
 	if (ad && !admod)
 		{
 		if (s > 0)
@@ -2340,7 +2343,7 @@ penalty_rf(int k, int s, int h1, int h2, int h3, int h4, int llshmin, int llshma
 		}
 	else
 		{
-		adratio = adunits / (double) nel ;
+		adratio = adunits / (double) adjustednel ;
 		arrj = adratio / (1.0 - wslwr) ;
 		}
 	t = arrj >= 0.0 ? arrj : -arrj ;
@@ -2695,7 +2698,7 @@ parcomp(int start)
 		*wordlspmax, *_wordlspmax,
 		linelshmin, linelshmax,
 		linelspmin, linelspmax,
-		linenchars, linespaces ;
+		linenchars, linespaces, rhangunits ;
 
 	_cost = malloc((pgsize + 1) * sizeof *_cost);
 	cost = &_cost[1];
@@ -2796,6 +2799,7 @@ parcomp(int start)
 			addletadj (pglgsc[i], &linelshmin, &linelshmax, &linelspmin, &linelspmax) ;
 			}
 		for (j = i; j < pgwords; j++) {
+			rhangunits = 0 ;
 			if (j > i) {
 				k += pgspacw[j] + pgwordw[j];
 				m += pgadspc[j] + pglsphc[j];
@@ -2807,9 +2811,27 @@ parcomp(int start)
 				linenchars += wordlength[j] ;
 				if (pgspacw[j])
 					linespaces++ ;
+				if (rhanglevel > 0)
+					{
+					tchar	c, hc ;
+					int	x ;
+					c = para[pgwordp[j+1]-1] ;
+					if (pghyphw[j])
+						{
+						hc = shc ? shc : HYPHEN;
+						c = sfmask(c) | hc ;
+						}
+					width (c) ;
+					rhangunits = lasttrack ;
+					rhangunits += kernadjust(c, ' ' | sfmask(c)) ;
+					if (admod != 1 && rhangtab != NULL && !ismot(c)
+					&&  rhangtab[xfont] != NULL
+					&&  (x = rhangtab[xfont][cbits(c)]) != 0)
+						rhangunits += (x * u2pts(xpts) + (Unitwidth / 2)) / Unitwidth ;
+					}
 			}
 			v = k + pghyphw[j] + pglgew[j];
-			if (v - m - pglgeh[j] <= nel)
+			if (v - m - pglgeh[j] <= nel + rhangunits)
 				{
 				if (wscalc == 0)
 					{
@@ -2860,6 +2882,7 @@ parcomp(int start)
 							linelspmax + dlspmax,
 							linespaces,
 							linenchars + dlinechars,
+							rhanglevel > 1 ? rhangunits : 0,
 							&rjay,
 							&lrj);
 						}

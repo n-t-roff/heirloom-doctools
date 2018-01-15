@@ -118,3 +118,4 @@ extern void	casewscalc(void) ;
 extern void	casewsmark(void) ;
 extern void	casewsmin(void) ;
 extern void	casewswarn(void) ;
+extern void	caserhanglevel(void) ;

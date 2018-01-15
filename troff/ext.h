@@ -635,3 +635,4 @@ extern	double	wsupr ;
 extern	int	wswarn ;
 extern	double	wswarnlwr ;
 extern	double	wswarnupr ;
+extern	int	rhanglevel ;

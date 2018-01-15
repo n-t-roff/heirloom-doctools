@@ -231,3 +231,4 @@ double	letpenupr = 0.01 ;
 double	exhyp = 0.0 ;
 double	adjlapenalty = 0.0 ;
 double	adjlathreshold = 1.0 ;
+int	rhanglevel = 0 ;

@@ -100,6 +100,7 @@ extern void	casedummy(void);
 #define caselinepenalty	casedummy
 #define caselooseness	casedummy
 #define caseoverrunpenalty	casedummy
+#define caserhanglevel	casedummy
 #define casewrdspc	casedummy
 #define casewscalc	casedummy
 #define casewsmark	casedummy

@@ -3582,3 +3582,19 @@ caseletshp(void)
 ret:
 	dfact = 1 ;
 }
+
+
+void
+caserhanglevel(void)
+{
+	int	n ;
+
+	if (skip(0))
+		rhanglevel = 0 ;
+	else
+		{
+		n = hatoi() ;
+		if (!nonumb && 0 <= n && n <= 2)
+			rhanglevel = n ;
+		}
+}
