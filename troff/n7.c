@@ -2309,8 +2309,9 @@ parcomp(int start)
 
 #ifndef NROFF
 static double
-penalty_rf(int k, int s, int h1, int h2, int h3, int h4, int llshmin, int llshmax,
-	int llspmin, int llspmax, int linespaces, int linechars, int rhangunits,
+penalty_rf(int k, int s, int h1, int h2, int h3, int h4, int h5,
+	int llshmin, int llshmax, int llspmin, int llspmax,
+	int linespaces, int linechars, int rhangunits,
 	double *rtnrj, double *rtnladrj)
 {
 	double	t,
@@ -2521,6 +2522,8 @@ penalty_rf(int k, int s, int h1, int h2, int h3, int h4, int llshmin, int llshma
 	p1 = p2 = p3 = p4 = 0.0 ;
 	if (h1 && hypp)
 		p1 = hypp / PENALSCALE / 100.0 ;
+	else if (h5 && exhyp)
+		p1 = exhyp ;
 	if (h2 && hypp2)
 		p2 = hypp2 / PENALSCALE / 100.0 ;
 	if (h3 && hypp3)
@@ -2670,6 +2673,13 @@ addletshpraw (int wid, int *llshmin, int *llshmax)
 {
 	*llshmin += wid * lshmin / LAFACT ;
 	*llshmax += wid * lshmax / LAFACT ;
+}
+
+
+static int
+is_exhyp(int j)
+{
+	return ((cbits(para[pgwordp[j+1]-1]) == '-') && (exhyp != 0.0)) ;
 }
 
 
@@ -2876,6 +2886,7 @@ parcomp(int start)
 							pghyphw[j] && hypc[i-1],
 							pghyphw[j] && j >= pglastw,
 							j == pgwords - 1 && hypc[i-1],
+							is_exhyp(j),
 							linelshmin + dlshmin,
 							linelshmax + dlshmax,
 							linelspmin + dlspmin,
@@ -3015,11 +3026,6 @@ parcompSkipAdj:
 				if (wscalc != 10 && wscalc != 11)
 					t += linepenalty ;
 /*
- *				explicit hyphen penalty
- */
-				if (exhyp && cbits(para[pgwordp[j+1]-1]) == '-')
-					t += exhyp ;
-/*
  *				overrun (short last line) penalty
  */
 				if (j == pgwords - 1 && overrunpenalty > 0.0)
@@ -3074,7 +3080,7 @@ parcompSkipAdj:
 					);*/
 
 				if ((double)t <= cost[j]) {
-					if (pghyphw[j])
+					if (pghyphw[j] || is_exhyp(j))
 						h = hypc[i-1] + 1;
 					else
 						h = 0;

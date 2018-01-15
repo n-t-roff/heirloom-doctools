@@ -1,3 +1,7 @@
+2018-01-11
+    Explicit hyphen penalty .exhyp now acts like the current-line hyphenation
+    penalty hypp1.
+
 2018-01-08
     Add .rhanglevel to take .rhang into account when breaking lines.
 
