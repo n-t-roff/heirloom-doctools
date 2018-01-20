@@ -2692,8 +2692,7 @@ parcomp(int start)
 	int	i, j, k, m, h, v, s;
 
 	double	rjay, *rjays, *_rjays,
-		lrj, *lrjays, *_lrjays,
-		xdbl, ydbl ;
+		lrj, *lrjays, *_lrjays ;
 
 	int	lsx = 0,
 		lsxmax = 250,
@@ -2828,7 +2827,7 @@ parcomp(int start)
 					c = para[pgwordp[j+1]-1] ;
 					if (pghyphw[j])
 						{
-						hc = shc ? shc : HYPHEN;
+						hc = shc ? shc : HYPHEN ;
 						c = sfmask(c) | hc ;
 						}
 					width (c) ;
@@ -2843,6 +2842,7 @@ parcomp(int start)
 			v = k + pghyphw[j] + pglgew[j];
 			if (v - m - pglgeh[j] <= nel + rhangunits)
 				{
+				rjay = lrj = 0.0 ;
 				if (wscalc == 0)
 					{
 					if (!spread && j == pgwords - 1 && pgpenal[j] == 0)
@@ -2852,14 +2852,13 @@ parcomp(int start)
 							pghyphw[j],
 							pghyphw[j] && hypc[i-1],
 							pghyphw[j] && j >= pglastw) ;
-					rjay = lrj = 0.0 ;
 					}
 				else
 					{
 					if (!spread && j == pgwords - 1 && pgpenal[j] == 0
 					&& (v < nel + rhangunits - (lastlinestretch ? EM / 2 : 0)))
 						{
-						t = rjay = lrj = 0.0 ;
+						t = 0.0 ;
 						t += hypc[i-1] * hypp4 / PENALSCALE / 100.0 ;
 						}
 					else
@@ -2911,26 +2910,6 @@ parcomp(int start)
 				if (wscalc == 0)
 					goto parcompSkipAdj ;
 /*
- *				If the last line is not full measure:
- *				1. Assign rjay = 0.
- *				   penalty_rf() always returns an r for the
- *				   last line as if it were justified, which is
- *				   not appropriate in this case.
- *				2. If using a TeX mode, add the line penalty.
- *				   The TeX modes have a second-order interaction
- *				   between the line penalty and badness in their
- *				   penalty calculations; the line penalty is
- *				   already included in t if the last line is
- *				   full measure.  Non-TeX modes are added
- *				   farther down, after the jump.
- */
-				if (j == pgwords - 1 && rjay > 0.0 && !spread && v < nel + rhangunits)
-					{
-					rjay = 0.0 ;
-					if (wscalc == 10 || wscalc == 11)
-						t += linepenalty * linepenalty ;
-					}
-/*
  *				Adjacent line incompatibility penalty.
  */
 				if (adjpenalty != 0.0 && adjthreshold > 0.0)
@@ -2947,7 +2926,10 @@ parcomp(int start)
 						}
 					else
 						cfc  = rjay / adjthreshold ;
-					cfc = cfc > 10 ? 10 : cfc ;
+					if (cfc > 10)
+						cfc = 10 ;
+					else if (cfc < -10)
+						cfc = -10 ;
 					if (cfc != 0 || j == pgwords - 1 || wscalc == 10 || wscalc == 11)
 						{
 						if (brcnt[i-1] == 0)
@@ -2963,7 +2945,10 @@ parcomp(int start)
 							}
 						else
 							pfc  = prevrj / adjthreshold ;
-						pfc = pfc > 10 ? 10 : pfc ;
+						if (pfc > 10)
+							pfc = 10 ;
+						else if (pfc < -10)
+							pfc = -10 ;
 						afc = abs(cfc - pfc) ;
 						if (wscalc == 10 || wscalc == 11)
 							{
@@ -2985,6 +2970,7 @@ parcomp(int start)
 					if ((lrj > 0.0 && lrjays[i-1] < 0.0)
 					||  (lrj < 0.0 && lrjays[i-1] > 0.0))
 						{
+						double	xdbl, ydbl ;
 						xdbl = lrj / adjlathreshold ;
 						xdbl = xdbl * xdbl * xdbl ;
 						xdbl *= xdbl ;			// x^6 ; 10^6=1e6 (MAXPENALTY)
@@ -2997,9 +2983,9 @@ parcomp(int start)
 						}
 					}
 parcompSkipAdj:
-				if (elppen)
+				if (elppen != 0.0)
 					{
-					static int	dflt_elpchar[] = 
+					static int	dflt_elpchar[] =
 								{ '.', ',', ';', ':', '!', '?', '\'', '\"', ')', ']', '}', 0 } ;
 					int	x ;
 					tchar	c ;
@@ -3021,10 +3007,13 @@ parcompSkipAdj:
 						}
 					}
 /*
- *				In non-TeX modes just add the line penalty to each line:
+ *				In non-TeX modes add the line penalty to each line,
+ *				but with TeX modes only do non-adjusted last lines here.
  */
 				if (wscalc != 10 && wscalc != 11)
 					t += linepenalty ;
+				else if (j == pgwords - 1 && !spread && v < nel + rhangunits)
+					t += linepenalty * linepenalty ;
 /*
  *				overrun (short last line) penalty
  */
@@ -3038,8 +3027,9 @@ parcompSkipAdj:
 
 						if (lastlineratio < overrunthreshold)
 							{
-							xdbl = lastlineratio / overrunthreshold ;
-							xdbl = xdbl < 0.001 ? 0.001 : xdbl ;
+							double	xdbl = lastlineratio / overrunthreshold ;
+							if (xdbl < 0.001)
+								xdbl = 0.001 ;
 							t += overrunpenalty / xdbl ;
 							}
 						}
