@@ -2857,7 +2857,7 @@ parcomp(int start)
 				else
 					{
 					if (!spread && j == pgwords - 1 && pgpenal[j] == 0
-					&& (v < nel - (lastlinestretch ? EM / 2 : 0)))
+					&& (v < nel + rhangunits - (lastlinestretch ? EM / 2 : 0)))
 						{
 						t = rjay = lrj = 0.0 ;
 						t += hypc[i-1] * hypp4 / PENALSCALE / 100.0 ;
@@ -2924,7 +2924,7 @@ parcomp(int start)
  *				   full measure.  Non-TeX modes are added
  *				   farther down, after the jump.
  */
-				if (j == pgwords - 1 && rjay > 0.0 && !spread && v < nel)
+				if (j == pgwords - 1 && rjay > 0.0 && !spread && v < nel + rhangunits)
 					{
 					rjay = 0.0 ;
 					if (wscalc == 10 || wscalc == 11)
@@ -3034,7 +3034,7 @@ parcompSkipAdj:
 						t += MAXPENALTY ;
 					else
 						{
-						double	lastlineratio = (double) v / nel ;
+						double	lastlineratio = (double) v / (nel + rhangunits) ;
 
 						if (lastlineratio < overrunthreshold)
 							{

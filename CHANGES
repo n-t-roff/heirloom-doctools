@@ -1,3 +1,6 @@
+2018-01-20
+    Take rhang into account for some minor features in parcomp().
+
 2018-01-11
     Explicit hyphen penalty .exhyp now acts like the current-line hyphenation
     penalty hypp1.
