@@ -2683,6 +2683,22 @@ is_exhyp(int j)
 }
 
 
+static int
+getrhang(tchar c)
+{
+	int	x, radj_units ;
+
+	width (c) ;
+	radj_units = lasttrack ;
+	radj_units += kernadjust(c, ' ' | sfmask(c)) ;
+	if (admod != 1 && rhangtab != NULL && !ismot(c)
+	&&  rhangtab[xfont] != NULL
+	&&  (x = rhangtab[xfont][cbits(c)]) != 0)
+		radj_units += (x * u2pts(xpts) + (Unitwidth / 2)) / Unitwidth ;
+	return (radj_units) ;
+}
+
+
 static void
 parcomp(int start)
 {
@@ -2820,24 +2836,15 @@ parcomp(int start)
 				linenchars += wordlength[j] ;
 				if (pgspacw[j])
 					linespaces++ ;
-				if (rhanglevel > 0)
-					{
+				if (rhanglevel > 0) {
 					tchar	c, hc ;
-					int	x ;
 					c = para[pgwordp[j+1]-1] ;
-					if (pghyphw[j])
-						{
+					if (pghyphw[j]) {
 						hc = shc ? shc : HYPHEN ;
 						c = sfmask(c) | hc ;
-						}
-					width (c) ;
-					rhangunits = lasttrack ;
-					rhangunits += kernadjust(c, ' ' | sfmask(c)) ;
-					if (admod != 1 && rhangtab != NULL && !ismot(c)
-					&&  rhangtab[xfont] != NULL
-					&&  (x = rhangtab[xfont][cbits(c)]) != 0)
-						rhangunits += (x * u2pts(xpts) + (Unitwidth / 2)) / Unitwidth ;
 					}
+					rhangunits = getrhang(c) ;
+				}
 			}
 			v = k + pghyphw[j] + pglgew[j];
 			if (v - m - pglgeh[j] <= nel + rhangunits)
@@ -3536,7 +3543,18 @@ parpr(struct s *s)
 		nwd += stretches;
 		nw++;
 	}
-	pbreak((nel - adspc < (lastlinestretch ? EM / 2 : 0) && nwd > 1) || _spread, 1, s);
+#ifndef NROFF
+	{
+	int	u ;
+	if (rhanglevel > 0)
+		u = getrhang(para[pgwordp[pgwords]-1]) ;
+	else
+		u = 0 ;
+	pbreak((nel + u - adspc < (lastlinestretch ? EM / 2 : 0) && nwd > 1) || _spread, 1, s) ;
+	}
+#else
+	pbreak(nel - adspc < 0 && nwd > 1 || _spread, 1, s);
+#endif
 	if (pgflags[pgwords] & PG_NEWIN)
 		savin = pgwdin[pgwords];
 	if (pgflags[pgwords] & PG_NEWLL)
