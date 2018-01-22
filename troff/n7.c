@@ -453,26 +453,25 @@ adj:
 				warnflag = (wswarn && (adratiom <= wswarnlwr || adratiom >= wswarnupr)) ;
 				if (warnflag || wsmark)
 					{
-					if      (adratiom <  0.0833) ic = 'f' ;
-					else if (adratiom <  0.1667) ic = 'e' ;
-					else if (adratiom <  0.2500) ic = 'd' ;
-					else if (adratiom <  0.3333) ic = 'c' ;
-					else if (adratiom <  0.4167) ic = 'b' ;
-					else if (adratiom <  0.5000) ic = 'a' ;
-					else if (adratiom <  0.5833) ic = '0' ;
-					else if (adratiom <  0.6667) ic = '1' ;
-					else if (adratiom <  0.7500) ic = '2' ;
-					else if (adratiom <  0.8333) ic = '3' ;
-					else if (adratiom <  0.9167) ic = '4' ;
-					else if (adratiom <= 1.1250) ic = '5' ;
-					else if (adratiom <= 1.2500) ic = '6' ;
-					else if (adratiom <= 1.3750) ic = '7' ;
-					else if (adratiom <= 1.5000) ic = '8' ;
-					else if (adratiom <= 1.6250) ic = '9' ;
-					else if (adratiom <= 1.7500) ic = 'A' ;
-					else if (adratiom <= 1.8750) ic = 'B' ;
-					else if (adratiom <= 2.0000) ic = 'C' ;
-					else                         ic = 'X' ;
+					if      (adratiom >  2.0000) ic = 'X' ;
+					else if (adratiom >  1.8750) ic = 'C' ;
+					else if (adratiom >  1.7500) ic = 'B' ;
+					else if (adratiom >  1.6250) ic = 'A' ;
+					else if (adratiom >  1.5000) ic = '9' ;
+					else if (adratiom >  1.3750) ic = '8' ;
+					else if (adratiom >  1.2500) ic = '7' ;
+					else if (adratiom >  1.1250) ic = '6' ;
+					else if (adratiom >= 0.9167) ic = '5' ;
+					else if (adratiom >= 0.8333) ic = '4' ;
+					else if (adratiom >= 0.7500) ic = '3' ;
+					else if (adratiom >= 0.6667) ic = '2' ;
+					else if (adratiom >= 0.5833) ic = '1' ;
+					else if (adratiom >= 0.5000) ic = '0' ;
+					else if (adratiom >= 0.4167) ic = 'b' ;
+					else if (adratiom >= 0.3333) ic = 'c' ;
+					else if (adratiom >= 0.2500) ic = 'd' ;
+					else if (adratiom >= 0.1667) ic = 'e' ;
+					else                         ic = 'f' ;
 //
 					if (wswarn == 2 && warnflag)
 						fprintf (stderr, "wswarn: wordspace bin %c ratio %f on page %ld\n",

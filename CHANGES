@@ -1,4 +1,7 @@
 2018-01-22
+    Make selecting word space bins less inefficient.
+
+2018-01-22
     Take rhang into account when making decision for lastlinestretch.
 
 2018-01-20
