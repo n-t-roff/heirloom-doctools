@@ -2862,7 +2862,7 @@ parcomp(int start)
 				else
 					{
 					if (!spread && j == pgwords - 1 && pgpenal[j] == 0
-					&& (v < nel + rhangunits - (lastlinestretch ? EM / 2 : 0)))
+					&& (v < nel - (lastlinestretch ? EM / 2 : 0)))
 						{
 						t = 0.0 ;
 						t += hypc[i-1] * hypp4 / PENALSCALE / 100.0 ;
@@ -3013,12 +3013,12 @@ parcompSkipAdj:
 						}
 					}
 /*
- *				In non-TeX modes add the line penalty to each line,
- *				but with TeX modes only do non-adjusted last lines here.
+ *				In non-TeX modes, add the line penalty to each line;
+ *				but with TeX modes, only do non-adjusted last lines here.
  */
 				if (wscalc != 10 && wscalc != 11)
 					t += linepenalty ;
-				else if (j == pgwords - 1 && !spread && v < nel + rhangunits)
+				else if (j == pgwords - 1 && !spread && v < nel - (lastlinestretch ? EM / 2 : 0))
 					t += linepenalty * linepenalty ;
 /*
  *				overrun (short last line) penalty
@@ -3029,7 +3029,7 @@ parcompSkipAdj:
 						t += MAXPENALTY ;
 					else
 						{
-						double	lastlineratio = (double) v / (nel + rhangunits) ;
+						double	lastlineratio = (double) v / nel ;
 
 						if (lastlineratio < overrunthreshold)
 							{
@@ -3542,17 +3542,10 @@ parpr(struct s *s)
 		nwd += stretches;
 		nw++;
 	}
-#ifndef NROFF
-	{
-	int	u ;
-	if (rhanglevel > 0)
-		u = getrhang(para[pgwordp[pgwords]-1]) ;
-	else
-		u = 0 ;
-	pbreak((nel + u - adspc < (lastlinestretch ? EM / 2 : 0) && nwd > 1) || _spread, 1, s) ;
-	}
-#else
+#ifdef NROFF
 	pbreak(nel - adspc < 0 && nwd > 1 || _spread, 1, s);
+#else
+	pbreak((nel - adspc < (lastlinestretch ? EM / 2 : 0) && nwd > 1) || _spread, 1, s) ;
 #endif
 	if (pgflags[pgwords] & PG_NEWIN)
 		savin = pgwdin[pgwords];
