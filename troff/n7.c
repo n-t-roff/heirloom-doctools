@@ -1818,7 +1818,9 @@ let_spclen(void)
 		{
 		if (!ismot(c = line[i]))
 			{
-			if (!isxfunc(c, FLDMARK) && (cbits(c) == ' ' || cbits(c) == STRETCH))
+			if (!isxfunc(c, FLDMARK)
+			&& (cbits(c) == ' ' || cbits(c) == STRETCH)
+			&& (!issentsp(c)))
 				s += width(c) ;
 			}
 		}

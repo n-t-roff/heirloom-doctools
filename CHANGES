@@ -1,4 +1,7 @@
 2018-01-26
+    Do not count sentence spaces as adjustable when doing letter adjustment.
+
+2018-01-26
     Do not take rhang into account for penalties that don't affect word spaces.
 
 2018-01-22
