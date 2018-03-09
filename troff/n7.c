@@ -371,6 +371,7 @@ t2:
 		glss = spcnt * sps + k;
 		if (lsmac) {
 			spcnt = 0;
+			ch = cbits(ch);
 			control(lsmac, 0);
 			goto rtn;
 		} else {
