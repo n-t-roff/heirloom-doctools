@@ -1102,10 +1102,12 @@ caseblm(void)
 void
 caselsm(void)
 {
+	lgf++;
 	if (!skip(0))
 		lsmac = getrq(1);
 	else
 		lsmac = 0;
+	lgf--;
 }
 
 void

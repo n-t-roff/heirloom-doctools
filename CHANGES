@@ -1,3 +1,8 @@
+2018-03-09
+    .lsm bugfix: Read argument in no-ligature mode
+
+    Reported by aksr@GitHub in issue 68
+
 2016-09-07
     Escapes \A and \T had unnecessary restrictions regarding the
     allowed character set.  This let to problems when e.g. gen-
