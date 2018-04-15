@@ -602,37 +602,3 @@ extern	void	morechars(int);
 extern	void	caseutf8conv(void);
 extern	int	addch(char *);
 #endif
-/*
- * Typo additions - rwf
- */
-extern	double	adjlapenalty ;
-extern	double	adjlathreshold ;
-extern	double	adjpenalty ;
-extern	double	adjthreshold ;
-extern	double	adjthreshupr ;
-extern	void	caseelpchar(void) ;
-extern	int	elpchar[NSENT] ;
-extern	double	elppen ;
-extern	double	exhyp ;
-extern	int	lastlinestretch ;
-extern	int	letcalc ;
-extern	int	letpen ;
-extern	double	letpenlwr ;
-extern	double	letpenupr ;
-extern	double	letstren ;
-extern	double	letthreshlwr ;
-extern	double	letthreshupr ;
-extern	double	linepenalty ;
-extern	int	looseness ;
-extern	int	overrunmin ;
-extern	double	overrunpenalty ;
-extern	double	overrunthreshold ;
-extern	int	wscalc ;
-extern	double	wslwr ;
-extern	int	wsmark ;
-extern	double	wsmin ;
-extern	double	wsupr ;
-extern	int	wswarn ;
-extern	double	wswarnlwr ;
-extern	double	wswarnupr ;
-extern	int	rhanglevel ;

@@ -2331,6 +2331,14 @@ caseconnectchar(void)
 	propchar(connectch);
 }
 
+#ifndef NROFF
+void
+caseelpchar(void)
+{
+	propchar(elpchar) ;
+}
+#endif
+
 void
 casemk(void)
 {
@@ -2545,10 +2553,3 @@ echo_on (void)			/*restore ECHO after .rd in "-q" mode*/
 
 }
 #endif	/* NROFF */
-
-
-void
-caseelpchar(void)
-{
-	propchar(elpchar) ;
-}

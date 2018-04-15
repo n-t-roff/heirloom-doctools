@@ -87,7 +87,7 @@ extern void	casedummy(void);
 /* typo additions - rwf */
 #define	caseadjlapenalty	casedummy
 #define caseadjpenalty	casedummy
-// #define	caseelpchar	casedummy
+#define	caseelpchar	casedummy
 #define	caseelppen	casedummy
 #define	caseexhyp	casedummy
 #define caselastlinestretch	casedummy

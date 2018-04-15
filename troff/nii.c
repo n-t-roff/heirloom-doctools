@@ -199,36 +199,3 @@ int	gemu;
 int	argdelim;
 int	chomp;
 int	chompend;
-/*
- * Typo additions to nii.c
- */
-int	wsmark = 0 ;
-int	wswarn = 0 ;
-double	wswarnlwr = 0.667 ;
-double	wswarnupr = 1.50 ;
-double	adjpenalty = 0.0 ;
-double	adjthreshold = 0.5 ;
-double	adjthreshupr = 0.0 ;
-double	wslwr = 0.08 ;
-double	wsupr = 1.6 ;
-double	wsmin = 0.0 ;
-int	looseness = 0 ;
-double	linepenalty = 0.0 ;
-double	overrunpenalty = 0.0 ;
-double	overrunthreshold = 0.25 ;
-int	overrunmin = 0 ;
-int	lastlinestretch = 0 ;
-double	elppen = 0 ;
-int	elpchar[NSENT] ;
-int	wscalc = 0 ;
-int	letcalc = 0 ;
-double	letstren = 1.0 ;
-double	letthreshlwr = 1.0 ;
-double	letthreshupr = 1.0 ;
-int	letpen = 0 ;
-double	letpenlwr = 0.01 ;
-double	letpenupr = 0.01 ;
-double	exhyp = 0.0 ;
-double	adjlapenalty = 0.0 ;
-double	adjlathreshold = 1.0 ;
-int	rhanglevel = 0 ;

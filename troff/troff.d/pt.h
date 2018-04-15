@@ -101,6 +101,7 @@ extern void	dostop(void);
 /* t6.c typo additions - rwf */
 extern void	caseadjlapenalty(void);
 extern void	caseadjpenalty(void);
+extern void	caseelpchar(void) ;
 extern void	caseelppen(void) ;
 extern void	caseexhyp(void) ;
 extern void	caselastlinestretch(void) ;
