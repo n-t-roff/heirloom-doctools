@@ -1,3 +1,7 @@
+2018-03-25
+    Bug reported by Valery Ushakov: troff -mdoc does output header before
+    ditroff p command.
+
 2018-03-09
     .lsm bugfix:
         - Read argument in no-ligature mode (issue 68)

@@ -123,12 +123,9 @@
 .		wh -1.25i fM
 .	\}
 .	\" .tm Here is gX == \\n(gX
-.	ie \\n(gX==1 \{\
+.	if \\n(gX==1 \{\
 .		rm n1
 .		if !\\n(cR .bp
-.	\}
-.	el \{\
-.		if !\\n(cR 'bp
 .	\}
 .	nr % 1
 .	nr gX 0
