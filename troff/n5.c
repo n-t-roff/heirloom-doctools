@@ -2286,9 +2286,10 @@ propchar(size_t *tp)
 	do {
 		while (!ismot(c = cbits(i = getch())) &&
 				c != ' ' && c != '\n')
-			if (tpp < &tp[NSENT])
+			if (tpp < &tp[NSENT-1])
 				*tpp++ = c;
 	} while (!skip(0));
+	*tpp = 0;
 }
 
 void

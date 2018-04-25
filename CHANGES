@@ -1,6 +1,10 @@
 2018-03-25
-    Bug reported by Valery Ushakov: troff -mdoc does output header before
-    ditroff p command.
+    * Issue #70 bug fixed by reffort@GitHub:
+      A user-defined list of sentence-ending characters, transparent
+      characters, etc., can contain unwanted characters.
+
+    * Bug reported by Valery Ushakov: troff -mdoc does output header
+      before ditroff p command.
 
 2018-03-09
     .lsm bugfix:
