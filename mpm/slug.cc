@@ -170,8 +170,10 @@ static char *getutf(FILE *fp)	// get 1 utf-encoded char (might be multiple bytes
 {
 	static char buf[100];
 	char *p = buf;
+	int c;
 
-	for (*p = 0; (*p++ = getc(fp)) != EOF; ) {
+	for (*p = 0; (c = getc(fp)) != EOF; ) {
+		*p++ = c;
 		*p = 0;
 #ifdef	EUC
 		if (mblen(buf, sizeof buf) > 0)	// found a valid character
