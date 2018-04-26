@@ -2289,7 +2289,10 @@ propchar(size_t *tp)
 			if (tpp < &tp[NSENT-1])
 				*tpp++ = c;
 	} while (!skip(0));
-	*tpp = 0;
+
+	if (tpp < &tp[NSENT]) {
+		*tpp = 0;
+	}
 }
 
 void
