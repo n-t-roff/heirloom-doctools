@@ -101,7 +101,7 @@ width(register tchar j)
 		else if (iscontrol(i))
 			return(0);
 	}
-	if ((size_t)i==ohc)
+	if (i==ohc)
 		return(0);
 #ifdef EUC
 	if (multi_locale && i >= nchtab + _SPECCHAR_ST) {

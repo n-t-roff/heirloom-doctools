@@ -100,7 +100,7 @@ setz(void)
 static int
 connectchar(tchar i)
 {
-	size_t	*cp, c;
+	int	*cp, c;
 
 	c = cbits(i);
 	if (*connectch) {
@@ -109,7 +109,7 @@ connectchar(tchar i)
 				return 1;
 		return 0;
 	}
-	return c == (size_t)RULE || c == (size_t)UNDERLINE || c == (size_t)ROOTEN;
+	return c == RULE || c == UNDERLINE || c == ROOTEN;
 }
 
 void
@@ -905,8 +905,8 @@ psskip(struct fg *fp, size_t n)
 static int
 psgetline(struct fg *fp, char **linebp, size_t *linesize)
 {
-	size_t	n = 0;
-	int	i, nl = 0;
+	int	i, n = 0;
+	int	nl = 0;
 
 	if (fp->bp == NULL)
 		fp->bp = fp->buf;

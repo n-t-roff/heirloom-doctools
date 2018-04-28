@@ -116,7 +116,7 @@ extern	int	em;
 extern	int	eqflg;
 extern	int	error;
 extern	int	esc;
-extern	unsigned int	eschar;
+extern	int	eschar;
 extern	int	ev;
 extern	int	fc;
 extern	char	*fchartab;

@@ -90,7 +90,7 @@ int	Vert;
 int	Unitwidth;
 int	nfonts;
 static int	nsizes;
-size_t	nchtab;
+int	nchtab;
 int	lettrack;
 float	horscale;
 
@@ -134,7 +134,7 @@ static void	ptlink(int);
 static void	ptulink(int);
 static void	ptyon(int);
 static void	ptchar(int, int);
-static void	pnc(size_t, struct afmtab *);
+static void	pnc(int, struct afmtab *);
 
 void
 growfonts(int n)
@@ -227,7 +227,7 @@ ptinit(void)
 	nfonts = dev.nfonts;
 	nsizes = dev.nsizes;
 	nchtab = dev.nchtab;
-	if (nchtab >= (size_t)NCHARS - 128) {
+	if (nchtab >= NCHARS - 128) {
 		errprint("too many special characters in file %s",
 			termtab);
 		done3(1);
@@ -350,7 +350,7 @@ specnames(void)
 int
 findch(register const char *s)	/* find char s in chname */
 {
-	size_t	i;
+	register int	i;
 
 	for (i = 0; i < nchtab; i++)
 		if (strcmp(s, &chname[chtab[i]]) == 0)
@@ -728,7 +728,7 @@ ptout0(tchar *pi, tchar *pend)
 }
 
 static void
-pnc(size_t k, struct afmtab *a) {
+pnc(int k, struct afmtab *a) {
 	int j;
 
 	if (k >= nchtab + 128) {

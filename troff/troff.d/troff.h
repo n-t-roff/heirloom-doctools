@@ -51,7 +51,7 @@ extern	int		*ccstab;
 extern	int		**fallbacktab;
 extern	float		*zoomtab;
 
-extern	size_t		nchtab;
+extern	int		nchtab;
 extern	char		*chname;
 extern	int		c_endash;
 

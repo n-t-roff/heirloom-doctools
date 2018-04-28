@@ -1632,8 +1632,7 @@ devcntrl(
 
 
     char	str[4096], *buf, str1[4096];
-    int		c, sz;
-    size_t	n;
+    int		c, n, sz;
 
 
 /*
@@ -1687,7 +1686,7 @@ devcntrl(
 		break;
 
 	case 'f':			/* load font in a position */
-		fscanf(fp, "%zd", &n);
+		fscanf(fp, "%d", &n);
 		sget(str, sizeof str, fp);
 		fgets(buf, sz, fp);	/* in case there's a filename */
 		ungetc('\n', fp);	/* fgets() goes too far */
@@ -1699,8 +1698,8 @@ devcntrl(
 
 	/* these don't belong here... */
 	case 'H':			/* char height */
-		fscanf(fp, "%zd", &n);
-		if (n != (size_t)FRACTSIZE)
+		fscanf(fp, "%d", &n);
+		if (n != FRACTSIZE)
 		    t_charht(n, 0);
 		else {
 		    float	f;
@@ -1710,7 +1709,7 @@ devcntrl(
 		break;
 
 	case 'S':			/* slant */
-		fscanf(fp, "%zd", &n);
+		fscanf(fp, "%d", &n);
 		t_slant(n);
 		break;
 
@@ -4578,7 +4577,7 @@ orderbookmarks(void)
     int	counts[MAXBOOKMARKLEVEL+1];
     int	refs[MAXBOOKMARKLEVEL+1];
     size_t	i, j, k, t;
-    size_t	lvl = 0;
+    int	lvl = 0;
 
 /*
  * Generate the Count parameter from the given levels.
