@@ -8362,7 +8362,7 @@ output device.
 .AC U O 0 Iacute         00CD "I acute
 .AC U O 0 Icircumflex    00CE "I circumflex
 .AC U O 0 Idieresis      00CF "I dieresis
-.AC U O 0 Eth            00D0 "E th
+.AC U O 0 Eth            00D0 Eth
 .AC U O 0 Ntilde         00D1 "N tilde
 .AC U O 0 Ograve         00D2 "O grave
 .AC U O 0 Oacute         00D3 "O acute
@@ -8394,7 +8394,7 @@ output device.
 .AC U O 0 iacute         00ED "i acute
 .AC U O 0 icircumflex    00EE "i circumflex
 .AC U O 0 idieresis      00EF "i dieresis
-.AC U O 0 eth            00F0 "e th
+.AC U O 0 eth            00F0 eth
 .AC U O 0 ntilde         00F1 "n tilde
 .AC U O 0 ograve         00F2 "o grave
 .AC U O 0 oacute         00F3 "o acute
