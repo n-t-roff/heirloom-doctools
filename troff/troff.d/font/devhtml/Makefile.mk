@@ -7,7 +7,7 @@ FONTS=		R I B BI C CW CR CI CB H HI HB S
 	cat $< > $@
 	./${BIN} $@ >> $@
 
-all:		$(BIN) ${FONTS}
+all: ${FONTS}
 
 install:
 	d=$(ROOT)$(FNTDIR)/devhtml; test -d $$d || mkdir $$d; \
@@ -25,3 +25,5 @@ mrproper:	clean
 
 $(BIN):		$(OBJS)
 		$(CC) $(_CFLAGS) $(_LDFLAGS) $(OBJS) -o $@
+
+$(FONTS): $(BIN)

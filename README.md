@@ -10,11 +10,20 @@ or with the git command
 git clone https://github.com/n-t-roff/heirloom-doctools.git
 ```
 Installation paths and compiler settings are adjusted in `mk.config`.
-The software is build with `make` and installed with `make install`.
+The software is build with
+```bash
+./configure
+make
+```
+and installed with
+```bash
+make install
+```
 Generated files are removed with `make mrproper` afterwards.
 A git repository can be kept up-to-date with
-`git pull`.
-
+```bash
+git pull
+```
 Bugs can be reported at the
 [issue list](https://github.com/n-t-roff/heirloom-doctools/issues).
 Please wait before creating a patch or a pull request,

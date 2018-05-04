@@ -42,3 +42,4 @@ pltroff.o: pltroff.c pic.h
 print.o: print.c pic.h y.tab.h
 symtab.o: symtab.c pic.h y.tab.h
 textgen.o: textgen.c pic.h y.tab.h
+picl.o: y.tab.h
