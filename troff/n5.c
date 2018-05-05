@@ -2299,6 +2299,8 @@ propchar(int *tp)
 			if (tpp < &tp[NSENT])
 				*tpp++ = c;
 	} while (!skip(0));
+	if (tpp < &tp[NSENT])
+		*tpp = 0;
 }
 
 void
