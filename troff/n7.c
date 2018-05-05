@@ -3001,17 +3001,20 @@ parcompSkipAdj:
 
 					if (j < pgwords - 1)
 						{
-						if (*elpchar && elpchar[0] != IMP)
+						if (*elpchar)
 							ep = elpchar ;
 						else
 							ep = dflt_elpchar ;
-						c = cbits(para[pgwordp[j+1]-1]) ;
-						for (x = 0; ep[x] && x < NSENT ; x++)
-							if (c == ep[x])
-								{
-								t += elppen ;
-								break ;
-								}
+						if (ep[0] != IMP)
+							{
+							c = cbits(para[pgwordp[j+1]-1]) ;
+							for (x = 0; ep[x] && x < NSENT ; x++)
+								if (c == ep[x])
+									{
+									t += elppen ;
+									break ;
+									}
+							}
 						}
 					}
 /*

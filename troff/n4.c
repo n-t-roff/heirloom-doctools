@@ -559,15 +559,17 @@ sl:
 			if (i != fl)
 				goto flt;
 		} else if (strcmp(&name[1], "elpchar") == 0) {
-			tchar	elpc[NSENT+1];
 			TMYES;
-			if (elpchar[0] == IMP || elpchar[0] == 0) {
+			if (elpchar[0] == IMP)
+				/*EMPTY*/;
+			else if (elpchar[0] == 0)
 				cpushback(".,;:!?\'\")]}") ;
-			} else {
+			else {
+				tchar	tc[NSENT+1];
 				for (i = 0; elpchar[i] && i < NSENT; i++)
-					elpc[i] = elpchar[i];
-				elpc[i] = 0;
-				pushback(elpc);
+					tc[i] = elpchar[i];
+				tc[i] = 0;
+				pushback(tc);
 			}
 			return(0);
 		} else if (strcmp(&name[1], "elppen") == 0) {
