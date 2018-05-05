@@ -2993,7 +2993,7 @@ parcomp(int start)
 parcompSkipAdj:
 				if (elppen != 0.0)
 					{
-					static int	dflt_elpchar[] =
+					static int	elpchar[] =
 								{ '.', ',', ';', ':', '!', '?', '\'', '\"', ')', ']', '}', 0 } ;
 					int	x ;
 					tchar	c ;
@@ -3001,10 +3001,10 @@ parcompSkipAdj:
 
 					if (j < pgwords - 1)
 						{
-						if (*elpchar)
-							ep = elpchar ;
+						if (*elpch)
+							ep = elpch ;
 						else
-							ep = dflt_elpchar ;
+							ep = elpchar ;
 						if (ep[0] != IMP)
 							{
 							c = cbits(para[pgwordp[j+1]-1]) ;

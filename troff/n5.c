@@ -2337,7 +2337,7 @@ caseconnectchar(void)
 void
 caseelpchar(void)
 {
-	propchar(elpchar) ;
+	propchar(elpch) ;
 }
 #endif
 

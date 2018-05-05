@@ -560,14 +560,14 @@ sl:
 				goto flt;
 		} else if (strcmp(&name[1], "elpchar") == 0) {
 			TMYES;
-			if (elpchar[0] == IMP)
+			if (elpch[0] == IMP)
 				/*EMPTY*/;
-			else if (elpchar[0] == 0)
+			else if (elpch[0] == 0)
 				cpushback(".,;:!?\'\")]}") ;
 			else {
 				tchar	tc[NSENT+1];
-				for (i = 0; elpchar[i] && i < NSENT; i++)
-					tc[i] = elpchar[i];
+				for (i = 0; elpch[i] && i < NSENT; i++)
+					tc[i] = elpch[i];
 				tc[i] = 0;
 				pushback(tc);
 			}

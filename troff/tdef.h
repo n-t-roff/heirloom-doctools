@@ -818,7 +818,7 @@ struct inlev {
 #define	breakch	env._breakch
 #define	nhych	env._nhych
 #define	connectch	env._connectch
-#define elpchar		env._elpchar
+#define elpch	env._elpch
 #define	para	env._para
 #define	parsp	env._parsp
 #define	pgwordp	env._pgwordp
@@ -1022,7 +1022,7 @@ extern struct env {
 	int	_breakch[NSENT];
 	int	_nhych[NSENT];
 	int	_connectch[NSENT];
-	int	_elpchar[NSENT] ;
+	int	_elpch[NSENT] ;
 	tchar	*_line;
 	tchar	*_word;
 	int	*_wdpenal;
