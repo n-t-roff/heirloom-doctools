@@ -192,6 +192,7 @@ static const struct {
 	{ "recursionlimit",	(void(*)(int))caserecursionlimit },
 	{ "return",		(void(*)(int))casereturn },
 	{ "rhang",		(void(*)(int))caserhang },
+	{ "rhanglevel",		(void(*)(int))caserhanglevel },
 	{ "rnn",		(void(*)(int))casernn },
 	{ "sentchar",		(void(*)(int))casesentchar },
 	{ "shc",		(void(*)(int))caseshc },
