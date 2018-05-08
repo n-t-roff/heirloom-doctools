@@ -320,10 +320,7 @@ drawarc (
 
     if ( (dx1 != 0 || dy1 != 0) && (dx2 != 0 || dy2 != 0) )
     {
-	if ( c != 'A' )
-	    fprintf(tf, "%d %d %d %d %d %d Da\n", hpos, vpos, dx1, dy1, dx2, dy2);
-	else fprintf(tf, "%d %d %d %d %d %d DA\n", hpos+dx1+dx2, vpos+dy1+dy2,
-						-dx2, -dy2, -dx1, -dy1);
+        fprintf(tf, "%d %d %d %d %d %d D%c\n", hpos, vpos, dx1, dy1, dx2, dy2, c);
     }
 
     hgoto(hpos + dx1 + dx2);		/* where troff expects to be */
