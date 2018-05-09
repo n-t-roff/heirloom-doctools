@@ -1,3 +1,18 @@
+2018-05-05
+    Rename .elpchar variable to use same convention as .sentchar,
+    .transchar, etc.
+
+2018-05-05
+    Add .rhanglevel to table of request names; .rhanglevel should work now.
+
+2018-05-05
+    Update .elpchar for change to propchar().  .elpchar options now work the
+    same as .sentchar, .transchar, etc.
+
+2018-05-05
+    Mark end of user-defined list in propchar().  Default list can now be
+    restored with \r.  
+
 2018-04-15
     Move typo variables into the troff environment.
 
