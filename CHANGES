@@ -1,3 +1,7 @@
+2018-07-01
+    \D escape argument with multiple consecutive spaces fixed.
+    Bug reported by @nbuwe in issue #73
+
 2018-05-08
     \D'A' escape fixed by Valery Ushakov
 

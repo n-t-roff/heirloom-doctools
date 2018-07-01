@@ -371,9 +371,10 @@ setdraw (void)	/* generate internal cookies for a drawing function */
 	delim = c;
 	type = cbits(getch());
 	for (i = 0; i < NPAIR ; i++) {
-		c = getch();
-		if (issame(c, delim))
-			break;
+		do {
+			c = getch();
+			if (issame(c, delim)) goto argend;
+		} while (cbits(c) == ' ');
 	/* ought to pick up optional drawing character */
 		if (cbits(c) != ' ')
 			ch = c;
@@ -384,10 +385,15 @@ setdraw (void)	/* generate internal cookies for a drawing function */
 			dx[i] = MAXMOT;
 		else if (dx[i] < -MAXMOT)
 			dx[i] = -MAXMOT;
-		if (c = getch(), issame(c, delim)) {	/* spacer */
-			dy[i++] = 0;
-			break;
-		}
+		do {
+			c = getch();
+			if (issame(c, delim)) {
+				dy[i++] = 0;
+				goto argend;
+			}
+		} while (cbits(c) == ' ');
+		if (cbits(c) != ' ')
+			ch = c;
 		vflag = 1;
 		dfact = lss;
 		dy[i] = quant(hatoi(), VERT);
@@ -398,6 +404,7 @@ setdraw (void)	/* generate internal cookies for a drawing function */
 		else if (dy[i] < -MAXMOT)
 			dy[i] = -MAXMOT;
 	}
+argend:
 	dfact = 1;
 	vflag = 0;
 #ifndef NROFF
