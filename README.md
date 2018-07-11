@@ -1,14 +1,6 @@
 For information about the Heirloom doctools please visit the project
 [webpage](http://n-t-roff.github.io/heirloom/doctools.html).
 
-Stable source code versions are available in the
-[releases archive](https://github.com/n-t-roff/heirloom-doctools/releases).
-
-Development snapshots can be downloaded as a zip archive with the "Download ZIP" button
-or with the git command
-```bash
-git clone https://github.com/n-t-roff/heirloom-doctools.git
-```
 Installation paths and compiler settings are adjusted in `mk.config`.
 The software is build with
 ```bash

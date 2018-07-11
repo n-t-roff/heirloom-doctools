@@ -173,7 +173,7 @@
 
 #define	isxfunc(c, x)	(cbits(c) == XFUNC && fbits(c) == (x))
 
-#define	LAFACT	1000	/* letter adjustment float-to-int conversion factor */
+#define	LAFACT	10000	/* letter adjustment float-to-int conversion factor */
 
 #define	HYPHEN	c_hyphen
 #define	EMDASH	c_emdash	/* \(em */
@@ -616,6 +616,37 @@ struct inlev {
 #define	lshlow	env._lshlow
 #define	lshhigh	env._lshhigh
 #define	lshcur	env._lshcur
+#define adjlapenalty	env._adjlapenalty
+#define adjlathreshold	env._adjlathreshold
+#define adjpenalty	env._adjpenalty
+#define adjthreshold	env._adjthreshold
+#define adjthreshupr	env._adjthreshupr
+#define elppen		env._elppen
+#define exhyp		env._exhyp
+#define lastlinestretch	env._lastlinestretch
+#define letcalc		env._letcalc
+#define letlimlwr	env._letlimlwr
+#define letlimupr	env._letlimupr
+#define letpen		env._letpen
+#define letpenlwr	env._letpenlwr
+#define letpenupr	env._letpenupr
+#define letstren	env._letstren
+#define letthreshlwr	env._letthreshlwr
+#define letthreshupr	env._letthreshupr
+#define linepenalty	env._linepenalty
+#define looseness	env._looseness
+#define overrunmin	env._overrunmin
+#define overrunpenalty	env._overrunpenalty
+#define overrunthreshold env._overrunthreshold
+#define rhanglevel	env._rhanglevel
+#define wscalc		env._wscalc
+#define wslwr		env._wslwr
+#define wsmark		env._wsmark
+#define wsmin		env._wsmin
+#define wsupr		env._wsupr
+#define wswarn		env._wswarn
+#define wswarnlwr	env._wswarnlwr
+#define wswarnupr	env._wswarnupr
 #else	/* NROFF */
 #define	minsps	0
 #define	minspsz	0
@@ -634,6 +665,37 @@ struct inlev {
 #define	lshlow	0
 #define	lshhigh	0
 #define	lshcur	0
+#define adjlapenalty	0
+#define adjlathreshold	0
+#define adjpenalty	0
+#define adjthreshold	0
+#define adjthreshupr	0
+#define elppen		0
+#define exhyp		0
+#define lastlinestretch	0
+#define letcalc		0
+#define letlimlwr	0
+#define letlimupr	0
+#define letpen		0
+#define letpenlwr	0
+#define letpenupr	0
+#define letstren	0
+#define letthreshlwr	0
+#define letthreshupr	0
+#define linepenalty	0
+#define looseness	0
+#define overrunmin	0
+#define overrunpenalty	0
+#define overrunthreshold 0
+#define rhanglevel	0
+#define wscalc		0
+#define wslwr		0
+#define wsmark		0
+#define wsmin		0
+#define wsupr		0
+#define wswarn		0
+#define wswarnlwr	0
+#define wswarnupr	0
 #endif	/* NROFF */
 #define	fldcnt	env._fldcnt
 #define	lss	env._lss
@@ -671,6 +733,7 @@ struct inlev {
 #define	hypp	env._hypp
 #define	hypp2	env._hypp2
 #define	hypp3	env._hypp3
+#define	hypp4	env._hypp4
 #define	un1	env._un1
 #define	tabc	env._tabc
 #define	dotc	env._dotc
@@ -756,6 +819,7 @@ struct inlev {
 #define	breakch	env._breakch
 #define	nhych	env._nhych
 #define	connectch	env._connectch
+#define elpch	env._elpch
 #define	para	env._para
 #define	parsp	env._parsp
 #define	pgwordp	env._pgwordp
@@ -808,6 +872,37 @@ extern struct env {
 	int	_lshlow;
 	int	_lshhigh;
 	int	_lshcur;
+	double	_adjlapenalty ;
+	double	_adjlathreshold ;
+	double	_adjpenalty ;
+	double	_adjthreshold ;
+	double	_adjthreshupr ;
+	double	_elppen ;
+	double	_exhyp ;
+	int	_lastlinestretch ;
+	int	_letcalc ;
+	double	_letlimlwr ;
+	double	_letlimupr ;
+	int	_letpen ;
+	double	_letpenlwr ;
+	double	_letpenupr ;
+	double	_letstren ;
+	double	_letthreshlwr ;
+	double	_letthreshupr ;
+	double	_linepenalty ;
+	int	_looseness ;
+	int	_overrunmin ;
+	double	_overrunpenalty ;
+	double	_overrunthreshold ;
+	int	_rhanglevel ;
+	int	_wscalc ;
+	double	_wslwr ;
+	int	_wsmark ;
+	double	_wsmin ;
+	double	_wsupr ;
+	int	_wswarn ;
+	double	_wswarnlwr ;
+	double	_wswarnupr ;
 #endif	/* !NROFF */
 	int	_fldcnt;
 	int	_lss;
@@ -845,6 +940,7 @@ extern struct env {
 	float	_hypp;
 	float	_hypp2;
 	float	_hypp3;
+	float	_hypp4;
 	int	_un1;
 	int	_tabc;
 	int	_dotc;
@@ -927,6 +1023,7 @@ extern struct env {
 	int	_breakch[NSENT];
 	int	_nhych[NSENT];
 	int	_connectch[NSENT];
+	int	_elpch[NSENT] ;
 	tchar	*_line;
 	tchar	*_word;
 	int	*_wdpenal;

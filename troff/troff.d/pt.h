@@ -4,6 +4,10 @@
  * Sccsid @(#)pt.h	1.54 (gritter) 8/19/08
  */
 
+/*
+ * Portions copyright 2017 Roy Fisher
+ */
+
 /* t6.c */
 extern int	width(register tchar);
 extern void	zapwcache(int);
@@ -94,3 +98,25 @@ extern void	ptlocale(const char *);
 extern void	pttrailer(void);
 extern void	ptstop(void);
 extern void	dostop(void);
+/* t6.c typo additions - rwf */
+extern void	caseadjlapenalty(void);
+extern void	caseadjpenalty(void);
+extern void	caseelpchar(void) ;
+extern void	caseelppen(void) ;
+extern void	caseexhyp(void) ;
+extern void	caselastlinestretch(void) ;
+extern void	caseletcalc(void) ;
+extern void	caseletpen(void) ;
+extern void	caseletshp(void);
+extern void	caseletspc(void);
+extern void	caseletstren(void) ;
+extern void	caseletthresh(void) ;
+extern void	caselinepenalty(void) ;
+extern void	caselooseness(void) ;
+extern void	caseoverrunpenalty(void) ;
+extern void	casewrdspc(void);
+extern void	casewscalc(void) ;
+extern void	casewsmark(void) ;
+extern void	casewsmin(void) ;
+extern void	casewswarn(void) ;
+extern void	caserhanglevel(void) ;

@@ -41,6 +41,10 @@
  */
 
 /*
+ * Portions Copyright (c) 2017 Roy Fisher
+ */
+
+/*
  * University Copyright- Copyright (c) 1982, 1986, 1988
  * The Regents of the University of California
  * All Rights Reserved
@@ -3028,4 +3032,568 @@ int
 ps2cc(const char *name)
 {
 	return _ps2cc(name, 1);
+}
+
+
+void
+casewswarn(void)
+{
+	int	i ;
+	float	n ;
+
+	if (skip(0))
+		wswarn = 1 ;
+	else
+		{
+		i = hatoi() ;
+		if (!nonumb)
+			{
+			if (i <= 0)
+				wswarn = 0 ;
+			else if (i == 1)
+				wswarn = 1 ;
+			else
+				wswarn = 2 ;
+			}
+		if (!skip(0))
+			{
+			n = atof() ;
+			if (!nonumb && n > 0.0 && n <= 100.0)
+				wswarnlwr = n / 100.0 ;
+			}
+		if (!skip(0))
+			{
+			n = atof() ;
+			if (!nonumb && n >= wswarnlwr && n >= 100.0)
+				wswarnupr = n / 100.0 ;
+			}
+		}
+}
+
+
+void
+casewsmark(void)
+{
+	int	n ;
+
+	if (skip(0))
+		wsmark = 1;
+	else
+		{
+		n = hatoi();
+		if (!nonumb && (n == 0 || n == 1))
+			wsmark = n ;
+		}
+}
+
+
+void
+casewrdspc(void)
+{
+	float	lowin, highin;
+
+	if (skip(0))
+		{
+		lowin  = -1.0 ;
+		highin = -1.0 ;
+		}
+	else
+		{
+		lowin = atof() ;
+		if (!nonumb)
+			lowin /= 100.0 ;
+		else
+			lowin = -1.0 ;
+
+		if (skip(1))
+			highin = -1.0 ;
+		else
+			{
+			highin = atof() ;
+			if (!nonumb)
+				highin /= 100.0 ;
+			else
+				highin = -1.0 ;
+			}
+		}
+	if (lowin >= 0.00 && lowin <= 0.99 && highin >= 1.01 && highin <= 5.00)
+		{
+		wslwr = lowin ;
+		wsupr = highin ;
+		}
+}
+
+
+void
+casewsmin(void)
+{
+	double	n ;
+
+	noscale = 1 ;
+	if (!skip(0))
+		{
+		n = atof() ;
+		if (!nonumb && n >= 0.0)
+			wsmin = n / 100.0 ;
+		}
+	else
+		wsmin = 0 ;
+	noscale = 0 ;
+}
+
+
+void
+casewscalc(void)
+{
+	int	n ;
+
+	if (!skip(0))
+		{
+		dfact = 1 ;
+		noscale = 1 ;
+		n = hatoi() ;
+		if (!nonumb)
+			{
+			if (n < 0)
+				wscalc = 0 ;
+			else if (n > 99)
+				wscalc = 99 ;
+			else
+				wscalc = n ;
+			}
+/*
+ *		Heirloom defaults.  wslwr and wsupr are not used with .wscalc 0;
+ *		they are set in case the user switches to a different mode later.
+ *		The Heirloom equivalent for wslwr is zero, but zero is not a
+ *		a valid choice with any of the new modes.
+ */
+		if (wscalc == 0)
+			{
+			wslwr = 0.084 ;
+			wsupr = 1.6 ;
+			wsmin = 0.0 ;
+			hypp  = 0.0 ;
+			hypp2 = 0.0 ;
+			hypp3 = 0.0 ;
+			hypp4 = 0.0 ;
+			linepenalty = 0.0 ;
+			adjpenalty = 0.0 ;
+			adjthreshold = 0.5 ;
+			adjthreshupr = 0.0 ;
+			overrunpenalty = 0.0 ;
+			overrunthreshold = 0.25 ;
+			overrunmin = 0 ;
+			lastlinestretch = 0 ;
+			elppen = 0.0 ;
+			exhyp = 0.0 ;
+			letcalc = 0 ;
+			}
+/*
+ *		TeX82 (10), Knuth-Plass (11), and adapted TeX82 (12) defaults.
+ *		All values are from, or adapted from, The TeX Book unless
+ *		otherwise noted.  Values have been converted from the TeX scale
+ *		to the internal scale.
+ *
+ *		The hypp hyphenation penalties are converted with PENALSCALE
+ *		because that's the way they are read in by casehypp() and kept in
+ *		the existing code.  Currently PENALSCALE divides the input by 50.
+ *		For wscalc 12, hypp appears to be half of hypp for wscalc 10,
+ *		but it is actually squared.  TeX squares hypp (but not hypp2 or
+ *		hypp3), wscalc 12 does not.
+ */
+		if (wscalc == 10 || wscalc == 11 || wscalc == 12)
+			{
+			wslwr = 0.667 ;
+			wsupr = 1.5 ;
+			wsmin = 0.0 ;
+			adjpenalty = 1.0 ;
+			adjthreshold = 0.5 ;
+			adjthreshupr = 0.0 ;
+			exhyp = 0.25 ;
+			if (wscalc == 10)
+				{
+				hypp  =  50.0 * PENALSCALE ;
+				hypp2 = 100.0 * PENALSCALE ;
+				hypp3 =   0.0 ;
+				hypp4 =  50.0 * PENALSCALE ;
+				linepenalty = 0.10 ;
+				}
+			else if (wscalc == 11)
+				{
+				hypp  =  50.0 * PENALSCALE ;
+				hypp2 =  30.0 * PENALSCALE ;
+				hypp3 =   0.0 ;
+				hypp4 =  50.0 * PENALSCALE ;
+				linepenalty = 0.01 ;
+				}
+			else
+				{
+				hypp  =  25.0 * PENALSCALE ;
+				hypp2 = 100.0 * PENALSCALE ;
+				hypp3 =   0.0 ;
+				hypp4 =  50.0 * PENALSCALE ;
+				linepenalty = 0.01 ;
+				}
+			overrunpenalty = 0.0 ;
+			overrunthreshold = 0.25 ;
+			overrunmin = 0 ;
+			lastlinestretch = 0 ;
+			elppen = 0.0 ;
+			}
+		noscale = 0 ;
+		}
+}
+
+
+void
+caselastlinestretch(void)
+{
+	int n ;
+
+	noscale = 1 ;
+	dfact = 1 ;
+	if (skip(0))
+		lastlinestretch = 1 ;
+	else
+		{
+		n = hatoi() ;
+		if (!nonumb)
+			lastlinestretch = n ;
+		}
+	if (lastlinestretch > 0)
+		lastlinestretch = 1 ;
+	else
+		lastlinestretch = 0 ;
+ 	noscale = 0 ;
+}
+
+
+void
+caseoverrunpenalty(void)
+{
+	float	n ;
+	int	m ;
+
+	if (skip(0))
+		{
+		overrunpenalty = 0.0 ;
+		overrunthreshold = 0.25 ;
+		overrunmin = 0 ;
+		}
+	else
+		{
+		n = atof() ;
+		if (!nonumb)
+			overrunpenalty = n / 100.0 ;
+		if (!skip(0))
+			{
+			n = atof() ;
+			if (!nonumb && n >= 1.0 && n <= 100.0)
+				overrunthreshold = n / 100.0 ;
+			}
+		if (!skip(0))
+			{
+			dfact = EM ;
+			m = max(hnumb(&m), 0) ;
+			overrunmin = m ;
+			dfact = 1 ;
+			}
+		}
+}
+
+
+void
+caselinepenalty(void)
+{
+	float	n ;
+
+	if (skip(0))
+		linepenalty = 0.0 ;
+	else
+		{
+		n = atof() ;
+		if (!nonumb)
+			linepenalty = n / 100.0 ;
+		}
+}
+
+
+void
+caselooseness(void)
+{
+	int	n ;
+
+	if (skip(0))
+		looseness = 0;
+	else
+		{
+		n = hatoi() ;
+		if (!nonumb)
+			{
+			if (n < -3)
+				n = -3 ;
+			else if (n > 3)
+				n = 3 ;
+			looseness = n ;
+			}
+		}
+}
+
+
+void
+caseelppen(void)
+{
+	float	n ;
+
+	if (skip(0))
+		elppen = 0.0 ;
+	else
+		{
+		n = atof() ;
+		if (!nonumb)
+			elppen = n / 100.0 ;
+		}
+}
+
+
+void
+caseadjpenalty(void)
+{
+	float	n ;
+
+	if (!skip(0))
+		{
+		n = atof() ;
+		if (!nonumb)
+			adjpenalty = n / 100.0 ;
+		if (!skip(0))
+			{
+			n = atof() ;
+			if (!nonumb && n >= 0.1)
+				adjthreshold = n / 100.0 ;
+			if (!skip(0))
+				{
+				n = atof() ;
+				if (!nonumb)
+					{
+					if (n > 1.0)
+						adjthreshupr = n / 100.0 ;
+					else
+						adjthreshupr = 0.0 ;
+					}
+				}
+			else
+				adjthreshupr = 0.0 ;
+			}
+		}
+}
+
+
+void
+caseadjlapenalty(void)
+{
+	float	n ;
+
+	if (!skip(0))
+		{
+		n = atof() ;
+		if (!nonumb)
+			adjlapenalty = n / 100.0 ;
+
+		if (!skip(0))
+			{
+			n = atof() ;
+			if (!nonumb && n > 0.0)
+				adjlathreshold = n / 100.0 ;
+			}
+		}
+}
+
+
+void
+caseletcalc(void)
+{
+	int	n ;
+
+	noscale = 1 ;
+	if (!skip(0))
+		{
+		n = hatoi() ;
+		if (!nonumb && n >= 0 && n <= 4)
+			letcalc = n ;
+		}
+	noscale = 0 ;
+}
+
+
+void
+caseletstren(void)
+{
+	float	s ;
+
+	noscale = 1 ;
+	if (!skip(0))
+		{
+		s = atof() ;
+		if (!nonumb)
+			{
+			if (s < 0.0)
+				s = 0.0 ;
+			letstren = s / 100.0 ;
+			}
+		}
+	else
+		letstren = 1.0 ;
+	noscale = 0 ;
+}
+
+
+void
+caseletthresh(void)
+{
+	float	n ;
+
+	noscale = 1 ;
+	if (!skip(0))
+		{
+		n = atof() ;
+		if (!nonumb)
+			{
+			if (n < 1.0)
+				n = 1.0 ;
+			if (n > 100.0)
+				n = 100.0 ;
+			letthreshlwr = n / 100.0 ;
+			}
+		if (!skip(0))
+			{
+			n = atof() ;
+			if (!nonumb)
+				{
+				if (n < 100.0)
+					n = 100.0 ;
+				if (n > 200.0)
+					n = 200.0 ;
+				letthreshupr = n / 100.0 ;
+				}
+			}
+		}
+	noscale = 0 ;
+}
+
+
+void
+caseletpen(void)
+{
+	int	n ;
+	float	p ;
+
+	noscale = 1 ;
+	if (!skip(0))
+		{
+		n = hatoi() ;
+		if (!nonumb)
+			{
+			if (n < 0)
+				n = 0 ;
+			letpen = n ;
+			}
+		if (!skip(0))
+			{
+			p = atof() ;
+			if (!nonumb)
+				letpenlwr = p / 100.0 ;
+			}
+		if (!skip(0))
+			{
+			p = atof() ;
+			if (!nonumb)
+				letpenupr = p / 100.0 ;
+			}
+		}
+	noscale = 0 ;
+}
+
+
+void
+caseexhyp(void)
+{
+	float	n ;
+
+	if (skip(0))
+		exhyp = 0 ;
+	else
+		{
+		n = atof() ;
+		if (!nonumb)
+			exhyp = n / 100.0 ;
+		}
+}
+
+
+void
+caseletspc(void)
+{
+	int	n ;
+
+	dfact = LAFACT / 100 ;
+	noscale = 0 ;
+	if (skip(1))
+		goto ret ;
+//	lower
+	n = hatoi() ;
+	if (!nonumb && n > 0)
+		lspmin = LAFACT - n;
+//	upper
+	if (!skip(0))
+		{
+		dfact = LAFACT / 100;
+		n = hatoi();
+		if (!nonumb && n > 0)
+			lspmax = n - LAFACT;
+		}
+ret:
+	dfact = 1 ;
+}
+
+
+void
+caseletshp(void)
+{
+	int	n ;
+
+	dfact = LAFACT / 100 ;
+	noscale = 0 ;
+	if (skip(1))
+		goto ret ;
+//	shrink
+	n = hatoi() ;
+	if (!nonumb && n > 0)
+		lshmin = LAFACT - n;
+//	stretch
+	if (!skip(0))
+		{
+		dfact = LAFACT / 100 ;
+		n = hatoi();
+		if (!nonumb && n > 0)
+			lshmax = n - LAFACT;
+		}
+ret:
+	dfact = 1 ;
+}
+
+
+void
+caserhanglevel(void)
+{
+	int	n ;
+
+	if (skip(0))
+		rhanglevel = 0 ;
+	else
+		{
+		n = hatoi() ;
+		if (!nonumb && 0 <= n && n <= 2)
+			rhanglevel = n ;
+		}
 }

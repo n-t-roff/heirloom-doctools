@@ -41,6 +41,10 @@
  */
 
 /*
+ * Portions Copyright (c) 2017 Roy Fisher
+ */
+
+/*
  * University Copyright- Copyright (c) 1982, 1986, 1988
  * The Regents of the University of California
  * All Rights Reserved
@@ -327,23 +331,30 @@ casehypp(void)
 	float	_t;
 
 	if (skip(0))
-		hypp = hypp2 = hypp3 = 0;
+		hypp = hypp2 = hypp3 = hypp4 = 0;
 	else {
 		_t = atop();
 		if (!nonumb)
 			hypp = _t;
 		if (skip(0))
-			hypp2 = hypp3 = 0;
+			hypp2 = hypp3 = hypp4 = 0;
 		else {
 			_t = atop();
 			if (!nonumb)
 				hypp2 = _t;
 			if (skip(0))
-				hypp3 = 0;
+				hypp3 = hypp4 = 0;
 			else {
 				_t = atop();
 				if (!nonumb)
 					hypp3 = _t;
+				if (skip(0))
+					hypp4 = 0;
+				else {
+					_t = atop();
+					if (!nonumb)
+						hypp4 = _t;
+				}
 			}
 		}
 	}
@@ -2324,6 +2335,14 @@ caseconnectchar(void)
 {
 	propchar(connectch);
 }
+
+#ifndef NROFF
+void
+caseelpchar(void)
+{
+	propchar(elpch) ;
+}
+#endif
 
 void
 casemk(void)

@@ -189,7 +189,7 @@ void do_first(void)	/* done at first .G1:  definitions, etc. */
 {
 	extern int lib;
 	extern char *lib_defines;
-	static char buf[50], buf1[50];	/* static because pbstr uses them */
+	static char buf[50], buf1[50+FILENAME_MAX] ;  /* static because pbstr uses them */
 	FILE *fp;
 	extern int getpid(void);
 

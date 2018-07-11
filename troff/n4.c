@@ -464,11 +464,21 @@ sl:
 		} else if (strcmp(&name[1], "hylen") == 0) {
 			i = hylen;
 		} else if (strcmp(&name[1], "hypp") == 0) {
-			i = hypp;
+			i = fl = hypp / PENALSCALE ;
+			if (i != fl)
+				goto flt;
 		} else if (strcmp(&name[1], "hypp2") == 0) {
-			i = hypp2;
+			i = fl = hypp2 / PENALSCALE ;
+			if (i != fl)
+				goto flt;
 		} else if (strcmp(&name[1], "hypp3") == 0) {
-			i = hypp3;
+			i = fl = hypp3 / PENALSCALE ;
+			if (i != fl)
+				goto flt;
+		} else if (strcmp(&name[1], "hypp4") == 0) {
+			i = fl = hypp4 / PENALSCALE ;
+			if (i != fl)
+				goto flt;
 		} else if (strcmp(&name[1], "padj") == 0) {
 			i = padj;
 		} else if (strcmp(&name[1], "ev") == 0) {
@@ -528,7 +538,119 @@ sl:
 			i = dpenal ? dpenal - INFPENALTY0 - 1 : 0;
 		else if (strcmp(&name[1], "ns") == 0)
 			i = dip->nls;
-		else
+		else if (strcmp(&name[1], "adjlapenalty") == 0) {
+			i = fl = adjlapenalty * 100.0 ;
+			if (i != fl)
+				goto flt;
+		} else if (strcmp(&name[1], "adjlathreshold") == 0) {
+			i = fl = adjlathreshold * 100.0 ;
+			if (i != fl)
+				goto flt;
+		} else if (strcmp(&name[1], "adjpenalty") == 0) {
+			i = fl = adjpenalty * 100.0 ;
+			if (i != fl)
+				goto flt;
+		} else if (strcmp(&name[1], "adjthreshold") == 0) {
+			i = fl = adjthreshold * 100.0 ;
+			if (i != fl)
+				goto flt;
+		} else if (strcmp(&name[1], "adjthreshupr") == 0) {
+			i = fl = adjthreshupr * 100.0 ;
+			if (i != fl)
+				goto flt;
+		} else if (strcmp(&name[1], "elpchar") == 0) {
+			TMYES;
+			if (elpch[0] == IMP)
+				/*EMPTY*/;
+			else if (elpch[0] == 0)
+				cpushback(".,;:!?\'\")]}") ;
+			else {
+				tchar	tc[NSENT+1];
+				for (i = 0; elpch[i] && i < NSENT; i++)
+					tc[i] = elpch[i];
+				tc[i] = 0;
+				pushback(tc);
+			}
+			return(0);
+		} else if (strcmp(&name[1], "elppen") == 0) {
+			i = fl = elppen * 100.0 ;
+			if (i != fl)
+				goto flt;
+		} else if (strcmp(&name[1], "exhyp") == 0) {
+			i = fl = exhyp * 100.0 ;
+			if (i != fl)
+				goto flt;
+		} else if (strcmp(&name[1], "lastlinestretch") == 0) {
+			i = lastlinestretch ;
+		} else if (strcmp(&name[1], "letcalc") == 0) {
+			i = letcalc ;
+		} else if (strcmp(&name[1], "letpen") == 0) {
+			i = letpen ;
+		} else if (strcmp(&name[1], "letpenlwr") == 0) {
+			i = fl = letpenlwr * 100.0 ;
+			if (i != fl)
+				goto flt;
+		} else if (strcmp(&name[1], "letpenupr") == 0) {
+			i = fl = letpenupr * 100.0 ;
+			if (i != fl)
+				goto flt ;
+		} else if (strcmp(&name[1], "letstren") == 0) {
+			i = fl = letstren * 100.0 ;
+			if (i != fl)
+				goto flt;
+		} else if (strcmp(&name[1], "letthreshlwr") == 0) {
+			i = fl = letthreshlwr * 100.0 ;
+			if (i != fl)
+				goto flt;
+		} else if (strcmp(&name[1], "letthreshupr") == 0) {
+			i = fl = letthreshupr * 100.0 ;
+			if (i != fl)
+				goto flt ;
+		} else if (strcmp(&name[1], "linepenalty") == 0) {
+			i = fl = linepenalty * 100.0 ;
+			if (i != fl)
+				goto flt;
+		} else if (strcmp(&name[1], "looseness") == 0) {
+			i = looseness ;
+		} else if (strcmp(&name[1], "overrunmin") == 0) {
+			i = overrunmin ;
+		} else if (strcmp(&name[1], "overrunpenalty") == 0) {
+			i = fl = overrunpenalty * 100.0 ;
+			if (i != fl)
+				goto flt;
+		} else if (strcmp(&name[1], "overrunthreshold") == 0) {
+			i = fl = overrunthreshold * 100.0 ;
+			if (i != fl)
+				goto flt;
+		} else if (strcmp(&name[1], "rhanglevel") == 0) {
+			i = rhanglevel ;
+		} else if (strcmp(&name[1], "wsupr") == 0) {
+			i = fl = wsupr * 100.0 ;
+			if (i != fl)
+				goto flt;
+		} else if (strcmp(&name[1], "wslwr") == 0) {
+			i = fl = wslwr * 100.0 ;
+			if (i != fl)
+				goto flt;
+		} else if (strcmp(&name[1], "wsmin") == 0) {
+			i = fl = wsmin * 100.0;
+			if (i != fl)
+				goto flt;
+		} else if (strcmp(&name[1], "wscalc") == 0) {
+			i = wscalc ;
+		} else if (strcmp(&name[1], "wsmark") == 0) {
+			i = wsmark ;
+		} else if (strcmp(&name[1], "wswarn") == 0) {
+			i = wswarn ;
+		} else if (strcmp(&name[1], "wswarnlwr") == 0) {
+			i = fl = wswarnlwr * 100.0 ;
+			if (i != fl)
+				goto flt;
+		} else if (strcmp(&name[1], "wswarnupr") == 0) {
+			i = fl = wswarnupr * 100.0 ;
+			if (i != fl)
+				goto flt;
+		} else
 			goto s0;
 	} else if (strcmp(name, "lss") == 0)
 		i = glss;
