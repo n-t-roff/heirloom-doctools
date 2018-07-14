@@ -6609,7 +6609,7 @@ ate  language  for the generation of PDF documents.  The _H_e_i_r_l_o_o_
            _O_u_t_p_u_t     _I_n_p_u_t          _P_o_s_t_S_c_r_i_p_t_U_n_i_c_o_d_e_N_o_t_e_s
            Î    Î     \[Icircumflex] \U'00CE'I circumflex
            Ï    Ï     \[Idieresis]   \U'00CF'I dieresis
-           Ð    Ð     \[Eth]         \U'00D0'E th
+           Ð    Ð     \[Eth]         \U'00D0'Eth
            Ñ    Ñ     \[Ntilde]      \U'00D1'N tilde
            Ò    Ò     \[Ograve]      \U'00D2'O grave
            Ó    Ó     \[Oacute]      \U'00D3'O acute
@@ -6641,7 +6641,7 @@ ate  language  for the generation of PDF documents.  The _H_e_i_r_l_o_o_
            í    í     \[iacute]      \U'00ED'i acute
            î    î     \[icircumflex] \U'00EE'i circumflex
            ï    ï     \[idieresis]   \U'00EF'i dieresis
-           ð    ð     \[eth]         \U'00F0'e th
+           ð    ð     \[eth]         \U'00F0'eth
            ñ    ñ     \[ntilde]      \U'00F1'n tilde
            ò    ò     \[ograve]      \U'00F2'o grave
            ó    ó     \[oacute]      \U'00F3'o acute
@@ -6687,6 +6687,7 @@ ate  language  for the generation of PDF documents.  The _H_e_i_r_l_o_o_
            Ĳ    \(IJ  \[IJ]          \U'0132'I+J combined
            ĳ    \(ij  \[ij]          \U'0133'i+j combined
            ı    \(.i* \[dotlessi]    \U'0131'i without a dot
+           ȷ    \(.j* \[dotlessj]    \U'0237'j without a dot
            Á    \('A* \[Aacute]      \U'00C1'A acute
            Ć    \('C* \[Cacute]      \U'0106'C acute
            É    \('E* \[Eacute]      \U'00C9'E acute
