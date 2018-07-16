@@ -4,11 +4,15 @@ CRYPT = -sOwnerPassword="`dd if=/dev/random bs=12 count=1 2>/dev/null | \
 	md5sum | awk '{ print $$1 }'` " -dEncryptionR=3 \
 	-dKeyLength=128 -dPermissions=-300
 
-.SUFFIXES: .tr .ps .pdf .more
+.SUFFIXES: .tr .ps .pdf .more .ditroff
 
 .tr.ps:
 	rm -f $@; trap "rm -f $$$$.ps" 0 2 3; \
 		tbl $< | troff | dpost >$$$$.ps && mv $$$$.ps $@
+
+.tr.ditroff:
+	rm -f $@; trap "rm -f $$$$.ps" 0 2 3; \
+		tbl $< | troff > $@
 
 .ps.pdf:
 	gs -sOutputFile=$@ $(DISTFLAGS) -f $<
@@ -23,6 +27,11 @@ test:
 	make doc.more
 	diff -d doc.more.orig doc.more
 	mv doc.more.orig doc.more
+	[ -e doc.ditroff ] && mv doc.ditroff doc.ditroff.orig
+	make doc.ditroff
+	rm fonts.tmac
+	diff -d doc.ditroff.orig doc.ditroff
+	mv doc.ditroff.orig doc.ditroff
 	[ -e doc.ps ] && mv doc.ps doc.ps.orig
 	make doc.ps
 	rm fonts.tmac
@@ -48,3 +57,4 @@ fonts.tmac:
 mrproper: clean
 
 doc.ps: fonts.tmac
+doc.ditroff: fonts.tmac

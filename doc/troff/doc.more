@@ -6687,7 +6687,6 @@ ate  language  for the generation of PDF documents.  The _H_e_i_r_l_o_o_
            Ĳ    \(IJ  \[IJ]          \U'0132'I+J combined
            ĳ    \(ij  \[ij]          \U'0133'i+j combined
            ı    \(.i* \[dotlessi]    \U'0131'i without a dot
-           ȷ    \(.j* \[dotlessj]    \U'0237'j without a dot
            Á    \('A* \[Aacute]      \U'00C1'A acute
            Ć    \('C* \[Cacute]      \U'0106'C acute
            É    \('E* \[Eacute]      \U'00C9'E acute
