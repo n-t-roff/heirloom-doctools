@@ -47,12 +47,15 @@
 .\"
 .\" from file m.mac
 .do xflag 3
-.warn
+.warn all
 .mediasize letter
 .lc_ctype en_US.utf8
-.\".fp 1 R LinLibertine_R otf
-.ig
+.hylang en_US
+.nhychar - \(en \(em
+.spacewidth
+.
 .fps math,greek 1 R texgyretermes-regular otf
+. flig R fi \(fi fl \(fl ff \(ff ffi \(Fi ffl \(Fl
 .fp 2 I texgyretermes-italic otf
 .fp 3 B texgyretermes-bold otf
 .fp 4 BI texgyretermes-bolditalic otf
@@ -76,7 +79,7 @@
 .kernpair B \\ B / 40
 .kernpair I f R \  60
 .kernpair BI f B \  80
-..
+.
 .ig
 .fps math,greek 1 R times ttf
 .fp 2 I timesi ttf
@@ -172,13 +175,15 @@
 .ds PDF "\s-1PDF\s+1
 .ds TEX T\h'-.13m'\v'.165m'E\v'-.165m'\h'-.17m'X
 .ds LaTeX L\h'-.2m'\v'-.165m'\s'-3'A\s0\v'.165m'\h'-.1m'\\*[TEX]
-.ds UTF \s-1UTF\s+1-8
+.ds UTF \s-1UTF-8\s+1
 .ds H
 .nr PS 10
 .nr PO 1i
 .hy 14
-.ds u \^\v'-0.3m'\s-2
-.ds d \s0\v'0.3m'
+. \" ds u \^\v'-0.3m'\s-2
+. \" ds d \s0\v'0.3m'
+.ds u \v'-0.35m'\s-4
+.ds d \s0\v'0.35m'
 .nr a .8i
 .nr b 1.6i
 .nr c 2.4i
@@ -258,7 +263,8 @@
 ..
 .nr savedline 0
 .de fo
-.ie 0&(\\n[nosave]=0)&(\\n(2C=0) \{\. \" FIXME
+. \" .ie 0&(\\n[nosave]=0)&(\\n(2C=0) \{\. \" FIXME
+.ie 0&(\\n[nosave]=0)&(\\n(2C=0) \{\
 .nr savedline 1
 .di savedline
 .dt 1v barefo
@@ -406,6 +412,21 @@ Form	Value\\$2	Argument	Notes\\$1	Explanation
 .ie '\\$1'' .nr nosave 1
 .el .nr nosave \\$1
 ..
+.
+.\" Additional kerns, etc.
+. kernpair R ` R ` -120
+. kernpair R ' R ' -120
+. lhang R ` -90 ( -20 * -50 a -30 c -20 w -20
+. rhang R ,.-\(hy 50 ;: 70 ' 90 f -80 g 20 r -30 s 30
+. lhang I f\(fi\(ff\(ffi\(ffl 150
+. rhang I . 50 f\(ff -180 F -60 ; 80
+. fspacewidth R 250
+. fspacewidth I 250
+. fspacewidth B 250
+. fspacewidth BI 250
+. fspacewidth S 250
+. fspacewidth S1 250
+.
 .de pg
 .ft R
 .fi
@@ -413,7 +434,29 @@ Form	Value\\$2	Argument	Notes\\$1	Explanation
 .xx
 .ne 1.1
 .nr nosave 0
+.
+. ss 12
+. minss 8
+. padj
+. wscalc 6
+. wrdspc 80 137.5
+. adjpenalty 50 80 140
+. linepenalty 1
+. lastlinestretch 1
+. letadj 98.5 100 12 101.5 100
+. letcalc 4
+. letthresh 91 112
+. letstren 100
+. letpen 2 1.5 1.5
+. hypp 60 90 100 50
+. overrunpenalty 1 0 16p
+. elppen -3
+. exhyp 20
+. rhanglevel 2
+. hy 4
+. \" wsmark
 ..
+.
 .de sc
 .pg
 .ne 1
@@ -592,6 +635,7 @@ Gunnar Ritter
 and others
 .ft R
 .ce 0
+.letstren 100
 .sp 2
 .ps \n(PS
 .fi
@@ -609,7 +653,7 @@ format the text into a printable, paginated document
 having a user-designed style.
 \*(NR and \*(TR offer
 unusual freedom in document styling,
-including:
+including: \
 arbitrary style headers and footers;
 arbitrary style footnotes;
 multiple automatic sequence numbering for paragraphs, sections, etc;
@@ -636,11 +680,11 @@ is capable of utilizing the full resolution of each terminal.
 On the Heirloom Documentation Tools Edition
 .pg
 In Summer 2005, Sun Microsystems, Inc. released
-the source code to the Solaris system,\|\T'ref_6'\*u6\*d\T
-including the System\ V Release\ 4 version of \*[TR,]
+the source code to the Solaris system,\T'ref_6'\*u6\*d\T
+including the System\~V Release\~4 version of \*[TR,]
 a derivative of AT\[ampersand]T
 \fIDocumenter's Workbench\fR \*[TR,] version 2.
-It had undergone few changes since the end of the 1980's,
+It had undergone few changes since the end of the 1980s,
 so it could serve as a clean starting point
 for a new version of \*(TR
 which is intended to be highly compatible
@@ -676,16 +720,16 @@ and changes to the intermediate language have been minor.
 Many \*(TR post-processors will thus continue to be usable
 with no or little adaptions.
 .pg
-\*(PS Type\ 1, OpenType, and TrueType
+\*(PS Type 1, OpenType, and TrueType
 have become device-independent font formats;
 virtually all commercial and free fonts
 are available in one of them.
 There is thus no need for a \*(TR-specific device-independent font format
 anymore;
 instead, \fIHeirloom\fR \*(TR can read font metrics directly
-from Type\ 1, OpenType, and TrueType font files.
+from Type 1, OpenType, and TrueType font files.
 This has greatly relieved the task of installing fonts\(emit
-suffices to copy the original files to a user-selectable font directory\(em,
+suffices to copy the original files to a user-selectable font directory\(em\j'1000',
 and makes it possible to access advanced typographic data,
 such as kerning tables or substitution instructions for old-style numerals.
 .pg
@@ -705,7 +749,7 @@ can be activated to achieve more aesthetically pleasant output:
 \*(TR can compute line breaks for a whole paragraph at once,
 using a variant of an algorithm
 originally developed by Donald Knuth and Michael Plass
-for the \*[TEX] system\|\T'ref_7'\*u7\*d\T.
+for the \*[TEX] system.\T'ref_7'\*u7\*d\T  \
 Interword spaces can be shrunk
 as an alternative to being expanded.
 Inter-letter spaces and letter shapes
@@ -714,14 +758,14 @@ both for computing break points
 and for adjusting output lines;
 this is sometimes called ``micro-typography'',
 .ds U+1EBF \o'e\s-1^\s0'\\k(aX\h'-.8n'\s-1\v'-.15m'´\v'+.15m'\s0\h'|\\n(aXu'
-cf. e.g. the thesis by Hàn Th\*[U+1EBF] Thành\|\T'ref_8'\*u8\*d\T.
+cf. e.g. the thesis by Hàn Th\*[U+1EBF] Thành.\T'ref_8'\*u8\*d\T  \
 All paragraph formatting options can be arbitrarily combined.
 .pg
 A variety of international paper formats
 and hyphenation languages are supported by \*[TR.]
 The algorithm for the latter is derived
 from the respective one developed for \*[TEX]
-by Franklin Liang\|\T'ref_9'\*u9\*d\T;
+by Franklin Liang;\T'ref_9'\*u9\*d\T
 \*(TR uses the implementation of \fILibHnj\fR by Raph Levien.
 \*[TEX] hyphenation patterns can be converted
 to the format accepted by \*[TR.]
@@ -730,7 +774,7 @@ Many internal limitations of \*(TR have been removed;
 most notably, \*(TR can now set characters in fractional point sizes.
 .pg
 The \*(TR language has been extended
-similarly as in the \s-1GNU\s+1 version of \*[TR,] \*(GR\|\T'ref_10'\*u10\*d\T;
+similarly as in the \s-1GNU\s+1 version of \*[TR,] \*(GR\^;\T'ref_10'\*u10\*d\T
 for example,
 names of requests, macros, strings, number registers, and fonts
 can consist of more than two characters.
@@ -744,7 +788,7 @@ are now capable of rastering \*(PS documents
 (at least using conversion tools),
 and as \*(PS and \*[PDF] viewer programs allow
 an accurate on-screen display of \*(TR documents,
-there is only one area where \*(NR is still useful:
+there is only one area where \*(NR is still useful: \
 the formatting of \s-1UNIX\s+1 manual pages.
 The \fIHeirloom\fR version of \*(NR
 is thus specifically aimed at this task;
@@ -774,16 +818,16 @@ of how to write well-styled \*(NR documents.
 .pg
 This manual as well as some of the pre- and post-processor commands
 have been derived from \s-1UNIX\s+1 code
-re\%leased by Caldera\T'ref_11'\*u11\*d\T,
+released by Caldera,\T'ref_11'\*u11\*d\T
 and from materials released by Lucent as parts
-of the \fIPlan\ 9\fR system\T'ref_12'\*u12\*d\T.
+of the Plan 9 system.\T'ref_12'\*u12\*d\T
 .pg
 .ft B
 Background to the Second Edition
 .pg
 \*(TR
 was originally written by the late Joe Ossanna
-in about 1973, in assembly language for the \s-1PDP\s+1-11,
+in about 1973, in assembly language for the \s-1PDP-11\s+1,
 to drive the Graphic Systems CAT typesetter.
 It was rewritten in C around 1975,
 and underwent slow but steady evolution until
@@ -839,7 +883,7 @@ A document may have an arbitrary number of fonts on any page
 Fonts may be accessed merely by naming them;
 ``mounting'' is no longer necessary.
 There are no limits on the number of characters.
-\H'8'Character height\H'10' and \S'-1'sl\S'0'a\S'1'nt\S'0' may be set
+\H'8'Character height\H'10' and \S'-5'sl\S'0'a\S'5'nt\S'0' may be set
 independently of width.
 .pg
 The remainder of this document contains
@@ -894,12 +938,15 @@ to adapt this manual.
 .ft B
 Availability and Contact Information
 .pg
+.char \[!-] \(hy
 The source code of the \fIHeirloom Documentation Tools\fR
 and accompanying materials
 are freely available from
-<\W'http://n-t-roff.github.io/heirloom/doctools.html'http://n-t-roff.github.io/heirloom/\:doctools.html\W>.
+.\" <\W'http://n\[!-]t\[!-]roff.github.io/heirloom/doctools.html'http://\:n\[!-]t\[!-]roff\:.github\:.io/\:heirloom/\:doctools.html\W>.
+<\W'http://n-t-roff.github.io/heirloom/doctools.html'http://\:n\[!-]t\[!-]roff\:.github\:.io/\:heirloom/\:doctools.html\W>.
 Comments and bug reports should be added at
-<\W'https://github.com/n-t-roff/heirloom-doctools/issues'https://github.com/n-t-roff/heirloom-doctools/issues\W>
+.\" <\W'https://github.com/n\[!-]t\[!-]roff/heirloom\[!-]doctools/issues'https://\:github\:.com/\:n\[!-]t\[!-]roff/\:heirloom-doctools/\:issues'\W>
+<\W'https://github.com/n-t-roff/heirloom-doctools/issues'https://\:github\:.com/\:n\[!-]t\[!-]roff/\:heirloom-doctools/\:issues\W>
 or send to <troff@arcor.de>.
 .pg
 .sp .4
@@ -921,7 +968,7 @@ Unix Programmer's Manual,
 Vol.\|2,
 AT\[ampersand]T Bell Laboratories,
 Murray Hill,
-\s-1NJ\s+1 07974, 1979;
+NJ 07974, 1979;
 <\W'http://plan9.bell-labs.com/7thEdMan/index.html'http://plan9.bell-labs.com/7thEdMan/index.html\W>.
 .ref 2
 B. W. Kernighan, L. L. Cherry,
@@ -943,18 +990,18 @@ in [1].
 D. E. Knuth, M. F. Plass,
 ``Breaking paragraphs into lines'',
 \fISoftware\(emPractice and Experience\fR,
-Vol. 11, Issue 12 (1981), pp.\ 1119\(en1184;
+Vol.\~11, Issue\~12 (1981), pp.\~1119\(en1184;
 also in D. E. Knuth, \fIDigital Typography\fR,
-Stanford, 1999 (\s-1CSLI\s0 lecture notes no. 78),
-pp.\ 67\(en155.
+Stanford, 1999 (CSLI lecture notes no.\~78),
+pp.\~67\(en155.
 .ref 8
 Hàn Th\*[U+1EBF] Thành, \fIMicro-typographic extensions to the \*[TEX]\fI
 typesetting system\fR,
 Masaryk University Brno, 2000.
 .ref 9
 F. M. Liang, \fIWord Hy-phen-a-tion by Com-put-er\fR,
-Stanford University, \s-1CA\s0 94305,
-Report No. \s-1STAN\s0-\s-1CS\s0-83-977,
+Stanford University, CA 94305,
+Report No. STAN-CS-83-977,
 1983.
 .ref 10
 <\W'http://www.gnu.org/software/groff'http://www.gnu.org/software/groff\W>
@@ -1065,7 +1112,7 @@ Currently defined names are \fB37\fR for the (default) Model 37 Teletype\(rg,
 \fB300S\fR for the \s-1DASI\s+1-300S,
 \fB300\fR for the \s-1DASI\s+1-300,
 and
-\fB450\fR for the \s-1DASI\s+1-450 (Diablo Hyterm).
+\fB450\fR for the \s-1DASI\s+1\[!-]450 (Diablo Hyterm).
 A special name, \fBlocale\fR, is also supported.
 It generates \*[UTF] output if permitted
 by the current \s-1LC_CTYPE\s+1 locale,
@@ -1183,7 +1230,7 @@ computing space widths in \fIdpost\fR
 storing text positions as differences
 .ti 0
 		\fB5\fR	like \fB4\fR but using a binary
-\*(PS Level\~2 representation
+\*(PS Level 2 representation
 .in 1.2i
 .ti 0
 .xx
@@ -1394,7 +1441,7 @@ Text Filling, Adjusting, and Centering
 .b1
 \T'kernpair'\fB&kernpair\T\fI|F|c...|G|d...|N\fR	ignored	P,T	Define a kerning pair.
 .b1
-\T'kernafter'\fB&kernafter\T\fI|F|c...|N|d...|M|...\fR	P,T	Add a constant amount of space after a character.
+\T'kernafter'\fB&kernafter\T\fI|F|c...|N|d...|M|...\fR		P,T	Add a constant amount of space after a character.
 .b1
 \T'kernbefore'\fB&kernbefore\T\fI|F|c...|N|d...|M|...\fR	P,T	Add a constant amount of space before a character.
 .b1 0
@@ -1594,7 +1641,7 @@ Hyphenation.
 .b1
 \T'shc'\fB&shc\T\fI|c\fR	\(hy	\(hy	E	Set the soft hyphenation character.
 .b1
-\T'hcode'\fB&hcode\T\fI|abcd...\fR	\(en	E	Hyphenation code of \fIa\fR is \fIb\fR, etc.
+\T'hcode'\fB&hcode\T\fI|abcd...\fR		\(en	E	Hyphenation code of \fIa\fR is \fIb\fR, etc.
 .b1
 \T'hylen'\fB&hylen\T\fI|N\fR	5	5	E	Hyphenate only words of at least \fIN\fR characters in length.
 .b1
@@ -1620,7 +1667,7 @@ Three-Part Titles.
 .mht s_onl
 Output Line Numbering.
 .bt
-\T'nm'\fB&nm\T\fI|\(+-N|M|S|I\fR	off	E	Number mode on or off, set parameters.
+\T'nm'\fB&nm\T\fI|\(+-N|M|S|I\fR		off	E	Number mode on or off, set parameters.
 .b1 0
 \T'nn'\fB&nn\T\fI|N\fR	\(en	\fIN\(eq\fR1	E	Do not number next \fIN\fR lines.
 .mht s_cond
@@ -1630,7 +1677,7 @@ Conditional Acceptance of Input
 .b1
 				for multi-line use \fI\e{anything\|\e}\fR.
 .b1
-\T'if'\fB&if\T|!\fIc|anything\fR	\(en	\(en	If condition \fIc\fR false, accept \fIanything\fR.
+\T'if'\fB&if\T|!\fIc|anything\fR		\(en	\(en	If condition \fIc\fR false, accept \fIanything\fR.
 .b1
 \T'if'\fB&if\T\fI|N|anything\fR		\(en	\fBu\fR	If expression \fIN\fR > 0, accept \fIanything\fR.
 .b1
@@ -1745,7 +1792,7 @@ Output and Error Messages, Debugging
 .mht s_color
 Color Support
 .bt
-\T'CL'\fB&CL\T\fI|color|text\fR	\s-1RGB\s+1|black	\(en	Print \fItext\fR in \fIcolor\fR.*
+\T'CL'\fB&CL\T\fI|color|text\fR	\s-1RGB\s+1|black		\(en	Print \fItext\fR in \fIcolor\fR.*
 .mht s_pics
 Picture Inclusion
 .bt
@@ -1755,7 +1802,7 @@ Picture Inclusion
 .b1 0
 \T'EP'\fB&EP\T\fR	\(en	\(en	\(en	End a picture started by \fB&BP\fR.*
 .b1 0
-\T'PI'\fB&PI\T\fI|source|height\fB,\fIwidth\fB,\fIyoffset\fB,\fIxoffset|flags\fR	Low-level picture inclusion.*
+\T'PI'\fB&PI\T\fI|source|height\fB,\fIwidth\fB,\fIyoffset\fB,\fIxoffset|flags\fR		Low-level picture inclusion.*
 .br
 .ne 8
 .mht s_pdf
@@ -2315,7 +2362,7 @@ Input consists of \fItext lines\fR, which are destined to be printed,
 interspersed with \fIcontrol lines\fR,
 which set parameters or otherwise control subsequent processing.
 Control lines begin with a \fIcontrol character\fR\(em\
-normally \fB.\fR (period) or \fB\'\fR (acute accent)\(em\
+normally \fB.\fR\~(period) or \fB\'\fR\~(acute accent)\(em\
 followed by a name that specifies
 a basic \fIrequest\fR or the substitution of
 a user-defined \fImacro\fR in place of the control line.
@@ -2329,7 +2376,7 @@ space or newline.
 Control lines with unrecognized names are ignored.
 .pg
 Various special functions may be introduced anywhere in the input by
-means of an \fIescape\fR character, normally \fB\e\fR.
+means of an \fIescape\fR character, normally \fB\e\fR\~.
 For example, the function
 \T'e_n'\fB\en\fIR\fR\T
 causes the interpolation of the contents of the
@@ -2458,11 +2505,22 @@ _
 \fBv\fR	Vertical line space	\fIV\fR	\fIV\fR
 none	Default, see below
 .TE
-In \*[NR,] \fIboth\fR the em and the en are taken to be equal to the \fIC\fR,
+.br
+.\"ss 12 0
+.\"wscalc 0
+.\"letadj
+.\"letcalc 0
+.\"padj 0
+.\"letthresh 100 100
+.\"letstren 99
+.\"rhanglevel 0
+.\"wswarn 2 100 100
+In \*[NR,] \fIboth\fR the em and the\~en\~are\~taken\~to\~be\~equal\~to the \fIC\fR,
+.\"In \*[NR,] \fIboth\fR the em and the en are taken to be equal to the \fIC\fR,
 which is output-device dependent;
 common values are 1/10 and 1/12 inch.
 Actual character widths in \*(NR need not be all the same and constructed characters
-such as \(mi> (\(->) are often extra wide.
+such as \(mi>\ (\(->) are often extra wide.
 The default scaling is \fBm\fP for the horizontally-oriented requests
 and functions
 \fB\T'll'll\T\fR,
@@ -2516,6 +2574,8 @@ except for floating-point computations with
 \T'nrf'\fBnrf\fR\T and \T'if'\fBif\ f\fR\T.
 Exponential notation as in `1\fBe+\fR9' or `1\fBe\-\fR10'
 is supported.
+.br
+.wswarn 0
 .pg
 The \fIabsolute position\fR indicator \fB~\fR may be prepended
 to a number \fIN\fR
@@ -2557,7 +2617,7 @@ Except where controlled by parentheses, evaluation of expressions is left-to-rig
 there is no operator precedence.
 Spaces are ignored if they occur within parentheses;
 any other non-numeric character terminates the expression.
-In the case of certain requests, an initial \fB\(pl\fR or \fB\(mi\fR is stripped
+In the case of certain requests, an initial \fB\(pl\fR or\~\fB\(mi\fR is stripped
 and interpreted as an increment or decrement indicator respectively.
 In the presence of default scaling, the desired scale indicator must be
 attached to \fIevery\fR number in an expression
@@ -2671,7 +2731,7 @@ as \fB\e(rs\fR and \fB\e(dq\fR, respectively;
 this form allows to completely avoid their interpretation
 as argument delimiter or escape character.
 In traditional \*[TR,],
-the \s-1ASCII\s+1 characters \fB@\fR, \fB#\fR, \fB"\fR, \fB\(aa\fR, \fB\(ga\fR, \fB<\fR, \fB>\fR, \fB\e\fR, \fB{\fR, \fB}\fR, \fB~\fR, \fB^\fR, and \fB\(ul\fR existed
+the \s-1ASCII\s+1 characters \fB@\fR, \fB#\fR, \fB"\fR, \fB\(aa\fR, \fB\(ga\fR, \fB<\fR, \fB>\fR, \fB\e\fR, \fB{\fR, \fB}\fR, \fB~\fR, \fB^\fR, and\~\fB\(ul\fR existed
 only on the Special Font and were printed as a 1-em space if that Font
 was not mounted.
 With the \fBpslow\fR device,
@@ -3661,8 +3721,8 @@ in the \A'n_.sentchar'\fB&sentchar\fR number register.
 .bta transchar
 \fB&transchar\fI|c..\fR	\fB"')]*\(dg\fR	off	E	Transparent characters for sentence-ending.
 A sentence-ending character is recognized as such
-even if followed by one or more of the characters \fIc...\fR
-before the end of an input text line.
+even if followed by one or more of the characters
+\fIc...\fR before the end of an input text line.
 The current set of transparent characters for sentence ending is available
 in the \A'n_.transchar'\fB&transchar\fR number register.
 .bta track
@@ -3706,7 +3766,7 @@ size or 1/1000 of an em (as in \s-1AFM\s+1 kerning pair definitions);
 it may be negative.
 To add a kerning pair that includes the space character, use \T'e_ '``\e\ ''.\T
 .bta kernafter
-\fB&kernafter\fI|F|c...|N|d...|M|...\fR	P,T	Add a constant amount of space after a character
+\fB&kernafter\fI|F|c...|N|d...|M|...\fR		P,T	Add a constant amount of space after a character
 if the current font is \fIF\fR and \fIc\fR
 is the first character of a pair of characters subject to kerning.
 \fIc\fR may consist of multiple characters;
@@ -3762,7 +3822,7 @@ output lines can be set
 using the \T'vs'\fBvs\fR\T request.
 \fIV\fR should be large enough to accommodate the character sizes
 on the affected output lines.
-For the common type sizes (9-12 points),
+For the common type sizes (9\(en12 points),
 usual typesetting practice is to set \fIV\fR to 2\ points greater than the
 point size;
 \*(TR default is 10-point type on a 12-point spacing
@@ -3916,7 +3976,7 @@ The resulting total indent may not be negative.
 The current indent is not changed.
 .bta pshape
 .di keep
-.hylang en_US
+\#.hylang en_US
 .minss 9
 .letadj 95 98 18 105 102
 \fB&pshape\fI|\(+-I1|\(+-L1|\(+-I2|\(+-L2|\fR...|off	E,\fBm\fR	Set a special shape for the current paragraph in \T'ad_p'\fBad\ p\fR\T mode.
@@ -4013,7 +4073,7 @@ As an exception, \T'e_p'\fB\ep\fR\T preserves the remaining part
 of the shape.
 To produce shapes with holes as in this example,
 \T'c_trap'diversion traps\T can be used
-to move formatted lines in vertical direction.
+to move formatted lines in a vertical direction.\p
 .br
 .di
 .ne \n(dnu
@@ -4021,9 +4081,9 @@ to move formatted lines in vertical direction.
 .nf
 .keep
 .fi
-.hylang
-.minss
-.letadj
+\# .hylang
+.\"minss
+.\"letadj
 .mha s_mac
 Macros, Strings, Diversion, and Position Traps
 .sc
@@ -4080,8 +4140,8 @@ The input is copied without interpretation
 .x2
 These interpretations can be suppressed by
 prepending
-a \fB\e\fR.
-For example, since \fB\e\e\fR maps into a \fB\e\fR,
+a \fB\e\fR\~.
+For example, since \fB\e\e\fR maps into a \fB\e\fR\~,
 \fB\e\en\fR will copy as \T'e_n'\fB\en\fR\T which
 will be interpreted as a number register indicator when the
 macro or string is reread.
@@ -4497,7 +4557,7 @@ and no limit for tail-recursion.
 Number Registers
 .pg
 A variety of parameters are available to the user as
-predefined, named \fInumber registers\fR (see Summary and Index, page 7).
+predefined, named \fInumber registers\fR (see Summary and Index, page\~7).
 In addition, the user may define his own named registers.
 Register names are one or two characters long and \fIdo not\fR conflict
 with request, macro, or string names.
@@ -4728,7 +4788,7 @@ in the remaining space.
 Set tab stops and types.
 \fIt=\fBR\fR, right adjusting;
 \fIt=\fBC\fR, centering;
-\fIt\fR absent, left adjusting.
+\fIt\fR\~absent, left adjusting.
 \*(TR tab stops are preset every 0.5in.;
 \*(NR every 0.8in.
 The stop values are separated by spaces, and
@@ -5021,7 +5081,7 @@ when the request is processed.
 .xx
 Whenever \fIc\fR occurs in regular (not copy mode) later,
 a temporary copy of the current environment is created,
-the escape character is temporarily set to \e,
+the escape character is temporarily set to \fB\e\fR\~,
 and \fIstring\fR is output in nofill mode to an unnamed diversion.
 If \fIc\fR itself occurs in \fIstring\fR,
 no recursive substitution takes place,
@@ -5121,7 +5181,7 @@ Comments and concealed newlines.
 An uncomfortably long input line that must stay
 one line (e.g. a string definition, or nofilled text)
 can be split into many physical lines by ending all but
-the last one with the escape \fB\e\fR.
+the last one with the escape \fB\e\fR\~.
 The sequence \A'e_newline'\fB\e\fR(newline) is \fIalways\fR ignored\(em\
 except in a comment.
 Comments may be imbedded at the \fIend\fR of any line by
@@ -5358,8 +5418,8 @@ and
 \h'-\w'.'u'.
 .pg
 The function \A'e_L'\fB\eL\'\fINc\fB\'\fR draws a vertical line consisting
-of the (optional) character \fIc\fR stacked vertically apart 1\|em
-(1 line in \*(NR),
+of the (optional) character \fIc\fR stacked vertically apart 1\~em
+(1\~line in \*(NR),
 with the first two characters overlapped,
 if necessary, to form a continuous line.
 The default character is the \fIbox rule\fR |\(br| (\fB\|\e(br\fR);
@@ -5541,7 +5601,7 @@ a hyphenated word.
 The current soft hyphenation character is available
 in the \A'n_.shc'\fB&shc\fR number register.
 .bta hcode
-\fB&hcode\fI|abcd...\fR	\(en	E	Hyphenation code.
+\fB&hcode\fI|abcd...\fR		\(en	E	Hyphenation code.
 When determining the hyphenation points for an input word,
 \fIa\fR is mapped to \fIb\fR, etc.
 When no hyphenation code is specified for a character,
@@ -5580,14 +5640,14 @@ The current values are available in the
 \A'n_.hypp3'\fB&hypp3\fR
 number registers.
 .bta breakchar
-\fB&breakchar\fI|c.\fR	\fB\(hy\(em\fR	off	E	Optional line break characters.
+\fB&breakchar\fI|c.\fR	\fB\(hy\|\(em\fR	off	E	Optional line break characters.
 A line may always be split after one of these characters.
 The current set of optional line break characters is available
 in the \A'n_.breakchar'\fB&breakchar\fR number register.
 .bta nhychar
-\fB&nhychar\fI|c...\fR	\fB\(hy\(em\fR	off	E	Hyphenation-inhibiting characters.
-A word that contains one of the characters \fIc...\fR
-is not hyphenated,
+\fB&nhychar\fI|c...\fR	\fB\(hy\|\(em\fR	off	E	Hyphenation-inhibiting characters.
+A word that contains one of the characters
+\fIc...\fR is not hyphenated,
 except that it may be split across lines
 if one of these characters is also an optional line break character.
 The current set of hyphenation-inhibiting characters is available
@@ -5600,7 +5660,7 @@ The indicator does not appear in the output.
 \fB&hw\fI|word1|...\fR		ignored	\(en	Specify hyphenation points in words
 with imbedded minus signs.
 Versions of a word with terminal \fIs\fR are implied;
-i.e. \fIdig\-it\fR implies \fIdig\-its\fR.
+i.e. \fIdig\[!-]it\fR implies \fIdig\[!-]its\fR.
 This list is examined initially \fIand\fR after
 each suffix stripping.
 .mha s_titles
@@ -5663,7 +5723,7 @@ as blank number fields).
 .ll
 .h1
 .bta nm
-\fB&nm\fI|\(+-N|M|S|I\fR	off	E	\
+\fB&nm\fI|\(+-N|M|S|I\fR		off	E	\
 Line number mode.
 If \fI\(+-N\fR is given,
 line numbering is turned on,
@@ -5710,7 +5770,7 @@ and
 \fB&if\fI|c|anything\fR		\(en	\(en	If condition \fIc\fR true, accept \fIanything\fR as input;
 in multi-line case use \fI\e{anything\|\e}\fR.
 .bt
-\fB&if|!\fIc|anything\fR	\(en	\(en	If condition \fIc\fR false, accept \fIanything\fR.
+\fB&if|!\fIc|anything\fR		\(en	\(en	If condition \fIc\fR false, accept \fIanything\fR.
 .bt
 \fB&if\fI|N|anything\fR		\(en	\fBu\fR	If \T'c_expr'expression\T \fIN\fR > 0, accept \fIanything\fR.
 .bt
@@ -5720,7 +5780,7 @@ in multi-line case use \fI\e{anything\|\e}\fR.
 .bt
 \fB&if|!f\fIF|anything\fR	\(en	\fBu\fR	If floating-point expression \fIF\fR \(<= 0 [sic], accept \fIanything\fR.
 .bt
-\fB&if\fI|\'string1\'string2\'|anything\fR	\(en	If \fIstring1\fR identical to \fIstring2\fR,
+\fB&if\fI|\'string1\'string2\'|anything\fR	\&	\(en	If \fIstring1\fR identical to \fIstring2\fR,
 accept \fIanything\fR.
 .bt
 \fB&if|!\fI\|\'string1\'string2\'|anything\fR	\(en	If \fIstring1\fR not identical to \fIstring2\fR,
@@ -6345,7 +6405,7 @@ and reverse video printing.
 It includes the following macro:
 .h1
 .bta CL
-\fB&CL\fI|color|text\fR	\s-1RGB\s+1|black	\(en	Print \fItext\fR in \fIcolor\fR.
+\fB&CL\fI|color|text\fR	\s-1RGB\s+1|black		\(en	Print \fItext\fR in \fIcolor\fR.
 No arguments restores a default color
 (black in \s-1RGB\s+1 color space;
 note that this is different from the initial color).
@@ -6542,7 +6602,8 @@ Call
 .B EP
 at the end of the document to retrieve it.
 .bta PI
-\fB&PI\fI|source|height\fB,\fIwidth\fB,\fIyoffset\fB,\fIxoffset|flags\fR	This low-level macro, used by \fBBP\fR,
+\fB&PI\fI|source|height\fB,\fIwidth\fB,\fIyoffset\fB,\fIxoffset|flags\fR	\
+\&	This low-level macro, used by \fBBP\fR,
 can help do more complex things.
 The two arguments not already described are:
 .Arg
@@ -6809,7 +6870,10 @@ The \fIuri\fR part is not interpreted by \*(TR,
 but just written to the generated output.
 Typically, this will be a link to a web page,
 as in
-<\W'http://n-t-roff.github.io/heirloom/doctools.html'\eW'http://n-t-roff.github.io/heirloom/doctools.html'http://n-t-roff.github.io/heirloom/\:doctools.html\eW\W>.
+.sp 0.5v
+.ce
+.ft B
+<\W'http://n-t-roff.github.io/heirloom/doctools.html'\eW'http://n-t-roff.github.io/heirloom/doctools.html'http://n-t-roff.github.io/heirloom/doctools.html\eW\W>\fR.
 .pg
 The appearance of links can be changed;
 links are normally surrounded by an 1 point wide blue border.
@@ -7330,6 +7394,9 @@ The \fB\-F\fR
 command-line option may be used to change the default directory.
 .sc
 Device description file.
+.ds oldbchars \n[.breakchar]
+.tm oldbchars = \*[oldbchars]
+.breakchar /
 General parameters of the device are stored, one per line, in
 the file \fB/usr/ucblib/doctools/font/dev\fIname\^\fB/DESC\fR,
 as a sequence of names and values.
@@ -7346,6 +7413,8 @@ others that may be present for specific drivers:
 .nr nosave 0
 \fBcharset\fR
 \fIlist of multi-character character names (optional)\fP
+.breakchar \*[oldbchars]
+.rm oldbchars
 .pg
 The F, G, ... are font names
 to be initially mounted.
@@ -7440,9 +7509,9 @@ ascender/descender information, and a decimal, octal or hexadecimal value
 by which the output device knows it
 (the \T'e_N'\fB\eN\fR\T
 ``number'' of the character).
-The character name is arbitrary, except that \fB\-\-\-\fR
+The character name is arbitrary, except that \fB\-\^\-\^\-\fR
 signifies an unnamed character.
-If the width field contains \fB"\fR,
+If the width field contains\~\fB"\fR,
 the name is a synonym for the previous character.
 The ascender/descender field is 1 if
 the character has a descender (hangs below the baseline, like \fBy\fR),
@@ -8315,6 +8384,7 @@ output device.
 .	sp .4
 ..
 .mx
+.warn 0
 .\" 8-bit ASCII
 .AC U O 0 exclamdown     00A1 "inverted exclamation mark
 .AC U O 0 cent           00A2 "currency unit

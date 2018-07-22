@@ -1,14 +1,17 @@
 .\" Heirloom troff demonstration page
 .\" Sccsid @(#)troffdemo.tr	1.37 (gritter) 10/28/06
+.\" Modified 1/22/18
 .\""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 .\" Enable long request names and warnings.
 .do xflag 3
 .warn all
+. \" 1 = use Adobe Caslon OTF, 0 = use Type 1
+. \" nr O 1
 .\""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 .\" Set the document size.
-.mediasize a4
-.ll 17c
-.po 2c
+.mediasize a4\" 595.27p x 841.89p
+.ll 413p\" 17c
+.po 91p\" 2c
 .\""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 .\" Set PDF attributes.
 \X'PDFMark: Author Gunnar Ritter'
@@ -20,6 +23,7 @@
 .\" This document can be built with both the Type 1 Adobe Caslon and the
 .\" OpenType Adobe Caslon Pro family. The "O" number register controls
 .\" which kind of fonts is used.
+.\" 01/22/18 OTF glyph names were modified to match Adobe Caslon Pro ver. 2.015
 .ie (\nO=0) \{\
 .	fp 1 R awrg____ pfb
 .	fp 0 V awrg____ pfb
@@ -64,6 +68,26 @@
 .	fp 0 O ACaslonPro-Regular otf
 .	feature R +pnum +onum
 .	feature E +smcp
+.	ds rhand \[bullet.045]
+.	ds orn1 \[bullet.040]
+.	ds orn2 \[bullet.030]
+.	ds orn3 \[bullet.035]
+.	ds orn4 \[bullet.041]
+.	ds thistle \[bullet.002]
+.	ds m0 R \[zero.oldstyle]
+.	ds m1 R \[one.oldstyle]
+.	ds m2 R \[two.oldstyle]
+.	ds m3 R \[three.oldstyle]
+.	ds m4 R \[four.oldstyle]
+.	ds m5 R \[five.oldstyle]
+.	ds m6 R \[six.oldstyle]
+.	ds m7 R \[seven.oldstyle]
+.	ds m8 R \[eight.oldstyle]
+.	ds m9 R \[nine.oldstyle]
+.	kernpair I \(ff R \  50\" 83
+.\}
+.ig
+.\" The older OTF glyph names are:
 .	ds rhand \[orn.045]
 .	ds orn1 \[orn.040]
 .	ds orn2 \[orn.030]
@@ -80,19 +104,24 @@
 .	ds m7 R \[sevenoldstyle]
 .	ds m8 R \[eightoldstyle]
 .	ds m9 R \[nineoldstyle]
-.	kernpair I \(ff R \  83
-.\}
+..
 .\" The expert font needs letter space tracking for use as small caps.
-.track E 1 .3 24 3
+.\" track E 1 .3 24 3
+.track E 1 0.055 24 1.33
 .\" The caps font needs to be tracked and zoomed.
-.track V 1 .3 24 3
+.\" track V 1 .3 24 3
+.track V 1 0.055 24 1.33
 .fzoom V .9
 .\" Adobe Caslon also needs minor tracking for the roman and the italic.
-.track R 1 .4 24 0
-.track I 1 .4 24 0
+.\" track R 1 .4 24 0
+.\" track I 1 .4 24 0
+.track R 1 0.2 24 0
+.track I 1 0.2 24 0
 .\" Hanging characters.
-.rhang R y -20 , 65 \(hy 30
-.rhang E \(hy 30
+.lhang R \[less] -60
+.lhang O \[bullet.045] 35
+.rhang R f -120 s 20 y -20 , 65 . 300 -\(hy 200
+.rhang E \(hy 30 . 300
 .\" Additional kerning pairs, mostly for old-style numerals.
 .kernpair R / \*(m0 -70
 .kernpair R / \*(m1 -20
@@ -122,11 +151,44 @@
 .kernpair V B V \  -70
 .\" General spacing.
 .kernbefore R ; 66 : 66
+.\" Other kerns, etc.
+.kernpair R ' R \  0
+.kernpair R \  R ` 0
+.kernafter R \[less] 50
+.kernbefore R \[greater] 50
+.kernpair I t R \  50
+.char \[!-] \(hy
+.
 .\""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 .\" Use a narrow word space, and disable sentence spacing.
-.ss 9 0
+.\" ss 9 0
+.
+.ds fsw 226
+.fspacewidth R \*[fsw]
+.fspacewidth I \*[fsw]
+.fspacewidth V \*[fsw]
+.fspacewidth E \*[fsw]
+.fspacewidth O \*[fsw]
+.
+.\" Use paragraph adjustment
+.padj
+.ad b
+.ss 12 0
+.minss 8
+.wscalc 6
+.wrdspc 80 135
+.letadj 98.5 100 12 101.5 100
+.letcalc 4
+.letthresh 91 112
+.letpen 8 1 1
+.letstren 100
+.adjletpen 5 100
+.rhanglevel 2
 .\" Enable automatic hyphenation.
-.hy
+.\" hy
+.hy 4
+.hypp 50 50 50 50
+.hylang en_US
 .\""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 .\" Macro for a feature description item.
 .ds rh \s(14\fO\*[rhand]\fP\s0
@@ -150,24 +212,31 @@
 .	repeat1 \\$3 \\$2
 ..
 .nr hl \n(.l/2
-.ps 22.9
+.ps 23\"22.9
 .ft O
 .repeat 9 left \*[orn2]
 .repeat 9 right \*[orn3]
-.sp |2.2c
+.ds hdrstr \*[orn1]\*[left]\*[right]\*[orn4]
+.
+.nr hdrwid \w'\*[hdrstr]'
+.nr hdrps (\n[.ps]u * \n[.l]u / \n[hdrwid]u)
+.ps \n[hdrps]u
+.
+.sp |2.75c\" |2.2c
 .ce
-\*[orn1]\*[left]\*[right]\*[orn4]
+\*[hdrstr]
+. \" \*[orn1]\*[left]\*[right]\*[orn4]
 .\""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 .\" Begin of title
-.sp |3.9c
-.po \n(.ou+3P
-.ll \n(.lu-6P
+.sp |135p\" |3.9c
+.\"po \n(.ou+3P
+.\"ll \n(.lu-6P
 .ad c
 .ps 24
 .vs 15
 \fRHeirloom Documentation Tools
 .sp 1c
-\fITroff\| Demonstration Page
+\fI\s[-1]Troff\| Demonstration Page\s0
 .sp 1c
 \s(21\fO\*[thistle]
 .sp .4c
@@ -175,50 +244,63 @@
 \fEGunnar Ritter\fR
 .br
 10/28/06
-.sp 2v
+.sp 40p\"2v
 .ad p
 .ps 12
 .\" Begin of text
 The \fItroff\fP text processor
 from the Heirloom Documentation Tools project
 is a variant of the Unix application
-originally written by \fEJoseph F. Ossanna\fR
-and \fEBrian W. Kernighan.\fR
+.\" originally 
+written by \fEJoseph\fR \fEF.\fR \fEOssanna\fR
+and \fEBrian\fR \fEW.\fR \fEKernighan.\fR
 It has been derived from source code provided by
 the OpenSolaris project.
 Amongst many enhancements,
 Heirloom \fItroff\fP provides extended
-capabilities to work with PostScript fonts:
+.\" capabilities to work with PostScript fonts:
+font handling capabilities:
 .F
-PostScript Type 1 and OpenType fonts can be used
+PostScript Type 1, TrueType, and OpenType fonts can be used
 as supplied by their vendor
 without any need for conversion;
 \fItroff\fP can access font metrics directly
-in the \fVAFM\fP or OpenType files,
+in the \fVAFM\fP, \fVTTF\fP, and \fVOTF\fP files,
 and the \fIdpost\fR post-processor
-can embed glyph data from \fVPFB\fP or OpenType files
+can embed glyph data
+. \" from \fVPFB\fP or OpenType files
 into the PostScript output it generates.
 .F
-With both Type 1 ``expert'' and OpenType fonts,
+With Type 1 ``expert,'' TrueType, and OpenType fonts,
 \fItroff\fR can be configured
-such that it sets extra characters transparently
-in alternation with base characters
-to produce extra ligatures, as in the words
+. \" such that it sets extra characters transparently
+. \" in alternation with base characters
+to transparently replace base characters with extra characters
+to produce ligatures, as in the words
 ``effective,'' ``office,'' ``offline,''
-\fESmall Capitals\fR,
-or the old-style numerals 0 1 2 3 4 5 6 7 8 9
-without the need to type escape sequences for individual characters.
+\fESmall\fR \fECapitals\fR,
+or old-style numerals 0\|1\|2\|3\|4\|5\|6\|7\|8\|9
+without the need to type escape sequences for individual characters in the
+document text.
+The replacement characters need not reside in the same font.
 .F
 Pairwise kerning and letter space tracking are supported;
-the page title provides an example for the former,
-and the latter is used for the \fESmall Capitals\fR, and,
+the page title provides an example of the former,
+and the latter is used for the \fESmall\fR \fECapitals\fR, and,
 at a minor rate, to adjust the regular font of this document.
+Kern pairs can be defined between different fonts, and tracking can vary
+automatically with size.
 .F
 Hanging characters can be used to achieve better visual alignment
-of commas, hyphens, &c. to the page margins.
+. \" of commas, hyphens, &c. to the page margins.
+of the margins and to implement hanging punctuation for commas, hyphens, &c.
 .sp
 .in 0
 Heirloom \fItroff\fP is free software;
-its \fIC\fP source code can be obtained at no charge from
-\[less]http\&://n-t-roff.github.io/heirloom/doctools.html\[greater]
-It runs on a wide variety of Unix systems.
+its
+. \" \fIC\fP 
+C source code can be obtained at no charge from
+\[less]http:\^//n\[!-]t\[!-]roff.github.io/heirloom/doctools.html\[greater].
+It runs on a wide variety of Unix and Unix-like systems.
+.rj
+\s[-2]\n[mo]/\n[dy]/\n[year]
