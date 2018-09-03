@@ -488,8 +488,8 @@ static const struct asciimap	punctascii[] = {
  	{ 0x003E,	"greater" },
  	{ 0x0040,	"at" },
  	{ 0x005C,	"backslash" },
- 	{ 0x005E,	"circumflex" },
- 	{ 0x007E,	"tilde" },
+ 	{ 0x005E,	"asciicircum" },
+ 	{ 0x007E,	"asciitilde" },
 	{ 0,		NULL }
 };
 

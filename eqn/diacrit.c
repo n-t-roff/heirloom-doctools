@@ -63,10 +63,18 @@ diacrit(int p1, int type) {
 #endif /* !NEQN */
 			break;
 		case HAT:
-			printf(".ds %d ^\n", c);
+#ifdef NEQN
+			printf(".ds %d ^\n", c); /* \[asciicircum] */
+#else
+			printf(".ds %d \\[circumflex]\n", c);
+#endif
 			break;
 		case TILDE:
-			printf(".ds %d ~\n", c);
+#ifdef NEQN
+			printf(".ds %d ~\n", c); /* \[asciitilde] */
+#else
+			printf(".ds %d \\[tilde]\n", c);
+#endif
 			break;
 		case DOT:
 #ifndef NEQN
