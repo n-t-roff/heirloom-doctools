@@ -1383,8 +1383,8 @@ evc(struct env *dp, struct env *sp)
 	if (dp->_brpnl < INT_MAX)
 		dp->_brpnl = 0;
 	dp->_nn = 0;
-	dp->_ndf = 0;
-	dp->_nms = 0;
+	dp->_ndf = 1;
+	dp->_nms = 1;
 	dp->_ni = 0;
 	dp->_ul = 0;
 	dp->_cu = 0;

@@ -292,7 +292,7 @@ donum(void)
 		nn--;
 		goto d1;
 	}
-	if (numtab[LN].val % ndf) {
+	if (numtab[LN].val % (ndf < 1 ? 1 : ndf)) {
 		numtab[LN].val++;
 d1:
 		un += nw * (3 + nms + ni);
