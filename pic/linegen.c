@@ -145,6 +145,7 @@ obj *linegen(int type)
 				else
 					chop2 = ap->a_val.f;
 			}
+			chop++;
 			break;
 		case FILL:
 			battr |= FILLBIT;
