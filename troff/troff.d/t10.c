@@ -1098,7 +1098,8 @@ newpage(int n)	/* called at end of each output page (we hope) */
 			if (a->supply)
 				ptsupplyfont(a->fontname, a->supply);
 		} else if (fontbase[i]->namefont[0])
-			fdprintf(ptid, "x font %d %s\n", i, macname(fontlab[i]));
+			fdprintf(ptid, "x font %d %s\n", i,
+				mapft(macname(fontlab[i])));
 	}
 	ptps();
 	ptfont();
