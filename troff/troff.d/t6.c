@@ -56,7 +56,7 @@
 
 /*
  * t6.c
- * 
+ *
  * width functions, sizes and fonts
  */
 
@@ -168,7 +168,7 @@ width(register tchar j)
 	if (sfbits(j) == oldbits) {
 		xfont = pfont;
 		xpts = ppts;
-	} else 
+	} else
 		xbits(j, 0);
 	if (widcache[i-32].fontpts == xfont + (xpts<<8) &&
 			(i > 32 || widcache[i-32].evid == evname) &&
@@ -349,8 +349,8 @@ getcw(register int i)
 	if ((cs = cstab[ofont])) {
 		nocache = 1;
 		if ((ccs = ccstab[ofont]))
-			x = pts2u(ccs); 
-		else 
+			x = pts2u(ccs);
+		else
 			x = xpts;
 		cs = (cs * EMPTS(x)) / 36;
 	}
@@ -468,7 +468,7 @@ int
 kernadjust(tchar c, tchar e)
 {
 	lastkern = 0;
-	if (!kern || ismot(c) || ismot(e) || html)
+	if (!kern || ismot(c) || ismot(e) || html || iszbit(c) || iszbit(e))
 		return 0;
 	if (!isdi(c)) {
 		c = trtab[cbits(c)] | (c & SFMASK);
@@ -1104,7 +1104,7 @@ setfont(int a)
 
 	if (a)
 		i = getrq(3);
-	else 
+	else
 		i = getsn(1);
 	if (!i || i == 'P') {
 		j = font1;
@@ -1169,7 +1169,7 @@ setwd(void)
 				k = -k;
 			base -= k;
 			emsz = 0;
-		} else 
+		} else
 			continue;
 		if (base < numtab[SB].val)
 			numtab[SB].val = base;
@@ -1704,8 +1704,8 @@ setfp(int pos, int f, char *truename)	/* mount font f at position pos[0...nfonts
 		setlig(pos, fontbase[pos]->ligfont);
 	}
 	if (pos == smnt) {
-		smnt = 0; 
-		sbold = 0; 
+		smnt = 0;
+		sbold = 0;
 	}
 	if ((fontlab[pos] = f) == 'S')
 		smnt = pos;
@@ -1785,7 +1785,7 @@ bd0:
 	if (skip(1) || !(i = getrq(2)) || (j = findft(i, 1)) == -1) {
 		if (k)
 			goto bd1;
-		else 
+		else
 			return;
 	}
 	if (j == smnt) {
@@ -1821,7 +1821,7 @@ casevs(void)
 			errprint("negative vertical spacing ignored");
 		i = lss1;
 	}
-	if (i < VERT) 
+	if (i < VERT)
 		i = VERT;
 	lss1 = lss;
 	lss = i;
