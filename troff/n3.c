@@ -1819,7 +1819,7 @@ casesubstring(void)
 				n1 = n2;
 				n2 = j;
 			}
-			for (j = 0; j <= k; j++) {
+			for (j = 0; j < k; j++) {
 				if (st == 0) {
 					if (j >= n1)
 						st = 1;
