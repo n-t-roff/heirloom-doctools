@@ -1588,8 +1588,6 @@ caseie(void)
 	caseif(1);
 }
 
-int	tryglf;
-
 void
 caseif(int x)
 {
