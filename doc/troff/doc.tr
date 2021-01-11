@@ -7204,7 +7204,7 @@ on a different device, within the latter's capabilities.
 .tb
 .ta .8i
 \fBs\^\fIn\fR	set point size to \fIn\fR, fractional parts (if any) ignored
-\fBs\-23\^\fId.d\fR	set point size to \fId.d\fR
+\fBs\-23 \fId.d\fR	set point size to \fId.d\fR
 \fBf\^\fIn\fR	set font to \fIn\fR
 \fBc\^\fIc\fR	print character \fIc\fR
 \fBC\^\fIname\fR	print the character called \fIname\fR; terminate \fIname\fR by white space
