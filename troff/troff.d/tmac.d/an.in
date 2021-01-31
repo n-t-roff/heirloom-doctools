@@ -156,9 +156,9 @@
 .	if !(\\nS>0) .nr S 10
 .	ie (\\nS>10) .vs \\nSp+3p
 .	el .vs \\nSp+2p
-.	ie n .nr IN 7n
+.	ie n .if !r IN .nr IN 7n
 .	el   .nr IN .5i
-.	ie n .nr LL 78n
+.	ie n .if !r LL .nr LL 78n
 .	el   .nr LL \\n(.l
 .	ds ]H \\$1\|(\|\\$2\|)
 .	ds ]L \\$3
@@ -560,13 +560,6 @@
 .	\}
 .	el \{\
 .		nop \\*(]X\h|\\n()Iu+\\n()Ru\c
-.		if \\n(.X \{\
-.			do nop \k[}pos]
-.			do vpt 0
-.			sp -1
-.			do vpt 1
-.			do nop \h\\n[}pos]u\c
-.		\}
 .	\}
 .	}f
 ..
