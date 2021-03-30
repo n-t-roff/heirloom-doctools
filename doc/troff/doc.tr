@@ -8481,7 +8481,7 @@ output device.
 .AC U O 0 thorn          00FE thorn
 .AC U O 0 ydieresis      00FF "y dieresis
 .P
-.AC -D \(miD 1 Eth        00D0 "uppercase eth
+.AC -D ""    1 Eth        00D0 "uppercase eth
 .AC Sd ""    1 eth        00F0 "lowercase eth
 .AC TP ""    1 Thorn      00DE "uppercase thorn
 .AC Tp ""    1 thorn      00FE "lowercase thorn
@@ -8562,7 +8562,7 @@ output device.
 .AC oa ""    1 aring       00E5 "a ring
 .P Accents
 .AC a" ""    1 hungarumlaut 02DD "Hungarian umlaut
-.AC a- a\(mi 1 macron       00AF "overbar accent
+.AC a- ""    1 macron       00AF "overbar accent
 .AC a. ""    1 dotaccent    02D9 "dot accent
 .AC a^ ""    1 circumflex   005E "circumflex accent
 .AC aa ""    0 acute        00B4 "acute accent
@@ -8626,8 +8626,8 @@ output device.
 .AC P  "" 0 parenrightbt   23A0 "right parenthesis bottom
 .AC P  "" 0 parenrightex   239F "right parenthesis extension
 .P Arrows
-.AC <- <\(mi 0 arrowleft     2190 "arrow left
-.AC -> \(mi> 0 arrowright    2192 "arrow right
+.AC <- ""    0 arrowleft     2190 "arrow left
+.AC -> ""    0 arrowright    2192 "arrow right
 .AC <> ""    1 arrowboth     2194 "horizontal arrow in both directions
 .AC da ""    0 arrowdown     2193 "arrow down
 .AC ua ""    0 arrowup       2191 "arrow up
@@ -8713,9 +8713,9 @@ output device.
 .AC pl  ""     0 plus           002B "plus
 .AC mi  ""     0 minus          2212 "minus
 .\" \(-+ ???
-.AC -+  \(mi+  1 uni2213        2213 "minus-plus
-.AC +-  +\(mi  0 ""             ""   "plus-minus
-.AC t+- t+\(mi 1 plusminus      00B1 "text variant of plus-minus
+.AC -+  ""     1 uni2213        2213 "minus-plus
+.AC +-  ""     0 ""             ""   "plus-minus
+.AC t+- ""     1 plusminus      00B1 "text variant of plus-minus
 .AC pc  ""     1 periodcentered 00B7 "period centered
 .AC md  ""     1 dotmath        22C5 "multiplication dot
 .AC mu  ""     0 ""             ""   "multiply sign
@@ -8783,7 +8783,7 @@ output device.
 .AC Re ""    1 Rfraktur    211C "Gothic R, real
 .AC wp ""    1 weierstrass 2118 "Weierstrass p
 .AC pd ""    0 partialdiff 2202 "partial differentiation
-.AC -h \(mih 1 hbar        210F "Planck constant / 2pi (h-bar)
+.AC -h ""    1 hbar        210F "Planck constant / 2pi (h-bar)
 .P "Greek glyphs
 .AC +h "" 1 theta1  03D1 "variant theta
 .AC +f "" 1 phi1    03C6 "variant phi
