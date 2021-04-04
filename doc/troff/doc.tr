@@ -3083,7 +3083,7 @@ exist:
 .br
 \fBgreek\fR	greek characters like \(*a \(*b \(*g \(*A \(*B \(*G
 .br
-\fBpunct\fR	the characters \e(or \- \e\` \e\' " # < > @ \e ^ ~
+\fBpunct\fR	the characters \e(or \- \e\` \e\' " # < > @ \e ^ \(a~
 .br
 \fBlarge\fR	parts of large characters like \(rc \(rk \(lb \(lk
 .xx
