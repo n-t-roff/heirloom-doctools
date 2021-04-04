@@ -156,21 +156,26 @@
 .ds Date "\*(mo \*(Dy, 20\*(Yr
 .\"
 .de ii
-.ds NR "\fInroff\fR
-.ds TR "\fItroff\fR
-.ds NR. "\fInroff.\fR
-.ds TR. "\fItroff.\fR
-.ds NR, "\fInroff,\fR
-.ds TR, "\fItroff,\fR
-.ds NR; "\fInroff;\fR
-.ds TR; "\fItroff;\fR
-.ds NR: "\fInroff:\fR
-.ds TR: "\fItroff:\fR
-.ds GR "\fIgroff\fR
-.ds GR. "\fIgroff.\fR
-.ds GR, "\fIgroff,\fR
-.ds GR; "\fIgroff;\fR
-.ds GR: "\fIgroff:\fR
+.ds NR "\@{\fInroff\@}
+.ds TR "\@{\fItroff\@}
+.ds GR "\@{\fIgroff\@}
+.
+.ds NR. "\@{\fInroff.\@}
+.ds TR. "\@{\fItroff.\@}
+.ds GR. "\@{\fIgroff.\@}
+.
+.ds NR, "\@{\fInroff,\@}
+.ds TR, "\@{\fItroff,\@}
+.ds GR, "\@{\fIgroff,\@}
+.
+.ds NR; "\@{\fInroff;\@}
+.ds TR; "\@{\fItroff;\@}
+.ds GR; "\@{\fIgroff;\@}
+.
+.ds NR: "\@{\fInroff:\@}
+.ds TR: "\@{\fItroff:\@}
+.ds GR: "\@{\fIgroff:\@}
+.
 .ds PS "\fRPostScript\fR
 .ds PDF "\s-1PDF\s+1
 .ds TEX T\h'-.13m'\v'.165m'E\v'-.165m'\h'-.17m'X
