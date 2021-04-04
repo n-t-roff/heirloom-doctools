@@ -1606,7 +1606,7 @@ on if \fIN\fR>0.
 .b1
 \T'cc'\fB&cc\T\fI|c\fR	\fB.	.\fR	E	Set control character to \fIc\fR.
 .b1
-\T'c2'\fB&c2\T\fI|c\fR	\fB\'	\'\fR	E	Set nobreak control character to \fIc\fR.
+\T'c2'\fB&c2\T\fI|c\fR	\fB\'	\'\fR	E	Set no-break control character to \fIc\fR.
 .b1
 \T'tr'\fB&tr\T\fI|abcd....\fR	none	\(en	O	Translate \fIa\fR to \fIb\fR, etc. on output.
 .b1
@@ -5037,7 +5037,7 @@ particularly of any trap-invoked macros.
 The basic control character is set to \fIc\fR,
 or reset to "\fB.\fR".
 .bta c2
-\fB&c2\fI|c\fR	\fB\'	\'\fR	E	The \fInobreak\fR control character is set
+\fB&c2\fI|c\fR	\fB\'	\'\fR	E	The \fIno-break\fR control character is set
 to \fIc\fR, or reset to "\fB\'\fR".
 .sc
 \A'c_trans'Output translation.
@@ -5931,7 +5931,7 @@ the current and previous point size,
 as set by \T'ps'\fBps\fR\T and \T'e_s'\fB\es\fR\T;
 the current and previous font,
 as set by \T'ft'\fBft\fR\T and \T'e_f'\fB\ef\fR\T;
-the control and nobreak control character,
+the control and no-break control character,
 as set by \T'cc'\fBcc\fR\T and \T'c2'\fBc2\fR\T, respectively;
 the optional hyphenation character,
 as set by \T'hc'\fBhc\fR\T;
