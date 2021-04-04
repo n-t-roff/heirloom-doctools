@@ -6993,7 +6993,7 @@ to the \fB&C\fR and \fB&g\fR registers.
 Nevertheless it is not recommend to do so
 without reason.
 For instance macro packages read \fB\en(.g\fR to test
-if they are processed with groff.
+if they are processed with \*[GR.]
 Setting \fB&g\fR to \fB1\fR with the \fB&nr\fR request
 also has some side effects in Heirloom \*(TR:
 .de ListBegin
@@ -7013,7 +7013,7 @@ also has some side effects in Heirloom \*(TR:
 .ListBegin
 .tr &&
 .ListItem
-\fIgroff\fR\^'s notation for accessing symbols with
+\*(GR\^'s notation for accessing symbols with
 \fB\e[char\fIn\fB]\fR and \fB\e[u\fIXXXX\fB]\fR
 are enabled.
 .ListItem
@@ -7033,7 +7033,7 @@ leads to a different placement of the middle title element
 with \*(NR under certain conditions.
 This is emulated by setting \fB.g\fR to 1.
 .ListItem
-\fIgroff\fR\^'s left italic correction escape \fB\e,\fR is removed
+\*(GR\^'s left italic correction escape \fB\e,\fR is removed
 from the input instead of producing a \(oq\fB,\fR\(cq.
 .ListEnd
 .tr &.
