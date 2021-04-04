@@ -6987,7 +6987,7 @@ to the \fB&C\fR and \fB&g\fR registers.
 .pg
 Nevertheless it is not recommend to do so
 without reason.
-For instance macro packages read \en(.g to test
+For instance macro packages read \fB\en(.g\fR to test
 if they are processed with groff.
 Setting \fB&g\fR to \fB1\fR with the \fB&nr\fR request
 also has some side effects in Heirloom \*(TR:
