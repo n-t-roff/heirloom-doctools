@@ -2127,7 +2127,7 @@ Reference	Sequence	Meaning
 \T'e_g'8\T	\T'e_g'\fB\eg\fIx\fR,\fB\eg(\fIxx\fR,\fB\eg[\fIxxx\fB]\fR\T	\T'e_g'Format of number register \fIx\fP, \fIxx\fR, or \fIxxx\fR\T
 \T'e_h'11.1\T	\T'e_h'\fB\eh\'\fIN\fB\'\fR\T	\T'e_h'Local horizontal motion; move right \fIN\fR \fI(negative left)\fR\T
 \T'e_H'2.3\T	\T'e_H'\fB\eH\'\fIN\fB\'\fR\T	\T'e_H'Height of current font is \fIN\fR\T
-\T'e_I'1.1\T	\T'e_I'\fB\eI\fI\(aqstring\(aq\fR\T	\T'e_B'Test if\
+\T'e_I'1.1\T	\T'e_I'\fB\eI\'\fIstring\fB\'\fR\T	\T'e_B'Test if\
  \fIstring\fR is a valid identifier name\T
 \T'e_j'4.1\T	\T'e_j'\fB\ej\'\fI\(+-N\fB\'\fR\T	\T'e_j'Penalty for breaking a line after the current word is \fIN\fR\T
 \T'e_J'4.1\T	\T'e_J'\fB\eJ\'\fI\(+-N\fB\'\fR\T	\T'e_J'Default line breaking penalty is \fIN\fR\T
@@ -2398,7 +2398,7 @@ only one and two character names were permitted
 for request, macro, string, number register, and font names.
 Heirloom \*(TR can accept names containing a (nearly) arbitrary
 number of \s-1ASCII\s+1 characters.
-Escape \A'e_I'\fB\eI\fR\(aq\fIstring\fR\(aq can by used to test if
+Escape \A'e_I'\fB\eI\'\fIstring\fB\'\fR can by used to test if
 \fIstring\fR is a valid identifier name.
 By default, request and macro names are still required
 to contain at most two characters for compatibility reasons.
@@ -2750,7 +2750,7 @@ With Type\ 1, OpenType, and TrueType fonts,
 \*(TR allows to access all named \*(PS
 characters of the current font and
 of those in the \T'fallback'\fBfallback\fR\T sequence
-in the forms \A'e_['\fB\e[\fIname\fB]\fR or \A'e_C'\fB\eC\(aq\fIname\fB\(aq\fR.
+in the forms \A'e_['\fB\e[\fIname\fB]\fR or \A'e_C'\fB\eC\'\fIname\fB\'\fR.
 .pg
 \A'p_locale'\*(TR internally converts non-\s-1ASCII\s+1 characters
 of the current \s-1LC_CTYPE\s+1 locale
@@ -2767,7 +2767,7 @@ first, then in the special fonts.
 If the character cannot be found, it is discarded.
 Characters for which no name is known are replaced by spaces.
 .pg
-The \A'e_N'\fB\eN\(aq\fIn\fB\(aq\fR escape sequence
+The \A'e_N'\fB\eN\'\fIn\fB\'\fR escape sequence
 has historically been available to refer
 to character \fIn\fR of the current font.
 It is still accepted,
@@ -2804,12 +2804,12 @@ print
 as themselves.
 .pg
 Both \*(NR and \*(TR allow references to specific
-Unicode characters with the \A'e_U'\fB\eU\(aq\fIX\fB\(aq\fR escape sequence;
+Unicode characters with the \A'e_U'\fB\eU\'\fIX\fB\'\fR escape sequence;
 it causes the character at position U+\fIX\fR to be printed
 (\fIX\fR is a hexadecimal number).
 For \*[TR,] it is required that this character
 is available in one of the fonts mounted at this point.
-As an example, \eU\(aq20AC\(aq prints the Euro character \U'20AC'.
+As an example, \fB\eU\'20AC\'\fR prints the Euro character \U'20AC'.
 When register \fB.g\fP is set to \fB1\fP
 Unicode charactes can also be accessed with
 \fB\e[u\fIXXXX\fB]\fR where \fIXXXX\fP is a four digit hexadecimal number.
