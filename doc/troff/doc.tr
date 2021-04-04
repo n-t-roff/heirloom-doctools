@@ -1305,7 +1305,7 @@ In the \fINotes\fP column,
 cw(.3i) lw(4i).
 B	T{
 Request normally causes a break.
-The use of \fB\'\fR as control character (instead of \fB.\fR)
+The use of \fB\^\'\^\fR as control character (instead of \fB\^.\^\fR)
 suppresses the break function.
 T}
 D	Mode or relevant parameters associated with current \T'c_diversion'diversion\T level.
@@ -2367,11 +2367,11 @@ Input consists of \fItext lines\fR, which are destined to be printed,
 interspersed with \fIcontrol lines\fR,
 which set parameters or otherwise control subsequent processing.
 Control lines begin with a \fIcontrol character\fR\(em\
-normally \fB.\fR\~(period) or \fB\'\fR\~(acute accent)\(em\
+normally \fB\^.\fR\~(period) or \fB\^\'\fR\~(acute accent)\(em\
 followed by a name that specifies
 a basic \fIrequest\fR or the substitution of
 a user-defined \fImacro\fR in place of the control line.
-The control character \fB\'\fR suppresses the \fIbreak\fR function\(em\
+The control character \fB\^\'\^\fR suppresses the \fIbreak\fR function\(em\
 the forced output of a partially filled line\(em\
 caused by certain requests.
 The control character may be separated from the request/macro name by
@@ -3857,7 +3857,7 @@ The most recently utilized post-line extra line-space is available
 in the \A'n_.a'\fB.a\fR register.
 .pg
 In \fB\ex\'\fI...\fB\'\fR and other functions having a pair of delimiters around
-their parameter (here \fB\'\fR\|),
+their parameter (here \fB\^\'\fR\|),
 the delimiter choice is arbitrary,
 except that it can not look like the continuation
 of a \T'c_expr'number expression\T for \fIN\fR.
@@ -4113,7 +4113,7 @@ and appended to by \T'am'\fBam\fR\T and \T'da'\fBda\fR;\T
 to be stored in a macro.
 Strings are created by \T'ds'\fBds\fR\T and appended to by \T'as'\fBas\fR.\T
 A macro is invoked in the same way as a request;
-a control line beginning \fB.\fIxx\fR will interpolate the contents of macro \fIxx\fR.
+a control line beginning \fB.\fI\^xx\fR will interpolate the contents of macro \fIxx\fR.
 The remainder of the line may contain arbitrarily many \fIarguments\fR.
 The strings \fIx\fR, \fIxx\fR, and \fIxxx\fR
 are interpolated at any desired point with
@@ -4374,7 +4374,7 @@ possibly makes a global string visible again,
 and \fBals\fR creates a local alias to a local string.
 .xx
 It is not allowed to define local macros or diversions.
-Calls to \fI&xx\fR or \fB\'\fIxx\fR reference a global macro or diversion
+Calls to \fB&\fI\^xx\fR or \fB\'\fIxx\fR reference a global macro or diversion
 even if a local string \fIxx\fR exists.
 \T'c_trap'Traps\T and the \T'e_Y'\fB\eY\fR\T escape sequence
 always operate on global macros or diversions.
@@ -5025,8 +5025,8 @@ In \*[NR,]
 \fIF\fR may \fInot\fR be on position 1.
 .sc
 Control characters.
-Both the control character \fB.\fR and the \fIno-break\fR
-control character \fB\'\fR may be changed, if desired.
+Both the control character \fB\^.\^\fR and the \fIno-break\fR
+control character \fB\^\'\^\fR may be changed, if desired.
 Such a change must be compatible with the design
 of any macros used in the span of the change,
 and
@@ -7668,7 +7668,7 @@ that word or part word will be forced out.
 In this and other examples,
 requests like \T'bp'\fBbp\fR\T and \T'sp'\fBsp\fR\T
 that normally cause breaks are invoked using
-the \fIno-break\fR control character \fB\'\fR
+the \fIno-break\fR control character \fB\^\'\^\fR
 to avoid this.
 When the header/footer design contains material
 requiring independent text processing, the
