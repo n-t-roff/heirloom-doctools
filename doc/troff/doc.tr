@@ -1195,10 +1195,10 @@ For example, in
 .x1
 \fBtbl  \fIfiles  \fB|  eqn  |  troff  \fIoptions  \fB|  dpost\fR  >\fIoutput.ps\fR
 .x2
-the first \|\fB|\fR\| indicates the piping of \fItbl's\fP
-output to \fIeqn's\fP input;
-the second the piping of \fIeqn's\fP output to \*(TR's input;
-and the third indicates the piping of \*(TR's output to \fIdpost,\fP
+the first \|\fB|\fR\| indicates the piping of \fItbl\fP\^'s
+output to \fIeqn\fP\^'s input;
+the second the piping of \fIeqn\fP\^'s output to \*(TR\^'s input;
+and the third indicates the piping of \*(TR\^'s output to \fIdpost,\fP
 which then writes \*(PS code to \fIoutput.ps\fR.
 .xx
 The following options are currently supported with \fIdpost:\fR
@@ -5355,7 +5355,7 @@ produces
 \A'c_line'Line drawing.
 .tr &&
 The function \A'e_l'\fB\e\|l\^\'\fINc\fB\'\fR (backslash-ell)
-will draw a string of repeated \fIc\fR\|'s towards the right for a distance \fIN\fR.
+will draw a string of repeated \fIc\fR\^'s towards the right for a distance \fIN\fR.
 If \fIc\fR looks like a continuation of
 an \T'c_expr'expression\T for \fIN\fR,
 it may insulated from \fIN\fR with a \fB\e&\fR.
@@ -6961,7 +6961,7 @@ functions for \*(GR compatibility:
 .h1
 .bta cp
 \fB&cp\fI|N\fR	off	\(en	\(en	Enable \*(GR compatibility mode.
-This is the name of \*(GR\fI's\fR own compatibility request
+This is the name of \*(GR\^'s own compatibility request
 with adapted semantics:
 Regardless of the argument,
 \*(GR compatibility mode is activated.
@@ -7705,7 +7705,7 @@ header/footer material, and ultimately restores them.
 The material in this case is a page number at the bottom of the
 first page and at the top of the remaining pages.
 If \*(TR is used, a \fIcut mark\fR is drawn in the form
-of \fIroot-en\fR's at each margin.
+of \fIroot-en\fP\^'s at each margin.
 The \T'sp'\fBsp\fR's\T refer to absolute positions to avoid
 dependence on the base-line spacing.
 Another reason for this in the footer
