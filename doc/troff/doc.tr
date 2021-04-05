@@ -1666,7 +1666,7 @@ Hyphenation.
 .mht s_titles
 Three-Part Titles.
 .bt
-\T'tl'\fB&tl\T\fI|\'left\'center\'right\'\fR	\(en	\(en	Three part title; delimiter may be any character.
+\T'tl'\fB&tl\T|\fB\'\fIleft\fB\'\fIcenter\fB\'\fIright\fB\'\fR	\(en	\(en	Three part title; delimiter may be any character.
 .b1 0
 \T'pc'\fB&pc\T\fI|c\fR	\fB%\fR	off	\(en	Page number character.
 .b1 0
@@ -5682,7 +5682,7 @@ normal text collecting process.
 A common use is in header and footer macros.
 .h1
 .bta tl
-\fB&tl\fI|\'left\'center\'right\'\fR	\(en	\(en	\
+\fB&tl|\fB\'\fIleft\fB\'\fIcenter\fB\'\fIright\fB\'\fR	\(en	\(en	\
 The strings \fIleft\fR, \fIcenter\fR, and \fIright\fR are
 respectively left-adjusted, centered, and right-adjusted
 in the current title-length.
@@ -5695,7 +5695,7 @@ Any character may be used as the string delimiter.
 .bta pc
 \fB&pc\fI|c\fR	\fB%\fR	off	\(en	The page number character is set to \fIc\fR,
 or removed.
-The page-number register remains \fB%\fR.
+The page-number register remains \T'n_%'\fB%\fR\T.
 .bta lt
 \fB&lt\fI|\(+-N\fR	6.5\|in	previous	E,\fBm\fR	Length of title set to \fI\(+-N\fR.
 The line-length and the title-length are \fIindependent\fR.
