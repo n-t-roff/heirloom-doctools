@@ -2773,7 +2773,7 @@ The \A'e_N'\fB\eN\'\fIn\fB\'\fR escape sequence
 has historically been available to refer
 to character \fIn\fR of the current font.
 It is still accepted,
-but its use is discouraged with 
+but its use is discouraged with
 Type\ 1, OpenType, and TrueType fonts
 since the arrangement of character in font tables
 is performed at run-time
@@ -2905,7 +2905,7 @@ Note that through an accident of history, a construction like
 is parsed as size 39, and thus converted to size 36 (given the sizes above),
 while
 .B \es40
-is parsed as size 4 followed by 
+is parsed as size 4 followed by
 \fB0\fR.
 The forms
 \fB\es(\fInn\fR, \fB\es\(+-(\fInn\fR,
@@ -3495,7 +3495,7 @@ The meaning of \fB\ep\fR is then changed
 such that a line that it is attached to is \fInot\fR spread;
 this is the only method to achieve a regular \fIbreak\fR without a spread then.
 Manually adjusted text can thus be typed more comfortably
-since only the (fewer) lines that are not spread 
+since only the (fewer) lines that are not spread
 need to be marked.
 .pg
 A text input line that happens to begin
@@ -4912,7 +4912,7 @@ They may be input (even in \*(NR) by
 In \*[TR,] the \T'flig'\fBflig\fR\T request specifies the set of ligatures
 available with an individual font.
 .lg
-The ligature mode is normally on in \*[TR,] and \fIautomatically\fR invokes 
+The ligature mode is normally on in \*[TR,] and \fIautomatically\fR invokes
 ligatures during input.
 At most the five named ligatures are enabled by default.
 .pg
@@ -6378,7 +6378,7 @@ e.g. ``.5 setgray''
 .ti -\nwu
 \(en\ ``[\fB$\fIsetcolorspace\fR] \fIcomp1 comp2 .\|.\|. compn \fBsetcolor\fR'',
 where \fB$\fIsetcolorspace\fR may be a \*(PS procedure
-defined in the setup section using a 
+defined in the setup section using a
 `\eX\'PSSetup: $setcolorspace {.\|.\|.} bind def\''
 escape sequence.
 This parameter is required if the color space changes
@@ -6560,7 +6560,7 @@ degrees, default \fId\fR\*(eq90.
 Outline the picture with a box.
 .Arg 2
 .B s
-Freely scale both picture dimensions. 
+Freely scale both picture dimensions.
 .Arg 2
 .B w
 White out the area to be occupied by the picture.
