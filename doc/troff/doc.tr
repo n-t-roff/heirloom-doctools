@@ -1682,7 +1682,7 @@ Conditional Acceptance of Input
 .bt
 \T'if'\fB&if\T\fI|c|anything\fR		\(en	\(en	If condition \fIc\fR true, accept \fIanything\fR as input,
 .b1
-				for multi-line use \fI\e{anything\|\e}\fR.
+				for multi-line use \fB\e{\fIanything\^\fB\e}\fR.
 .b1
 \T'if'\fB&if\T|!\fIc|anything\fR		\(en	\(en	If condition \fIc\fR false, accept \fIanything\fR.
 .b1
@@ -5775,7 +5775,7 @@ and
 .h1
 .bta if
 \fB&if\fI|c|anything\fR		\(en	\(en	If condition \fIc\fR true, accept \fIanything\fR as input;
-in multi-line case use \fI\e{anything\|\e}\fR.
+in multi-line case use \fB\e{\fIanything\^\fB\e}\fR.
 .bt
 \fB&if|!\fIc|anything\fR		\(en	\(en	If condition \fIc\fR false, accept \fIanything\fR.
 .bt
