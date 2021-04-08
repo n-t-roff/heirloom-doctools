@@ -111,8 +111,6 @@
 .fallback BI BIE
 .flig BI 31
 ..
-.ds eq \^\(eq\^
-.ds != \^\(!=\^
 .\" mo/dy/yr
 .ds Sccsdate 02/10/16
 .ds Str \*[Sccsdate]
@@ -158,26 +156,21 @@
 .ds Date "\*(mo \*(Dy, 20\*(Yr
 .\"
 .de ii
-.ds NR "\@{\fInroff\@}
-.ds TR "\@{\fItroff\@}
-.ds GR "\@{\fIgroff\@}
-.
-.ds NR. "\@{\fInroff.\@}
-.ds TR. "\@{\fItroff.\@}
-.ds GR. "\@{\fIgroff.\@}
-.
-.ds NR, "\@{\fInroff,\@}
-.ds TR, "\@{\fItroff,\@}
-.ds GR, "\@{\fIgroff,\@}
-.
-.ds NR; "\@{\fInroff;\@}
-.ds TR; "\@{\fItroff;\@}
-.ds GR; "\@{\fIgroff;\@}
-.
-.ds NR: "\@{\fInroff:\@}
-.ds TR: "\@{\fItroff:\@}
-.ds GR: "\@{\fIgroff:\@}
-.
+.ds NR "\fInroff\fR
+.ds TR "\fItroff\fR
+.ds NR. "\fInroff.\fR
+.ds TR. "\fItroff.\fR
+.ds NR, "\fInroff,\fR
+.ds TR, "\fItroff,\fR
+.ds NR; "\fInroff;\fR
+.ds TR; "\fItroff;\fR
+.ds NR: "\fInroff:\fR
+.ds TR: "\fItroff:\fR
+.ds GR "\fIgroff\fR
+.ds GR. "\fIgroff.\fR
+.ds GR, "\fIgroff,\fR
+.ds GR; "\fIgroff;\fR
+.ds GR: "\fIgroff:\fR
 .ds PS "\fRPostScript\fR
 .ds PDF "\s-1PDF\s+1
 .ds TEX T\h'-.13m'\v'.165m'E\v'-.165m'\h'-.17m'X
@@ -1059,7 +1052,7 @@ from \fIN\fR to the end.
 	\fB\-n\fIN\fR	Number first generated page \fIN\fR.
 .bt
 	\fB\-s\fIN\fR	Stop every \fIN\fR pages.
-\*(NR will halt prior to every \fIN\fR pages (default \fIN\fR\*(eq1)
+\*(NR will halt prior to every \fIN\fR pages (default \fIN\fR=1)
 to allow paper loading or
 changing, and will resume upon receipt of a newline.
 \*(TR will include a ``pause'' code every \fIN\fR pages;
@@ -1197,10 +1190,10 @@ For example, in
 .x1
 \fBtbl  \fIfiles  \fB|  eqn  |  troff  \fIoptions  \fB|  dpost\fR  >\fIoutput.ps\fR
 .x2
-the first \|\fB|\fR\| indicates the piping of \fItbl\fP\^'s
-output to \fIeqn\fP\^'s input;
-the second the piping of \fIeqn\fP\^'s output to \*(TR\^'s input;
-and the third indicates the piping of \*(TR\^'s output to \fIdpost,\fP
+the first \|\fB|\fR\| indicates the piping of \fItbl's\fP
+output to \fIeqn's\fP input;
+the second the piping of \fIeqn's\fP output to \*(TR's input;
+and the third indicates the piping of \*(TR's output to \fIdpost,\fP
 which then writes \*(PS code to \fIoutput.ps\fR.
 .xx
 The following options are currently supported with \fIdpost:\fR
@@ -1307,7 +1300,7 @@ In the \fINotes\fP column,
 cw(.3i) lw(4i).
 B	T{
 Request normally causes a break.
-The use of \fB\^\'\^\fR as control character (instead of \fB\^.\^\fR)
+The use of \fB\'\fR as control character (instead of \fB.\fR)
 suppresses the break function.
 T}
 D	Mode or relevant parameters associated with current \T'c_diversion'diversion\T level.
@@ -1372,7 +1365,7 @@ Also \T's_f'\fB\ef\fIx\fR,\|\fB\ef(\fIxx\fR,\|\fB\ef\fIN\fR\T.
 .b1
 \T'hidechar'\fB&hidechar\T\fI|F|c|d|...\fR	ignored	P,T	Hide the characters \fIc\fR, \fId\fR, etc. from font F.
 .b1 0
-\T'spacewidth'\fB&spacewidth\T\fI|\fIN\fR	on	O,T	If \fIN\fR\*(!=0, use the space width from the font metrics file.
+\T'spacewidth'\fB&spacewidth\T\fI|\fIN\fR	on	O,T	If \fIN\fR\(!=0, use the space width from the font metrics file.
 .b1 0
 \T'fspacewidth'\fB&fspacewidth\T\fI|F|\fR[\fIN\fR]	ignored	O,T	Set the width
 of the space character in font \fIF\fR to \fIN\fR.
@@ -1391,14 +1384,14 @@ Page Control
 .b1
 \T'bleedat'\fB&bleedat\T\fI|L|T|W|H\fR	ignored	T,\fBp\fR	Set the ``BleedBox'' page parameter for \*[PDF] generation.
 .b1
-\T'bp'\fB&bp\T|\fI\(+-N\fR	\fIN\fR\*(eq1	\(en	B	\
+\T'bp'\fB&bp\T|\fI\(+-N\fR	\fIN\(eq\fR1	\(en	B	\
 Eject current page; next page number \fIN\fR.
 .b1
-\T'pn'\fB&pn\T\fI|\(+-N	N\fR\*(eq1	ignored	\(en	Next page number \fIN\fR.
+\T'pn'\fB&pn\T\fI|\(+-N	N\(eq\fR1	ignored	\(en	Next page number \fIN\fR.
 .b1
 \T'po'\fB&po\T\fI|\(+-N\fR	0;1i	previous	\fBm\fR	Page offset.
 .b1
-\T'ne'\fB&ne\T\fI|N\fR	\(en	\fIN\fR\*(eq1v	D,\fBv\fR	Need \fIN\fR vertical space (\fIV\fR = vertical spacing).
+\T'ne'\fB&ne\T\fI|N\fR	\(en	\fIN\(eq\fR1v	D,\fBv\fR	Need \fIN\fR vertical space (\fIV\fR = vertical spacing).
 .b1 0
 \T'mk'\fB&mk\T|\fIR\fR	none	internal	D	Mark current vertical place in register \fIR\fR.
 .b1 0
@@ -1418,19 +1411,19 @@ Text Filling, Adjusting, and Centering
 .b1
 \T'nf'\fB&nf\T\fR	fill	\(en	B,E	No filling or adjusting of output lines.
 .b1
-\T'ad'\fB&ad\T\fI|c\fR	adj,both	adjust	E	Adjust output lines with mode \fIc\fR; \fIc\fP\*(eql,\^r,\^c,\^b,\^p,\^\fInone\fP
+\T'ad'\fB&ad\T\fI|c\fR	adj,both	adjust	E	Adjust output lines with mode \fIc\fR; \fIc\fP\^=\^l,\^r,\^c,\^b,\^p,\^\fInone\fP
 .b1
 \T'na'\fB&na\T\fR	adjust	\(en	E	No output line adjusting.
 .b1
 \T'padj'\fB&padj\T\fI|N\fR	off	on	\(en	Control paragraph-at-once adjustment globally.
 .b1
-\T'ce'\fB&ce\T\fI|N\fR	off	\fIN\fR\*(eq1	B,E	Center following \fIN\fR input text lines.
+\T'ce'\fB&ce\T\fI|N\fR	off	\fIN\(eq\fR1	B,E	Center following \fIN\fR input text lines.
 .b1
-\T'rj'\fB&rj\T\fI|N\fR	off	\fIN\fR\*(eq1	B,E	Right-align following \fIN\fR input text lines.
+\T'rj'\fB&rj\T\fI|N\fR	off	\fIN\(eq\fR1	B,E	Right-align following \fIN\fR input text lines.
 .b1
-\T'brnl'\fB&brnl\T\fI|N\fR	off	\fIN\fR\*(eq\(if	B,E	Break at end of next \fIN\fR input text lines.
+\T'brnl'\fB&brnl\T\fI|N\fR	off	\fIN\(eq\fR\(if	B,E	Break at end of next \fIN\fR input text lines.
 .b1
-\T'brpnl'\fB&brpnl\T\fI|N\fR	off	\fIN\^\fR\*(eq\(if	B,E	Break and spread at end of next \fIN\fR input text lines.
+\T'brpnl'\fB&brpnl\T\fI|N\fR	off	\fIN\(eq\fR\(if	B,E	Break and spread at end of next \fIN\fR input text lines.
 .b1
 \T'minss'\fB&minss\T\fI|N\fR	off	off	E,T	Minimum word space when adjusting lines.
 .b1
@@ -1460,12 +1453,12 @@ Vertical Spacing
 .bt
 \T'vs'\fB&vs\T\fI|N\fR	1/6in;12pts	previous	E,\fBp\fR	Vertical base line spacing (\fIV\fR\^).
 .b1
-\T'ls'\fB&ls\T\fI|N	N\fR\*(eq1	previous	E	Output \fIN\(mi\fR1 \fIV\^\fRs after each text output line.
+\T'ls'\fB&ls\T\fI|N	N\(eq\fR1	previous	E	Output \fIN\(mi\fR1 \fIV\^\fRs after each text output line.
 .b1
-\T'sp'\fB&sp\T\fI|N\fR	\(en	\fIN\fR\*(eq1\fIV\fR	B,\fBv\fR	Space \
+\T'sp'\fB&sp\T\fI|N\fR	\(en	\fIN\(eq\fR1\fIV\fR	B,\fBv\fR	Space \
 vertical distance \fIN\fR \fIin either direction\fR.
 .b1
-\T'sv'\fB&sv\T\fI|N\fR	\(en	\fIN\fR\*(eq1\fIV\fR	\fBv\fR	Save vertical distance \fIN\fR.
+\T'sv'\fB&sv\T\fI|N\fR	\(en	\fIN\(eq\fR1\fIV\fR	\fBv\fR	Save vertical distance \fIN\fR.
 .b1
 \T'os'\fB&os\T\fR	\(en	\(en	\(en	Output saved vertical distance.
 .b1 0
@@ -1477,7 +1470,7 @@ Line Length and Indenting
 .bt
 \T'll'\fB&ll\T\fI|\(+-N\fR	6.5\|i	previous	E,\fBm\fR	Line length.
 .b1
-\T'in'\fB&in\T\fI|\(+-N\fR	\fIN\fR\*(eq0	previous	B,E,\fBm\fR	Indent.
+\T'in'\fB&in\T\fI|\(+-N\fR	\fIN\(eq\fR\^0	previous	B,E,\fBm\fR	Indent.
 .b1 0
 \T'ti'\fB&ti\T\fI|\(+-N\fR	\(en	ignored	B,E,\fBm\fR	Temporary indent.
 .b1 0
@@ -1485,9 +1478,9 @@ Line Length and Indenting
 .mht s_mac
 Macros, Strings, Diversion, and Position Traps
 .bt
-\T'de'\fB&de\T\fI|xx|yy\fR	\(en	\fB.\fIyy\fR\*(eq\fB..\fR	\(en	Define or redefine macro \fIxx;\fR end at call of \fIyy\fR.
+\T'de'\fB&de\T\fI|xx|yy\fR	\(en	\fI.yy=\fB..\fR	\(en	Define or redefine macro \fIxx;\fR end at call of \fIyy\fR.
 .b1
-\T'am'\fB&am\T\fI|xx|yy\fR	\(en	\fB.\fIyy\fR\*(eq\fB..\fR	\(en	Append to a macro.
+\T'am'\fB&am\T\fI|xx|yy\fR	\(en	\fI.yy=\fB..\fR	\(en	Append to a macro.
 .b1
 \T'ds'\fB&ds\T\fI|xx|string\fR	\(en	ignored	\(en	Define a string \fIxx\fR containing \fIstring\fR.
 .b1
@@ -1495,7 +1488,7 @@ Macros, Strings, Diversion, and Position Traps
 .b1
 \T'lds'\fB&lds\T\fI|xx|string\fR	\(en	ignored	\(en	Define local string \fIxx\fR containing \fIstring\fR.
 .b1
-\T'substring'\fB&substring\T\fI|xx|N|\fR[\fIM\fR]	\fIM\fR\*(eq\(mi1	\(en	Replace string \fIxx\fR by its substring between \fIN\fR and \fIM\fR.
+\T'substring'\fB&substring\T\fI|xx|N|\fR[\fIM\fR]	\fIM\fR\(eq\|\(mi1	\(en	Replace string \fIxx\fR by its substring between \fIN\fR and \fIM\fR.
 .b1
 \T'length'\fB&length\T\fI|R|string\fR	\fIR\fR|set|to|0	\(en	Store the length of \fIstring\fR in register \fIR\fR.
 .b1
@@ -1557,7 +1550,7 @@ Number Registers
 .b1
 \T'lnrf'\fB&lnrf\T\fI|R|\(+-F|G\fR		\(en	\fBu\fR	Define and set local floating-point register \fIR\fR.
 .b1
-\T'af'\fB&af\T\fI|R|c\fR	arabic	\(en	\(en	Assign format to register \fIR\fR (\fIc\fR\*(eq\fB1\fR, \fBi\fR, \fBI\fR, \fBa\fR, \fBA\fR).
+\T'af'\fB&af\T\fI|R|c\fR	arabic	\(en	\(en	Assign format to register \fIR\fR (\fIc=\fB1\fR, \fBi\fR, \fBI\fR, \fBa\fR, \fBA\fR).
 .b1
 \T'rr'\fB&rr\T\fI|R\fR	\(en	\(en	\(en	Remove register \fIR\fR.
 .b1 0
@@ -1567,7 +1560,7 @@ Number Registers
 .mht s_tabs
 Tabs, Leaders, and Fields
 .bt
-\T'ta'\fB&ta\T\fI|Nt|...\fR	8\|n;|0.5\|i	none	E,\fBm\fR	Tab settings; \fIleft\fR type, unless \fIt\fR\*(eq\fBR\fR(right), \fBC\fR(centered).
+\T'ta'\fB&ta\T\fI|Nt|...\fR	8\|n;|0.5\|i	none	E,\fBm\fR	Tab settings; \fIleft\fR type, unless \fIt=\fBR\fR(right), \fBC\fR(centered).
 .b1
 \T'tc'\fB&tc\T\fI|c\fR	none	none	E	Tab repetition character.
 .b1 0
@@ -1600,15 +1593,15 @@ on if \fIN\fR>0.
 .b1
 \T'fdeferlig'\fB&fdeferlig\T\fI|F|string|...\fR	ignored	T	Defer ligature building for the first character of \fIstring\fR.
 .b1
-\T'ul'\fB&ul\T\fI|N\fR	off	\fIN\fR\*(eq1	E	Underline (italicize in \*(TR) \fIN\fR input lines.
+\T'ul'\fB&ul\T\fI|N\fR	off	\fIN\(eq\fR1	E	Underline (italicize in \*(TR) \fIN\fR input lines.
 .b1
-\T'cu'\fB&cu\T\fI|N\fR	off	\fIN\fR\*(eq1	E	Continuous underline in \*[NR;] like \fBul\fR in \*[TR.]
+\T'cu'\fB&cu\T\fI|N\fR	off	\fIN\(eq\fR1	E	Continuous underline in \*[NR;] like \fBul\fR in \*[TR.]
 .b1
 \T'uf'\fB&uf\T\fI|F\fR	Italic	Italic	\(en	Underline font set to \fIF\fR (to be switched to by \fBul\fR).
 .b1
 \T'cc'\fB&cc\T\fI|c\fR	\fB.	.\fR	E	Set control character to \fIc\fR.
 .b1
-\T'c2'\fB&c2\T\fI|c\fR	\fB\'	\'\fR	E	Set no-break control character to \fIc\fR.
+\T'c2'\fB&c2\T\fI|c\fR	\fB\'	\'\fR	E	Set nobreak control character to \fIc\fR.
 .b1
 \T'tr'\fB&tr\T\fI|abcd....\fR	none	\(en	O	Translate \fIa\fR to \fIb\fR, etc. on output.
 .b1
@@ -1642,7 +1635,7 @@ Hyphenation.
 .bt
 \T'nh'\fB&nh\T\fR	hyphenate	\(en	E	No hyphenation.
 .b1
-\T'hy'\fB&hy\T\fI|N\fR	hyphenate	hyphenate	E	Hyphenate; \fIN\fR = mode.
+\T'hy'\fB&hy\T\fI|N\fR	hyphenate	hyphenate	E	Hyphenate; \fIN =\fR mode.
 .b1
 \T'hylang'\fB&hylang\T\fI|name\fR	off	off	E	Set the hyphenation language.
 .b1
@@ -1666,7 +1659,7 @@ Hyphenation.
 .mht s_titles
 Three-Part Titles.
 .bt
-\T'tl'\fB&tl\T|\fB\'\fIleft\fB\'\fIcenter\fB\'\fIright\fB\'\fR	\(en	\(en	Three part title; delimiter may be any character.
+\T'tl'\fB&tl\T\fI|\'left\'center\'right\'\fR	\(en	\(en	Three part title; delimiter may be any character.
 .b1 0
 \T'pc'\fB&pc\T\fI|c\fR	\fB%\fR	off	\(en	Page number character.
 .b1 0
@@ -1676,13 +1669,13 @@ Output Line Numbering.
 .bt
 \T'nm'\fB&nm\T\fI|\(+-N|M|S|I\fR		off	E	Number mode on or off, set parameters.
 .b1 0
-\T'nn'\fB&nn\T\fI|N\fR	\(en	\fIN\fR\*(eq1	E	Do not number next \fIN\fR lines.
+\T'nn'\fB&nn\T\fI|N\fR	\(en	\fIN\(eq\fR1	E	Do not number next \fIN\fR lines.
 .mht s_cond
 Conditional Acceptance of Input
 .bt
 \T'if'\fB&if\T\fI|c|anything\fR		\(en	\(en	If condition \fIc\fR true, accept \fIanything\fR as input,
 .b1
-				for multi-line use \fB\e{\fIanything\^\fB\e}\fR.
+				for multi-line use \fI\e{anything\|\e}\fR.
 .b1
 \T'if'\fB&if\T|!\fIc|anything\fR		\(en	\(en	If condition \fIc\fR false, accept \fIanything\fR.
 .b1
@@ -1712,13 +1705,13 @@ accept \fIanything\fR.
 .mht s_env
 Environment Switching.
 .bt
-\T'ev'\fB&ev\T\fI|name\fR	\fIname\fR\*(eq0	previous	\(en	Environment switched (\fIpush down\fR).
+\T'ev'\fB&ev\T\fI|name\fR	\fIname\(eq\fR0	previous	\(en	Environment switched (\fIpush down\fR).
 .b1 0
 \T'evc'\fB&evc\T\fI|name\fR		\(en	\(en	Copy environment \fIname\fR to the current environment.
 .mht s_stdin
 Insertions from the Standard Input
 .bt
-\T'rd'\fB&rd\T\fI|prompt\fR\fR	\(en	\fIprompt\fR\*(eq\s-1\fRBEL\s+1	\(en	Read insertion.
+\T'rd'\fB&rd\T\fI|prompt\fR\fR	\(en	\fIprompt=\s-1\fRBEL\s+1	\(en	Read insertion.
 .b1 0
 \T'ex'\fB&ex\T\fR	\(en	\(en	\(en	\
 Exit from \*(NR/\*[TR.]
@@ -1767,7 +1760,7 @@ Miscellaneous
 .b1
 \T'ab'\fB&ab\T\fI|string\fR	\(en	newline	\(en	Print \fIstring\fR on standard error, exit program.
 .b1
-\T'ig'\fB&ig\T\fI|yy\fR	\(en	\fB.\fIyy\fR\*(eq\fB..\fR	\(en	Ignore till call of \fIyy\fR.
+\T'ig'\fB&ig\T\fI|yy\fR	\(en	\fI.yy=\fB..\fR	\(en	Ignore till call of \fIyy\fR.
 .b1
 \T'lf'\fB&lf\T\fI|N|f\fR		\(en	\(en	Set input line number to \fIN\fP and filename to \fIf\fP.
 .b1
@@ -2115,54 +2108,54 @@ Reference	Sequence	Meaning
 \T'e_;'10.2\T	\T'e_;'\fB\e;\fR\T	\T'e_;'Ligature suppressor\T
 \T'e_@'17\T	\T'e_@'\fB\e@{\fR,\fB\e@}\fR\T	\T'e_@'Inline environment push/pop\T
 \T'e_a'9.1\T	\T'e_a'\fB\ea\fR\T	\T'e_a'Non-interpreted leader character\T
-\T'e_A'24.6\T	\T'e_A'\fB\eA\'\fIstring\fB\'\fR\T	\T'e_A'Anchor definition\T
-\T'e_b'12.3\T	\T'e_b'\fB\eb\'\fIabc...\fB\'\fR\T	\T'e_b'Bracket building function\T
-\T'e_B'1.4\T	\T'e_B'\fB\eB\'\fIstring\fB\'\fR\T	\T'e_B'Test if\
+\T'e_A'24.6\T	\T'e_A'\fB\eA\fI\'string\'\fR\T	\T'e_A'Anchor definition\T
+\T'e_b'12.3\T	\T'e_b'\fB\eb\fI\'abc...\'\fR\T	\T'e_b'Bracket building function\T
+\T'e_B'1.4\T	\T'e_B'\fB\eB\fI\(aqstring\(aq\fR\T	\T'e_B'Test if\
  \fIstring\fR is a numerical expression\T
 \T'e_c'4.2\T	\T'e_c'\fB\ec\fR\T	\T'e_c'Interrupt text processing\T
-\T'e_C'2.1\T	\T'e_C'\fB\eC\'\fIxxx\fB\'\fR\T	\T'e_C'Character named \fIxxx\fP\T
+\T'e_C'2.1\T	\T'e_C'\fB\eC\fI\'xxx\'\fR\T	\T'e_C'Character named \fIxxx\fP\T
 \T'e_d'11.1\T	\T'e_d'\fB\ed\fR\T	\T'e_d'Forward (down) 1/2\|em vertical motion (1/2 line in \*(NR)\T
-\T'e_D'12.5\T	\T'e_D'\fB\eD\'\fIc...\fB\'\fR\T	\T'e_D'Draw graphics function \fIc\fP with parameters ...; \fIc\fR\*(eq\fBl\fR,\^\fBc\fR,\^\fBe\fR,\^\fBa\fP,\^\fB\(ti\fP\T
+\T'e_D'12.5\T	\T'e_D'\fB\eD\fI\'c...\'\fR\T	\T'e_D'Draw graphics function \fIc\fP with parameters ...; \fIc\fP\^=\^\fBl\fR,\^\fBc\fR,\^\fBe\fR,\^\fBa\fP,\^\fB\(ap\fP\T
 \T'e_e'10.1\T	\T'e_e'\fB\ee\fR\T	\T'e_e'Printable version of the \fIcurrent\fR escape character\T
 \T'e_E'10.1\T	\T'e_E'\fB\eE\fR\T	\T'e_E'Escape character, not interpreted in \fIcopy mode\fR\T
 \T'e_f'2.2\T	\T'e_f'\fB\ef\fIx\fR,\fB\ef(\fIxx\fR,\fB\ef[\fIxxx\fB]\fR,\fB\ef\fIN\fR\T	\T'e_f'Change to font named \fIx\fR, \fIxx\fR, or \fIxxx\fR, or position \fIN\fR\T
 \T'e_g'8\T	\T'e_g'\fB\eg\fIx\fR,\fB\eg(\fIxx\fR,\fB\eg[\fIxxx\fB]\fR\T	\T'e_g'Format of number register \fIx\fP, \fIxx\fR, or \fIxxx\fR\T
-\T'e_h'11.1\T	\T'e_h'\fB\eh\'\fIN\fB\'\fR\T	\T'e_h'Local horizontal motion; move right \fIN\fR \fI(negative left)\fR\T
-\T'e_H'2.3\T	\T'e_H'\fB\eH\'\fIN\fB\'\fR\T	\T'e_H'Height of current font is \fIN\fR\T
-\T'e_I'1.1\T	\T'e_I'\fB\eI\'\fIstring\fB\'\fR\T	\T'e_B'Test if\
+\T'e_h'11.1\T	\T'e_h'\fB\eh\fI\'N\'\fR\T	\T'e_h'Local horizontal motion; move right \fIN\fR \fI(negative left)\fR\T
+\T'e_H'2.3\T	\T'e_H'\fB\eH\fI\'N\'\fR\T	\T'e_H'Height of current font is \fIN\fR\T
+\T'e_I'1.1\T	\T'e_I'\fB\eI\fI\(aqstring\(aq\fR\T	\T'e_B'Test if\
  \fIstring\fR is a valid identifier name\T
-\T'e_j'4.1\T	\T'e_j'\fB\ej\'\fI\(+-N\fB\'\fR\T	\T'e_j'Penalty for breaking a line after the current word is \fIN\fR\T
-\T'e_J'4.1\T	\T'e_J'\fB\eJ\'\fI\(+-N\fB\'\fR\T	\T'e_J'Default line breaking penalty is \fIN\fR\T
+\T'e_j'4.1\T	\T'e_j'\fB\ej\fI\'\(+-N\'\fR\T	\T'e_j'Penalty for breaking a line after the current word is \fIN\fR\T
+\T'e_J'4.1\T	\T'e_J'\fB\eJ\fI\'\(+-N\'\fR\T	\T'e_J'Default line breaking penalty is \fIN\fR\T
 \T'e_k'11.3\T	\T'e_k'\fB\ek\fIx\fR,\fB\ek(\fIxx\fR,\fB\ek[\fIxxx\fB]\fR\T	\T'e_k'Mark horizontal \fIinput\fR place in register \fIx,\fR \fIxx\fR, or \fIxxx\fR\T
-\T'e_l'12.4\T	\T'e_l'\fB\el\'\fINc\fB\'\fR\T	\T'e_l'Horizontal line drawing function (optionally with \fIc\fR\|)\T
-\T'e_L'12.4\T	\T'e_L'\fB\eL\'\fINc\fB\'\fR\T	\T'e_L'Vertical line drawing function (optionally with \fIc\fR\|)\T
+\T'e_l'12.4\T	\T'e_l'\fB\el\fI\^\'Nc\'\fR\T	\T'e_l'Horizontal line drawing function (optionally with \fIc\fR\|)\T
+\T'e_L'12.4\T	\T'e_L'\fB\eL\fI\'Nc\'\fR\T	\T'e_L'Vertical line drawing function (optionally with \fIc\fR\|)\T
 \T'e_n'8\T	\T'e_n'\fB\en\fIx\fR,\fB\en(\fIxx\fR,\fB\en[\fIxxx\fB]\fR\T	\T'e_n'Interpolate number register \fIx\fR, \fIxx\fR, or \fIxxx\fR\T
-\T'e_N'2.\T	\T'e_N'\fB\eN\'\fIN\fB\'\fR\T	\T'e_N'Character number \fIN\fR on current font\T
-\T'e_o'12.1\T	\T'e_o'\fB\eo\'\fIabc...\fB\'\fR\T	\T'e_o'Overstrike characters \fIa, b, c, ...\fR\T
+\T'e_N'2.\T	\T'e_N'\fB\eN\fI\'N\'\fR\T	\T'e_N'Character number \fIN\fR on current font\T
+\T'e_o'12.1\T	\T'e_o'\fB\eo\fI\'abc...\'\fR\T	\T'e_o'Overstrike characters \fIa, b, c, ...\fR\T
 \T'e_p'4.1\T	\T'e_p'\fB\ep\fR\T	\T'e_p'Break and spread output line\T
 \T'e_P'7.5\T	\T'e_P'\fB\eP\fIx\fR,\fB\eP(\fIxx\fR,\fB\eP[\fIxxx\fB]\fR\T	\T'e_P'Output-line trap \fIx\fR, \fIxx\fR, or \fIxxx\fR\T
 \T'e_r'11.1\T	\T'e_r'\fB\er\fR\T	\T'e_r'Reverse 1\|em vertical motion (reverse line in \*(NR)\T
-\T'e_R'8\T	\T'e_R'\fB\eR\'\fIR\ \(+-N\fB\'\fR\T	\T'e_R'Set number register \fIR\fR to \fI\(+-N\fR\T
+\T'e_R'8\T	\T'e_R'\fB\eR\fI\'R\ \(+-N\'\fR\T	\T'e_R'Set number register \fIR\fR to \fI\(+-N\fR\T
 .ne 3
 \T'e_s'2.3\T	T{
 \T'e_s'\fB\es\fIN\fR,\fB\es\fI\(+-N\fR,
 \fB\es\'\fI\(+-N\fB\'\fR,\fB\es\fI\(+-\fB\'\fIN\fB\'\fR,
 \fB\es[\fI\(+-N\fB]\fR,\fB\es\fI\(+-\fB[\fIN\fB]\fR\T
 T}	\T'e_s'Point-size change function\T
-\T'e_S'2.2\T	\T'e_S'\fB\eS\'\fIN\fB\'\fR\T	\T'e_S'Slant output \fIN\fP degrees\T
+\T'e_S'2.2\T	\T'e_S'\fB\eS\fI\'N\'\fR\T	\T'e_S'Slant output \fIN\fP degrees\T
 \T'e_t'9.1\T	\T'e_t'\fB\et\fR\T	\T'e_t'Non-interpreted horizontal tab\T
-\T'e_T'24.6\T	\T'e_T'\fB\eT\'\fIstring\fB\'\fR\T	\T'e_T'Intra-document link definition\T
+\T'e_T'24.6\T	\T'e_T'\fB\eT\fI\'string\'\fR\T	\T'e_T'Intra-document link definition\T
 \T'e_u'11.1\T	\T'e_u'\fB\eu\fR\T	\T'e_u'Reverse (up) 1/2\|em vertical motion (1/2 line in \*(NR)\T
-\T'e_U'2.1\T	\T'e_U'\fB\eU\'\fIX\fB\'\fR\T	\T'e_U'Character at Unicode position U+\fIX\fR\T
-\T'e_v'11.1\T	\T'e_v'\fB\ev\'\fIN\fB\'\fR\T	\T'e_v'Local vertical motion; move down \fIN\fR \fI(negative up)\fR\T
+\T'e_U'2.1\T	\T'e_U'\fB\eU\fI\'X\'\fR\T	\T'e_U'Character at Unicode position U+\fIX\fR\T
+\T'e_v'11.1\T	\T'e_v'\fB\ev\fI\'N\'\fR\T	\T'e_v'Local vertical motion; move down \fIN\fR \fI(negative up)\fR\T
 \T'e_V'20\T	\T'e_V'\fB\eV\fIx\fR,\fB\eV(\fIxx\fR,\fB\eV[\fIxxx\fB]\fR\T	\T'e_V'Environment variable \fIx\fP, \fIxx\fR, or \fIxxx\fR\T
-\T'e_w'11.2\T	\T'e_w'\fB\ew\'\fIstring\fB\'\fR\T	\T'e_w'Interpolate width of \fIstring\fR\T
-\T'e_W'24.6\T	\T'e_W'\fB\eW\'\fIstring\fB\'\fR\T	\T'e_W'URI link definition\T
-\T'e_x'5.2\T	\T'e_x'\fB\ex\'\fIN\fB\'\fR\T	\T'e_x'Extra line-space function \fI(negative before, positive after)\fR\T
-\T'e_X'10.7\T	\T'e_X'\fB\eX\'\fIstring\fB\'\fR\T	\T'e_X'Output \fIstring\fP as device control function\T
+\T'e_w'11.2\T	\T'e_w'\fB\ew\fI\'string\'\fR\T	\T'e_w'Interpolate width of \fIstring\fR\T
+\T'e_W'24.6\T	\T'e_W'\fB\eW\fI\'string\'\fR\T	\T'e_W'URI link definition\T
+\T'e_x'5.2\T	\T'e_x'\fB\ex\fI\'N\'\fR\T	\T'e_x'Extra line-space function \fI(negative before, positive after)\fR\T
+\T'e_X'10.7\T	\T'e_X'\fB\eX\fI\'string\'\fR\T	\T'e_X'Output \fIstring\fP as device control function\T
 \T'e_Y'10.7\T	\T'e_Y'\fB\eY\fIx\fR,\fB\eY(\fIxx\fR,\fB\eY[\fIxxx\fB]\fR\T	\T'e_Y'Output contents of macro \fIx\fP, \fIxx\fR, or \fIxxx\fR\T as device control function
 \T'e_z'12.2\T	\T'e_z'\fB\ez\fIc\fR\T	\T'e_z'Print \fIc\fR with zero width (without spacing)\T
-\T'e_Z'12.2\T	\T'e_Z'\fB\eZ\'\fIstring\fB\'\fR\T	\T'e_Z'Print \fIstring\fR with zero width and height\T
+\T'e_Z'12.2\T	\T'e_Z'\fB\eZ\fI\'string\'\fR\T	\T'e_Z'Print \fIstring\fR with zero width and height\T
 \T'e_{'16\T	\T'e_{'\fB\e{\fR\T	\T'e_{'Begin conditional input\T
 \T'e_}'16\T	\T'e_}'\fB\e}\fR\T	\T'e_}'End conditional input\T
 \T'e_newline'10.7\T	\T'e_newline'\fB\e\fR(newline)\T	\T'e_newline'Concealed (ignored) newline\T
@@ -2224,7 +2217,7 @@ Reference	Name	Description
 \T'n_st'11.2\T	\T'n_st'\fBst\fR\T	\T'n_st'Height of string above base line (generated by \fIwidth\fR function).\T
 \(en	\fByear\fR	Current year.
 \(en	\fByr\fR	Current year minus 1900.
-\T'n_.g'25.1\T	\T'n_.g'\fB&g\fR\T	\T'n_.g'Current \*(GR compatibility mode (0\*(eqoff).\T
+\T'n_.g'25.1\T	\T'n_.g'\fB&g\fR\T	\T'n_.g'Current \*(GR compatibility mode (0=off).\T
 .TE
 .sp
 .nr nosave 1
@@ -2247,7 +2240,7 @@ Reference	Name	Description
 \T'n_.$'7.3\T	\T'n_.$'\fB&$\fR\T	\T'n_.$'Number of arguments available at the current macro level.\T
 \(en	\fB&A\fR	Set to 1 in \*[TR,] if \fB\-a\fR option used; always 1 in \*[NR.]
 \T'n_.a'5.2\T	\T'n_.a'\fB&a\fR\T	\T'n_.a'Post-line extra line-space most recently utilized \
-using \fB\ex\'\fIN\fB\'\fR.\T
+using \fB\ex\fI\'N\'\fR.\T
 \T'n_.ascender'5.4\T	\T'n_.ascender'\fB&ascender\fR\T	\T'n_.ascender'Ascender of current font and point size.\T
 \T'n_.b'2.3\T	\T'n_.b'\fB&b\fR\T	\T'n_.b'Emboldening level.\T
 \T'n_.breakchar'13\T	\T'n_.breakchar'\fB&breakchar\fR\T	\T'n_.breakchar'Current optional line break characters.\T
@@ -2369,11 +2362,11 @@ Input consists of \fItext lines\fR, which are destined to be printed,
 interspersed with \fIcontrol lines\fR,
 which set parameters or otherwise control subsequent processing.
 Control lines begin with a \fIcontrol character\fR\(em\
-normally \fB\^.\fR\~(period) or \fB\^\'\fR\~(acute accent)\(em\
+normally \fB.\fR\~(period) or \fB\'\fR\~(acute accent)\(em\
 followed by a name that specifies
 a basic \fIrequest\fR or the substitution of
 a user-defined \fImacro\fR in place of the control line.
-The control character \fB\^\'\^\fR suppresses the \fIbreak\fR function\(em\
+The control character \fB\'\fR suppresses the \fIbreak\fR function\(em\
 the forced output of a partially filled line\(em\
 caused by certain requests.
 The control character may be separated from the request/macro name by
@@ -2400,7 +2393,7 @@ only one and two character names were permitted
 for request, macro, string, number register, and font names.
 Heirloom \*(TR can accept names containing a (nearly) arbitrary
 number of \s-1ASCII\s+1 characters.
-Escape \A'e_I'\fB\eI\'\fIstring\fB\'\fR can by used to test if
+Escape \A'e_I'\fB\eI\fR\(aq\fIstring\fR\(aq can by used to test if
 \fIstring\fR is a valid identifier name.
 By default, request and macro names are still required
 to contain at most two characters for compatibility reasons.
@@ -2642,7 +2635,7 @@ then
 .x2
 will set the line length to 1/2 the sum of 4.25 inches \(pl 2 picas \(pl 30 points.
 .pg
-The \A'e_B'\fB\eB\'\fIstring\fB\'\fR escape sequence
+The \A'e_B'\fB\eB\fI'string'\fR escape sequence
 checks whether \fIstring\fR is a valid numerical expression
 and evaluates to ``1'' if it does and to ``0'' otherwise.
 .sc
@@ -2752,7 +2745,7 @@ With Type\ 1, OpenType, and TrueType fonts,
 \*(TR allows to access all named \*(PS
 characters of the current font and
 of those in the \T'fallback'\fBfallback\fR\T sequence
-in the forms \A'e_['\fB\e[\fIname\fB]\fR or \A'e_C'\fB\eC\'\fIname\fB\'\fR.
+in the forms \A'e_['\fB\e[\fIname\fB]\fR or \A'e_C'\fB\eC\(aq\fIname\fB\(aq\fR.
 .pg
 \A'p_locale'\*(TR internally converts non-\s-1ASCII\s+1 characters
 of the current \s-1LC_CTYPE\s+1 locale
@@ -2769,11 +2762,11 @@ first, then in the special fonts.
 If the character cannot be found, it is discarded.
 Characters for which no name is known are replaced by spaces.
 .pg
-The \A'e_N'\fB\eN\'\fIn\fB\'\fR escape sequence
+The \A'e_N'\fB\eN\(aq\fIn\fB\(aq\fR escape sequence
 has historically been available to refer
 to character \fIn\fR of the current font.
 It is still accepted,
-but its use is discouraged with
+but its use is discouraged with 
 Type\ 1, OpenType, and TrueType fonts
 since the arrangement of character in font tables
 is performed at run-time
@@ -2806,12 +2799,12 @@ print
 as themselves.
 .pg
 Both \*(NR and \*(TR allow references to specific
-Unicode characters with the \A'e_U'\fB\eU\'\fIX\fB\'\fR escape sequence;
+Unicode characters with the \A'e_U'\fB\eU\(aq\fIX\fB\(aq\fR escape sequence;
 it causes the character at position U+\fIX\fR to be printed
 (\fIX\fR is a hexadecimal number).
 For \*[TR,] it is required that this character
 is available in one of the fonts mounted at this point.
-As an example, \fB\eU\'20AC\'\fR prints the Euro character \U'20AC'.
+As an example, \eU\(aq20AC\(aq prints the Euro character \U'20AC'.
 When register \fB.g\fP is set to \fB1\fP
 Unicode charactes can also be accessed with
 \fB\e[u\fIXXXX\fB]\fR where \fIXXXX\fP is a four digit hexadecimal number.
@@ -2873,7 +2866,7 @@ but there is no other difference.
 Mention of an unmounted font loads it temporarily at font position
 zero, which serves as a one-font cache.
 .pg
-The function \A'e_S'\fB\eS\'\fI\(+-N\fB\'\fR
+The function \A'e_S'\fB\eS\fI'\(+-N'\fR
 causes the current font to be slanted by \fI\(+-N\fR degrees.
 Not all devices support slanting.
 .pg
@@ -2905,7 +2898,7 @@ Note that through an accident of history, a construction like
 is parsed as size 39, and thus converted to size 36 (given the sizes above),
 while
 .B \es40
-is parsed as size 4 followed by
+is parsed as size 4 followed by 
 \fB0\fR.
 The forms
 \fB\es(\fInn\fR, \fB\es\(+-(\fInn\fR,
@@ -2925,10 +2918,10 @@ it is identical to the current size on
 modern output devices.
 \*(NR ignores type size control.
 .pg
-The function \A'e_H'\fB\eH\'\fI\(+-N\fB\'\fR
+The function \A'e_H'\fB\eH\fI\'\(+-N'\fR
 sets \H'+2'the height of the current font\H'0' to
 \fIN\fP, or increments it by +\fIN\fR, or decrements it by \-\fIN\fP;
-if \fIN\fR\*(eq0, the height is restored to the current point size.
+if \fIN\fR=0, the height is restored to the current point size.
 In each case, the width is unchanged.
 Not all devices support independent height and width for characters.
 .h1
@@ -3085,7 +3078,7 @@ exist:
 .br
 \fBgreek\fR	greek characters like \(*a \(*b \(*g \(*A \(*B \(*G
 .br
-\fBpunct\fR	the characters \e(or \- \e\` \e\' " # < > @ \e ^ \(a~
+\fBpunct\fR	the characters \e(or \- \e\` \e\' " # < > @ \e ^ ~
 .br
 \fBlarge\fR	parts of large characters like \(rc \(rk \(lb \(lk
 .xx
@@ -3116,7 +3109,7 @@ they are searched in other fonts using the fallback sequence.
 This is useful e.g. for combining characters from a regular
 and a Type\ 1 expert font.
 .bta spacewidth
-\fB&spacewidth\fI|\fIN\fR	on	O,T	If \fIN\fR\*(!=0, use the space width from the font metrics file.
+\fB&spacewidth\fI|\fIN\fR	on	O,T	If \fIN\fR\(!=0, use the space width from the font metrics file.
 The space width otherwise defaults to 1/3\|em for
 variable-width fonts, or to the width of the \fBspace\fR character
 for monospaced fonts.
@@ -3253,12 +3246,12 @@ Cut marks, color bars, and other
 information for the printing office should be positioned outside
 the BleedBox.
 .bta bp
-\fB&bp\fI|\(+-N\fR	\fIN\fR\*(eq1	\(en	B	Begin page.
+\fB&bp\fI|\(+-N\fR	\fIN\(eq\fR1	\(en	B	Begin page.
 The current page is ejected and a new page is begun.
 If \fI\(+-N\fR is given, the new page number will be \fI\(+-N\fR.
 Also see request \T'ns'\fBns\fR\T.
 .bta pn
-\fB&pn\fI|\(+-N\fR	\fIN\fR\*(eq1	ignored	\(en	Page number.
+\fB&pn\fI|\(+-N\fR	\fIN\fR\(eq1	ignored	\(en	Page number.
 The next page (when it occurs) will have the page number \fI\(+-N\fR.
 A \fBpn\fR must occur before the initial pseudo-page transition
 to effect the page number of the first page.
@@ -3273,7 +3266,7 @@ The \*(TR initial value provides about 1|inch of paper margin
 on a typical device.
 The current page offset is available in the \A'n_.o'\fB.o\fR register.
 .bta ne
-\fB&ne\fI|N\fR	\(en	\fIN\fR\(*eq1\|\fIV\fR	D,\fBv\fR	Need \fIN\fR vertical space.
+\fB&ne\fI|N\fR	\(en	\fIN\(eq\fR1\|\fIV\fR	D,\fBv\fR	Need \fIN\fR vertical space.
 If the distance, \fID\fR, to the next trap position
 \T'c_trap'(see \(sc7.5)\T is less than \fIN\fR,
 a forward vertical space of size \fID\fR occurs,
@@ -3466,7 +3459,7 @@ When adjusting paragraphs at once,
 is possible to specify additional \fIpenalties\fR
 for putting a line break after the current word
 (or part of a hyphenated word)
-by imbedding or attaching a \A'e_j'\fB\ej\'\fI\(+-N\fB\'\fR to it.
+by imbedding or attaching a \A'e_j'\fB\ej\fI\'\(+-N\'\fR to it.
 A positive value of \fIN\fR discourages a line break,
 a negative value encourages it.
 Values of 1\^000\^000 and above
@@ -3474,7 +3467,7 @@ are taken as infinitive penalties
 and always prevent a line break;
 values of \-1\^000\^000 always cause a line break.
 A default penalty can be set
-with the \A'e_J'\fB\eJ\'\fI\(+-N\fB\'\fR escape sequence;
+with the \A'e_J'\fB\eJ\fI\'\(+-N\'\fR escape sequence;
 this is useful to discourage line breaks
 within a certain group of words,
 e.g. a person's name or a formula.
@@ -3495,7 +3488,7 @@ The meaning of \fB\ep\fR is then changed
 such that a line that it is attached to is \fInot\fR spread;
 this is the only method to achieve a regular \fIbreak\fR without a spread then.
 Manually adjusted text can thus be typed more comfortably
-since only the (fewer) lines that are not spread
+since only the (fewer) lines that are not spread 
 need to be marked.
 .pg
 A text input line that happens to begin
@@ -3648,14 +3641,14 @@ The adjustment type for \fBad\fR is not changed.
 Output line filling still occurs if fill mode is on.
 .bta padj
 \fB&padj\fI|N\fR	off	on	\(en	Control paragraph-at-once adjustment globally.
-If \fIN\fR\*(!=0 or missing,
+If \fIN\fR\(!=0 or missing,
 paragraph-at-once adjustment is enabled in all environments,
 and \fBad\ \fIx\fR effectively acts like \fBad\ p\fIx\fR.
 The current value is available in the \A'n_.padj'\fB&padj\fR register.
 .bta ce
-\fB&ce\fI|N\fR	off	\fIN\fR\*(eq1	B,E	Center the next \fIN\fR input text lines
+\fB&ce\fI|N\fR	off	\fIN\fR\(eq1	B,E	Center the next \fIN\fR input text lines
 within the current (line-length minus indent).
-If \fIN\fR\*(eq0, any residual count is cleared.
+If \fIN\fR\(eq\^0, any residual count is cleared.
 A break occurs after each of the \fIN\fR input lines.
 If the input line is too long,
 it will be left adjusted.
@@ -3664,7 +3657,7 @@ is set to zero.
 The remaining number of lines to be centered
 is available in the \A'n_.ce'\fB&ce\fR register.
 .bta rj
-\fB&rj\fI|N\fR	off	\fIN\fR\*(eq1	B,E	Right-align the next \fIN\fR input text lines
+\fB&rj\fI|N\fR	off	\fIN\fR\(eq1	B,E	Right-align the next \fIN\fR input text lines
 within the current (line-length minus indent);
 otherwise like \fBce\fR.
 The number of lines to be centered, if any,
@@ -3672,12 +3665,12 @@ is set to zero.
 The remaining number of lines to be right-justified
 is available in the \A'n_.rj'\fB&rj\fR register.
 .bta brnl
-\fB&brnl\fI|N\fR	off	\fIN\fR\*(eq\(if	B,E	Break at end of next \fIN\fR input text lines
+\fB&brnl\fI|N\fR	off	\fIN\(eq\fR\(if	B,E	Break at end of next \fIN\fR input text lines
 when filling is in effect.
 The remaining number of lines so treated
 is available in the \A'n_.brnl'\fB&brnl\fR register.
 .bta brpnl
-\fB&brpnl\fI|N\fR	off	\fIN\fR\*(eq\(if	B,E	Break and spread at end of next \fIN\fR input text lines
+\fB&brpnl\fI|N\fR	off	\fIN\(eq\fR\(if	B,E	Break and spread at end of next \fIN\fR input text lines
 when filling is in effect.
 The remaining number of lines so treated
 is available in the \A'n_.brpnl'\fB&brpnl\fR register.
@@ -3752,11 +3745,11 @@ from another font that have been selected
 by the \T'fallback'\fBfallback\fP\T sequence.
 .bta kern
 \fB&kern\fI|N\fR	1	1	P,T	Control pairwise kerning;
-disabled if \fIN\fR\*(eq0, otherwise enabled.
+disabled if \fIN\fR=0, otherwise enabled.
 .bta fkern
 \fB&fkern\fI|F|N\fR	1	1	P,T	Control the use of kerning tables from font \fIF\fR;
-disabled if \fIN\fR\*(eq0,
-enabled if \fIN\fR\*(eq1 or missing.
+disabled if \fIN\fR=0,
+enabled if \fIN\fR=1 or missing.
 For \fIN\fR\(>=2,
 only kerning pairs with absolute values greater or equal to \fIN\fR are used.
 \*(TR kerning adjustments as defined by the following requests
@@ -3845,7 +3838,7 @@ Extra line-space.
 If a word contains a vertically tall construct requiring
 the output line containing it to have extra vertical space
 before and/or after it,
-the \fIextra-line-space\fR function \A'e_x'\fB\ex\'\fIN\fB\'\fR
+the \fIextra-line-space\fR function \A'e_x'\fB\ex\fI\'N\'\fR
 can be imbedded in or attached to that word.
 If \fIN\fR is negative,
 the output line containing the word will
@@ -3858,8 +3851,8 @@ the maximum values are used.
 The most recently utilized post-line extra line-space is available
 in the \A'n_.a'\fB.a\fR register.
 .pg
-In \fB\ex\'\fI...\fB\'\fR and other functions having a pair of delimiters around
-their parameter (here \fB\^\'\fR\|),
+In \fB\ex\fI\'...\'\fR and other functions having a pair of delimiters around
+their parameter (here \fB\'\fR\|),
 the delimiter choice is arbitrary,
 except that it can not look like the continuation
 of a \T'c_expr'number expression\T for \fIN\fR.
@@ -3885,15 +3878,15 @@ these registers are set to zero.
 .h1
 .bta vs
 \fB&vs\fI\|N\fR	1/6in;12pts	previous	E,\fBp\fR	Set vertical base-line spacing size \fIV\fR.
-Transient \fIextra\fR vertical space available with \T'e_x'\fB\ex\'\fIN\fB\'\fR (see above).\T
+Transient \fIextra\fR vertical space available with \T'e_x'\fB\ex\fI\'N\'\fR (see above).\T
 .bta ls
-\fB&ls\fI\|N\fR	\fIN\fR\*(eq1	previous	E	\fILine\fR spacing
+\fB&ls\fI\|N\fR	\fIN\(eq\^\fR1	previous	E	\fILine\fR spacing
 set to \fI\(+-N\fR.
 \fIN\(mi\fR1 \fIV\fR\^s \fI(blank lines)\fR are
 appended to each output text line.
 Appended blank lines are omitted, if the text or previous appended blank line reached a trap position.
 .bta sp
-\fB&sp\fI|N\fR	\(en	\fIN\fR\*(eq1\fIV\fR	B,\fBv\fR	Space vertically in \fIeither\fR direction.
+\fB&sp\fI|N\fR	\(en	\fIN\fR\(eq1\fIV\fR	B,\fBv\fR	Space vertically in \fIeither\fR direction.
 If \fIN\fR is negative, the motion is \fIbackward\fR (upward)
 and is limited to the distance to the top of the page.
 Forward (downward) motion is truncated to the distance to the
@@ -3902,7 +3895,7 @@ nearest trap.
 If the no-space mode is on,
 no spacing occurs (see \T'ns'\fBns\fR\T, and \T'rs'\fBrs\fR\T below).
 .bta sv
-\fB&sv\fI|N\fR	\(en	\fIN\fR\*(eq1\fIV\fR	\fBv\fR	Save a contiguous vertical block of size \fIN\fR.
+\fB&sv\fI|N\fR	\(en	\fIN\(eq\fR1\fIV\fR	\fBv\fR	Save a contiguous vertical block of size \fIN\fR.
 If the distance to the next trap is greater
 than \fIN\fR, \fIN\fR vertical space is output.
 No-space mode has \fIno\fR effect.
@@ -3973,7 +3966,7 @@ but may result in less optimal line breaking decisions then.
 .bta ll
 \fB&ll\fI|\(+-N\fR	6.5\|in	previous	E,\fBm\fR	Line length is set to \(+-\fIN\fR.
 .bta in
-\fB&in\fI|\(+-N\fR	\fIN\fR\*(eq0	previous	B,E,\fBm\fR	Indent is set to \fI\(+-N\fR.
+\fB&in\fI|\(+-N\fR	\fIN\(eq\^\fR0	previous	B,E,\fBm\fR	Indent is set to \fI\(+-N\fR.
 The indent is prepended to each output line.
 .bta ti
 \fB&ti\fI|\(+-N\fR	\(en	ignored	B,E,\fBm\fR	Temporary indent.
@@ -4115,7 +4108,7 @@ and appended to by \T'am'\fBam\fR\T and \T'da'\fBda\fR;\T
 to be stored in a macro.
 Strings are created by \T'ds'\fBds\fR\T and appended to by \T'as'\fBas\fR.\T
 A macro is invoked in the same way as a request;
-a control line beginning \fB.\fI\^xx\fR will interpolate the contents of macro \fIxx\fR.
+a control line beginning \fB.\fIxx\fR will interpolate the contents of macro \fIxx\fR.
 The remainder of the line may contain arbitrarily many \fIarguments\fR.
 The strings \fIx\fR, \fIxx\fR, and \fIxxx\fR
 are interpolated at any desired point with
@@ -4376,13 +4369,13 @@ possibly makes a global string visible again,
 and \fBals\fR creates a local alias to a local string.
 .xx
 It is not allowed to define local macros or diversions.
-Calls to \fB&\fI\^xx\fR or \fB\'\fIxx\fR reference a global macro or diversion
+Calls to \fI&xx\fR or \fB\'\fIxx\fR reference a global macro or diversion
 even if a local string \fIxx\fR exists.
 \T'c_trap'Traps\T and the \T'e_Y'\fB\eY\fR\T escape sequence
 always operate on global macros or diversions.
 .h1
 .bta de
-\A'e_.'\fB&de\fI|xx|yy\fR	\(en	\fB.\fIyy\fR\*(eq\fB..\fR	\(en	Define or redefine the macro \fIxx\fR.
+\A'e_.'\fB&de\fI|xx|yy\fR	\(en	\fI.yy=\fB..\fR	\(en	Define or redefine the macro \fIxx\fR.
 The contents of the macro begin on the next input line.
 Input lines are copied in \T'copy mode'\fIcopy mode\fR\T
 until the definition is terminated by a
@@ -4397,7 +4390,7 @@ or the contained definition terminator is concealed.
 \&"\fB..\fR" can be concealed as
 \fB\e\e..\fR which will copy as \fB\e..\fR and be reread as "\fB..\fR".
 .bta am
-\fB&am\fI|xx|yy\fR	\(en	\fB.\fIyy\fR\*(eq\fB..\fR	\(en	Append to macro (append version of \fBde\fR).
+\fB&am\fI|xx|yy\fR	\(en	\fI.yy=\fB..\fR	\(en	Append to macro (append version of \fBde\fR).
 .bta ds
 \fB&ds\fI|xx|string\fR	\(en	ignored	\(en	Define a string
 \fIxx\fR containing \fIstring\fR.
@@ -4411,7 +4404,7 @@ initial blanks.
 \fB&lds\fI|xx|string\fR	\(en	ignored	\(en	Define local string \fIxx\fR containing \fIstring\fR.
 Equivalent to \fBds\fR at the top non-macro level.
 .bta substring
-\fB&substring\fI|xx|N|\fR[\fIM\fR]	\fIM\fR\*(eq\(mi1	\(en	Replace string \fIxx\fR by its substring between indices \fIN\fR and \fIM\fR.
+\fB&substring\fI|xx|N|\fR[\fIM\fR]	\fIM\fR\(eq\|\(mi1	\(en	Replace string \fIxx\fR by its substring between indices \fIN\fR and \fIM\fR.
 \fIN\fR and \fIM\fR start at 0.
 Negative values are interpreted relative to the end
 of the string;
@@ -4509,7 +4502,7 @@ macro \fIxx\fR.
 Another \fBdt\fR will redefine the diversion trap.
 If no arguments are given, the diversion trap is removed.
 .bta vpt
-\fB&vpt\fI|N\fR	1	ignored	\(en	Enable (\fIN\fR\*(!=0) or disable (\fIN\fR\*(eq0)
+\fB&vpt\fI|N\fR	1	ignored	\(en	Enable (\fIN\fR\(!=0) or disable (\fIN\fR\(eq0)
 page ejections and vertical position traps,
 i.e. those set with \fBwh\fR or \fBdt\fR.
 At end of input, the page is forcefully ejected.
@@ -4633,7 +4626,7 @@ makes the global number register \fIxx\fR, if any, completely inaccessible.
 The sequences
 \fB\en(\fIxx\fR and \fB\en[\fIxx\fB]\fR
 retrieve the value of the local register,
-\fB\eR\'\fIxx\|...\fB\'\fR,
+\fB\eR\fI'xx\|...'\fR,
 \fB\en+(\fIxx\fR and \fB\en+[\fIxx\fB]\fR (and likewise) modify it,
 and \fB\eg(\fIxx\fR and \fB\eg[\fIxx\fB]\fR retrieve its format.
 Subsequent calls to \fBnr\fR, \fBnrf\fR, \fBaf\fR,
@@ -4651,7 +4644,7 @@ The number register \fIR\fR is assigned the value \fI\(+-N\fR
 with respect to the previous value, if any.
 The increment for auto-incrementing is set to \fIM\fR.
 An alternate syntax is available
-with the \A'e_R'\fB\eR\'\fIR\ \(+-N\fB\'\fR escape sequence.
+with the \A'e_R'\fB\eR\fI\'R\ \(+-N\'\fR escape sequence.
 .bta nrf
 \fB&nrf\fI|R|\(+-F|G\fR		\(en	\fBu\fR	\
 The floating-point register \fIR\fR is assigned the value \fI\(+-F\fR
@@ -4793,8 +4786,8 @@ in the remaining space.
 .bta ta
 \fB&ta\fI|Nt|...\fR	8\|n;|0.5\|i	none	E,\fBm\fR	\
 Set tab stops and types.
-\fIt\fR\*(eq\fBR\fR, right adjusting;
-\fIt\fR\*(eq\fBC\fR, centering;
+\fIt=\fBR\fR, right adjusting;
+\fIt=\fBC\fR, centering;
 \fIt\fR\~absent, left adjusting.
 \*(TR tab stops are preset every 0.5in.;
 \*(NR every 0.8in.
@@ -4811,7 +4804,7 @@ it can thus be used to save and restore tab stops.
 \(**\|Register \fB&S\fR is available for compatibility with DWB.
 .ef
 .bt
-\fB&ta\fI|Mv|...|Nw|\fBT\fI|At|...|Zu\fRa	\fIN\fR\*(eq0	E,\fBm\fR\
+\fB&ta\fI|Mv|...|Nw|\fBT\fI|At|...|Zu\fRa	\fIN\fR=0	E,\fBm\fR\
 	Set repeated tab stops and types at \fIMv\fR, ..., \fINw\fR,
 \fIN\fR|+|\fIAt\fR, ..., \fIN\fR|+|\fIZu\fR,
 \fIN\fR|+|\fIZ\fR|+|\fIAt\fR, ..., \fIN\fR|+|\fIZ\fR|+|\fIZu\fR,
@@ -4912,7 +4905,7 @@ They may be input (even in \*(NR) by
 In \*[TR,] the \T'flig'\fBflig\fR\T request specifies the set of ligatures
 available with an individual font.
 .lg
-The ligature mode is normally on in \*[TR,] and \fIautomatically\fR invokes
+The ligature mode is normally on in \*[TR,] and \fIautomatically\fR invokes 
 ligatures during input.
 At most the five named ligatures are enabled by default.
 .pg
@@ -4929,8 +4922,8 @@ also disable automatic ligature building.
 .bta lg
 \fB&lg\fI|N\fR	off;|on	on	\(en	Ligature mode
 is turned on if \fIN\fR is absent or non-zero,
-and turned off if \fIN\fR\*(eq0.
-If \fIN\fR\*(eq2, only the two-character ligatures are automatically invoked.
+and turned off if \fIN\(eq\^\fR0.
+If \fIN\fR\(eq\^2, only the two-character ligatures are automatically invoked.
 Ligature mode is inhibited for
 request, macro, string, register, or file names,
 and in \T'copy mode'\fIcopy mode\fR.\T
@@ -5000,7 +4993,7 @@ Underlining is restricted to an output-device-dependent
 subset of \fIreasonable\fR characters.
 .h1
 .bta ul
-\fB&ul\fI|N\fR	off	\fIN\fR\*(eq1	E	\
+\fB&ul\fI|N\fR	off	\fIN\(eq\fR1	E	\
 Underline in \*(NR (italicize in \*(TR) the next \fIN\fR
 input text lines.
 Actually, switch to \fIunderline\fR font, saving the
@@ -5016,7 +5009,7 @@ a trap interpolated macro may provide text
 lines within the span;
 environment switching can prevent this.
 .bta cu
-\fB&cu\fI|N\fR	off	\fIN\fR\*(eq1	E	\
+\fB&cu\fI|N\fR	off	\fIN\(eq\fR1	E	\
 Continuous underline.
 A variant of \fBul\fR that causes \fIevery\fR character to be underlined in \*[NR.]
 Identical to \fBul\fR in \*[TR.]
@@ -5027,8 +5020,8 @@ In \*[NR,]
 \fIF\fR may \fInot\fR be on position 1.
 .sc
 Control characters.
-Both the control character \fB\^.\^\fR and the \fIno-break\fR
-control character \fB\^\'\^\fR may be changed, if desired.
+Both the control character \fB.\fR and the \fIno-break\fR
+control character \fB\'\fR may be changed, if desired.
 Such a change must be compatible with the design
 of any macros used in the span of the change,
 and
@@ -5039,7 +5032,7 @@ particularly of any trap-invoked macros.
 The basic control character is set to \fIc\fR,
 or reset to "\fB.\fR".
 .bta c2
-\fB&c2\fI|c\fR	\fB\'	\'\fR	E	The \fIno-break\fR control character is set
+\fB&c2\fI|c\fR	\fB\'	\'\fR	E	The \fInobreak\fR control character is set
 to \fIc\fR, or reset to "\fB\'\fR".
 .sc
 \A'c_trans'Output translation.
@@ -5169,7 +5162,7 @@ regardless of whether there is a \T'c_diversion'current diversion\T or not.
 and an initial double-quote is discarded.
 .sc
 Transparent output.
-The sequence \A'e_X'\fB\eX\'\fIanything\fB\'\fR copies \fIanything\fR
+The sequence \A'e_X'\fB\eX\fI\'anything\'\fR copies \fIanything\fR
 to the \*(TR output,
 as a device control function in the form \fBx\ X\ \fIanything\fR
 \T's_output'(\(sc26).\T
@@ -5264,7 +5257,7 @@ could be generated by the sequence
 note that the 0.4|em vertical motions are at the smaller size.
 .sc
 \A'c_width'Width Function.
-The \fIwidth\fR function \A'e_w'\fB\ew\'\fIstring\fB\'\fR
+The \fIwidth\fR function \A'e_w'\fB\ew\'\fIstring\fB\|\'\fR
 generates the numerical width of \fIstring\fR (in basic units).
 Size and font changes may be safely imbedded in \fIstring\fR,
 and will not affect the current environment.
@@ -5318,7 +5311,7 @@ Overstrike, Bracket, Line-drawing, Graphics, and Zero-width Functions
 \A'c_overstrike'Overstriking.
 Automatically centered overstriking of up to nine characters
 is provided by the \fIoverstrike\fR function
-\A'e_o'\fB\eo\'\fIstring\fB\'\fR.
+\A'e_o'\fB\eo\'\fIstring\fB\|\'\fR.
 The characters in \fIstring\fR overprinted with centers aligned; the total width
 is that of the widest character.
 \fIstring\fR may \fInot\fR contain local vertical motion.
@@ -5335,7 +5328,7 @@ As examples,
 \fB\e(br\ez\e(rn\e(ul\e(br\fR will produce the smallest possible
 constructed box \fB\(br\z\(rn\(ul\(br\fR\|.
 .pg
-The function \A'e_Z'\fB\eZ\'\fIstring\fB\'\fR
+The function \A'e_Z'\fB\eZ\fI'string'\fR
 prints \fIstring\fR in nofill mode
 and restores the horizontal and vertical position afterwards.
 .sc
@@ -5343,7 +5336,7 @@ Large Brackets.
 The Special Font contains a number of bracket construction pieces
 (\|\|\(lt\|\|\(lb\|\|\(rt\|\|\(rb\|\|\(lk\|\|\(rk\|\|\(bv\|\|\(lf\|\|\(rf\|\|\(lc\|\|\(rc\|\|)
 that can be combined into various bracket styles.
-The function \A'e_b'\fB\eb\'\fIstring\fB\'\fR may be used to pile
+The function \A'e_b'\fB\eb\'\fIstring\fB\|\'\fR may be used to pile
 up vertically the characters in \fIstring\fR
 (the first character on top and the last at the bottom);
 the characters are vertically separated by 1|em and the total
@@ -5357,7 +5350,7 @@ produces
 \A'c_line'Line drawing.
 .tr &&
 The function \A'e_l'\fB\e\|l\^\'\fINc\fB\'\fR (backslash-ell)
-will draw a string of repeated \fIc\fR\^'s towards the right for a distance \fIN\fR.
+will draw a string of repeated \fIc\fR\|'s towards the right for a distance \fIN\fR.
 If \fIc\fR looks like a continuation of
 an \T'c_expr'expression\T for \fIN\fR,
 it may insulated from \fIN\fR with a \fB\e&\fR.
@@ -5484,28 +5477,28 @@ The current set is available
 in the \A'n_.connectchar'\fB&connectchar\fR number register.
 .sc
 \A's_graphics'Graphics.
-The function \A'e_D'\fB\eD\'\fIc ...\fB\'\fR
+The function \A'e_D'\fB\eD\fI\'c...\'\fR
 draws a graphic object of type \fIc\fR
 according to a sequence of parameters,
 which are generally pairs of numbers.
 .nf
 .ta 1.6i
 .nr nosave 1
-\fB\eD\'l \fIdh dv\fB\'	\fRdraw line from current position by \fIdh,\|dv\fR
+\fB\eD\'l \fIdh dv\'	\fRdraw line from current position by \fIdh,\|dv\fR
 .nr nosave 0
-\fB\eD\'p \fIdh1 dv1 dh2 dv2 ...\fB\'	\fRdraw polygon, i.e. a line to\
+\fB\eD\'p \fIdh1 dv1 dh2 dv2 ...\'	\fRdraw polygon, i.e. a line to\
  \fIdh1,\|dv1\fR, then to \fIdh2,\|dv2\fR, then ...
-\fB\eD\'P \fIdh1 dv1 dh2 dv2 ...\fB\'	\fRdraw filled polygon
-\fB\eD\'c \fId\fB\'	\fRdraw circle of diameter \fId\fR with left side at\
+\fB\eD\'P \fIdh1 dv1 dh2 dv2 ...\'	\fRdraw filled polygon
+\fB\eD\'c \fId\'	\fRdraw circle of diameter \fId\fR with left side at\
  current position
-\fB\eD\'C \fId\fB\'	\fRdraw filled circle
-\fB\eD\'e \fIu v\fB\'	\fRdraw ellipse of diameters \fIu\fP and \fIv\fP
-\fB\eD\'E \fIu v\fB\'	\fRdraw filled ellipse
+\fB\eD\'C \fId\'	\fRdraw filled circle
+\fB\eD\'e \fIu v\'	\fRdraw ellipse of diameters \fIu\fP and \fIv\fP
+\fB\eD\'E \fIu v\'	\fRdraw filled ellipse
 .ne 2
-\fB\eD\'a \fIa b c d\fB\'	\fRdraw arc from current position to\
+\fB\eD\'a \fIa b c d\'\fB	\fRdraw arc from current position to\
  \fIa\fR+\fIc\fR,\|\fIb\fR+\fId\fR, \fRwith center at \fIa\fR,\|\fIb\fR from\
  current position
-\fB\eD\'\(ti \fIa b c d ...\fB\'	\fRdraw B-spline from current position by\
+\fB\eD\'\(ap \fIa b c d...\'\fB	\fRdraw B-spline from current position by\
  \fIa\fR,\|\fIb\fR, \fRthen by \fIc\fR,\|\fId\fR, then by \fIc\fR,\|\fId\fR,\
  then ...
 .pg
@@ -5562,19 +5555,19 @@ whether automatic hyphenation is on or off.
 \fB&nh\fR	hyphenate	\(en	E	\
 Automatic hyphenation is turned off.
 .bta hy
-\fB&hy\fI|N\fR	on,\|\fIN\fR\*(eq1	on,\|\fIN\fR\*(eq1	E	\
+\fB&hy\fI|N\fR	on,\fIN=\fR1	on,\fIN=\fR1	E	\
 Automatic hyphenation is turned on
-for \fIN\fR\|\(>=1, or off for \fIN\fR\*(eq0.
-If \fIN\fR\*(eq2, \fIlast\fR lines (ones that will cause a trap)
+for \fIN\fR\|\(>=1, or off for \fIN=\fR\|0.
+If \fIN=\fR\|2, \fIlast\fR lines (ones that will cause a trap)
 are not hyphenated.
-For \fIN\fR\*(eq4 and 8, the last and first two characters
+For \fIN=\fR\|4 and 8, the last and first two characters
 respectively of a word are not split off.
-For \fIN\fR\*(eq16 and 32, the last and first characters
+For \fIN=\fR\|16 and 32, the last and first characters
 respectively of a word are allowed to be split off;
 this is only effective for explicit hyphenation points
 specified with \fB\e%\fR, \fB\e:\fR, or \fBhw\fR.
 These values are additive;
-i.e. \fIN\fR\*(eq14 will invoke the three restrictions.
+i.e. \fIN=\fR\|14 will invoke the three restrictions.
 The current value is available in the \A'n_.hy'\fB&hy\fR number register.
 .bta hylang
 \fB&hylang\fI|name\fR	off	off	E	Set the hyphenation language
@@ -5682,7 +5675,7 @@ normal text collecting process.
 A common use is in header and footer macros.
 .h1
 .bta tl
-\fB&tl|\fB\'\fIleft\fB\'\fIcenter\fB\'\fIright\fB\'\fR	\(en	\(en	\
+\fB&tl\fI|\'left\'center\'right\'\fR	\(en	\(en	\
 The strings \fIleft\fR, \fIcenter\fR, and \fIright\fR are
 respectively left-adjusted, centered, and right-adjusted
 in the current title-length.
@@ -5695,7 +5688,7 @@ Any character may be used as the string delimiter.
 .bta pc
 \fB&pc\fI|c\fR	\fB%\fR	off	\(en	The page number character is set to \fIc\fR,
 or removed.
-The page-number register remains \T'n_%'\fB%\fR\T.
+The page-number register remains \fB%\fR.
 .bta lt
 \fB&lt\fI|\(+-N\fR	6.5\|in	previous	E,\fBm\fR	Length of title set to \fI\(+-N\fR.
 The line-length and the title-length are \fIindependent\fR.
@@ -5735,20 +5728,20 @@ Line number mode.
 If \fI\(+-N\fR is given,
 line numbering is turned on,
 and the next output line numbered is numbered \fI\(+-N\fR.
-Default values are \fIM\fR\*(eq1, \fIS\fR\*(eq1, and \fII\fR\*(eq0.
+Default values are \fIM=\fR\|1, \fIS=\fR\|1, and \fII=\fR\|0.
 Parameters corresponding to missing arguments are unaffected;
 a non-numeric argument is considered missing.
 In the absence of all arguments, numbering is turned off;
 the next line number is preserved for possible further use
 in number register \A'n_ln'\fBln\fR.
 .bta nn
-\fB&nn\fI|N\fR	\(en	\fIN\fR\*(eq1	E	The next \fIN\fR text output lines are not
+\fB&nn\fI|N\fR	\(en	\fIN=\fR1	E	The next \fIN\fR text output lines are not
 numbered.
 .pg
 .ll -\w'0000'u
 .nm +0
 As an example, the paragraph portions of this section
-are numbered with \fIM\fR\*(eq3:
+are numbered with \fIM=\fR\|3:
 \&\fB.nm|1|3\fR was placed at the beginning;
 \&\fB.nm\fR was placed at the end of the first paragraph;
 and \fB.nm|+0\fR was placed in front of this paragraph;
@@ -5757,7 +5750,7 @@ Line lengths were also changed (by \fB\ew\'0000\'u\fR) to keep the right side al
 Another example is
 \&\fB.nm|+5|5|x|3\fR which turns on numbering with the line number of the next
 line to be 5 greater than the last numbered line,
-with \fIM\fR\*(eq5, with spacing \fIS\fR untouched, and with the indent \fII\fR set to 3.
+with \fIM=\fR\|5, with spacing \fIS\fR untouched, and with the indent \fII\fR set to 3.
 .br
 .ll
 .nm
@@ -5775,7 +5768,7 @@ and
 .h1
 .bta if
 \fB&if\fI|c|anything\fR		\(en	\(en	If condition \fIc\fR true, accept \fIanything\fR as input;
-in multi-line case use \fB\e{\fIanything\^\fB\e}\fR.
+in multi-line case use \fI\e{anything\|\e}\fR.
 .bt
 \fB&if|!\fIc|anything\fR		\(en	\(en	If condition \fIc\fR false, accept \fIanything\fR.
 .bt
@@ -5829,7 +5822,7 @@ It is not necessary that all of the loops
 are contained within the same macro;
 if there are any macros executing inside the specified loop,
 control also returns from these macros.
-In case of a non-positive or non-numeric argument, \fIn\fR\*(eq1 is assumed.
+In case of a non-positive or non-numeric argument, \fIn\fR=1 is assumed.
 If the number of levels requested is greater
 than the number of loops currently executing,
 control returns to the highest non-looping level.
@@ -5840,7 +5833,7 @@ Execution resumes with the test of the specified \fBwhile\fR loop;
 if this test fails, the request is effectively like \fBbreak\fR.
 \fBcontinue\fR also returns from all inside macro calls
 until it has reached the specified loop.
-In case of a non-positive or non-numeric argument, \fIn\fR\*(eq1 is assumed.
+In case of a non-positive or non-numeric argument, \fIn\fR=1 is assumed.
 If the number of levels requested is greater
 than the number of loops currently executing,
 control returns to the highest non-looping level,
@@ -5860,7 +5853,7 @@ _
 Character \fIG\fR exists in the current font,
 where \fIG\fR is either an \s-1ASCII\s+1 or localized input
 character, a \*(TR special character \T'e_('\fB\e(\fIxx\fR\T or
-\T'e_['\fB\e[\fIxxx\fB]\fR\T, or a \T'e_U'\fB\eU\'\fIX\fB\'\fR\T escape sequence
+\T'e_['\fB\e[\fIxxx\fB]\fR\T, or a \T'e_U'\fB\eU\fI\'X\'\fR\T escape sequence
 T}
 \fBd\fI xx\fR	There is a request, macro, or string \fIxx\fR
 \fBr\fI xx\fR	Number register \fIxx\fR has been accessed
@@ -5933,7 +5926,7 @@ the current and previous point size,
 as set by \T'ps'\fBps\fR\T and \T'e_s'\fB\es\fR\T;
 the current and previous font,
 as set by \T'ft'\fBft\fR\T and \T'e_f'\fB\ef\fR\T;
-the control and no-break control character,
+the control and nobreak control character,
 as set by \T'cc'\fBcc\fR\T and \T'c2'\fBc2\fR\T, respectively;
 the optional hyphenation character,
 as set by \T'hc'\fBhc\fR\T;
@@ -5957,7 +5950,7 @@ after the sequence ``\efB...\e@{\efR...\e@{\efI...\e@}...\e@}'',
 but ``I'' after the sequence ``\efB...\efR...\efI...\efP...\efP''.
 .h1
 .bta ev
-\fB&ev\fI|name\fR	\fIname\fR\*(eq0	previous	\(en	Environment switched to
+\fB&ev\fI|name\fR	\fIname\(eq\fR0	previous	\(en	Environment switched to
 environment \fIname\fR.
 Switching is done in push-down fashion so that
 restoring a previous environment \fImust\fR be done with \fB.ev\fR
@@ -5983,7 +5976,7 @@ The \fIstandard input\fR can be the user's keyboard,
 a \fIpipe\fR, or a \fIfile\fR.
 .h1
 .bta rd
-\fB&rd\fI|prompt\fR	\(en	\fIprompt\fR\*(eq\s-1BEL\s+1	\(en	\
+\fB&rd\fI|prompt\fR	\(en	\fIprompt=\fR\s-1BEL\s+1	\(en	\
 Read insertion from the standard input until two newlines in a row are found.
 If the standard input is the user's keyboard, \fIprompt\fR (or a \s-1BEL\s+1)
 is written onto the user's terminal.
@@ -6116,7 +6109,7 @@ After skipping initial blanks, \fIstring\fR (rest of the line) is read in \T'cop
 and written on the standard error.
 \*(TR or \*(NR then exit.
 .bta ig
-\fB&ig\fI|yy\fR	\(en	\fB.\fIyy\fR\*(eq\fB..\fR	\(en	Ignore \
+\fB&ig\fI|yy\fR	\(en	\fI.yy=\fB..\fR	\(en	Ignore \
 input lines.
 \fBig\fR behaves exactly like \T'de'\fBde\fR\T
 \T's_mac'(\(sc7)\T except that the
@@ -6378,7 +6371,7 @@ e.g. ``.5 setgray''
 .ti -\nwu
 \(en\ ``[\fB$\fIsetcolorspace\fR] \fIcomp1 comp2 .\|.\|. compn \fBsetcolor\fR'',
 where \fB$\fIsetcolorspace\fR may be a \*(PS procedure
-defined in the setup section using a
+defined in the setup section using a 
 `\eX\'PSSetup: $setcolorspace {.\|.\|.} bind def\''
 escape sequence.
 This parameter is required if the color space changes
@@ -6554,13 +6547,13 @@ One or more of:
 \fBa \fId\fR
 Rotate the picture clockwise
 .I d
-degrees, default \fId\fR\*(eq90.
+degrees, default \fId\fR =90.
 .Arg 2
 .B o
 Outline the picture with a box.
 .Arg 2
 .B s
-Freely scale both picture dimensions.
+Freely scale both picture dimensions. 
 .Arg 2
 .B w
 White out the area to be occupied by the picture.
@@ -6641,9 +6634,9 @@ using the \fBpdfmark\fR operator.
 Such advices are generated automatically by some \*(TR requests,
 e.g. by \T'cropat'\fBcropat\fR\T \T's_page'(\(sc3).\T
 Other advices can be given explicitly using the
-\fB\eX\'PS:\fI...\fB\'\fR
+\fB\eX\'PS:\fR...\fB\'\fR
 or
-\fB\eX\'PDFMark:\fI...\fB\'\fR
+\fB\eX\'PDFMark:\fR...\fB\'\fR
 escape sequences.
 .pg
 .sc
@@ -6692,7 +6685,7 @@ Examples are:
 .ti -2m
 .ne 2
 .nr nosave 1
-\fB\eX\'PS: [ {Catalog} << /ViewerPreferences << /DisplayDocTitle true >> >> /PUT pdfmark\'\fR
+\fB\eX\'PS: [ {Catalog} << /ViewerPreferences << /DisplayDocTitle true >> >> /PUT pdfmark\e'\fR
 .br
 .nr nosave 0
 This causes the \*[PDF] viewer to print the document title
@@ -6860,19 +6853,19 @@ when the user clicks on an area of the page,
 as well as links to external documents in URI form.
 In \*[TR,] such links can be built as follows:
 .pg
-The \A'e_A'\fB\eA\'\fIstring\fB\'\fR escape sequence defines an anchor,
+The \A'e_A'\fB\eA\fI\'string\'\fR escape sequence defines an anchor,
 i.e. a location to jump to,
 with the name \fIstring\fR
 (consisting of \s-1ASCII\s0 characters).
 .pg
 The actual link is built using two \A'e_T'\fB\eT\fR escape
 sequences surrounding the text that forms the area to click on,
-e.g.: \fB\eT\'\fIstring\fB\'\fItext of link\^\fB\eT\fR.
+e.g.: \fB\eT\fI\'string\'text of link\fB\eT\fR.
 \fIstring\fR must correspond to an anchor
 anywhere in the document.
 .pg
 An URI link is built likewise using two \A'e_W'\fB\eW\fR escape sequences:
-\fB\eW\'\fIuri\^\fB\'\fItext of link\^\fB\eW\fR.
+\fB\eW\fI\'uri\'text of link\fB\eW\fR.
 The \fIuri\fR part is not interpreted by \*(TR,
 but just written to the generated output.
 Typically, this will be a link to a web page,
@@ -6880,21 +6873,21 @@ as in
 .sp 0.5v
 .ce
 .ft B
-<\W'http://n-t-roff.github.io/heirloom/doctools.html'\eW\'http://n-t-roff.github.io/heirloom/doctools.html\'http://n-t-roff.github.io/heirloom/doctools.html\^\eW\W>\fR.
+<\W'http://n-t-roff.github.io/heirloom/doctools.html'\eW'http://n-t-roff.github.io/heirloom/doctools.html'http://n-t-roff.github.io/heirloom/doctools.html\eW\W>\fR.
 .pg
 The appearance of links can be changed;
 links are normally surrounded by an 1 point wide blue border.
 The color can be set using
-\fB\eX\'SetLinkColor: \fIred green blue\fB\'\fR,
+\fB\eX'SetLinkColor: \fIred green blue\fB'\fR,
 where \fIred, green, and blue\fR are values between 0 and 1.
 The border can be set using
-\fB\eX\'SetLinkBorder: \fIbx by width\fB\'\fR,
+\fB\eX'SetLinkBorder: \fIbx by width\fB'\fR,
 where \fIbx\fR and \fIby\fR define the horizontal
 and vertical corner radius, respectively,
 and \fIwidth\fR defines the width.
 .pg
 The border style can be changed with the
-\fB\eX\'SetBorderStyle: \fIarguments\fB\'\fR command.
+\fB\eX\(aqSetBorderStyle: \fIarguments\fB\(aq\fR command.
 The \fIarguments\fR are the same
 as for the \fB/BS\fR pdfmark operator
 or the \*[LaTeX] \fBhyperref pdfborderstyle={}\fR variable.
@@ -6906,8 +6899,8 @@ are available for URI links.
 E.\^g. for this document the commands
 .x1
 .ft B
-\eX\'SetBorderStyle: /S/U/W 0.1\'
-\eX\'SetUBorderStyle: /S/U/W 0.1\'
+\eX\(aqSetBorderStyle: /S/U/W 0.1\(aq
+\eX\(aqSetUBorderStyle: /S/U/W 0.1\(aq
 .ft R
 .x2
 are used.
@@ -6941,11 +6934,11 @@ and
 \T's_pdf'\*[PDF] structuring\T
 are realized using different mechanisms.
 The \fIdpost\fR post-processor does not recognize
-the \fB\eX\'ps:\fI...\fB\'\fR escape sequence
+the \fB\eX\'ps:\fR...\fB\'\fR escape sequence
 (or \fBx\ X\ ps:\fR command, respectively)
 that is used for pass-through \*(PS
 with the \fIgrops\fR post-processor of \*(GR
-\T'x_X_PS'(\fIdpost\fR accepts \fB\eX\'PS:\fI...\fB\'\fR and \fBx\ X\ PS:\fR);\T
+\T'x_X_PS'(\fIdpost\fR accepts \fB\eX'PS:\fR...\fB\'\fR and \fBx\ X\ PS:\fR);\T
 the \*(PS output generated by \fIdpost\fR is very different
 to that generated by \fIgrops.\fR
 \fIdpost\fR accepts the \*(GR drawing command extensions
@@ -6963,13 +6956,13 @@ functions for \*(GR compatibility:
 .h1
 .bta cp
 \fB&cp\fI|N\fR	off	\(en	\(en	Enable \*(GR compatibility mode.
-This is the name of \*(GR\^'s own compatibility request
+This is the name of \*(GR\fI's\fR own compatibility request
 with adapted semantics:
 Regardless of the argument,
 \*(GR compatibility mode is activated.
-If \fIN\fR\*(eq0, compatibility with traditional \*(TR is decreased,
+If \fIN\fR=0, compatibility with traditional \*(TR is decreased,
 and Heirloom \*(TR \T'c_extension'extension level 3\T is set.
-If \fIN\fR\*(!=0 or missing,
+If \fIN\fR\(!=0 or missing,
 compatibility with traditional \*(TR is improved,
 and Heirloom \*(TR \T'c_extension'extension level 1\T is set.
 Thus \fB&cp\ 0\fR results in maximum \*(GR compatibility.
@@ -6994,8 +6987,8 @@ to the \fB&C\fR and \fB&g\fR registers.
 .pg
 Nevertheless it is not recommend to do so
 without reason.
-For instance macro packages read \fB\en(.g\fR to test
-if they are processed with \*[GR.]
+For instance macro packages read \en(.g to test
+if they are processed with groff.
 Setting \fB&g\fR to \fB1\fR with the \fB&nr\fR request
 also has some side effects in Heirloom \*(TR:
 .de ListBegin
@@ -7015,7 +7008,7 @@ also has some side effects in Heirloom \*(TR:
 .ListBegin
 .tr &&
 .ListItem
-\*(GR\^'s notation for accessing symbols with
+\fIgroff\fR\^'s notation for accessing symbols with
 \fB\e[char\fIn\fB]\fR and \fB\e[u\fIXXXX\fB]\fR
 are enabled.
 .ListItem
@@ -7035,7 +7028,7 @@ leads to a different placement of the middle title element
 with \*(NR under certain conditions.
 This is emulated by setting \fB.g\fR to 1.
 .ListItem
-\*(GR\^'s left italic correction escape \fB\e,\fR is removed
+\fIgroff\fR\^'s left italic correction escape \fB\e,\fR is removed
 from the input instead of producing a \(oq\fB,\fR\(cq.
 .ListEnd
 .tr &.
@@ -7077,10 +7070,10 @@ Any call to the \fBcp\fR request
 activates the following \*(GR compatibility escape sequences;
 any call to the \T'xflag'\fBxflag\fR\T request disables them.
 .pg
-The \fB\eA\'\fIstring\fB\'\fR escape sequence
+The \fB\eA\fI'string'\fR escape sequence
 checks whether \fIstring\fR is acceptable as the name
 of a string, macro, number register, or font,
-and evaluates to ``1'' if it does and to ``0'' otherwise.
+and evaluates to ``1' if it does and to ``0'' otherwise.
 The Heirloom \*(TR anchoring escape sequence
 \T'e_A'\fB\eA\fR\T is not available in \*(GR compatibility mode.
 .pg
@@ -7101,7 +7094,7 @@ since the shape of both characters can be taken into account
 and also does not need to be be positioned directly in the input text
 at every occasion.
 .pg
-The \T's_graphics'\fB\eD\'p\fI|...\fB\'\fR polygon drawing escape sequence\T
+The \T's_graphics'\fB\eD\'p\fR|...\fB\'\fR polygon drawing escape sequence\T
 is altered such that the path is always closed,
 i.e. if the last line part does not return to the starting position,
 an additional line is added that does.
@@ -7294,7 +7287,7 @@ then a command, then other parameters.
 \fBx X HorScale \fIpercent\fR	scale letters horizontally by \fIpercent\fR (with the \T'letadj'\fBletadj\fR\T request)
 \fBx X LC_CTYPE \fIname\fR	sets the \s-1LC_CTYPE\s+1 locale to \fIname\fR
 \fBx X Link \fIx1\fR,\fIy1\fR,\fIx2\fR,\fIy2 id\fR	\
-specify PDF link (generated by the \fB\eT\'\fIid\^\fB\'\fR request)
+specify PDF link (generated by the \fB\eT\(aq\fIid\fB\(aq\fR request)
 \fBx X Link \fIid\fR	begin HTML link (generates \fB<a href="\fIid\fB">\fR)
 \fBx X Link\fR	end HTML link (generates \fB</a>\fR)
 .ne 2
@@ -7310,7 +7303,7 @@ specify PDF link (generated by the \fB\eT\'\fIid\^\fB\'\fR request)
 .nr nosave 0
 \fBx X TrimAt \fIL T W H\fR	generated by the \T'trimat'\fBtrimat\fR\T request
 \fBx X ULink \fIx1\fR,\fIy1\fR,\fIx2\fR,\fIy2 URL\fR	\
-specify PDF URL link (generated by the \fB\eW\'\fIid\^\fB\'\fR request)
+specify PDF URL link (generated by the \fB\eW\(aq\fIid\fB\(aq\fR request)
 \fBx X ULink \fIURL\fR	begin HTML URL link (generates \fB<a href="\fIURL\fB">\fR)
 \fBx X ULink\fR	end HTML URL link (generates \fB</a>\fR)
 \fBx \fIany\fP	\fRto be ignored if not recognized
@@ -7379,7 +7372,7 @@ for the benefit of postprocessors
 that re-order pages or process only a subset.
 The \fBx X PSSetup\fR command is an exception from this rule;
 it is included only once at the point where the corresponding
-\T'e_X'\fB\eX\'PSSetup:\fI\|...\fB\'\fR escape sequence\T occurs.
+\T'e_X'\fB\eX\fI'\fBPSSetup:\fR\|...\fI'\fR escape sequence\T occurs.
 .pg
 .mha s_device
 Device and Font Description Files
@@ -7670,7 +7663,7 @@ that word or part word will be forced out.
 In this and other examples,
 requests like \T'bp'\fBbp\fR\T and \T'sp'\fBsp\fR\T
 that normally cause breaks are invoked using
-the \fIno-break\fR control character \fB\^\'\^\fR
+the \fIno-break\fR control character \fB\'\fR
 to avoid this.
 When the header/footer design contains material
 requiring independent text processing, the
@@ -7707,7 +7700,7 @@ header/footer material, and ultimately restores them.
 The material in this case is a page number at the bottom of the
 first page and at the top of the remaining pages.
 If \*(TR is used, a \fIcut mark\fR is drawn in the form
-of \fIroot-en\fP\^'s at each margin.
+of \fIroot-en\fR's at each margin.
 The \T'sp'\fBsp\fR's\T refer to absolute positions to avoid
 dependence on the base-line spacing.
 Another reason for this in the footer
