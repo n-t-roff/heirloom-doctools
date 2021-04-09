@@ -1,0 +1,53 @@
+# -*- indent-tabs-mode: t; tab-width: 25 -*- vim: ts=25 noet
+root	= true
+
+[*]
+trim_trailing_whitespace	= true
+insert_trailing_newline	= true
+default_only	= indent_size tab_width
+charset	= utf-8
+end_of_line	= lf
+indent_style	= tab
+indent_size	= 8
+tab_width	= 8
+
+[/.editorconfig]
+default_only	= unset
+elastic_tabstops	= true
+indent_size	= 25
+tab_width	= 25
+
+
+# Ad hoc tweaks
+[troff/troff.d/devaps/daps.g]
+indent_size	= 4
+tab_width	= 4
+
+[eqn/eqnchar.d/greek]
+indent_size	= 10
+tab_width	= 10
+
+[eqn/eqnchar.d/iso]
+charset	= latin1
+
+[{CHANGES{,_GR},/LICENSE.d/*}]
+indent_style	= space
+indent_size	= unset
+
+
+# Tabular data
+[{*.tsv,**/devhtml/charset}]
+elastic_tabstops	= true
+default_only	= unset
+tm_scope	= source.generic-db
+indent_size	= 16
+tab_width	= 16
+
+
+# PostScript is limited to 8-bit ASCII encoding
+[{ps.requests,**/devpost/charlib/*}]
+tm_scope	= source.postscript
+charset	= latin1
+
+[**/devpost/charlib/{*.map,BRACKETS_NOTE,README}]
+charset	= unset
