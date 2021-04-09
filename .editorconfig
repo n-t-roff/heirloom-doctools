@@ -11,6 +11,9 @@ indent_style	= tab
 indent_size	= 8
 tab_width	= 8
 
+[*.md]
+trim_trailing_whitespace	= false
+
 [/.editorconfig]
 default_only	= unset
 elastic_tabstops	= true
