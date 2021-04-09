@@ -1,0 +1,59 @@
+# C/C++ headers
+*.h                linguist-language=C
+mpm/*.h            linguist-language=C++
+
+# Roff source (including preprocessor-specific markup)
+Rbstjissue         linguist-language=Roff
+Rv7man             linguist-language=Roff
+eqnchar            linguist-language=Roff
+*.doc              linguist-language=Roff
+*.eqn              linguist-language=Roff
+*.toc              linguist-language=Roff
+*.tr               linguist-language=Roff
+an.in              linguist-language=Roff
+andoc.in           linguist-language=Roff
+bib.in             linguist-language=Roff
+ms.acc             linguist-language=Roff
+ms.cov             linguist-language=Roff
+ms.ths             linguist-language=Roff
+**/refer/32/bib    linguist-language=Roff
+**/refer/32/out    linguist-language=Roff
+**/refer/ab/ab.*   linguist-language=Roff
+**/tmac.d/color    linguist-language=Roff
+**/tmac.d/[nt]aa   linguist-language=Roff
+**/tmac.d/padj     linguist-language=Roff
+**/tmac.d/ptx      linguist-language=Roff
+**/tmac.d/pictures linguist-language=Roff
+**/tmac.d/safe     linguist-language=Roff
+**/tmac.d/srefs    linguist-language=Roff
+**/tmac.d/v        linguist-language=Roff
+**/tmac.d/vgrind   linguist-language=Roff
+**/tmac.d/*.in     linguist-language=Roff
+**/tmac.d/*.tbl    linguist-language=Roff
+**/tmac.d/*.ref    linguist-language=Roff
+
+# Plain-text files, or unsupported/unknown formats
+NOTES              linguist-language=Text
+README.*           linguist-language=Text
+ascii              linguist-language=Text
+greek              linguist-language=Text
+iso                linguist-language=Text
+eign               linguist-language=Text
+*.more             linguist-language=Text
+**/refer/ab/out    linguist-language=Text
+**/terms.d/[ab].*  linguist-language=Text
+**/terms.d/ab.*    linguist-language=Text
+**/devpost/*.name  linguist-language=Text
+/LICENSE.d/*       linguist-language=Text
+
+# Misc
+/mk.config         linguist-language=Makefile
+*.dic              linguist-language=TeX linguist-vendored
+**/devhtml/charset linguist-language=TSV
+
+# PostScript
+ps.requests                                       linguist-language=PostScript
+/troff/troff.d/font/devpost/charlib/*             linguist-language=PostScript
+/troff/troff.d/font/devpost/charlib/*.map         linguist-language=Text
+/troff/troff.d/font/devpost/charlib/BRACKETS_NOTE linguist-language=Text
+/troff/troff.d/font/devpost/charlib/README        linguist-language=Text
