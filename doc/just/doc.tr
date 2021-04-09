@@ -1,3 +1,4 @@
+.\" -*- nroff -*- vim: ft=nroff
 .\" Sccsid @(#)doc.tr	1.20 (gritter) 11/11/06
 .do xflag 3
 .mediasize a5

@@ -1,2 +1,3 @@
+.\" -*- nroff -*- vim: ft=nroff
 .nr O 1
 .so troffdemo.tr

@@ -1,4 +1,4 @@
-#
+# -*- fundamental -*- vim: ft=text
 # CDDL HEADER START
 #
 # The contents of this file are subject to the terms of the
@@ -43,5 +43,3 @@ a new character:
   font		name of the current font
   ptsize	and the point size
   size		Postscript is using this size - it's scaled up from ptsize
-
-

@@ -1,3 +1,4 @@
+.\" -*- nroff -*- vim: ft=nroff
 .\"
 .\" tmac.an - macros for manual pages
 .\"
@@ -637,4 +638,3 @@
 .	el                 .ds ]W 3rd
 .	as ]W " Berkeley Distribution
 ..
-.\" vim:set filetype=groff:

@@ -1,3 +1,4 @@
+.\" -*- nroff -*- vim: ft=nroff
 .\" Sccsid @(#)doc.tr	2.22 (gritter) 10/24/06
 .do xflag 3
 .warn

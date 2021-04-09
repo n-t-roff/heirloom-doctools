@@ -1,3 +1,4 @@
+.\" -*- nroff -*- vim: ft=nroff
 .ds [F 1
 .]-
 .ds [T OpenBSD.org

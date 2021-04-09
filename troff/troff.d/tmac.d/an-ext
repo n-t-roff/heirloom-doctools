@@ -1,4 +1,4 @@
-.\" -*- nroff -*-
+.\" -*- nroff -*- vim: ft=nroff
 .\"
 .\" an-ext.tmac
 .\"
@@ -101,4 +101,3 @@
 .	fi
 .	hy \\n(HY
 ..
-.\" vim:set filetype=groff:

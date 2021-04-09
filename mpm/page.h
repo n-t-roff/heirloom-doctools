@@ -1,4 +1,4 @@
-/*
+/* -*- C++ -*- vim: ft=cpp
  * Changes by Gunnar Ritter, Freiburg i. Br., Germany, October 2005.
  *
  * Derived from Plan 9 source code published at the 9fans list by Rob Pike,
