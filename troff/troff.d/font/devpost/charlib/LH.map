@@ -1,3 +1,4 @@
+% -*- ps -*- vim: ft=postscr
 gsave
 /M {moveto} def
 /L {lineto} def

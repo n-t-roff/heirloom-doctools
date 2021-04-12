@@ -1,3 +1,4 @@
+.\" -*- nroff -*- vim: ft=nroff
 .\" tbl tbl.man | eqn -Txxx | troff -ms -Txxx
 .if t .ds ^ \^\s+4\v@.3m@^\v@-.3m@\s-4\^
 .if n .ds ^ ^

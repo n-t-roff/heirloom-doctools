@@ -723,7 +723,7 @@ Release 060321
 * [nt]roff: Hyphenation is now enabled by default. This is compatible
   with most other versions of troff, but differs from Solaris troff.
 * troff/dpost: The characters \(or \- \` \' " # < > @ \ ^ ~ are now
-  taken from the current font instead of the special font by default 
+  taken from the current font instead of the special font by default
   if possible with the "ps" and "psmed" devices. The new DESC keyword
   "allpunct" controls this.
 * troff: Kerning pairs from font metrics files that include "\[name]"

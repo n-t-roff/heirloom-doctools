@@ -1,3 +1,4 @@
+.\" -*- nroff -*- vim: ft=nroff
 .\" Sccsid @(#)safe	1.2 (gritter) 12/13/05
 .ie (\n(.X>0) \{\
 .	do rm sy

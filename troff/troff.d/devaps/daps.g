@@ -1,4 +1,4 @@
-/*
+/* -*- mode: C; tab-width: 4; -*- vim: ft=c ts=4 noet
  * CDDL HEADER START
  *
  * The contents of this file are subject to the terms of the
@@ -216,4 +216,3 @@ int		vadjustment[] = {				/* corresponding vert adjustment */
 
 
 #endif
-

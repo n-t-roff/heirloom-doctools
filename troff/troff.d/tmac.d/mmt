@@ -1,3 +1,4 @@
+.\" -*- nroff -*- vim: ft=nroff
 .\" Copyright 1997 Sun Microsystems, Inc.  All rights reserved.
 .\" Use is subject to license terms.
 .\"
@@ -2847,4 +2848,3 @@ PGFORM [linelength [pagelength [pageoffset [1]]]]
 .		if \\$4 .br
 .	\}
 ..
-.\" vim:set filetype=groff:

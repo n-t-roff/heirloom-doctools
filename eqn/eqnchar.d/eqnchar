@@ -1,3 +1,4 @@
+.\" -*- nroff -*- vim: ft=nroff
 .EQ
 tdefine ciplus % "\(pl\h'-\w'\(pl\^'u'\v'.3n'\(ci\v'-.3n'" %
 ndefine ciplus % O+ %

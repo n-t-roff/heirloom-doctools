@@ -1,3 +1,4 @@
+.\" -*- nroff -*- vim: ft=nroff
 .do xflag 3
 .char \(<>         \[arrowboth]
 .char \(-+         \[uni2213]
@@ -269,4 +270,3 @@
 .char \(vz         \[zcaron]
 .char \(wp         \[weierstrass]
 .char \(Ye         \[yen]
-.\" vim:set filetype=groff:
