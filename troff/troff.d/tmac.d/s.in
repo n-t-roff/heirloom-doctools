@@ -43,9 +43,11 @@
 .ds // @MACDIR@/
 .	\" IZ - initialize (before text begins)
 .de IZ
-.nr HM 1i
+.ie rHM .nr HM \\n(HMu/(1p)u
+.el     .nr HM 1i
 .nr M1 \\n(HMu/2
-.nr FM 1i
+.ie rFM .nr FM \\n(FMu/(1p)u
+.el     .nr FM 1i
 .nr M4 \\n(FMu/2
 .nr YY -\\n(FMu
 .nr XX 0 1
@@ -58,16 +60,18 @@
 .if t .nr PD .3v
 .if n .nr DD 1v
 .if t .nr DD .5v
-.nr PS 10
-.nr VS 12
+.ie rPS .nr PS \\n(PSu/(1p)u
+.el     .nr PS 10
+.ie rVS .nr VS \\n(VSu/(1p)u
+.el     .nr VS 12
 .ps \\n(PS
 .vs \\n(VSp
 .nr ML 3v
 .nr IR 0
 .nr TB 0
 .nr SJ \\n(.j
-.nr PO \\n(.o
-.nr LL 6i
+.if !\\n(PO>0 .nr PO \\n(.o
+.if !\\n(LL>0 .nr LL 6i
 .ll \\n(LLu
 .lt 6i
 .ev 1
@@ -339,7 +343,7 @@
 .nr @ \\w'x'u*8
 .if \\n(.$ .nr @ \\w'x'u*\\$2
 .if \\n(.$ .if \\$1no .nr @ \\w'x'u*\\$3
-.ta \\n@u +\\n@u +\\n@u +\\n@u +\\n@u +\\n@u +\\n@u +\\n@u +\\n@u +\\n@u +\\n@u 
+.ta \\n@u +\\n@u +\\n@u +\\n@u +\\n@u +\\n@u +\\n@u +\\n@u +\\n@u +\\n@u +\\n@u
 ..
 .	\" LE - listing end
 .de LE
