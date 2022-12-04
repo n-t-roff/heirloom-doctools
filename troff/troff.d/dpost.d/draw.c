@@ -397,8 +397,8 @@ drawspline(
  *
  */
 
-
-    for ( N = 2; N < sizeof(x)/sizeof(x[0]); N++ )
+again:
+    for ( N = 2; N < sizeof(x)/sizeof(x[0])-1; N++ )
 	if (fscanf(fp, "%d %d", &x[N], &y[N]) != 2)
 		break;
 
@@ -418,6 +418,9 @@ drawspline(
 
     hgoto(x[N]);			/* where troff expects to be */
     vgoto(y[N]);
+
+    if ( N >= sizeof(x)/sizeof(x[0])-1 )
+	goto again;
 
     resetpos();				/* not sure where the printer is */
 
