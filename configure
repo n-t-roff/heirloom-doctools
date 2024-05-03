@@ -25,7 +25,7 @@ MAKE=
 DEFS=
 LIB_LEX=
 LIB_CURSES=
-cat /dev/null > compat.h
+> compat.h
 
 while [ $# -gt 0 ]; do
 	case $1 in
