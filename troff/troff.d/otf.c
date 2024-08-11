@@ -2815,10 +2815,43 @@ get_PairPosFormat1(int o)
 	free_cov(cp);
 }
 
+static int
+get_left_class(struct class *cp, int gid)
+{
+	int Class = 0;
+
+	if (cp->ClassFormat == 1) {
+		int g = gid - cp->StartGlyph;
+
+		if (g >= 0 && g < cp->GlyphCount)
+			Class = pbe16(&contents[cp->offset + 6 + 2 * g]);
+		return Class;
+	}
+	if (cp->ClassFormat == 2) {
+		int RangeRecord_offset, Start, End, i;
+
+		for (i = 0; i < cp->ClassRangeCount; i++) {
+			RangeRecord_offset = cp->offset + 4 + 6 * i;
+			Start = _pbe16(&contents[RangeRecord_offset]);
+			End = _pbe16(&contents[RangeRecord_offset + 2]);
+			if (gid < Start)
+				break;
+			if (gid >= Start && gid <= End) {
+				Class = _pbe16(&contents[RangeRecord_offset + 4]);
+				break;
+			}
+		}
+		return Class;
+	}
+	return -1;
+}
+
 static void
 get_PairPosFormat2(int o)
 {
 	struct class	*c1, *c2;
+	struct cov	*cp;
+	int	Coverage;
 	int	ValueFormat1, ValueFormat2;
 	int	ClassDef1, ClassDef2;
 	int	Class1Count, Class2Count;
@@ -2828,6 +2861,9 @@ get_PairPosFormat2(int o)
 	int	i, n, a;
 	int	x;
 
+	Coverage = o + pbe16(&contents[o+2]);
+	if ((cp = open_cov(Coverage)) == NULL)
+		return;
 	ValueFormat1 = pbe16(&contents[o+4]);
 	ValueFormat2 = pbe16(&contents[o+6]);
 	ClassDef1 = o + pbe16(&contents[o+8]);
@@ -2850,7 +2886,8 @@ get_PairPosFormat2(int o)
 				v2[n] = v;
 				n++;
 			}
-			while (get_class(c1, &g, &v), g >= 0) {
+			while ((g = get_cov(cp)) >= 0) {
+				v = get_left_class(c1, g);
 				if (v < 0 || v >= Class1Count)
 					continue;
 				for (i = 0; i < n; i++) {
@@ -2865,6 +2902,7 @@ get_PairPosFormat2(int o)
 		}
 		free_class(c1);
 	}
+	free_cov(cp);
 	free(g2);
 	free(v2);
 }
@@ -3129,10 +3167,11 @@ get_lookup(int o, int type, const char *name,
 		y = pbe16(&contents[LookupList+2+2*x]);
 		if ((t = pbe16(&contents[LookupList+y])) == type || type < 0) {
 			SubTableCount = pbe16(&contents[LookupList+y+4]);
-			for (j = 0; j < SubTableCount; j++)
+			for (j = 0; j < SubTableCount; j++) {
 				func(t, LookupList+y +
 					pbe16(&contents[LookupList+y+6+2*j]),
 					name);
+			}
 		}
 	}
 }
