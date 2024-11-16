@@ -30,6 +30,10 @@ hyperlink in their browsers and select "Copy URL" -->
 </code></pre>
 
 Installation paths and compiler settings are adjusted in `mk.config`.
+
+
+You will need `byacc` to build this system.  `yacc` may be insufficient.
+
 The software is built with
 ```bash
 ./configure
